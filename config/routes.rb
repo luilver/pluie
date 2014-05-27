@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :bulk_messages
+
   resources :lists
 
   resources :group_messages

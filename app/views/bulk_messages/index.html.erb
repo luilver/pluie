@@ -1,0 +1,29 @@
+<h1>Listing bulk_messages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th>List</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bulk_messages.each do |bulk_message| %>
+      <tr>
+        <td><%= bulk_message.message %></td>
+        <td><%= bulk_message.list_id %></td>
+        <td><%= link_to 'Show', bulk_message %></td>
+        <td><%= link_to 'Edit', edit_bulk_message_path(bulk_message) %></td>
+        <td><%= link_to 'Destroy', bulk_message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Bulk message', new_bulk_message_path %>

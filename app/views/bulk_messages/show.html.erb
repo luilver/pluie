@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @bulk_message.message %>
+</p>
+
+<p>
+  <strong>List:</strong>
+  <%= @bulk_message.list_id %>
+</p>
+
+<%= link_to 'Edit', edit_bulk_message_path(@bulk_message) %> |
+<%= link_to 'Back', bulk_messages_path %>
