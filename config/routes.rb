@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :single_messages
+
   devise_for :users
   root to: "home#index"
   #

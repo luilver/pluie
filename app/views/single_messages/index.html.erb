@@ -1,0 +1,29 @@
+<h1>Listing single_messages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th>Number</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @single_messages.each do |single_message| %>
+      <tr>
+        <td><%= single_message.message %></td>
+        <td><%= single_message.number %></td>
+        <td><%= link_to 'Show', single_message %></td>
+        <td><%= link_to 'Edit', edit_single_message_path(single_message) %></td>
+        <td><%= link_to 'Destroy', single_message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Single message', new_single_message_path %>

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @single_message.message %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @single_message.number %>
+</p>
+
+<%= link_to 'Edit', edit_single_message_path(@single_message) %> |
+<%= link_to 'Back', single_messages_path %>
