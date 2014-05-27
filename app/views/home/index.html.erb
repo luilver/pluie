@@ -1,0 +1,4 @@
+  <h1><%= t('.welcome') %></h1>
+  <p>
+    <%= t('.today is ').html_safe %><%= I18n.localize(Date.today, :format => :long).html_safe %>
+  </p>
