@@ -1,0 +1,29 @@
+<h1>Listing group_messages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Group</th>
+      <th>Message</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @group_messages.each do |group_message| %>
+      <tr>
+        <td><%= group_message.group_id %></td>
+        <td><%= group_message.message %></td>
+        <td><%= link_to 'Show', group_message %></td>
+        <td><%= link_to 'Edit', edit_group_message_path(group_message) %></td>
+        <td><%= link_to 'Destroy', group_message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Group message', new_group_message_path %>
