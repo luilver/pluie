@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :groups
+
   resources :single_messages
 
   devise_for :users
