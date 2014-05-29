@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'reports/todays_stats' => 'reports#today'
   get 'reports/messages_log' => 'reports#messages'
+  get 'reports/messages_summary' => 'reports#summary'
   post 'reports/messages_log' => 'reports#search_messages', as: :search_messages
 
 

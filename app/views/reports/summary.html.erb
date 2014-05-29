@@ -1,0 +1,30 @@
+<h1>Messages Summary</h1>
+
+<%= form_tag search_messages_path(@messages) do %>
+<table>
+  <tbody>
+      <tr>
+        <td>Date from:</td>
+        <td>
+          <%= date_select 'search', 'date_from', :default => { :day => Date.today.day - 3 } %>
+        </td>
+      </tr>
+      <tr>
+        <td>Date to:</td>
+        <td>
+          <%= date_select 'search', 'date_to' %>
+        </td>
+      </tr>
+  </tbody>
+</table>
+
+<%= submit_tag "Submit" %>
+<%end%>
+
+<% if @results %>
+<h1>Last 48h log</h1>
+  <% @results.each do |message| %>
+    <%= render_message @message unless @scope.size == 1 %>
+  <% end %>
+<%  end %>
+

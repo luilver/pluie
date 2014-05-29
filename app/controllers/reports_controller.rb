@@ -18,6 +18,15 @@ class ReportsController < ApplicationController
     end
   end
 
+  # GET /reports/messages_summary
+  # GET /reports/messages_summary.json
+  def summary
+    @log = []
+    2010.upto(2015) do |i|
+      @log.append(i)
+    end
+  end
+
   def search_messages
   end
 end
