@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'reports/today' => 'reports#today'
+
   resources :credits
 
   resources :bulk_messages

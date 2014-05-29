@@ -1,0 +1,20 @@
+<h1>Today's Stats</h1>
+
+<table>
+  <thead>
+    <tr>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td>Total Messages: <%= @log.count %></td>
+      </tr>
+      <tr>
+        <td>Total Messages Parts: <%= @log[450] %></td>
+      </tr>
+      <tr>
+        <td>Total Deducted Credits: <%= @log[-1].balance %></td>
+      </tr>
+  </tbody>
+</table>
