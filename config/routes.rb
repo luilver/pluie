@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'reports/today' => 'reports#today'
+  get 'reports/todays_stats' => 'reports#today'
 
   resources :credits
 
