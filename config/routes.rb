@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   get 'reports/todays_stats' => 'reports#today'
+  get 'reports/messages_log' => 'reports#messages'
+  post 'reports/messages_log' => 'reports#search_messages', as: :search_messages
+
 
   resources :credits
 
