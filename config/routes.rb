@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :credits
+
   resources :bulk_messages
 
   resources :lists
