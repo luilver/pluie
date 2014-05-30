@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
-  # GET /reports/today
-  # GET /reports/today.json
+  # GET /reports/today_stats
+  # GET /reports/today_stats.json
   def today
     @log = []
     1.upto(1000) do |i|
@@ -9,8 +9,8 @@ class ReportsController < ApplicationController
     @log.append(Credit.first)
   end
 
-  # GET /reports/messages
-  # GET /reports/messages.json
+  # GET /reports/messages_log
+  # GET /reports/messages_log.json
   def messages
     @log = []
     1.upto(1000) do |i|
