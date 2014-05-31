@@ -4,7 +4,7 @@ class SingleMessagesController < ApplicationController
   # GET /single_messages
   # GET /single_messages.json
   def index
-    @single_messages = SingleMessage.all
+    @single_messages = current_user.single_messages
   end
 
   # GET /single_messages/1
@@ -25,6 +25,7 @@ class SingleMessagesController < ApplicationController
   # POST /single_messages.json
   def create
     @single_message = SingleMessage.new(single_message_params)
+    @single_message.user = current_user
 
     respond_to do |format|
       if @single_message.save
