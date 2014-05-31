@@ -8,4 +8,5 @@ class User < ActiveRecord::Base
   has_many :single_messages
   has_many :contacts
   has_many :groups
+  has_many :lists
 end
