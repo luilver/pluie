@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.all
+    @groups = current_user.groups
   end
 
   # GET /groups/1
@@ -25,6 +25,7 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
+    @group.user = current_user
 
     respond_to do |format|
       if @group.save
