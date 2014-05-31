@@ -4,7 +4,7 @@ class GroupMessagesController < ApplicationController
   # GET /group_messages
   # GET /group_messages.json
   def index
-    @group_messages = GroupMessage.all
+    @group_messages = current_user.group_messages
   end
 
   # GET /group_messages/1
@@ -25,6 +25,7 @@ class GroupMessagesController < ApplicationController
   # POST /group_messages.json
   def create
     @group_message = GroupMessage.new(group_message_params)
+    @group_message.user = current_user
 
     respond_to do |format|
       if @group_message.save

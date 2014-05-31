@@ -4,7 +4,7 @@ class BulkMessagesController < ApplicationController
   # GET /bulk_messages
   # GET /bulk_messages.json
   def index
-    @bulk_messages = BulkMessage.all
+    @bulk_messages = current_user.bulk_messages
   end
 
   # GET /bulk_messages/1
@@ -25,6 +25,7 @@ class BulkMessagesController < ApplicationController
   # POST /bulk_messages.json
   def create
     @bulk_message = BulkMessage.new(bulk_message_params)
+    @bulk_message.user = current_user
 
     respond_to do |format|
       if @bulk_message.save
