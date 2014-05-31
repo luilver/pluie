@@ -4,7 +4,7 @@ class CreditsController < ApplicationController
   # GET /credits
   # GET /credits.json
   def index
-    @credits = Credit.all
+    @credits = current_user.credits
   end
 
   # GET /credits/1
@@ -25,6 +25,7 @@ class CreditsController < ApplicationController
   # POST /credits.json
   def create
     @credit = Credit.new(credit_params)
+    @credit.user = current_user
 
     respond_to do |format|
       if @credit.save

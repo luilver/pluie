@@ -9,4 +9,5 @@ class User < ActiveRecord::Base
   has_many :contacts
   has_many :groups
   has_many :lists
+  has_many :credits
 end
