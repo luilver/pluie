@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
   has_many :bulk_messages
   has_many :group_messages
   has_many :single_messages
+  has_many :contacts
 end
