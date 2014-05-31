@@ -6,7 +6,7 @@ class ReportsController < ApplicationController
     1.upto(1000) do |i|
       @log.append(i)
     end
-    @log.append(Credit.first)
+    @log.append(current_user.credits.first)
   end
 
   # GET /reports/messages_log
