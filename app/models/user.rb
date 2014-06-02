@@ -10,4 +10,13 @@ class User < ActiveRecord::Base
   has_many :groups
   has_many :lists
   has_many :credits
+
+  def self.current
+    Thread.current[:user]
+  end
+
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
+
 end
