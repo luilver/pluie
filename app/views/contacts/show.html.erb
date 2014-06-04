@@ -7,7 +7,7 @@
 
 <p>
   <strong>Gsm number:</strong>
-  <%= @contact.gsm_number_id %>
+  <%= @contact.gsm_numbers.first %>
 </p>
 
 <%= link_to 'Edit', edit_contact_path(@contact) %> |
