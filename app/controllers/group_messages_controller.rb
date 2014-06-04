@@ -1,6 +1,6 @@
 class GroupMessagesController < ApplicationController
   before_action :set_group_message, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:create]
 
   # GET /group_messages
   # GET /group_messages.json

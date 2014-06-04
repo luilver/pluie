@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
   before_action :set_list, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:create]
 
   # GET /lists
   # GET /lists.json
