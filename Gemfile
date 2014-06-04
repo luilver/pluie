@@ -43,3 +43,11 @@ gem 'devise'
 
 # Cancan
 gem 'cancan'
+
+group :development do
+  # Better errors & binding of caller
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  # Thin web server
+  gem 'thin'
+end
