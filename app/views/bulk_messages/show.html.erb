@@ -6,8 +6,8 @@
 </p>
 
 <p>
-  <strong>List:</strong>
-  <%= @bulk_message.list_id %>
+  <strong>Lists:</strong>
+  <%= @bulk_message.lists.first %>
 </p>
 
 <%= link_to 'Edit', edit_bulk_message_path(@bulk_message) %> |

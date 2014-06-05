@@ -11,22 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140531184406) do
+ActiveRecord::Schema.define(version: 20140605160851) do
 
   create_table "bulk_messages", force: true do |t|
     t.text     "message"
-    t.integer  "list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
   end
 
+  create_table "bulk_messages_lists", force: true do |t|
+    t.integer "bulk_message_id"
+    t.integer "list_id"
+  end
+
   create_table "contacts", force: true do |t|
     t.string   "name"
-    t.integer  "gsm_number_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+  end
+
+  create_table "contacts_groups", id: false, force: true do |t|
+    t.integer "group_id"
+    t.integer "contact_id"
+  end
+
+  create_table "contacts_gsm_numbers", id: false, force: true do |t|
+    t.integer "contact_id"
+    t.integer "gsm_number_id"
   end
 
   create_table "credits", force: true do |t|
@@ -37,11 +50,15 @@ ActiveRecord::Schema.define(version: 20140531184406) do
   end
 
   create_table "group_messages", force: true do |t|
-    t.integer  "group_id"
     t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+  end
+
+  create_table "group_messages_groups", id: false, force: true do |t|
+    t.integer "group_message_id"
+    t.integer "group_id"
   end
 
   create_table "groups", force: true do |t|
@@ -55,6 +72,11 @@ ActiveRecord::Schema.define(version: 20140531184406) do
     t.string   "number"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "gsm_numbers_lists", id: false, force: true do |t|
+    t.integer "list_id"
+    t.integer "gsm_number_id"
   end
 
   create_table "lists", force: true do |t|

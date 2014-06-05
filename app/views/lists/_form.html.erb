@@ -15,6 +15,17 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+  <fieldset>
+    <legend>Upload file:</legend>
+      <%= file_field_tag "file" %>
+  </fieldset>
+  <fieldset>
+    <legend>GSM numbers</legend>
+    <%= select_tag :gsm_numbers,
+      options_from_collection_for_select(@list.gsm_numbers, "id", "number"),
+      {:multiple => true, :size => 5}
+    %>
+  </fieldset>
   <div class="actions">
     <%= f.submit %>
   </div>
