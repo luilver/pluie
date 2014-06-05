@@ -44,6 +44,8 @@ gem 'devise'
 # Cancan
 gem 'cancan'
 
+gem 'clockwork'
+
 group :development do
   # Better errors & binding of caller
   gem 'better_errors'
