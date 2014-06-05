@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140605154737) do
+ActiveRecord::Schema.define(version: 20140605155516) do
 
   create_table "bulk_messages", force: true do |t|
     t.text     "message"
@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(version: 20140605154737) do
   end
 
   create_table "group_messages_groups", id: false, force: true do |t|
-    t.integer "group_messages_id"
-    t.integer "groups_id"
+    t.integer "group_message_id"
+    t.integer "group_id"
   end
 
   create_table "groups", force: true do |t|
