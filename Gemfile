@@ -44,7 +44,7 @@ gem 'devise'
 # Cancan
 gem 'cancan'
 
-gem 'clockwork'
+gem 'clockworksms'
 
 group :development do
   # Better errors & binding of caller
