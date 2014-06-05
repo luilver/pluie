@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604185802) do
+ActiveRecord::Schema.define(version: 20140604192449) do
 
   create_table "bulk_messages", force: true do |t|
     t.text     "message"
@@ -64,6 +64,11 @@ ActiveRecord::Schema.define(version: 20140604185802) do
     t.string   "number"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "gsm_numbers_lists", id: false, force: true do |t|
+    t.integer "list_id"
+    t.integer "gsm_number_id"
   end
 
   create_table "lists", force: true do |t|
