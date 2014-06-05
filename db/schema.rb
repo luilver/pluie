@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140605150204) do
+ActiveRecord::Schema.define(version: 20140605152122) do
 
   create_table "bulk_messages", force: true do |t|
     t.text     "message"
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20140605150204) do
   end
 
   create_table "group_messages", force: true do |t|
-    t.integer  "group_id"
     t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
