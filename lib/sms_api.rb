@@ -24,6 +24,12 @@ module SmsApi
         @api.messages.build(:to => to, :content => text)
 
         response = message.deliver
+
+        if response.success
+          "message #{response.message_id} sended"
+        else
+          response.error_description
+        end
       end
 
       def send_multiple_messages(numbers, text)
@@ -31,6 +37,16 @@ module SmsApi
         numbers.each do |n|
           api.messages.build({:to => n, :content => text})
         end
+
+        responses = api.deliver_messages
+        c = 0
+        responses.each do |response|
+          if response.succes
+            c +=1
+          end
+        end
+
+        "#{c} messages sended"
       end
 
     end
