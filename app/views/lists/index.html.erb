@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Amount</th>
       <th></th>
       <th></th>
       <th></th>
@@ -14,6 +15,7 @@
     <% @lists.each do |list| %>
       <tr>
         <td><%= list.name %></td>
+        <td><%= list.gsm_numbers.count %></td>
         <td><%= link_to 'Show', list %></td>
         <td><%= link_to 'Edit', edit_list_path(list) %></td>
         <td><%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
