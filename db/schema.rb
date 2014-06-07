@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140605160851) do
+ActiveRecord::Schema.define(version: 20140607044221) do
 
   create_table "bulk_messages", force: true do |t|
     t.text     "message"
@@ -84,6 +84,10 @@ ActiveRecord::Schema.define(version: 20140605160851) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
   end
 
   create_table "single_messages", force: true do |t|

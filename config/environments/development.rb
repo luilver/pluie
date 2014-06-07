@@ -41,4 +41,6 @@ Pluie::Application.configure do
   #Secret key base
   config.secret_key_base = '4c6ff30c61ca1bef1726dc803bfee01cdda84d169b9b052bdedd4258089fc4109ba285ad7bda391fc7809bb50fc7113b4960bd162979b93ebf87e9ac
   637dcaa5'
+
+  Paperclip.options[:command_path] = "/usr/bin/"
 end

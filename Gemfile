@@ -51,3 +51,6 @@ group :development do
   # Thin web server
   gem 'thin'
 end
+
+#Paperclip
+gem 'paperclip'
