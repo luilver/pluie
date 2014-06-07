@@ -4,6 +4,6 @@ class List < ActiveRecord::Base
   has_and_belongs_to_many :bulk_messages
   has_attached_file :file
 
-  validates_attachment :file, content_type: { content_type: ["text/html"]}
+  validates_attachment :file, content_type: { content_type: ["text/plain"]}
 
 end

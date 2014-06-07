@@ -30,6 +30,7 @@ class ListsController < ApplicationController
 
     respond_to do |format|
       if @list.save
+        attach_numbers
         format.html { redirect_to @list, notice: 'List was successfully created.' }
         format.json { render :show, status: :created, location: @list }
       else
@@ -44,6 +45,7 @@ class ListsController < ApplicationController
   def update
     respond_to do |format|
       if @list.update(list_params)
+        attach_numbers
         format.html { redirect_to @list, notice: 'List was successfully updated.' }
         format.json { render :show, status: :ok, location: @list }
       else
@@ -72,5 +74,10 @@ class ListsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
       params.require(:list).permit(:name, :file)
+    end
+
+    def attach_numbers
+      IO.foreach(@list.file.path) { |line| n = GsmNumber.find_by_number(line[0,10]) ||
+                                    GsmNumber.create(:number => line[0,10]); @list.gsm_numbers << n } if @list.file.path
     end
 end
