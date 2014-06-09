@@ -15,10 +15,19 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
-  <div class="field">
-    <%= f.label :gsm_number_id %><br>
-    <%= f.text_field :gsm_number_id %>
-  </div>
+  <% if @contact.gsm_numbers and not @contact.gsm_numbers.empty? %>
+    <fieldset>
+      <legend>GSM numbers</legend>
+      <%= select_tag :gsm_numbers,
+        options_from_collection_for_select(@contact.gsm_numbers, "id", "number"),
+        {:multiple => true, :disabled => true, :size => 2}
+      %>
+    </fieldset>
+  <% end %>
+  <fieldset>
+    <legend>Add mobile numbers here</legend>
+    <%= text_area_tag "new_gsm_numbers" %>
+  </fieldset><br />
   <div class="actions">
     <%= f.submit %>
   </div>

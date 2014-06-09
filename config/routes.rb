@@ -11,11 +11,11 @@ Rails.application.routes.draw do
 
   resources :lists
 
-  resources :group_messages
+  #resources :group_messages
 
-  resources :groups
+  #resources :groups
 
-  resources :contacts
+  #resources :contacts
 
   resources :single_messages
 

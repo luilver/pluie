@@ -1,4 +1,4 @@
-<%= form_for(@list) do |f| %>
+<%= form_for(@list, :html => { :multipart => true }) do |f| %>
   <% if @list.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@list.errors.count, "error") %> prohibited this list from being saved:</h2>
@@ -15,6 +15,17 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+  <fieldset>
+    <legend>Upload file:</legend>
+      <%= f.file_field :file %>
+  </fieldset>
+  <fieldset>
+    <legend>GSM numbers</legend>
+    <%= select_tag :gsm_numbers,
+      options_from_collection_for_select(@list.gsm_numbers, "id", "number"),
+      {:multiple => true, :size => 5}
+    %>
+  </fieldset>
   <div class="actions">
     <%= f.submit %>
   </div>

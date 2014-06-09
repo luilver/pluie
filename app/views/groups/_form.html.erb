@@ -15,6 +15,14 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+  <fieldset>
+    <legend>Contacts</legend>
+    <%= f.select :contacts,
+      options_for_select(current_user.contacts, @group.contacts),
+      {},
+      {:multiple => true, :size => 10}
+    %>
+  </fieldset>
   <div class="actions">
     <%= f.submit %>
   </div>
