@@ -82,7 +82,8 @@ class ListsController < ApplicationController
 
     def attach_numbers
       IO.foreach(@list.file.path) { |line| n = GsmNumber.find_by_number(line[0,10]) ||
-                                    GsmNumber.create(:number => line[0,10]); @list.gsm_numbers << n } if @list.file.path
+                                    GsmNumber.create(:number => line[0,10]);
+                                    @list.gsm_numbers << n if not @list.gsm_numbers.include?(n) } if @list.file.path
     end
 
     def remove_numbers
