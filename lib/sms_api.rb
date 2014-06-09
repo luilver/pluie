@@ -7,6 +7,10 @@ module SmsApi
 
     module InstanceMethods
 
+      def get_sms_dispatcher
+
+      end
+
     end
 
     def self.included(receiver)
