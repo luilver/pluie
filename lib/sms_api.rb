@@ -24,6 +24,14 @@ module SmsApi
         @nexmo = Nexmo::Client.new(key = ENV['NEXMO_API_KEY'], secret = ENV['NEXMO_API_SECRET'],  on_response)
       end
 
+      def send_single_message(to, text)
+        response = @nexmo.send_message({:to => to, :from => '', :text => text})
+      end
+
+      def send_multiple_messages(numbers, text)
+
+      end
+
     end
 
     class  ResponseProvider
