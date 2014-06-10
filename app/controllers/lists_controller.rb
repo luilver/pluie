@@ -45,7 +45,11 @@ class ListsController < ApplicationController
   def update
     respond_to do |format|
       if @list.update(list_params)
-        attach_numbers
+        if params[:remove]
+          remove_numbers
+        else
+          attach_numbers
+        end
         format.html { redirect_to @list, notice: 'List was successfully updated.' }
         format.json { render :show, status: :ok, location: @list }
       else
@@ -78,6 +82,12 @@ class ListsController < ApplicationController
 
     def attach_numbers
       IO.foreach(@list.file.path) { |line| n = GsmNumber.find_by_number(line[0,10]) ||
-                                    GsmNumber.create(:number => line[0,10]); @list.gsm_numbers << n } if @list.file.path
+                                    GsmNumber.create(:number => line[0,10]);
+                                    @list.gsm_numbers << n if not @list.gsm_numbers.include?(n) } if @list.file.path
+    end
+
+    def remove_numbers
+      IO.foreach(@list.file.path) { |line| n = GsmNumber.find_by_number(line[0,10]);
+                                    @list.gsm_numbers.delete(n) if @list.gsm_numbers.include?(n)  } if @list.file.path
     end
 end
