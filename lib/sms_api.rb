@@ -1,5 +1,6 @@
 module SmsApi
     require 'clockwork'
+    require 'nexmo'
 
     module ClassMethods
 
@@ -7,8 +8,8 @@ module SmsApi
 
     module InstanceMethods
 
-      def get_sms_dispatcher
-
+      def get_sms_dispatcher(&on_response)
+          ClockWorks.new()
       end
 
     end
@@ -18,22 +19,39 @@ module SmsApi
       receiver.send :include, InstanceMethods
     end
 
-    class ClockWorks
-      def initialize(args)
+    class Nexmo
+      def initialize(&on_response)
+        @nexmo = Nexmo::Client.new(key = ENV['NEXMO_API_KEY'], secret = ENV['NEXMO_API_SECRET'],  on_response)
+      end
+
+    end
+
+    class  ResponseProvider
+      def initialize(&on_response)
+        @response_block = on_response
+      end
+
+      protected
+        def decode_response(api_response)
+          @response_block ? @response_block.call(api_response) : api_response
+        end
+
+    end
+#add threading
+    class ClockWorks < ResponseProvider
+      def initialize(args, &on_response)
+        super(on_response)
         @api = Clockwork::API.new(ENV['TEST_CLOCKWORKS_KEY'])
       end
 
       def send_single_message(to, text)
         #to The phone number to send the SMS to in international number format (without a leading + or international dialling prefix such as 00, e.g. 441234567890).
-        @api.messages.build(:to => to, :content => text)
-
+        message = @api.messages.build(:to => to, :content => text)
         response = message.deliver
 
-        if response.success
-          "message #{response.message_id} sended"
-        else
-          response.error_description
-        end
+        #TODO ver si se implementa un objeto response custom, que agrupe las funcionalidades de cada provider
+        decode_response(response)
+
       end
 
       def send_multiple_messages(numbers, text)
@@ -43,14 +61,9 @@ module SmsApi
         end
 
         responses = api.deliver_messages
-        c = 0
         responses.each do |response|
-          if response.succes
-            c +=1
-          end
+          decode_response response
         end
-
-        "#{c} messages sended"
       end
 
     end
