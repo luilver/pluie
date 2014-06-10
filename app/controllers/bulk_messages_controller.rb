@@ -30,6 +30,7 @@ class BulkMessagesController < ApplicationController
 
     respond_to do |format|
       if @bulk_message.save
+        related_numbers
         format.html { redirect_to @bulk_message, notice: 'Bulk message was successfully created.' }
         format.json { render :show, status: :created, location: @bulk_message }
       else
@@ -44,6 +45,7 @@ class BulkMessagesController < ApplicationController
   def update
     respond_to do |format|
       if @bulk_message.update(bulk_message_params)
+        related_numbers
         format.html { redirect_to @bulk_message, notice: 'Bulk message was successfully updated.' }
         format.json { render :show, status: :ok, location: @bulk_message }
       else
@@ -72,5 +74,13 @@ class BulkMessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def bulk_message_params
       params.require(:bulk_message).permit(:message, :list_id)
+    end
+
+    def related_numbers
+      params[:lists].each { |list_id| l = List.find(list_id);
+                            l.gsm_numbers.each {
+                              |n| @bulk_message.gsm_numbers << n if not @bulk_message.gsm_numbers.include?(n)
+                            }
+      }
     end
 end
