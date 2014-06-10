@@ -12,6 +12,14 @@ module SmsApi
           ClockWorks.new()
       end
 
+      def send_message( single_msg)
+        #envia un mensaje a los numeros que tiene asociados.
+        # el texto del mensaje esta dado por la propiedad message
+      end
+
+      def send_bulk(bulk_msg)
+      end
+
     end
 
     def self.included(receiver)
@@ -29,6 +37,8 @@ module SmsApi
       end
 
       def send_multiple_messages(numbers, text)
+
+
 
       end
 
