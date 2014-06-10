@@ -33,13 +33,14 @@ module SmsApi
       end
 
       def send_single_message(to, text)
-        response = @nexmo.send_message({:to => to, :from => '', :text => text})
+        response = @nexmo.send_message({:to => to, :text => text})
       end
 
       def send_multiple_messages(numbers, text)
 
-
-
+        numbers.each do |number|
+          @nexmo.send_message({:to => number, :text => text})
+        end
       end
 
     end
