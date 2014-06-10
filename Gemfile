@@ -45,6 +45,7 @@ gem 'devise'
 gem 'cancan'
 
 gem 'clockworksms'
+gem 'nexmo'
 
 group :development do
   # Better errors & binding of caller
