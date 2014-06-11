@@ -58,7 +58,7 @@ module SmsApi
     end
 #add threading
     class ClockWorks < ResponseProvider
-      def initialize(args, &on_response)
+      def initialize(&on_response)
         super(on_response)
         @api = Clockwork::API.new(ENV['TEST_CLOCKWORKS_KEY'])
       end

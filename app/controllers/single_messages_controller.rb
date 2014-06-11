@@ -1,6 +1,7 @@
 class SingleMessagesController < ApplicationController
   before_action :set_single_message, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:create]
+  include SmsApi
 
   # GET /single_messages
   # GET /single_messages.json
