@@ -57,3 +57,5 @@ end
 
 #Paperclip
 gem 'paperclip'
+
+gem 'nokogiri'
