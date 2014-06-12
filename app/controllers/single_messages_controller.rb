@@ -1,9 +1,12 @@
+require 'sms_api'
+
 class SingleMessagesController < ApplicationController
-  before_action :set_single_message, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource except: [:create]
   include SmsApi
 
+  before_action :set_single_message, only: [:show, :edit, :update, :destroy]
   before_action :set_sms_dispatcher
+  load_and_authorize_resource except: [:create]
+
 
   # GET /single_messages
   # GET /single_messages.json
@@ -34,6 +37,11 @@ class SingleMessagesController < ApplicationController
     respond_to do |format|
       if @single_message.save
         related_numbers
+
+        #test SmsApi
+        send_message(@single_message)
+        #test SmsApi
+
         format.html { redirect_to @single_message, notice: 'Single message was successfully created.' }
         format.json { render :show, status: :created, location: @single_message }
       else
@@ -49,6 +57,11 @@ class SingleMessagesController < ApplicationController
     respond_to do |format|
       if @single_message.update(single_message_params)
         related_numbers
+
+        #test SmsApi
+        send_message(@single_message)
+        #test SmsApi
+        #
         format.html { redirect_to @single_message, notice: 'Single message was successfully updated.' }
         format.json { render :show, status: :ok, location: @single_message }
       else

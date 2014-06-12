@@ -1,6 +1,4 @@
 module SmsApi
-    require 'clockwork'
-    require 'nexmo'
 
     module ClassMethods
 
@@ -8,14 +6,32 @@ module SmsApi
 
     module InstanceMethods
 
+      #add threading
+
       def set_sms_dispatcher
         #crea la variable en el controller, a traves de la cual se enviaran los mensajes
-        @dispatcher =  Nexmo.new { |response| puts response.ok?}
+        #la idea seria, ejecutar este metodo en cada controller que envie mensajes y luego
+        #con los metodos de instancia del modulo SmsApi, se envian los mensajes
+        #
+        #ahora solo esta la implementacion de Nexmo
+        @dispatcher =  NexmoApi.new { |response| puts "hello from nexmo response"}
       end
 
       def send_message( single_msg)
         #envia un mensaje a los numeros que tiene asociados.
         # el texto del mensaje esta dado por la propiedad message
+
+        begin
+          if single_msg.gsm_numbers.count == 1
+            @dispatcher.send_single_message(single_msg.gsm_numbers.first.number, single_msg.message)
+          else
+            @dispatcher.send_multiple_messages(single_msg.gsm_numbers.map { |n| n.number  }, single_msg.message)
+          end
+        rescue Exception => e
+          puts "<<<<<<<<<<<<<<<<<<<<< #{e.message} >>>>>>>>>>>>>>>>>>>"
+          #TODO... log errors here
+        end
+
       end
 
       def send_bulk(bulk_msg)
@@ -28,9 +44,9 @@ module SmsApi
       receiver.send :include, InstanceMethods
     end
 
-    class Nexmo
+    class NexmoApi
       def initialize(&on_response)
-        @nexmo = Nexmo::Client.new(key = ENV['NEXMO_API_KEY'], secret = ENV['NEXMO_API_SECRET'],  on_response)
+        @nexmo = Nexmo::Client.new(key = ENV['NEXMO_API_KEY'], secret = ENV['NEXMO_API_SECRET'],  &on_response)
       end
 
       def send_single_message(to, text)
@@ -57,10 +73,10 @@ module SmsApi
         end
 
     end
-#add threading
+
     class ClockWorks < ResponseProvider
       def initialize(&on_response)
-        super(on_response)
+        super(&on_response)
         @api = Clockwork::API.new(ENV['TEST_CLOCKWORKS_KEY'])
       end
 
