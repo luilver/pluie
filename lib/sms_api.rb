@@ -8,8 +8,9 @@ module SmsApi
 
     module InstanceMethods
 
-      def get_sms_dispatcher(&on_response)
-          ClockWorks.new()
+      def set_sms_dispatcher
+        #crea la variable en el controller, a traves de la cual se enviaran los mensajes
+        @dispatcher =  Nexmo.new { |response| puts response.ok?}
       end
 
       def send_message( single_msg)

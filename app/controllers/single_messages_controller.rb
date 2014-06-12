@@ -3,6 +3,8 @@ class SingleMessagesController < ApplicationController
   load_and_authorize_resource except: [:create]
   include SmsApi
 
+  before_action :set_sms_dispatcher
+
   # GET /single_messages
   # GET /single_messages.json
   def index
