@@ -6,14 +6,16 @@ module SmsApi
 
     module InstanceMethods
 
-      #add threading
+      #TODO add threading
 
       def set_sms_dispatcher
         #crea la variable en el controller, a traves de la cual se enviaran los mensajes
         #la idea seria, ejecutar este metodo en cada controller que envie mensajes y luego
         #con los metodos de instancia del modulo SmsApi, se envian los mensajes
         #
-        #ahora solo esta la implementacion de Nexmo
+        #ahora solo esta la implementacion de Nexmo,...
+        #en general, segun la ruta o proveedor que escoja el usuario, se instancia
+        #la  clase correspondiente.
         @dispatcher =  NexmoApi.new { |response| puts "hello from nexmo response"}
       end
 
@@ -74,7 +76,7 @@ module SmsApi
 
     end
 
-    class ClockWorks < ResponseProvider
+    class ClockWorksApi < ResponseProvider
       def initialize(&on_response)
         super(&on_response)
         @api = Clockwork::API.new(ENV['TEST_CLOCKWORKS_KEY'])
