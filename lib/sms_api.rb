@@ -1,3 +1,4 @@
+require 'sms_delayed_jobs'
 module SmsApi
 
     module ClassMethods
@@ -23,23 +24,11 @@ module SmsApi
         #envia un mensaje a los numeros que tiene asociados.
         # el texto del mensaje esta dado por la propiedad message
 
-        begin
-          if single_msg.gsm_numbers.count == 1
-            @dispatcher.send_single_message(single_msg.gsm_numbers.first.number, single_msg.message)
-          else
-            @dispatcher.send_multiple_messages(single_msg.gsm_numbers.map { |n| n.number  }, single_msg.message)
-          end
-        rescue Exception => e
-          puts "<<<<<<<<<<<<<<<<<<<<< #{e.message} >>>>>>>>>>>>>>>>>>>"
-          #TODO... log errors here
-        end
-
+        Delayed::Job.enqueue SingleMessageJob.new(@dispatcher, single_msg)
       end
-      handle_asynchronously :send_message
 
       def send_bulk(bulk_msg)
       end
-      handle_asynchronously :send_bulk, :queue =>'bulk'
 
     end
 
