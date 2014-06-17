@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  body: MyText
+  from: 44124643128
+  gateway: Ruta-1
+  msg_id: 1
+  status: DELIVERED
+  to: 5352644047
+
+two:
+  body: MyText
+  from: 44124643128
+  gateway: Ruta-1
+  msg_id: 1
+  status: DELIVERED
+  to: 5352644047
