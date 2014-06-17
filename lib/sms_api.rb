@@ -39,7 +39,7 @@ module SmsApi
 
       def send_bulk(bulk_msg)
       end
-      handle_asynchronously :send_bulk
+      handle_asynchronously :send_bulk, :queue =>'bulk'
 
     end
 
