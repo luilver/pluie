@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'file:///home/pepe/DevTools/rubygems/'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -62,3 +62,4 @@ gem 'nokogiri'
 
 #delayed_job -> async jobs
 gem 'delayed_job_active_record'
+gem 'daemons'
