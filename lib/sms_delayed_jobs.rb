@@ -1,4 +1,4 @@
-module SmsApi
+module DeliveryMethods
 
     class SingleMessageJob
 
