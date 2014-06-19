@@ -6,9 +6,61 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+  <STYLE type="text/css">
+    table {
+      border:  1px solid gray;
+      border-collapse:collapse;
+
+    }
+    th, td {
+      border:  1px solid gray;
+      padding: 1px 8px 1px 3px;
+    }
+
+    h1 { margin-top: 40px; }
+    h2 { margin-top: 40px; }
+
+    body, div {
+      color: #444;
+      font-size: 12px;
+      line-height: 150%;
+      line-height: 130%;
+      font-family: Helvetica, Arial, sans-serif;
+
+    }
+    hr { margin-top: 20px; margin-bottom: 10px; }
+
+    .selection_links { font-weight: strong; }
+    .selection_links a { font-size: 12px; font-weight: normal; padding-left: 10px; padding-right: 10px;}
+    .selection_links a.selected { font-size: 14px; font-weight: bold; color: black; }
+    li.selected {background-color: #ddd;}
+
+
+    .menu { margin-top: 30px; }
+    .menu a { margin-right: 20px; font-size: 16px; }
+
+  </STYLE>
+
 <body>
 
+<div class="menu">
+  <%= link_to t('home'), '/' %>
+  <%= link_to t('single_messages'), single_messages_path %>
+  <%= link_to t('bulk_messages'), bulk_messages_path %>
+  <%= link_to t('lists'), lists_path %>
+  <%= link_to t('summary'), delivery_reports_path -%>
+  <%= link_to t('all_sms'), list_delivery_reports_path %>
+</div>
+
 <%= yield %>
+
+<hr>
+<p>
+  By <%= link_to 'openBGS', 'http://openbgs.com' %>
+</p>
+
+<p style="margin-top: 600px"></p>
+
 
 </body>
 </html>
