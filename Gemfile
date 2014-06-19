@@ -59,3 +59,6 @@ end
 gem 'paperclip'
 
 gem 'nokogiri'
+
+#delayed_job -> async jobs
+gem 'delayed_job_active_record'
