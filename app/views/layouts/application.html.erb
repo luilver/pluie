@@ -38,10 +38,15 @@
 
     .menu { margin-top: 30px; }
     .menu a { margin-right: 20px; font-size: 16px; }
+    .right-menu { margin-top: 0px; float: right; }
 
   </STYLE>
 
 <body>
+
+<div class="right-menu">
+  Balance: <%= current_user.balance %>
+</div>
 
 <div class="menu">
   <%= link_to t('home'), '/' %>
@@ -50,7 +55,12 @@
   <%= link_to t('lists'), lists_path %>
   <%= link_to t('summary'), delivery_reports_path -%>
   <%= link_to t('all_sms'), list_delivery_reports_path %>
+  <% if current_user.admin %>
+    <%= render '/admin_links' %>
+  <% end %>
 </div>
+
+<hr>
 
 <%= yield %>
 
