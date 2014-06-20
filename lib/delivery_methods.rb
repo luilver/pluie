@@ -1,5 +1,5 @@
 require 'sms_delayed_jobs'
-module SmsApi
+module DeliveryMethods
 
     module ClassMethods
 

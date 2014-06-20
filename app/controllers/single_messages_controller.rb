@@ -1,7 +1,7 @@
-require 'sms_api'
+require 'delivery_methods'
 
 class SingleMessagesController < ApplicationController
-  include SmsApi
+  include DeliveryMethods
 
   before_action :set_single_message, only: [:show, :edit, :update, :destroy]
   before_action :set_sms_dispatcher
