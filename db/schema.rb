@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140619153405) do
+ActiveRecord::Schema.define(version: 20140620213147) do
+
+  create_table "api_settings", force: true do |t|
+    t.string   "api_key"
+    t.string   "api_secret"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "bulk_messages", force: true do |t|
     t.text     "message"
