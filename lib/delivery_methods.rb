@@ -23,7 +23,6 @@ module DeliveryMethods
       def send_message( single_msg)
         #envia un mensaje a los numeros que tiene asociados.
         # el texto del mensaje esta dado por la propiedad message
-        Rails.logger.info "sending single msg #{single_msg}"
 
         Delayed::Job.enqueue SingleMessageJob.new(@dispatcher, single_msg)
       end
