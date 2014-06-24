@@ -1,18 +1,27 @@
 module DeliveryMethods
 
-    class SingleMessageJob
-
-      def initialize(dispatcher, single_msg)
-        @dispatcher = dispatcher
-        @single_msg = single_msg
+    SimpleMessageJob = Struct.new(:dispatcher, :number, :text) do
+      def perform
+        begin
+          dispatcher.send_single_message(number, text)
+        rescue Exception => e
+          Rails.logger.error e.message
+        end
       end
 
-      def perform
+
+ MultipleMessageJob = Struct.new(:dispatcher, :numbers, :text) do
+       def perform
+         begin
           if @single_msg.gsm_numbers.count == 1
-            @dispatcher.send_single_message(@single_msg.gsm_numbers.first.number, single_msg.message)
+            @dispatcher.send_single_message(@single_msg.gsm_numbers.first.number, @single_msg.message)
           else
-            @dispatcher.send_multiple_messages(@single_msg.gsm_numbers.map { |n| n.number  }, single_msg.message)
+            @dispatcher.send_multiple_messages(@single_msg.gsm_numbers.map { |n| n.number  }, @single_msg.message)
           end
-        end
-    end
+          dispatcher.send_multiple_messages(numbers, text)
+         rescue Exception => e
+           Rails.logger.error e.message
+         end
+       end
+  end
 end

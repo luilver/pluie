@@ -24,7 +24,11 @@ module DeliveryMethods
         #envia un mensaje a los numeros que tiene asociados.
         # el texto del mensaje esta dado por la propiedad message
 
-        Delayed::Job.enqueue SingleMessageJob.new(@dispatcher, single_msg)
+        if single_msg.gsm_numbers.count == 1
+          Delayed::Job.enqueue SimpleMessageJob.new(@dispatcher, single_msg.gsm_numbers.first.number, single_msg.message)
+        else
+          Delayed::Job.enqueue MultipleMessageJob.new(@dispatcher, single_msg.gsm_numbers.map { |n| n.number  }, single_msg.message)
+        end
       end
 
       def send_bulk(bulk_msg)
