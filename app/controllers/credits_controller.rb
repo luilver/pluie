@@ -1,5 +1,6 @@
 class CreditsController < ApplicationController
   before_action :set_credit, only: [:show, :edit, :update, :destroy]
+  after_action :credit_user, only: [:create, :update]
   load_and_authorize_resource except: [:create]
 
   # GET /credits
@@ -26,7 +27,7 @@ class CreditsController < ApplicationController
   # POST /credits.json
   def create
     @credit = Credit.new(credit_params)
-    @credit.user = current_user
+    relate_user
 
     respond_to do |format|
       if @credit.save
@@ -72,5 +73,14 @@ class CreditsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def credit_params
       params.require(:credit).permit(:balance)
+    end
+
+    def relate_user
+      @credit.user = User.find(params[:user])
+    end
+
+    def credit_user
+      @credit.user.balance += @credit.balance
+      @credit.save
     end
 end

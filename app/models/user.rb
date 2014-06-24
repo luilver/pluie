@@ -10,5 +10,12 @@ class User < ActiveRecord::Base
   has_many :groups
   has_many :lists
   has_many :credits
+  has_one :api_setting
 
+  def api_key
+    self.api_setting.api_key
+  end
+  def api_secret=(api_secret)
+    self.api_setting.api_secret = api_secret
+  end
 end
