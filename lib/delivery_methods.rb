@@ -17,7 +17,7 @@ module DeliveryMethods
         #ahora solo esta la implementacion de Nexmo,...
         #en general, segun la ruta o proveedor que escoja el usuario, se instancia
         #la  clase correspondiente.
-        @dispatcher =  NexmoApi.new { |response| puts "hello from nexmo response"}
+        @dispatcher =  NexmoApi.new
       end
 
       def send_message( single_msg)
