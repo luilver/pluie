@@ -44,9 +44,11 @@
 
 <body>
 
-<div class="right-menu">
-  Balance: <%= current_user.balance %>
-</div>
+<% if current_user %>
+  <div class="right-menu">
+    Balance: <%= current_user.balance %>
+  </div>
+<% end %>
 
 <div class="menu">
   <%= link_to t('home'), '/' %>
@@ -55,8 +57,8 @@
   <%= link_to t('lists'), lists_path %>
   <%= link_to t('summary'), delivery_reports_path -%>
   <%= link_to t('all_sms'), list_delivery_reports_path %>
-  <% if current_user.admin %>
-    <%= render '/admin_links' %>
+  <% if current_user and current_user.admin%>
+      <%= render '/admin_links' %>
   <% end %>
 </div>
 
