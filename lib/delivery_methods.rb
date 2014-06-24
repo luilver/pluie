@@ -34,6 +34,10 @@ module DeliveryMethods
       def send_bulk(bulk_msg)
       end
 
+      def get_balance
+        @dispatcher.get_balance
+      end
+
     end
 
     def self.included(receiver)
@@ -55,6 +59,11 @@ module DeliveryMethods
         numbers.each do |number|
           @nexmo.send_message({:to => number, :text => text})
         end
+      end
+
+      def get_balance
+        response = @nexmo.get_balance
+        response.ok? ? response.object['value']:0
       end
 
     end
