@@ -24,10 +24,6 @@ module Api
       def destroy
         respond_with BulkMessage.destroy(params[:id])
       end
-
-      private
-        def authenticate_api
-        end
     end
   end
 end
