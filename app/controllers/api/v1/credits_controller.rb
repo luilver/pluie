@@ -1,7 +1,6 @@
 module Api
   module V1
-    class CreditsController < ApplicationController
-      skip_before_filter :authenticate_user!
+    class CreditsController < ApiController
 
       respond_to :json
 
@@ -24,10 +23,6 @@ module Api
       def destroy
         respond_with Credit.destroy(params[:id])
       end
-
-      private
-        def authenticate_api
-        end
     end
   end
 end

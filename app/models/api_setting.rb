@@ -2,6 +2,10 @@ class ApiSetting < ActiveRecord::Base
   belongs_to :user
   before_create :generate_api_key
 
+  def valid_secret?(api_secret)
+    self.api_secret == api_secret
+  end
+
   private
     def generate_api_key
       begin
