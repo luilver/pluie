@@ -1,7 +1,6 @@
 module Api
   module V1
-    class SingleMessagesController < ApplicationController
-      skip_before_filter :authenticate_user!
+    class SingleMessagesController < ApiController
 
       respond_to :json
 

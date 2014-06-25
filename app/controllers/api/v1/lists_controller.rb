@@ -1,7 +1,6 @@
 module Api
   module V1
-    class ListsController < ApplicationController
-      skip_before_filter :authenticate_user!
+    class ListsController < ApiController
 
       respond_to :json
 

@@ -1,7 +1,6 @@
 module Api
   module V1
-    class CreditsController < ApplicationController
-      skip_before_filter :authenticate_user!
+    class CreditsController < ApiController
 
       respond_to :json
 

@@ -1,7 +1,6 @@
 module Api
   module V1
-    class BulkMessagesController < ApplicationController
-      skip_before_filter :authenticate_user!
+    class BulkMessagesController < ApiController
 
       respond_to :json
 
