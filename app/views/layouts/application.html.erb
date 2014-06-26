@@ -39,6 +39,7 @@
     .menu { margin-top: 30px; }
     .menu a { margin-right: 20px; font-size: 16px; }
     .right-menu { margin-top: 0px; float: right; }
+    .right-menu a { margin-right: 10px; }
 
   </STYLE>
 
@@ -46,6 +47,8 @@
 
 <% if current_user %>
   <div class="right-menu">
+    <%= link_to t('account'), edit_user_registration_path %>
+    <%= link_to t('sign_out'), destroy_user_session_path, :method => :delete %>
     Balance: <%= current_user.balance %>
   </div>
 <% end %>

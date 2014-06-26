@@ -1,4 +1,16 @@
+require 'api_constraints'
+
 Rails.application.routes.draw do
+  namespace :api, :defaults => {:format => 'json'} do
+    scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
+      resources :bulk_messages
+      resources :credits
+      resources :lists
+      resources :single_messages
+      resources :users
+    end
+  end
+
   match 'delivery_reports/gateway_commit/:gateway' => 'delivery_reports#gateway_commit', via: [:get, :post]
   resources :delivery_reports, :only => :index do
     get 'list', :on => :collection
