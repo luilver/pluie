@@ -1,5 +1,6 @@
 class ApiController < ActionController::Base
   before_filter :authenticate_api!
+  load_and_authorize_resource
   prepend_before_filter :ensure_params_exist
   protect_from_forgery with: :null_session
 
@@ -13,6 +14,7 @@ class ApiController < ActionController::Base
 
     return invalid_api_key unless api
     return invalid_api_secret unless api.valid_secret?(params[:api_secret])
+    current_user = api.user
   end
 
   protected

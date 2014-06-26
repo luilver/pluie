@@ -9,7 +9,7 @@ class Ability
       can [:read, :update, :destroy],
         [BulkMessage, Contact, GroupMessage, Group, List, SingleMessage],
         :user_id => user.id
-      can :read, Credit
+      can :read, Credit, :user_id => user.id
       cannot [:create, :update, :destroy], Credit
     end
   end

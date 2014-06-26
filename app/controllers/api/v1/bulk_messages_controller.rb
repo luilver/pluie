@@ -5,7 +5,7 @@ module Api
       respond_to :json
 
       def index
-        respond_with BulkMessage.all
+        respond_with current_user.bulk_messages
       end
 
       def show
