@@ -12,6 +12,7 @@ class Ability
         :user_id => user.id
       can :read, Credit, :user_id => user.id
       cannot [:create, :update, :destroy], Credit
+      can :balance, User, :user_id => user.id
     end
   end
 end
