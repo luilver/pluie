@@ -14,23 +14,23 @@ class ApiController < ActionController::Base
 
     return invalid_api_key unless api
     return invalid_api_secret unless api.valid_secret?(params[:api_secret])
-    current_user = api.user
+    User.current = api.user
   end
 
   protected
-     def ensure_params_exist
-        return unless params[:api_key].blank?
-        render :json => { :success => false,
-                          :message => "missing api key" }, :status => 400
-     end
-
-     def invalid_api_key
+    def ensure_params_exist
+       return unless params[:api_key].blank?
        render :json => { :success => false,
-                      :message => 'invalid api key' }, :status => 401
-     end
+                         :message => "missing api key" }, :status => 400
+    end
 
-     def invalid_api_secret
-       render :json => { :success => false,
-                      :message => 'invalid api secret' }, :status => 401
-     end
+    def invalid_api_key
+      render :json => { :success => false,
+                     :message => 'invalid api key' }, :status => 401
+    end
+
+    def invalid_api_secret
+      render :json => { :success => false,
+                     :message => 'invalid api secret' }, :status => 401
+    end
 end

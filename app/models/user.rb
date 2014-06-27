@@ -18,4 +18,12 @@ class User < ActiveRecord::Base
   def api_secret=(api_secret)
     self.api_setting.api_secret = api_secret
   end
+
+  def self.current
+    Thread.current[:user]
+  end
+
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
 end
