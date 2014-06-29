@@ -1,5 +1,5 @@
 GEM
-  remote: file:/home/pepe/DevTools/rubygems/
+  remote: https://rubygems.org/
   specs:
     actionmailer (4.0.0)
       actionpack (= 4.0.0)
