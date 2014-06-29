@@ -5,9 +5,6 @@ module DeliveryMethods
 
     class NexmoHttp < DeliveryMethods::Base
 
-      rescue_from 'SocketError' do |exception|
-        Rails.logger.error exception.message
-      end
       def initialize
         super
         @nexmo = Nexmo::Client.new(key = ENV['NEXMO_API_KEY'], secret = ENV['NEXMO_API_SECRET'])
