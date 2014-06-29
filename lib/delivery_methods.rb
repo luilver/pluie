@@ -1,4 +1,4 @@
-require 'dispatchers/nexmo_http'
+require 'dispatchers/nexmo_sp'
 
 module DeliveryMethods
 
@@ -17,7 +17,7 @@ module DeliveryMethods
       #ahora solo esta la implementacion de Nexmo,...
       #en general, segun la ruta o proveedor que escoja el usuario, se instancia
       #la  clase correspondiente.
-      @dispatcher =  NexmoHttp.new
+      @dispatcher =  NexmoSp.new
     end
 
     def send_message(single_msg)
