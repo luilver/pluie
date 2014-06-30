@@ -25,6 +25,7 @@ module DeliveryMethods
     end
 
     def send_bulk(bulk_msg)
+      @dispatcher.send_bulk(bulk_msg)
     end
 
     def get_balance
