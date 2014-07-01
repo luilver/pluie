@@ -6,7 +6,7 @@ class NexmoMultipleMessageJob < NexmoJob
       @nexmo.send_message({:to => number, :text => text})
       end
     rescue Exception => e
-      Rails.logger.error "<<<<<<<<<<<<Error while sending msg:#{text.truncate(12)} to [#{numbers.join("--")}]>>>>>>>>>>>>>>>>"
+      Rails.logger.error "<<<<<<<<<<<<Error #{e.message} while sending msg:#{text.truncate(12)} to [#{numbers.join("--")}]>>>>>>>>>>>>>>>>"
     end
   end
 
