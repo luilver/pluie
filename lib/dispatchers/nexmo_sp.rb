@@ -19,6 +19,8 @@ module DeliveryMethods
     end
 
     def send_bulk_messages(numbers, text)
+      Rails.logger.info "<<<<<<<<<<<<<<Bulk message to #{numbers.count} numbers on #{Time.now}>>>>>>>>>>>>>>>>>"
+
       numbers.each_slice(@bulk_batch_size) do |batch|
          NexmoMultipleMessageJob.new.async.perform(batch, text)
       end
