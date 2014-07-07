@@ -5,6 +5,7 @@
     <tr>
       <th>Message</th>
       <th>Lists</th>
+      <th>Recipients</th>
       <th></th>
     </tr>
   </thead>
@@ -13,7 +14,8 @@
     <% @bulk_messages.each do |bulk_message| %>
       <tr>
         <td><%= bulk_message.message %></td>
-        <td><%= bulk_message.lists.first %></td>
+        <td><%= bulk_message.lists.count %></td>
+        <td><%= bulk_message.gsm_numbers.count %></td>
         <td><%= link_to 'Show', bulk_message %></td>
       </tr>
     <% end %>
