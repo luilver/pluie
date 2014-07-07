@@ -4,6 +4,10 @@ module Api
 
       respond_to :json
 
+      def balance
+        respond_with User.current.balance
+      end
+
       def index
         respond_with User.all
       end

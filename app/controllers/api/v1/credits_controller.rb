@@ -5,7 +5,7 @@ module Api
       respond_to :json
 
       def index
-        respond_with current_user.credits
+        respond_with User.current.credits
       end
 
       def show

@@ -2,6 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    user ||= User.current
     if user.admin?
       can :manage, :all
     else
@@ -11,6 +12,7 @@ class Ability
         :user_id => user.id
       can :read, Credit, :user_id => user.id
       cannot [:create, :update, :destroy], Credit
+      can :balance, User, :user_id => user.id
     end
   end
 end

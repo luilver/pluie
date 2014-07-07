@@ -4,9 +4,6 @@
   <thead>
     <tr>
       <th>Balance</th>
-      <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -14,9 +11,6 @@
     <% @credits.each do |credit| %>
       <tr>
         <td><%= credit.balance %></td>
-        <td><%= link_to 'Show', credit %></td>
-        <td><%= link_to 'Edit', edit_credit_path(credit) %></td>
-        <td><%= link_to 'Destroy', credit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
