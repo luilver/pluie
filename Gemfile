@@ -67,3 +67,6 @@ gem 'daemons'
 
 #async processing
 gem 'sucker_punch'
+
+#Paginate
+gem 'will_paginate'
