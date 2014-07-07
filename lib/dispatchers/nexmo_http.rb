@@ -1,4 +1,3 @@
-require 'thread'
 require 'dispatchers/base'
 
 module DeliveryMethods

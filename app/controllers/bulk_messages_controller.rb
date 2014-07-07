@@ -1,4 +1,9 @@
+require 'delivery_methods'
+
 class BulkMessagesController < ApplicationController
+  include DeliveryMethods
+
+  before_action :set_sms_dispatcher, only: [:create]
   before_action :set_bulk_message, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:create]
 
@@ -31,6 +36,9 @@ class BulkMessagesController < ApplicationController
     respond_to do |format|
       if @bulk_message.save
         related_numbers
+
+        send_bulk(@bulk_message)
+
         format.html { redirect_to @bulk_message, notice: 'Bulk message was successfully created.' }
         format.json { render :show, status: :created, location: @bulk_message }
       else

@@ -64,3 +64,6 @@ gem 'nokogiri'
 #delayed_job -> async jobs
 gem 'delayed_job_active_record'
 gem 'daemons'
+
+#async processing
+gem 'sucker_punch'

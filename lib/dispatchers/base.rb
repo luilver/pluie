@@ -10,6 +10,12 @@ module DeliveryMethods
       end
     end
 
+    def send_bulk(bulk_msg)
+      numbers = bulk_msg.gsm_numbers.map {|n| n.number}
+      text = bulk_msg.message
+      send_bulk_messages(numbers, text)
+    end
+
   end
 
 end
