@@ -5,7 +5,9 @@ class BulkMessagesController < ApplicationController
   # GET /bulk_messages
   # GET /bulk_messages.json
   def index
-    @bulk_messages = current_user.bulk_messages
+    @bulk_messages = BulkMessage.paginate :page => params[:page],
+      :conditions => ['user_id', "%#{current_user.id}"],
+      :per_page => 5
   end
 
   # GET /bulk_messages/1

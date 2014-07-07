@@ -54,3 +54,6 @@ end
 
 #Paperclip
 gem 'paperclip'
+
+#Paginate
+gem 'will_paginate'
