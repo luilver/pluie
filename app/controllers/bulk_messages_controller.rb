@@ -86,8 +86,10 @@ class BulkMessagesController < ApplicationController
       params.require(:bulk_message).permit(:message, :list_id)
     end
 
+    # I'm really busy to change method name
     def related_numbers
       params[:lists].each { |list_id| l = List.find(list_id);
+                            @bulk_message.lists << l
                             l.gsm_numbers.each {
                               |n| @bulk_message.gsm_numbers << n if not @bulk_message.gsm_numbers.include?(n)
                             }
