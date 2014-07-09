@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Balance</th>
+      <th>Date</th>
     </tr>
   </thead>
 
@@ -11,6 +12,7 @@
     <% @credits.each do |credit| %>
       <tr>
         <td><%= credit.balance %></td>
+        <td><%= credit.created_at %></td>
       </tr>
     <% end %>
   </tbody>
