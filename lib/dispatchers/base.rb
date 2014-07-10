@@ -7,6 +7,9 @@ module DeliveryMethods
       text = single_msg.message
 
       numbers.each do |num|
+        if current_user.balance >= current_user.gateway.price
+
+        end
         success = send_single_message(num, text)
       end
 

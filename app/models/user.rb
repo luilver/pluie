@@ -27,4 +27,13 @@ class User < ActiveRecord::Base
   def self.current=(user)
     Thread.current[:user] = user
   end
+
+  after_initialize :defaults
+
+  private
+    def defaults
+      self.gateway ||= Gateway.find_by(name: :nexmo) || Gateway.first
+    end
+
+
 end
