@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :lists
   has_many :credits
   has_one :api_setting
+  belongs_to :gateway
 
   def api_key
     self.api_setting.api_key
