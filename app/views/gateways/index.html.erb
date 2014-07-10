@@ -1,0 +1,29 @@
+<h1>Listing gateways</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @gateways.each do |gateway| %>
+      <tr>
+        <td><%= gateway.name %></td>
+        <td><%= gateway.price %></td>
+        <td><%= link_to 'Show', gateway %></td>
+        <td><%= link_to 'Edit', edit_gateway_path(gateway) %></td>
+        <td><%= link_to 'Destroy', gateway, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Gateway', new_gateway_path %>
