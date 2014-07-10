@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140620213147) do
+ActiveRecord::Schema.define(version: 20140710202907) do
 
   create_table "api_settings", force: true do |t|
     t.string   "api_key"
@@ -96,6 +96,13 @@ ActiveRecord::Schema.define(version: 20140620213147) do
 
   add_index "delivery_reports", ["msg_id"], name: "index_delivery_reports_on_msg_id"
 
+  create_table "gateways", force: true do |t|
+    t.string   "name"
+    t.decimal  "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "group_messages", force: true do |t|
     t.text     "message"
     t.datetime "created_at"
@@ -165,6 +172,7 @@ ActiveRecord::Schema.define(version: 20140620213147) do
     t.datetime "updated_at"
     t.boolean  "admin"
     t.decimal  "balance",                default: 0.0
+    t.integer  "gateway_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
