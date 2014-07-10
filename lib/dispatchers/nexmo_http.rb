@@ -10,12 +10,12 @@ module DeliveryMethods
       end
 
       def send_single_message(to, text)
-        response = @nexmo.send_message({:to => to, :text => text})
-      end
-
-      def send_multiple_messages(numbers, text)
-        numbers.each do |number|
-          @nexmo.send_message({:to => number, :text => text})
+        begin
+          response = @nexmo.send_message({:to => to, :text => text})
+          response.ok?
+        rescue Exception => e
+          log_error("Failed sending msg to: #{to}. #{e.message}")
+          return false
         end
       end
 
