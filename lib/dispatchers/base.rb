@@ -12,22 +12,18 @@ module DeliveryMethods
         numbers, text = get_numbers_and_text(single_msg)
         unit_price = @current_user.gateway.price
         msg_sended = false
-        cost = 0
 
         numbers.each do |num|
           if @current_user.balance >= unit_price
             success = send_single_message(num, text)
             msg_sended ||= success
-            cost += unit_price if success
+            @current_user.balance -= unit_price if success
           else
             log_error("Failed sending msg to: #{num}. Not enough credit")
           end
         end
 
-        if msg_sended
-          @current_user.balance -= cost
-          @current_user.save
-        end
+        @current_user.save if msg_sended
 
       end
 
