@@ -11,19 +11,10 @@ module DeliveryMethods
       def send_message(single_msg)
         numbers, text = get_numbers_and_text(single_msg)
         unit_price = @current_user.gateway.price
-        msg_sended = false
 
-        numbers.each do |num|
-          if @current_user.balance >= unit_price
-            success = send_single_message(num, text)
-            msg_sended ||= success
-            @current_user.balance -= unit_price if success
-          else
-            log_error("Failed sending msg to: #{num}. Not enough credit")
-          end
-        end
+        any_success = process_messages(numbers, text, unit_price)
 
-        @current_user.save if msg_sended
+        @current_user.save if any_success
 
       end
 
@@ -45,6 +36,22 @@ module DeliveryMethods
 
       def log_info(info)
         Rails.logger.info "<<<<<<<<<<<<#{info}>>>>>>>>>>>>"
+      end
+
+      def process_messages(numbers, text, unit_price)
+
+        msg_sended = false
+        numbers.each do |num|
+          if @current_user.balance >= unit_price
+            success = send_single_message(num, text)
+            msg_sended ||= success
+            @current_user.balance -= unit_price if success
+          else
+            log_error("Failed sending msg to: #{num}. Not enough credit")
+          end
+        end
+
+        return msg_sended
       end
 
     private
