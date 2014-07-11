@@ -12,6 +12,7 @@ module DeliveryMethods
       def send_single_message(to, text)
         begin
           response = @nexmo.send_message({:to => to, :text => text})
+          log_info("Sending message to: #{to} #{response ? "sucessful" : "failed"}")
           response.ok?
         rescue Exception => e
           log_error("Failed sending msg to: #{to}. #{e.message}")

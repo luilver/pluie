@@ -47,6 +47,10 @@ module DeliveryMethods
         Rails.logger.error "<<<<<<<<<<<<#{error_msg}>>>>>>>>>>>>"
       end
 
+      def log_info(info)
+        Rails.logger.info "<<<<<<<<<<<<#{info}>>>>>>>>>>>>"
+      end
+
     private
       def get_numbers_and_text(msg)
         #para usarlo en los mensajes en bulk tambien
