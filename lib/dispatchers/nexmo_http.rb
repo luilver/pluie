@@ -4,7 +4,7 @@ module DeliveryMethods
 
     class NexmoHttp < DeliveryMethods::Base
 
-      def initialize
+      def initialize(user)
         super
         @nexmo = Nexmo::Client.new(key = ENV['NEXMO_API_KEY'], secret = ENV['NEXMO_API_SECRET'])
       end

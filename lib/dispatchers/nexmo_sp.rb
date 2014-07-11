@@ -5,7 +5,7 @@ module DeliveryMethods
   class NexmoSp < NexmoHttp
     attr_reader :bulk_batch_size
 
-    def initialize
+    def initialize(user)
       super
       @bulk_batch_size = 50
     end
