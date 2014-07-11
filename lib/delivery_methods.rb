@@ -1,4 +1,5 @@
-require 'dispatchers/nexmo_sp'
+require 'dispatchers/nexmo_http'
+require 'thread'
 
 module DeliveryMethods
 
@@ -21,11 +22,11 @@ module DeliveryMethods
     end
 
     def send_message(single_msg)
-      @dispatcher.send_message(single_msg)
+      Thread.new{ @dispatcher.send_message(single_msg)}
     end
 
     def send_bulk(bulk_msg)
-      @dispatcher.send_bulk(bulk_msg)
+      Thread.new{@dispatcher.send_bulk(bulk_msg)}
     end
 
     def get_balance
