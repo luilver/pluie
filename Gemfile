@@ -70,3 +70,6 @@ gem 'sucker_punch'
 
 #Paginate
 gem 'will_paginate'
+
+#Infobip
+gem 'oneapi-ruby'
