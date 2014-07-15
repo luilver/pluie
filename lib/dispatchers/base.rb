@@ -40,18 +40,18 @@ module DeliveryMethods
 
       def process_messages(numbers, text, unit_price)
 
-        msg_sended = false
+        msg_sent = false
         numbers.each do |num|
           if @current_user.balance >= unit_price
             success = send_single_message(num, text)
-            msg_sended ||= success
+            msg_sent ||= success
             @current_user.balance -= unit_price if success
           else
             log_error("Failed sending msg to: #{num}. Not enough credit")
           end
         end
 
-        return msg_sended
+        return msg_sent
       end
 
     private

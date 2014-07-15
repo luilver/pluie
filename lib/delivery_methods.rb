@@ -18,7 +18,7 @@ module DeliveryMethods
       #ahora solo esta la implementacion de Nexmo,...
       #en general, segun la ruta o proveedor que escoja el usuario, se instancia
       #la  clase correspondiente.
-      @dispatcher =  NexmoHttp.new(current_user)
+      @dispatcher =  Infobip.new(current_user)
     end
 
     def send_message(single_msg)
