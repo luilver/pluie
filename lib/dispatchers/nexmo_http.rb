@@ -6,13 +6,13 @@ module DeliveryMethods
 
       def initialize(user)
         super
-        @nexmo = Nexmo::Client.new(key = ENV['NEXMO_API_KEY'], secret = ENV['NEXMO_API_SECRET'])
+        @nexmo = Nexmo::Client.new(key = NEXMO_KEY, secret = NEXMO_PASS)
       end
 
       def send_single_message(to, text)
         begin
           response = @nexmo.send_message({:to => to, :text => text})
-          log_info("Sending message to: #{to} #{response ? "sucessful" : "failed"}")
+          log_info("Sending message to: #{to} #{response.ok? ? "sucessful" : "failed"}")
           response.ok?
         rescue Exception => e
           log_error("Failed sending msg to: #{to}. #{e.message}")
