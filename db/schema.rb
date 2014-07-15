@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140620213147) do
+ActiveRecord::Schema.define(version: 20140714200241) do
 
   create_table "api_settings", force: true do |t|
     t.string   "api_key"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20140620213147) do
     t.boolean  "re_delivered"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "delivery_reports", ["msg_id"], name: "index_delivery_reports_on_msg_id"

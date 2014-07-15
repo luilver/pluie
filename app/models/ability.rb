@@ -10,8 +10,13 @@ class Ability
       can [:read, :update, :destroy],
         [BulkMessage, Contact, GroupMessage, Group, List, SingleMessage],
         :user_id => user.id
+
       can :read, Credit, :user_id => user.id
       cannot [:create, :update, :destroy], Credit
+
+      can :read, DeliveryReport, :user_id => user.id
+      cannot [:create, :update, :destroy], DeliveryReport
+
       can :balance, User, :user_id => user.id
     end
   end

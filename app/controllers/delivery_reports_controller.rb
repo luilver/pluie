@@ -59,6 +59,19 @@ class DeliveryReportsController < ApplicationController
 
   end
 
+  def show
+
+  def new
+    @delivery_report = DeliveryReport.new
+  end
+
+  def create
+    @delivery_report = DeliveryReport.new(delivery_report_params)
+    @delivery_report.user = current_user
+  end
+
+  end
+
   def list
 
   end

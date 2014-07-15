@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :lists
       resources :single_messages
       resources :users
+      resources :delivery_reports
     end
   end
 
