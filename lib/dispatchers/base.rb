@@ -1,9 +1,24 @@
 module DeliveryMethods
 
   class Base
+    @@dispatchers = {}
 
     def initialize(user)
       @current_user = user
+    end
+
+    def self.create(gateway_name, *params)
+      #Instancia el dispatcher asociado a este gateway.
+      disp = @@dispatchers[gateway_name]
+      if disp
+        disp.new(params)
+      else
+        raise "#{gateway_name} does not have any dispatcher associated"
+      end
+    end
+
+    def self.register_gateway(gateway_name)
+      @@dispatchers[gateway_name] = self
     end
 
     begin

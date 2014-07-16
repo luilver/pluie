@@ -5,6 +5,8 @@ module DeliveryMethods
 
     class Infobip < DeliveryMethods::Base
 
+      register_gateway "infobip"
+
       def initialize(user)
         super
         @client = OneApi::SmsClient.new(INFOBIP_KEY, INFOBIP_PASS)

@@ -5,6 +5,8 @@ module DeliveryMethods
 
     class Clockworks < DeliveryMethods::Base
 
+      register_gateway "clockwork"
+
       def initialize(user)
         super
         @api_key =  ENV['CLOCKWORKS_API_KEY']

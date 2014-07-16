@@ -1,4 +1,4 @@
-require 'dispatchers/nexmo_http'
+require 'dispatchers'
 require 'thread'
 
 module DeliveryMethods
@@ -14,11 +14,9 @@ module DeliveryMethods
       #crea la variable en el controller, a traves de la cual se enviaran los mensajes
       #la idea seria, ejecutar este metodo en cada controller que envie mensajes y luego
       #con los metodos de instancia del modulo SmsApi, se envian los mensajes
-      #
-      #ahora solo esta la implementacion de Nexmo,...
-      #en general, segun la ruta o proveedor que escoja el usuario, se instancia
-      #la  clase correspondiente.
-      @dispatcher =  Infobip.new(current_user)
+
+      user = current_user
+      @dispatcher =  Base.create(user.gateway.name, user)
     end
 
     def send_message(single_msg)

@@ -4,6 +4,8 @@ module DeliveryMethods
 
     class NexmoHttp < DeliveryMethods::Base
 
+      register_gateway "nexmo"
+
       def initialize(user)
         super
         @nexmo = Nexmo::Client.new(key = NEXMO_KEY, secret = NEXMO_PASS)
