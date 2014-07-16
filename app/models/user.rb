@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
 
   private
     def defaults
-      self.gateway ||= Gateway.find_by(name: :nexmo) || Gateway.first
+      self.gateway ||= Gateway.find_by(name: :infobip) || Gateway.first
     end
 
 
