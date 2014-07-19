@@ -17,3 +17,6 @@
 
 # Ignore paperclip system dir
 /public/system
+
+#ruby version file for rvm
+.ruby-version
