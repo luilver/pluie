@@ -12,6 +12,21 @@ module Api
         respond_with SingleMessage.find(params[:id])
       end
 
+      def new
+        #TODO: allow multiple recipients in single message
+        numbers = GsmNumber.find_by_number_or_create(params[:number])
+
+        message = SingleMessage.create(
+           :message => params[:message],
+           :number => params[:number],
+           :user => User.current
+        )
+        message.gsm_numbers << numbers
+        message.save
+
+        respond_with message
+      end
+
       def create
         respond_with SingleMessage.create(params[:single_message])
       end

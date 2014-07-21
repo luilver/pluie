@@ -12,6 +12,20 @@ module Api
         respond_with BulkMessage.find(params[:id])
       end
 
+      def new
+        #TODO: allow multiple lists in bulk message
+        lists = List.find(params[:list])
+
+        message = BulkMessage.new(
+          :message => params[:message],
+          :user => User.current
+        )
+        message.lists << lists
+        message.save
+
+        respond_with message
+      end
+
       def create
         respond_with BulkMessage.create(params[:bulk_message])
       end
