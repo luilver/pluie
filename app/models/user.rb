@@ -28,6 +28,15 @@ class User < ActiveRecord::Base
     Thread.current[:user] = user
   end
 
+  def has_credit_for(amount)
+    self.balance >= amount
+  end
+
+  def decrease_balance(sms_cost, skip_db_update=False)
+    self.balance -= sms_cost
+    save unless skip_db_update
+  end
+
   after_initialize :defaults
 
   private
