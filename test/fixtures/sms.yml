@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  gateway_id: 
+  user_id: 
+  msg_id: 
+  msg_type: Msg
+
+two:
+  gateway_id: 
+  user_id: 
+  msg_id: 
+  msg_type: Msg
