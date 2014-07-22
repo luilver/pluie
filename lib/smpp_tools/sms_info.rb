@@ -1,4 +1,4 @@
-SmsInfo = Struct.new(:id,  :receiver, :text, :cost,  :gateway)  do
+SmsInfo = Struct.new(:id,  :receiver, :text, :cost,  :gateway_id, :user_id)  do
 #el costo del mensaje se calcula previamente a partir del precio del
 #gateway por que el que se envia y el tamaño del mensaje
 #los mensajes que superan el tamaño maximo de 1 sms,
@@ -20,5 +20,17 @@ SmsInfo = Struct.new(:id,  :receiver, :text, :cost,  :gateway)  do
 
   def to_str
     "Msg #{id} for #{receiver.truncate(35)} says #{text.truncate(10)}"
+  end
+
+  def gateway
+    Gateway.find(gateway_id)
+  end
+
+  def user
+    User.find(user_id)
+  end
+
+  def charge_sms_to_user
+    user.decrease_balance(cost)
   end
 end
