@@ -98,7 +98,7 @@ module SmppTools
       end
 
       def large_text(txt)
-        return txt.size > MAX_SMS_SIZE
+        return txt.size > Sms.MAX_SIZE
       end
 
       def choose_method(text)
