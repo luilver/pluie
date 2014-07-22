@@ -31,7 +31,32 @@ module SmppTools
 
     end
 
+    protected
+
+      def delivery_report_received(transceiver, pdu)
+        logger.info "Delegate: delivery_report_received: ref #{pdu.msg_reference} stat #{pdu.stat}"
+      end
+
+      def message_accepted(transceiver, mt_message_id, pdu)
+        logger.info "Delegate: message_accepted: id #{mt_message_id} smsc ref id: #{pdu.message_id}"
+      end
+
+      def message_rejected(transceiver, mt_message_id, pdu)
+        logger.info "Delegate: message_rejected: id #{mt_message_id} smsc ref id: #{pdu.message_id}"
+      end
+
+      def bound(transceiver)
+        logger.info "Delegate: transceiver bound"
+      end
+
+      def unbound(transceiver)
+        logger.info "Delegate: transceiver unbound"
+        EventMachine::stop_event_loop
+      end
+
+
     private
+
       def logger
         Smpp::Base.logger
       end
