@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140722215933) do
+ActiveRecord::Schema.define(version: 20140722222139) do
 
   create_table "api_settings", force: true do |t|
     t.string   "api_key"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20140722215933) do
     t.string   "msg_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "receiver"
   end
 
   add_index "sms", ["gateway_id"], name: "index_sms_on_gateway_id"
