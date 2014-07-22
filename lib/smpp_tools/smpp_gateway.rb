@@ -14,10 +14,9 @@ module SmppTools
     attr_reader :name
 
 
-    def initialize(name, queue, user, logger=nil)
+    def initialize(name, queue, logger=nil)
       @name = name
       @queue = queue # EM:Queue  utilizada para obtener los sms.
-      @user = user
       @tx = nil # Smpp::Transceiver
       Smpp::Base.logger =  logger || Rails.logger
     end
@@ -27,9 +26,9 @@ module SmppTools
       sender = ""
       m = choose_method(text)
 
-      if @user.has_credit_for(sms.cost)
+      if user_has_credit_for(sms)
         m.call(id, sender, receiver, text)
-        @user.charge_sms(sms.cost)
+        sms.charge_sms_to_user
       else
         logger.info "#{user.email} has not enough credit. Failed sending sms #{sms.id}"
 
@@ -109,6 +108,9 @@ module SmppTools
           lambda { | *args | @tx.send_mt(args) }
       end
 
+      def user_has_credit_for(sms)
+        sms.user.has_credit_for(sms.cost)
+      end
   end
 end
 # SMPP properties.... cada gateway debe tener, digamos que guardados en la BD, estos valores
