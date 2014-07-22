@@ -1,3 +1,5 @@
+#Sms model mockup
+
 SmsInfo = Struct.new(:id,  :receiver, :text, :cost,  :gateway_id, :user_id)  do
 #el costo del mensaje se calcula previamente a partir del precio del
 #gateway por que el que se envia y el tamaño del mensaje
@@ -30,7 +32,7 @@ SmsInfo = Struct.new(:id,  :receiver, :text, :cost,  :gateway_id, :user_id)  do
     User.find(user_id)
   end
 
-  def charge_sms_to_user
+  def charge_to_user
     user.decrease_balance(cost)
   end
 end

@@ -28,7 +28,7 @@ module SmppTools
 
       if user_has_credit_for(sms)
         m.call(id, sender, receiver, text)
-        sms.charge_sms_to_user
+        sms.charge_to_user
       else
         logger.info "#{user.email} has not enough credit. Failed sending sms #{sms.id}"
 
