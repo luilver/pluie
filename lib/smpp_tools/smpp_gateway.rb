@@ -2,9 +2,13 @@
 #(nexmo, infobip, etc) usando una api Smpp.  El nombre(@name) de un SmppGateway debe coincidir
 #con el del Gateway asociado a él.
 require 'smpp'
-MAX_SMS_SIZE = 160
+
 
 module SmppTools
+
+  MAX_SMS_SIZE = 160
+  WAIT_TIME = 5
+
   class SmppGateway
 
     attr_reader :name
@@ -12,7 +16,7 @@ module SmppTools
 
     def initialize(name, queue, user, logger=nil)
       @name = name
-      @msg_queue = queue
+      @queue = queue # EM:Queue  utilizada para obtener los sms.
       @user = user
       @tx = nil # Smpp::Transceiver
       Smpp::Base.logger =  logger || Rails.logger
@@ -29,6 +33,35 @@ module SmppTools
       else
         logger.info "#{user.email} has not enough credit. Failed sending sms #{sms.id}"
 
+    end
+
+    def start_loop(config)
+
+      process_msg = Proc.new do |q_sms|
+        begin
+          send_message(q_sms)
+          @queue.pop(process_msg)
+        rescue Exception => e
+          logger.error e.message
+        end
+
+      end
+
+      loop do
+        EM::run do
+          @tx = EM::connect(
+            config[:host], config[:port],
+            Smpp::Transceiver,
+            config,
+            self   # Receive callbacks on Delivery Reports and other events
+            )
+
+          @queue.pop(process_msg)
+        end
+
+        logger.info "Disconnected. Reconnecting in #{WAIT_TIME} seconds"
+        sleep(WAIT_TIME)
+      end
     end
 
     protected
@@ -78,3 +111,29 @@ module SmppTools
 
   end
 end
+# SMPP properties.... cada gateway debe tener, digamos que guardados en la BD, estos valores
+  # config = {
+  #   :host => '127.0.0.1',
+  #   :port => 6000,
+  #   :system_id => 'hugo',
+  #   :password => 'ggoohu',
+  #   :system_type => '', # default given according to SMPP 3.4 Spec
+  #   :interface_version => 52,
+  #   :source_ton  => 0,
+  #   :source_npi => 1,
+  #   :destination_ton => 1,
+  #   :destination_npi => 1,
+  #   :source_address_range => '',
+  #   :destination_address_range => '',
+  #   :enquire_link_delay_secs => 10
+  # }
+  #
+  #El SmppGateway se usaria, por ejemplo, de la siguiente manera:
+  #gateway = SmppGateway.new('infobip', # identificador del gateway... queda por definir si es mas conveniente usar un id o el string de su nombre
+  #                          @infobip_queue # EventMachine::Queue,  en la cual se añaden los sms, que son consumidos en el ciclo de eventos de EM, segun se definio en el metodo start_loop
+  #                          )
+  #config = Gateway.load_smpp_config_from_db
+  #
+  #gateway.start_loop(config)
+#
+#El metodo start_loop bloquea el Thread en el cual se ejecuta
