@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   end
 
   def decrease_balance(sms_cost, skip_db_update=False)
+    return if sms_cost <= 0
     self.balance -= sms_cost
     save unless skip_db_update
   end
