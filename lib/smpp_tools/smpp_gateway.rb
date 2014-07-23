@@ -38,8 +38,6 @@ module SmppTools
 
     def start_loop(config)
 
-      process_msg =
-
       loop do
         EM::run do
           @tx = EM::connect(
@@ -60,7 +58,7 @@ module SmppTools
         Proc.new do |q_sms|
           begin
             send_message(q_sms)
-            @queue.pop(process_msg)
+            @queue.pop(process_message)
           rescue Exception => e
             logger.error e.message
           end
@@ -81,7 +79,7 @@ module SmppTools
 
       def bound(transceiver)
         @server_bound = true
-        @queue.pop(process_msg)
+        @queue.pop(process_message)
 
         logger.info "Delegate: transceiver bound"
       end
