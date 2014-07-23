@@ -31,6 +31,7 @@ module SmppTools
         sms.charge_to_user
       else
         logger.info "#{user.email} has not enough credit. Failed sending sms #{sms.id}"
+      end
 
     end
 
@@ -106,6 +107,7 @@ module SmppTools
           lambda { | *args | @tx.send_concat_mt(args) }
         else
           lambda { | *args | @tx.send_mt(args) }
+        end
       end
 
       def user_has_credit_for(sms)
