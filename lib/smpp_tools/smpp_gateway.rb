@@ -104,9 +104,9 @@ module SmppTools
 
       def choose_method(text)
         if large_text(text)
-          lambda { | *args | @tx.send_concat_mt(args) }
+          lambda { | *args | @tx.send_concat_mt(*args) }
         else
-          lambda { | *args | @tx.send_mt(args) }
+          lambda { | *args | @tx.send_mt(*args) }
         end
       end
 
