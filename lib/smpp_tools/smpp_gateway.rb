@@ -19,6 +19,7 @@ module SmppTools
       @queue = queue # EM:Queue  utilizada para obtener los sms.
       @tx = nil # Smpp::Transceiver
       Smpp::Base.logger =  logger || Rails.logger
+      @server_bound = false
     end
 
     def send_message(sms)
@@ -37,15 +38,7 @@ module SmppTools
 
     def start_loop(config)
 
-      process_msg = Proc.new do |q_sms|
-        begin
-          send_message(q_sms)
-          @queue.pop(process_msg)
-        rescue Exception => e
-          logger.error e.message
-        end
-
-      end
+      process_msg =
 
       loop do
         EM::run do
@@ -56,7 +49,6 @@ module SmppTools
             self   # Receive callbacks on Delivery Reports and other events
             )
 
-          @queue.pop(process_msg)
         end
 
         logger.info "Disconnected. Reconnecting in #{WAIT_TIME} seconds"
@@ -64,7 +56,16 @@ module SmppTools
       end
     end
 
-    protected
+      def process_message
+        Proc.new do |q_sms|
+          begin
+            send_message(q_sms)
+            @queue.pop(process_msg)
+          rescue Exception => e
+            logger.error e.message
+          end
+        end
+      end
 
       def delivery_report_received(transceiver, pdu)
         logger.info "Delegate: delivery_report_received: ref #{pdu.msg_reference} stat #{pdu.stat}"
@@ -79,10 +80,14 @@ module SmppTools
       end
 
       def bound(transceiver)
+        @server_bound = true
+        @queue.pop(process_msg)
+
         logger.info "Delegate: transceiver bound"
       end
 
       def unbound(transceiver)
+        @server_bound = false
         logger.info "Delegate: transceiver unbound"
         EventMachine::stop_event_loop
       end
