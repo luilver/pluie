@@ -1,4 +1,4 @@
-require 'smpp_gateway'
+require_relative 'smpp_gateway'
 
 module SmppTools
   class SimpleSmppGateway < SmppGateway

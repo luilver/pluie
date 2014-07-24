@@ -7,6 +7,7 @@ require 'smpp'
 module SmppTools
 
   WAIT_TIME = 5
+  MAX_SIZE = 160
 
   class SmppGateway
 
@@ -107,7 +108,7 @@ module SmppTools
       end
 
       def large_text(txt)
-        return txt.size > Sms.MAX_SIZE
+        return txt.size > MAX_SIZE
       end
 
       def choose_method(text)
