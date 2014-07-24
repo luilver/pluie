@@ -39,14 +39,8 @@ module SmppTools
 
       loop do
         EM::run do
-          #setup connection
-          @tx = EM::connect(
-            config[:host], config[:port],
-            Smpp::Transceiver,
-            config,
-            self   # Receive callbacks on Delivery Reports and other events
-            )
-
+          setup_smpp_connection
+          schedule_sms_sending
         end
 
         logger.info "Disconnected. Reconnecting in #{WAIT_TIME} seconds"
@@ -81,6 +75,10 @@ module SmppTools
     end
 
     protected
+      def process_next_item
+        @queue.pop(fetch_and_send_message)
+      end
+
       def fetch_and_send_message
         Proc.new do |q_sms|
           begin
@@ -92,8 +90,19 @@ module SmppTools
         end
       end
 
-      def process_next_item
-        @queue.pop(fetch_and_send_message)
+      def setup_smpp_connection
+        @tx = EM::connect(
+            config[:host], config[:port],
+            Smpp::Transceiver,
+            config,
+            self   # Receive callbacks on Delivery Reports and other events
+            )
+      end
+
+      def schedule_sms_sending
+        #Use this to implement a different strategy for sending messages
+        #For example, to send 5 sms/second, sms can be stored in a
+        #queue and a periodic timer can be set to retrieve them in batches.
       end
 
     private
