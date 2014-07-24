@@ -32,7 +32,11 @@ SmsInfo = Struct.new(:id,  :receiver, :text, :cost,  :gateway_id, :user_id)  do
     User.find(user_id)
   end
 
-  def charge_to_user
-    user.decrease_balance(cost)
+  def charge_to_user(mockup = true)
+    user.decrease_balance(cost) unless mockup
+  end
+
+  def user_has_credit(mockup = true)
+    mockup || user.has_credit_for(cost)
   end
 end
