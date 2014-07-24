@@ -6,7 +6,6 @@ require 'smpp'
 
 module SmppTools
 
-  MAX_SMS_SIZE = 160
   WAIT_TIME = 5
 
   class SmppGateway
@@ -14,9 +13,8 @@ module SmppTools
     attr_reader :name
 
 
-    def initialize(name, queue, logger=nil)
+    def initialize(name, logger=nil)
       @name = name
-      @queue = queue # EM:Queue  utilizada para obtener los sms. TODO -> poner esto en una clase hija... abstraer como se obtienen los mensajes
       @tx = nil # Smpp::Transceiver
       Smpp::Base.logger =  logger || Rails.logger
       @server_bound = false
@@ -39,7 +37,9 @@ module SmppTools
 
       loop do
         EM::run do
+
           setup_smpp_connection
+
           schedule_sms_sending
         end
 
@@ -48,7 +48,7 @@ module SmppTools
       end
     end
 
-    #Smpp callback methods
+    ############### Smpp callback methods
     def delivery_report_received(transceiver, pdu)
       logger.info "Delegate: delivery_report_received: ref #{pdu.msg_reference} stat #{pdu.stat}"
     end
@@ -73,21 +73,11 @@ module SmppTools
       logger.info "Delegate: transceiver unbound"
       EventMachine::stop_event_loop
     end
+    ####################
 
     protected
       def process_next_item
-        @queue.pop(fetch_and_send_message)
-      end
-
-      def fetch_and_send_message
-        Proc.new do |q_sms|
-          begin
-            send_message(q_sms)
-            process_next_item
-          rescue Exception => e
-            logger.error e.message
-          end
-        end
+        #get the next message from a queue or some other mechanism
       end
 
       def setup_smpp_connection
