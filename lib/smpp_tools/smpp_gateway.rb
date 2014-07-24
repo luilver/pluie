@@ -16,19 +16,18 @@ module SmppTools
 
     def initialize(name, queue, logger=nil)
       @name = name
-      @queue = queue # EM:Queue  utilizada para obtener los sms.
+      @queue = queue # EM:Queue  utilizada para obtener los sms. TODO -> poner esto en una clase hija... abstraer como se obtienen los mensajes
       @tx = nil # Smpp::Transceiver
       Smpp::Base.logger =  logger || Rails.logger
       @server_bound = false
     end
 
     def send_message(sms)
-      id, receiver, text = get_fields(sms)
-      sender = ""
-      m = choose_method(text)
+      id, receiver, text, sender = get_fields(sms)
+      smpp_dispatcher = choose_method(text)
 
       if user_has_credit_for(sms)
-        m.call(id, sender, receiver, text)
+        smpp_dispatcher.call(id, sender, receiver, text)
         sms.charge_to_user
       else
         logger.info "#{user.email} has not enough credit. Failed sending sms #{sms.id}"
@@ -40,6 +39,7 @@ module SmppTools
 
       loop do
         EM::run do
+          #setup connection
           @tx = EM::connect(
             config[:host], config[:port],
             Smpp::Transceiver,
@@ -54,42 +54,47 @@ module SmppTools
       end
     end
 
-      def process_message
+    #Smpp callback methods
+    def delivery_report_received(transceiver, pdu)
+      logger.info "Delegate: delivery_report_received: ref #{pdu.msg_reference} stat #{pdu.stat}"
+    end
+
+    def message_accepted(transceiver, mt_message_id, pdu)
+      logger.info "Delegate: message_accepted: id #{mt_message_id} smsc ref id: #{pdu.message_id}"
+    end
+
+    def message_rejected(transceiver, mt_message_id, pdu)
+      logger.info "Delegate: message_rejected: id #{mt_message_id} smsc ref id: #{pdu.message_id}"
+    end
+
+    def bound(transceiver)
+      @server_bound = true
+      process_next_item()
+
+      logger.info "Delegate: transceiver bound"
+    end
+
+    def unbound(transceiver)
+      @server_bound = false
+      logger.info "Delegate: transceiver unbound"
+      EventMachine::stop_event_loop
+    end
+
+    protected
+      def fetch_and_send_message
         Proc.new do |q_sms|
           begin
             send_message(q_sms)
-            @queue.pop(process_message)
+            process_next_item
           rescue Exception => e
             logger.error e.message
           end
         end
       end
 
-      def delivery_report_received(transceiver, pdu)
-        logger.info "Delegate: delivery_report_received: ref #{pdu.msg_reference} stat #{pdu.stat}"
+      def process_next_item
+        @queue.pop(fetch_and_send_message)
       end
-
-      def message_accepted(transceiver, mt_message_id, pdu)
-        logger.info "Delegate: message_accepted: id #{mt_message_id} smsc ref id: #{pdu.message_id}"
-      end
-
-      def message_rejected(transceiver, mt_message_id, pdu)
-        logger.info "Delegate: message_rejected: id #{mt_message_id} smsc ref id: #{pdu.message_id}"
-      end
-
-      def bound(transceiver)
-        @server_bound = true
-        @queue.pop(process_message)
-
-        logger.info "Delegate: transceiver bound"
-      end
-
-      def unbound(transceiver)
-        @server_bound = false
-        logger.info "Delegate: transceiver unbound"
-        EventMachine::stop_event_loop
-      end
-
 
     private
 
@@ -98,7 +103,8 @@ module SmppTools
       end
 
       def get_fields(sms)
-        return sms.id, sms.receiver, sms.text
+        #the message does not have a sender, but smpp requires one. The empty string works just fine
+        return sms.id, sms.receiver, sms.text, ""
       end
 
       def large_text(txt)
