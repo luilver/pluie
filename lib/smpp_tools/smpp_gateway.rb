@@ -119,7 +119,7 @@ module SmppTools
       end
 
       def user_has_credit_for(sms)
-        sms.user.has_credit_for(sms.cost)
+        sms.user_has_credit
       end
   end
 end
