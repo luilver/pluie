@@ -24,7 +24,11 @@ class Sms < ActiveRecord::Base
   def msg_count
     #How many sms does it take to send the given text
     #This, should be calculated according to the message encoding.
-    text.size / MAX_SIZE
+    @msg_count ||= text.size / MAX_SIZE
+  end
+
+  def user_has_credit
+    self.user.has_credit_for(cost)
   end
 
 end
