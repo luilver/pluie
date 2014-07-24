@@ -81,6 +81,13 @@ ActiveRecord::Schema.define(version: 20140714200241) do
 
   add_index "delivery_reports", ["msg_id"], name: "index_delivery_reports_on_msg_id"
 
+  create_table "gateways", force: true do |t|
+    t.string   "name"
+    t.decimal  "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "group_messages", force: true do |t|
     t.text     "message"
     t.datetime "created_at"
