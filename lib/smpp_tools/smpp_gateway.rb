@@ -38,7 +38,7 @@ module SmppTools
       loop do
         EM::run do
 
-          setup_smpp_connection
+          setup_smpp_connection(config)
 
           schedule_sms_sending
         end
@@ -80,7 +80,7 @@ module SmppTools
         #get the next message from a queue or some other mechanism
       end
 
-      def setup_smpp_connection
+      def setup_smpp_connection(config)
         @tx = EM::connect(
             config[:host], config[:port],
             Smpp::Transceiver,
