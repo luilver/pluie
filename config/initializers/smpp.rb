@@ -19,8 +19,8 @@ module PluieEM
     config = {
     :host => 'smpp3.infobip.com',
     :port => 8888,
-    :system_id => 'pepesenaris',
-    :password => 'Jl6KU6It',
+    :system_id => INFOBIP_KEY,
+    :password => INFOBIP_PASS,
     :system_type => '', # default given according to SMPP 3.4 Spec
     :interface_version => 52,
     :source_ton  => 0,
