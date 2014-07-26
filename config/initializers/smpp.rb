@@ -1,4 +1,5 @@
 #require 'eventmachine'
+require 'smpp_tools/simple_smpp_gateway'
 
 module PluieEM
 
@@ -14,6 +15,7 @@ module PluieEM
   end
 
   def self.gateway_config(gateway_name)
+    #las configuraciones se deben cargar de la BD o del enviroment.
     config = {
     :host => 'smpp3.infobip.com',
     :port => 8888,
@@ -29,6 +31,7 @@ module PluieEM
     :destination_address_range => '',
     :enquire_link_delay_secs => 30
   }
+  #TODO ... confirmar loa valores de  los ultimos parametros de configuracion de infobip
 
   @@configs[:infobip] = config
 
@@ -37,10 +40,13 @@ module PluieEM
   end
 
   def self.run_em
-
-    smpp = SimpleSmppGateway.new(:infobip, queue, Rails.logger)
-    config =  gateway_config(smpp.name)
-    smpp.start_loop(config)
+    begin
+      smpp = SimpleSmppGateway.new(:infobip, queue, Rails.logger)
+      config =  gateway_config(smpp.name)
+      smpp.start_loop(config)
+    rescue Exception => e
+      Rails.logger.error e.message
+    end
   end
 
   def self.start
