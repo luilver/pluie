@@ -2,6 +2,7 @@
 #(nexmo, infobip, etc) usando una api Smpp.  El nombre(@name) de un SmppGateway debe coincidir
 #con el del Gateway asociado a él.
 require 'smpp'
+require 'logger'
 
 
 module SmppTools
@@ -17,7 +18,7 @@ module SmppTools
     def initialize(name, logger=nil)
       @name = name
       @tx = nil # Smpp::Transceiver
-      Smpp::Base.logger =  logger || Rails.logger
+      Smpp::Base.logger =  logger || Logger.new(STDOUT)
       @server_bound = false
     end
 
