@@ -13,6 +13,10 @@ module SmppTools
   class SmppGateway
 
     attr_reader :name
+    attr_accessor :single_connection
+    #true if only one connection to a smpp server is stablished in this process, false otherwise
+    #if two or more connections can be stablished in the same process, then none of them
+    #can terminate the EM event loop in order to mantain the remaining connections alive.
 
 
     def initialize(name, logger=nil)
@@ -20,7 +24,7 @@ module SmppTools
       @tx = nil # Smpp::Transceiver
       Smpp::Base.logger =  logger || Logger.new(STDOUT)
       @server_bound = false
-    end
+      @single_connection = false
 
     def send_message(sms)
       id, receiver, text, sender = get_fields(sms)
@@ -73,7 +77,7 @@ module SmppTools
     def unbound(transceiver)
       @server_bound = false
       logger.info "Delegate: transceiver unbound"
-      EventMachine::stop_event_loop
+      EventMachine::stop_event_loop if @single_connection
     end
     ####################
 
