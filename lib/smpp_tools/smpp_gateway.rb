@@ -63,6 +63,10 @@ module SmppTools
       end
     end
 
+    def connected?
+      @tx && @tx.bound #is it connected to the smpp server?
+    end
+
     ############### Smpp callback methods
     def delivery_report_received(transceiver, pdu)
       logger.info "Delegate: delivery_report_received: ref #{pdu.msg_reference} stat #{pdu.stat}"
