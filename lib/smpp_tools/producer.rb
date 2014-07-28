@@ -10,7 +10,7 @@ module SmppTools
       @name = name
     end
 
-    def to_str
+    def to_s
       "Send msgs througth #{@name} gateway"
     end
 
