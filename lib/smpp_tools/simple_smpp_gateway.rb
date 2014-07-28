@@ -3,9 +3,12 @@ require_relative 'smpp_gateway'
 module SmppTools
   class SimpleSmppGateway < SmppGateway
 
-    def initialize(name, queue, logger=nil)
+    def initialize(name, logger=nil)
       super(name, logger)
-      @queue = queue
+      @queue = SmppTools.get_producer(name).queue
+      #Se asume que los mensajes se obtendran a traves de una EM::Queue
+      #En particular, la cola creada en la instancia de SimpleProducer asociada
+      #al gateway(name) dado
     end
 
     def process_next_item
