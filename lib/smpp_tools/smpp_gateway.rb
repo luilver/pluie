@@ -25,6 +25,7 @@ module SmppTools
       Smpp::Base.logger =  logger || Logger.new(STDOUT)
       @server_bound = false
       @single_connection = false
+    end
 
     def send_message(sms)
       id, receiver, text, sender = get_fields(sms)
