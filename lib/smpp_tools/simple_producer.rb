@@ -1,11 +1,14 @@
 require_relative 'producer'
+require 'eventmachine'
 
 module SmppTools
   class SimpleProducer < Producer
 
-    def initialize(name, queue)
+    attr_reader :queue
+
+    def initialize(name)
       super(name)
-      @queue = queue
+      @queue = EM::Queue.new
     end
 
     def publish(sms)
