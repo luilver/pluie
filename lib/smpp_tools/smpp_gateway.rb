@@ -3,7 +3,7 @@
 #con el del Gateway asociado a él.
 require 'smpp'
 require 'logger'
-
+require 'factory'
 
 module SmppTools
 
@@ -11,6 +11,7 @@ module SmppTools
   MAX_SIZE = 160
 
   class SmppGateway
+    include Factory
 
     attr_reader :name
     attr_accessor :single_connection

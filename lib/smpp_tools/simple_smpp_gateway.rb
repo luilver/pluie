@@ -3,6 +3,9 @@ require_relative 'smpp_gateway'
 module SmppTools
   class SimpleSmppGateway < SmppGateway
 
+    register_subclass "infobip"
+    register_subclass "nexmo"
+
     def initialize(name, logger=nil)
       super(name, logger)
       @queue = SmppTools.get_producer(name).queue
