@@ -49,13 +49,19 @@ module PluieEM
     end
   end
 
+  def run_loop
+    loop do
+      EM.run
+    end
+  end
+
   def self.start
     if defined?(PhusionPassenger)
       PhusionPassenger.on_event(:starting_worker_process) do |forked|
         if forked && EM.reactor_running?
           EM.stop
         end
-        Thread.new {run_em}
+        Thread.new {run_loop}
         die_gracefully_on_signal
       end
     end
