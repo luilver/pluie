@@ -74,3 +74,5 @@ module PluieEM
 end
 
 PluieEM.start
+
+Q_TYPE = ENV["QUEUE_TYPE"] #keep in the env, the kind of queue, ie the kind of producer, used to store sms

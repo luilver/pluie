@@ -1,5 +1,8 @@
+require 'factory'
+
 module SmppTools
   class Producer
+    include Factory
 
     attr_reader :name
 
