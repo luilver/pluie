@@ -5,7 +5,7 @@ module DeliveryMethods
 
     class Infobip < DeliveryMethods::Base
 
-      register_gateway "infobip"
+      register_subclass "infobip"
 
       def initialize(user)
         super

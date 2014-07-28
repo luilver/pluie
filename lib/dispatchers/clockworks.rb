@@ -5,7 +5,7 @@ module DeliveryMethods
 
     class Clockworks < DeliveryMethods::Base
 
-      register_gateway "clockwork"
+      register_subclass "clockwork"
 
       def initialize(user)
         super
