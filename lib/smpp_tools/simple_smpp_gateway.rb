@@ -29,5 +29,9 @@ module SmppTools
       end
     end
 
+    def to_s
+      "#{@name} gateway with queue #{@queue}"
+    end
+
   end
 end
