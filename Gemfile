@@ -73,3 +73,5 @@ gem 'will_paginate'
 
 #Infobip
 gem 'oneapi-ruby'
+
+gem 'ruby-smpp'
