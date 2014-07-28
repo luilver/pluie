@@ -54,6 +54,14 @@ module SmppTools
       end
     end
 
+    def connect(config)
+      if EM.reactor_running?
+        setup_smpp_connection(config)
+      else
+        logger.info "EM reactor loop is not running. Can not connect to #{config[:host]}"
+      end
+    end
+
     ############### Smpp callback methods
     def delivery_report_received(transceiver, pdu)
       logger.info "Delegate: delivery_report_received: ref #{pdu.msg_reference} stat #{pdu.stat}"
