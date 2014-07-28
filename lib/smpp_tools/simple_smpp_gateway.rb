@@ -16,7 +16,7 @@ module SmppTools
       Proc.new do |q_sms|
         begin
           send_message(q_sms)
-          process_next_item
+          process_next_item if @queue.num_waiting < 1
         rescue Exception => e
           logger.error e.message
         end
