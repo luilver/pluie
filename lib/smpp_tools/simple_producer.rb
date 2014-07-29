@@ -17,5 +17,7 @@ module SmppTools
       @queue << sms
     end
 
+    alias :<< :publish
+
   end
 end
