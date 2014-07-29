@@ -25,7 +25,7 @@ module Factory
     def create(name, *args)
       klass = @@classes[name]
       if klass
-        klass.new(args)
+        klass.new(*args)
       else
         raise "Class #{name} is not registered"
       end
