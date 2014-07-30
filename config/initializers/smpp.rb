@@ -1,5 +1,4 @@
-#require 'eventmachine'
-require 'smpp_tools/simple_smpp_gateway'
+require 'eventmachine'
 
 module PluieEM
 
