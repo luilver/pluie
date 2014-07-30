@@ -31,14 +31,7 @@ module SmppTools
     def send_message(sms)
       id, receiver, text, sender = get_fields(sms)
       smpp_dispatcher = choose_method(text)
-
-      if user_has_credit_for(sms)
-        smpp_dispatcher.call(id, sender, receiver, text)
-        sms.charge_to_user
-      else
-        logger.info "#{user.email} has not enough credit. Failed sending sms #{sms.id}"
-      end
-
+      smpp_dispatcher.call(id, sender, receiver, text)
     end
 
     def start_loop(config)
@@ -74,6 +67,7 @@ module SmppTools
     end
 
     def message_accepted(transceiver, mt_message_id, pdu)
+      #TODO... charge sms
       logger.info "Delegate: message_accepted: id #{mt_message_id} smsc ref id: #{pdu.message_id}"
     end
 
