@@ -20,15 +20,16 @@ module DeliveryMethods
     end
 
     def send_message(gateway, user, msg)
-
+      @dispatcher =  Base.create(gateway.name, user)
       receivers =  msg.receivers #numbers that will get the message
       sms_list = receivers.map { |number| Sms.create(gateway, user, msg, number) }
-      cost = sms_list.first.cost unless sms_list.empty?
-      if cost
+
+      unless sms_list.empty?
+        cost = sms_list.first.cost
         credit_limit = (user.balance / cost).floor
         allowed = sms_list.take(credit_limit)
         allowed.each do { |s| s.save }
-        @dispatchers.send_sms(allowed)
+        @dispatcher.send_sms(allowed)
       end
     end
 
