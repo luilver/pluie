@@ -41,7 +41,7 @@ class SingleMessagesController < ApplicationController
         related_numbers
 
         #test SmsApi
-        send_message(@single_message)
+        send_message(@single_message.user.gateway, @single_message.user, @single_message)
         #test SmsApi
 
         format.html { redirect_to @single_message, notice: 'Single message was successfully created.' }
@@ -60,10 +60,6 @@ class SingleMessagesController < ApplicationController
       if @single_message.update(single_message_params)
         related_numbers
 
-        #test SmsApi
-        send_message(@single_message)
-        #test SmsApi
-        #
         format.html { redirect_to @single_message, notice: 'Single message was successfully updated.' }
         format.json { render :show, status: :ok, location: @single_message }
       else
