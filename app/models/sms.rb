@@ -31,4 +31,13 @@ class Sms < ActiveRecord::Base
     self.user.has_credit_for(cost)
   end
 
+  def self.create(gateway, user, msg, receiver)
+    sms = Sms.new
+    sms.gateway = gateway
+    sms.user = user
+    sms.msg = msg
+    sms.receiver = receiver
+    sms
+  end
+
 end
