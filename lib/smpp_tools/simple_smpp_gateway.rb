@@ -15,17 +15,15 @@ module SmppTools
     end
 
     def process_next_item
-      @queue.pop(fetch_and_send_message)
+      @queue.pop(&method(:fetch_message))
     end
 
-    def fetch_and_send_message
-      Proc.new do |q_sms|
-        begin
-          send_message(q_sms)
-          process_next_item if @queue.num_waiting < 1
-        rescue Exception => e
-          logger.error e.message
-        end
+    def fetch_message(q_sms)
+      begin
+        send_message(q_sms)
+        process_next_item if @queue.num_waiting < 1
+      rescue Exception => e
+        logger.error e.message
       end
     end
 
