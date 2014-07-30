@@ -19,6 +19,19 @@ module DeliveryMethods
       @dispatcher =  Base.create(user.gateway.name, user)
     end
 
+    def send_message(gateway, user, msg)
+
+      receivers =  msg.receivers #numbers that will get the message
+      sms_list = receivers.map { |number| Sms.create(gateway, user, msg, number) }
+      cost = sms_list.first.cost unless sms_list.empty?
+      if cost
+        credit_limit = (user.balance / cost).floor
+        allowed = sms_list.take(credit_limit)
+        allowed.each do { |s| s.save }
+        @dispatchers.send_sms(allowed)
+      end
+    end
+
     def send_message(single_msg)
       Thread.new{ @dispatcher.send_message(single_msg)}
     end
@@ -30,7 +43,6 @@ module DeliveryMethods
     def get_balance
       @dispatcher.get_balance
     end
-
   end
 
   def self.included(receiver)
