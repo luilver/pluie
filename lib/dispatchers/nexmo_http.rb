@@ -4,7 +4,7 @@ module DeliveryMethods
 
     class NexmoHttp < DeliveryMethods::Base
 
-      register_subclass "nexmo"
+      register_subclass "nexmo_http"
 
       def initialize(user)
         super
