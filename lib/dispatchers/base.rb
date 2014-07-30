@@ -29,6 +29,15 @@ module DeliveryMethods
         #con un servicio de smpp
       end
 
+      #En las api http usualmente se envian, uno por uno los sms
+      #en el caso de smpp, se debe implementar este metodo nuevamente
+      #para crear la conexion una sola vez y encolar todos los sms
+      def send_sms(sms_list)
+        sms_list.each do |sms|
+          send_single_sms(sms)
+        end
+      end
+
     rescue Exception => e
       log_error(e.message)
     end
