@@ -31,5 +31,14 @@ module SmppTools
       "#{@name} gateway with queue #{@queue}"
     end
 
+    ##############TODO##############
+    #Comprobar que al tener dos instancias de smpp gateway, con sendas EM::Queue
+    #lleguen los mensajes a los gateways correctos,...
+    #me parece que las colas solo estan poniendo los callbacks en el ciclo de eventos
+    #de EM, y que se puede perder, la nocion de separar las conexiones usando instancias distintas
+    #y que en su lugar hay tener todas las conexiones en el mismo lugar,
+    #y enviar un sms usando la conexion adecuada
+    ###############TODO##############
+
   end
 end
