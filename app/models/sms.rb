@@ -14,7 +14,7 @@ class Sms < ActiveRecord::Base
   end
 
   def cost
-    @cost ||= self.gateway.price * msg_count
+    @cost = self.gateway.price * msg_count
   end
 
   def charge_to_user
@@ -24,7 +24,7 @@ class Sms < ActiveRecord::Base
   def msg_count
     #How many sms does it take to send the given text
     #This, should be calculated according to the message encoding.
-    @msg_count ||= text.size / MAX_SIZE
+    @msg_count = (text.size / MAX_SIZE) + (text.size % MAX_SIZE == 0 ? 0:1)
   end
 
   def user_has_credit
