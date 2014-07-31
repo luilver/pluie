@@ -1,4 +1,7 @@
 require 'eventmachine'
+#ensure that files get loaded,  to add classes to Factory hash
+require 'smpp_tools/gateway/simple_smpp_gateway'
+require 'smpp_tools/producer/simple_producer'
 
 module PluieEM
 
