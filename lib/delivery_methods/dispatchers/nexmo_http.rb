@@ -1,4 +1,4 @@
-require 'dispatchers/base'
+require_relative 'base'
 
 module DeliveryMethods
 

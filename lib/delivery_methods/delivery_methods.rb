@@ -1,4 +1,4 @@
-require 'dispatchers'
+require_relative 'dispatchers/base'
 require 'thread'
 
 module DeliveryMethods
