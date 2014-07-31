@@ -14,7 +14,7 @@ class Sms < ActiveRecord::Base
   end
 
   def cost
-    @cost ||= self.gateway.unit_price * msg_count
+    @cost ||= self.gateway.price * msg_count
   end
 
   def charge_to_user
