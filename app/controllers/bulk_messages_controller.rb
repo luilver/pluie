@@ -1,4 +1,4 @@
-require 'delivery_methods'
+require 'delivery_methods/delivery_methods'
 
 class BulkMessagesController < ApplicationController
   include DeliveryMethods

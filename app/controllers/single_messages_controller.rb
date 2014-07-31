@@ -1,4 +1,4 @@
-require 'delivery_methods'
+require 'delivery_methods/delivery_methods'
 
 class SingleMessagesController < ApplicationController
   include DeliveryMethods
