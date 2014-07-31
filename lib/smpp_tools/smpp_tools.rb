@@ -1,5 +1,5 @@
-require_relative 'producer'
-require_relative 'gateway'
+require 'smpp_tools/producer/producer'
+require 'smpp_tools/gateway/smpp_gateway'
 require 'json'
 
 module SmppTools
