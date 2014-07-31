@@ -28,7 +28,7 @@ module DeliveryMethods
         cost = sms_list.first.cost
         credit_limit = (user.balance / cost).floor
         allowed = sms_list.take(credit_limit)
-        allowed.each do { |s| s.save }
+        allowed.each { |s| s.save }
         @dispatcher.send_sms(allowed)
       end
     end
