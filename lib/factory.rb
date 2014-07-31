@@ -34,6 +34,10 @@ module Factory
     def register_subclass(name)
       @@classes[name] = self
     end
+
+    def inspect_registered
+      @@classes.inspect
+    end
   end
 
   module InstanceMethods
