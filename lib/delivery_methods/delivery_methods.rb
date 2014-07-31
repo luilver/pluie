@@ -33,14 +33,6 @@ module DeliveryMethods
       end
     end
 
-    def send_message(single_msg)
-      Thread.new{ @dispatcher.send_message(single_msg)}
-    end
-
-    def send_bulk(bulk_msg)
-      Thread.new{@dispatcher.send_bulk(bulk_msg)}
-    end
-
     def get_balance
       @dispatcher.get_balance
     end
