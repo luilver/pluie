@@ -95,12 +95,16 @@ module SmppTools
       end
 
       def setup_smpp_connection(config)
-        @tx = EM::connect(
+        begin
+          @tx = EM::connect(
             config[:host], config[:port],
             Smpp::Transceiver,
             config,
             self   # Receive callbacks on Delivery Reports and other events
             )
+        rescue Exception => e
+          logger.error "Connection error in SmppGateway. #{e.message}"
+        end
       end
 
       def schedule_sms_sending

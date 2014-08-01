@@ -25,16 +25,3 @@ module DeliveryMethods
 
   end
 end
-
-
-# producer = SmppTools.get_producer(gtw_name) #para  enviar(encolar) los mensajes
-
-# gateway = SmppTools.get_smpp_gateway(gtw_name) #debe conectarse, una vez que este corriendo eventmachine
-
-# sleep 2
-# puts "# gtw_name is #{gtw_name}"
-# puts "# producer name is #{producer.name}"
-# puts "# gateway name is #{gateway.name}"
-
-# puts "# gateway is #{gateway}"
-# SmppTools.connect_to_server(gateway)
