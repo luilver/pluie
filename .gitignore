@@ -22,3 +22,7 @@
 .ruby-version
 
 TODO
+
+#patch file to change gem sources
+Gemfile.patch
+
