@@ -75,3 +75,5 @@ gem 'will_paginate'
 gem 'oneapi-ruby'
 
 gem 'ruby-smpp'
+
+gem 'em-http-request'
