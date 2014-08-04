@@ -43,4 +43,6 @@ Pluie::Application.configure do
   637dcaa5'
 
   Paperclip.options[:command_path] = "/usr/bin/"
+
+  USE_EM_PROXY = false
 end
