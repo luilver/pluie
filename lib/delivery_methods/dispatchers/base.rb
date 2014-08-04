@@ -67,6 +67,12 @@ module DeliveryMethods
         return msg_sent
       end
 
+      def cubacel_random_number
+        result = "535"
+        rand = Random.new
+        7.times{ result << rand.rand(9).to_s}
+        result
+      end
     private
       def get_numbers_and_text(msg)
         #para usarlo en los mensajes en bulk tambien
