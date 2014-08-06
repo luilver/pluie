@@ -40,8 +40,13 @@ class SingleMessagesController < ApplicationController
       if @single_message.save
         related_numbers
 
+        sms_list = ActionSmser.generate_messages(@single_msg)
+        sms_list.each do |sms|
+          sms.deliver
+        end
+
         #test SmsApi
-        send_message(@single_message.user.gateway, @single_message.user, @single_message)
+        #send_message(@single_message.user.gateway, @single_message.user, @single_message)
         #test SmsApi
 
         format.html { redirect_to @single_message, notice: 'Single message was successfully created.' }
