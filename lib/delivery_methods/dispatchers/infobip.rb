@@ -12,9 +12,9 @@ module DeliveryMethods
       def initialize(user)
         super
         @client = OneApi::SmsClient.new(INFOBIP_KEY, INFOBIP_PASS)
-        @base_url = 'https://oneapi.infobip.com/'
+        @base_url = "http://api.infobip.com/"
         @sender_address = cubacel_random_number.to_s
-        @path_url = "/1/smsmessaging/outbound/#{@sender_address}/requests"
+        @path_url = "/api/v3/sendsms/json"
         # en oneapi, de infobip, al parecer identifica al numero que envia el sms
         #buscar si puede ser aleatorio o no
       end
