@@ -1,4 +1,5 @@
 require 'delivery_methods/delivery_methods'
+require 'action_smser/action_smser'
 
 class SingleMessagesController < ApplicationController
   include DeliveryMethods
@@ -40,7 +41,7 @@ class SingleMessagesController < ApplicationController
       if @single_message.save
         related_numbers
 
-        sms_list = ActionSmser.generate_messages(@single_msg)
+        sms_list = ActionSmserUtils.generate_messages(@single_message)
         sms_list.each do |sms|
           sms.deliver
         end
