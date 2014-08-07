@@ -7,4 +7,8 @@ class SimpleSms < ActionSmser::Base
     sms(:to => receivers, :from => "", :body => text)
   end
 
+  def valid?
+    !body.blank? && !to_numbers_array.collect{|number| number.to_s.blank? ? nil : true}.compact.blank?
+  end
+
 end
