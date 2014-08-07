@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 # Use sqlite3 as the database for Active Record
@@ -44,6 +45,9 @@ gem 'devise'
 # Cancan
 gem 'cancan'
 
+gem 'clockworksms'
+gem 'nexmo'
+
 group :development do
   # Better errors & binding of caller
   gem 'better_errors'
@@ -55,5 +59,23 @@ end
 #Paperclip
 gem 'paperclip'
 
+gem 'nokogiri'
+
+#delayed_job -> async jobs
+gem 'delayed_job_active_record'
+gem 'daemons'
+
+#async processing
+gem 'sucker_punch'
+
 #Paginate
 gem 'will_paginate'
+
+#Infobip
+gem 'oneapi-ruby'
+
+gem 'ruby-smpp'
+
+gem 'em-http-request'
+
+gem 'action_smser'
