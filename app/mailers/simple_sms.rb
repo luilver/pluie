@@ -1,4 +1,4 @@
-class SimpleSms < ActionsSmser::Base
+class SimpleSms < ActionSmser::Base
   def multiple_receivers(receivers, text, dlr_method=nil)
     if dlr_method && ActionsSmser.delivery_options[dlr_method]
       #update delivery method  for this sms.
