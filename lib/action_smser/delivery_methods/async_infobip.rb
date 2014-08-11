@@ -53,9 +53,12 @@ module ActionSmser::DeliveryMethods
 
         http.callback do
           if sms.delivery_options[:save_delivery_reports]
-            #save DLRs
             results = JSON.parse(http.response.body["results"])
-            self.save_delivery_reports(results, dest)
+            if results
+            self.save_delivery_reports(sms, results, dest)
+            else
+              ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
+            end
           end
           EventMachine.stop unless em_was_running
         end
