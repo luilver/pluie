@@ -83,7 +83,7 @@ module ActionSmser::DeliveryMethods
       msg
     end
 
-    def self.save_delivery_reports(results, dest)
+    def self.save_delivery_reports(sms, results, dest)
       results.each do |res|
         error_code = res["status"].to_i
         sent_error =  error_code > 0
