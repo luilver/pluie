@@ -42,22 +42,12 @@ module ActionSmser::DeliveryMethods
       dest = {}# to associates each recipient or destination to the generated messageId
       info = self.sms_info(sms, dest)
       r_body = {authentication: {username: INFOBIP_KEY, password: INFOBIP_PASS }, messages: [info]}
-
-      if USE_EM_PROXY
-        connection_options = {
-          host: EM_PHOST, port: EM_PPORT,
-          authorization: [EM_PUSER, EM_PPASS]
-        }
-      else
-        connection_options = {}
-      end
-
+      conn_options = self.connection_options()
 
       em_was_running =  EM.reactor_running?
 
       EM.run do
-        connection = EM::HttpRequest.new(base_url, connection_options)
-
+        connection = EM::HttpRequest.new(base_url, conn_options)
         options = self.request_options(r_head, nil, r_body)
         http = connection.post(options)
 
