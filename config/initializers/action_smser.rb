@@ -1,6 +1,3 @@
-NEXMO_KEY = ENV['NEXMO_API_KEY']
-NEXMO_PASS = ENV['NEXMO_API_SECRET']
-
 if Rails.env.development? || Rails.env.production?
   require 'action_smser/delivery_methods/async_infobip'
 
