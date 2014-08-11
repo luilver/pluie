@@ -1,5 +1,5 @@
 if Rails.env.development? || Rails.env.production?
-  require 'action_smser/delivery_methods/async_infobip'
+  require 'action_smser_delivery_methods' #load the DeliveryMethods implemented in this app
 
   ActionSmser.delivery_options[:delivery_method] = :async_infobip
   #ActionSmser.delivery_options[:delivery_method] = :nexmo
