@@ -57,7 +57,6 @@ module ActionSmser::DeliveryMethods
 
       EM.run do
         connection = EM::HttpRequest.new(base_url, connection_options)
-        connection.use EM::Middleware::JSONResponse
 
         options = self.request_options(r_head, nil, r_body)
         http = connection.post(options)
@@ -65,7 +64,7 @@ module ActionSmser::DeliveryMethods
         http.callback do
           if sms.delivery_options[:save_delivery_reports]
             #save DLRs
-            results = http.response["results"]
+            results = JSON.parse(http.response.body["results"])
             self.save_delivery_reports(results, dest)
           end
           EventMachine.stop unless em_was_running
