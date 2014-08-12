@@ -1,4 +1,5 @@
-require 'delivery_methods'
+require 'delivery_methods/delivery_methods'
+require 'action_smser/action_smser'
 
 class SingleMessagesController < ApplicationController
   include DeliveryMethods
@@ -40,8 +41,13 @@ class SingleMessagesController < ApplicationController
       if @single_message.save
         related_numbers
 
+        sms_list = ActionSmserUtils.generate_messages(@single_message)
+        sms_list.each do |sms|
+          sms.deliver
+        end
+
         #test SmsApi
-        send_message(@single_message)
+        #send_message(@single_message.user.gateway, @single_message.user, @single_message)
         #test SmsApi
 
         format.html { redirect_to @single_message, notice: 'Single message was successfully created.' }
@@ -60,10 +66,6 @@ class SingleMessagesController < ApplicationController
       if @single_message.update(single_message_params)
         related_numbers
 
-        #test SmsApi
-        send_message(@single_message)
-        #test SmsApi
-        #
         format.html { redirect_to @single_message, notice: 'Single message was successfully updated.' }
         format.json { render :show, status: :ok, location: @single_message }
       else

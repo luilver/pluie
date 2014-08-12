@@ -1,24 +1,13 @@
+require 'factory'
+
 module DeliveryMethods
 
   class Base
-    @@dispatchers = {}
+
+    include Factory
 
     def initialize(user)
       @current_user = user
-    end
-
-    def self.create(gateway_name, *params)
-      #Instancia el dispatcher asociado a este gateway.
-      disp = @@dispatchers[gateway_name]
-      if disp
-        disp.new(params)
-      else
-        raise "#{gateway_name} does not have any dispatcher associated"
-      end
-    end
-
-    def self.register_gateway(gateway_name)
-      @@dispatchers[gateway_name] = self
     end
 
     begin
@@ -38,6 +27,15 @@ module DeliveryMethods
         #Por ahora los mensajes en bulk se envian de la misma manera que los
         #mensajes de multiples destinatarios... la idea es que esto se resuelva
         #con un servicio de smpp
+      end
+
+      #En las api http usualmente se envian, uno por uno los sms
+      #en el caso de smpp, se debe implementar este metodo nuevamente
+      #para crear la conexion una sola vez y encolar todos los sms
+      def send_sms(sms_list)
+        sms_list.each do |sms|
+          send_single_sms(sms)
+        end
       end
 
     rescue Exception => e
@@ -69,6 +67,12 @@ module DeliveryMethods
         return msg_sent
       end
 
+      def cubacel_random_number
+        result = "535"
+        rand = Random.new
+        7.times{ result << rand.rand(9).to_s}
+        result
+      end
     private
       def get_numbers_and_text(msg)
         #para usarlo en los mensajes en bulk tambien

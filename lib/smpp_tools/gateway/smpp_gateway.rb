@@ -2,7 +2,8 @@
 #(nexmo, infobip, etc) usando una api Smpp.  El nombre(@name) de un SmppGateway debe coincidir
 #con el del Gateway asociado a él.
 require 'smpp'
-
+require 'logger'
+require 'factory'
 
 module SmppTools
 
@@ -10,28 +11,27 @@ module SmppTools
   MAX_SIZE = 160
 
   class SmppGateway
+    include Factory
 
     attr_reader :name
+    attr_accessor :single_connection
+    #true if only one connection to a smpp server is stablished in this process, false otherwise
+    #if two or more connections can be stablished in the same process, then none of them
+    #can terminate the EM event loop in order to mantain the remaining connections alive.
 
 
     def initialize(name, logger=nil)
       @name = name
       @tx = nil # Smpp::Transceiver
-      Smpp::Base.logger =  logger || Rails.logger
+      Smpp::Base.logger =  logger || Logger.new(STDOUT)
       @server_bound = false
+      @single_connection = false
     end
 
     def send_message(sms)
       id, receiver, text, sender = get_fields(sms)
       smpp_dispatcher = choose_method(text)
-
-      if user_has_credit_for(sms)
-        smpp_dispatcher.call(id, sender, receiver, text)
-        sms.charge_to_user
-      else
-        logger.info "#{user.email} has not enough credit. Failed sending sms #{sms.id}"
-      end
-
+      smpp_dispatcher.call(id, sender, receiver, text)
     end
 
     def start_loop(config)
@@ -49,12 +49,25 @@ module SmppTools
       end
     end
 
+    def connect(config)
+      if EM.reactor_running?
+        setup_smpp_connection(config)
+      else
+        logger.info "EM reactor loop is not running. Can not connect to #{config[:host]}"
+      end
+    end
+
+    def connected?
+      @tx && @tx.bound #is it connected to the smpp server?
+    end
+
     ############### Smpp callback methods
     def delivery_report_received(transceiver, pdu)
       logger.info "Delegate: delivery_report_received: ref #{pdu.msg_reference} stat #{pdu.stat}"
     end
 
     def message_accepted(transceiver, mt_message_id, pdu)
+      #TODO... charge sms
       logger.info "Delegate: message_accepted: id #{mt_message_id} smsc ref id: #{pdu.message_id}"
     end
 
@@ -72,7 +85,7 @@ module SmppTools
     def unbound(transceiver)
       @server_bound = false
       logger.info "Delegate: transceiver unbound"
-      EventMachine::stop_event_loop
+      EventMachine::stop_event_loop if @single_connection
     end
     ####################
 
@@ -82,12 +95,16 @@ module SmppTools
       end
 
       def setup_smpp_connection(config)
-        @tx = EM::connect(
+        begin
+          @tx = EM::connect(
             config[:host], config[:port],
             Smpp::Transceiver,
             config,
             self   # Receive callbacks on Delivery Reports and other events
             )
+        rescue Exception => e
+          logger.error "Connection error in SmppGateway. #{e.message}"
+        end
       end
 
       def schedule_sms_sending

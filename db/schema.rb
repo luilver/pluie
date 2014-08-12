@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140812172956) do
+ActiveRecord::Schema.define(version: 20140811212638) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -27,9 +27,11 @@ ActiveRecord::Schema.define(version: 20140812172956) do
     t.boolean  "re_delivered"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "action_smser_delivery_reports", ["msg_id"], name: "index_action_smser_delivery_reports_on_msg_id"
+  add_index "action_smser_delivery_reports", ["user_id"], name: "index_action_smser_delivery_reports_on_user_id"
 
   create_table "api_settings", force: true do |t|
     t.string   "api_key"

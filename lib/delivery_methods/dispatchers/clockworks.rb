@@ -1,11 +1,11 @@
-require 'dispatchers/base'
+require_relative 'base'
 require 'clockwork'
 
 module DeliveryMethods
 
     class Clockworks < DeliveryMethods::Base
 
-      register_gateway "clockwork"
+      register_subclass "clockwork"
 
       def initialize(user)
         super

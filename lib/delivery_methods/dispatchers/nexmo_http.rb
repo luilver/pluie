@@ -1,10 +1,10 @@
-require 'dispatchers/base'
+require_relative 'base'
 
 module DeliveryMethods
 
     class NexmoHttp < DeliveryMethods::Base
 
-      register_gateway "nexmo"
+      register_subclass "nexmo_http"
 
       def initialize(user)
         super

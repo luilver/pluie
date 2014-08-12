@@ -1,7 +1,11 @@
-#require 'eventmachine'
+require 'eventmachine'
+#ensure that files get loaded,  to add classes to Factory hash
+require 'smpp_tools/gateway/simple_smpp_gateway'
+require 'smpp_tools/producer/simple_producer'
 
 module PluieEM
 
+<<<<<<< HEAD
   @@msg_queue = EM::Queue.new
   @@configs = {}
 
@@ -43,13 +47,19 @@ module PluieEM
     smpp.start_loop(config)
   end
 
+  def run_loop
+    loop do
+      EM.run
+    end
+  end
+
   def self.start
     if defined?(PhusionPassenger)
       PhusionPassenger.on_event(:starting_worker_process) do |forked|
         if forked && EM.reactor_running?
           EM.stop
         end
-        Thread.new {run_em}
+        Thread.new {run_loop}
         die_gracefully_on_signal
       end
     end
@@ -60,5 +70,7 @@ module PluieEM
     Signal.trap("TERM") { EM.stop }
   end
 end
+
+Q_TYPE = ENV["Q_TYPE"] #keep in the env, the kind of queue, ie the kind of producer, used to store sms
 
 PluieEM.start

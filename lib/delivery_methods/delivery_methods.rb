@@ -1,4 +1,4 @@
-require 'dispatchers'
+require_relative 'dispatchers/base'
 require 'thread'
 
 module DeliveryMethods
@@ -19,18 +19,23 @@ module DeliveryMethods
       @dispatcher =  Base.create(user.gateway.name, user)
     end
 
-    def send_message(single_msg)
-      Thread.new{ @dispatcher.send_message(single_msg)}
-    end
+    def send_message(gateway, user, msg)
+      @dispatcher =  Base.create(gateway.name, user)
+      receivers =  msg.receivers #numbers that will get the message
+      sms_list = receivers.map { |number| Sms.create(gateway, user, msg, number) }
 
-    def send_bulk(bulk_msg)
-      Thread.new{@dispatcher.send_bulk(bulk_msg)}
+      unless sms_list.empty?
+        cost = sms_list.first.cost
+        credit_limit = (user.balance / cost).floor
+        allowed = sms_list.take(credit_limit)
+        allowed.each { |s| s.save }
+        @dispatcher.send_sms(allowed)
+      end
     end
 
     def get_balance
       @dispatcher.get_balance
     end
-
   end
 
   def self.included(receiver)
