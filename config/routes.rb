@@ -11,13 +11,7 @@ Rails.application.routes.draw do
       resources :lists
       resources :single_messages
       resources :users
-      resources :delivery_reports
     end
-  end
-
-  match 'delivery_reports/gateway_commit/:gateway' => 'delivery_reports#gateway_commit', via: [:get, :post]
-  resources :delivery_reports, :only => :index do
-    get 'list', :on => :collection
   end
 
   get 'reports/todays_stats' => 'reports#today'
