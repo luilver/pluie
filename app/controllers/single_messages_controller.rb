@@ -1,5 +1,4 @@
 require 'delivery_methods/delivery_methods'
-require 'action_smser/action_smser'
 
 class SingleMessagesController < ApplicationController
   include DeliveryMethods
