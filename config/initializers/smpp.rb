@@ -5,7 +5,6 @@ require 'smpp_tools/producer/simple_producer'
 
 module PluieEM
 
-<<<<<<< HEAD
   @@msg_queue = EM::Queue.new
   @@configs = {}
 
