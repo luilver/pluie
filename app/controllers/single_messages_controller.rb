@@ -5,7 +5,6 @@ class SingleMessagesController < ApplicationController
   include DeliveryMethods
 
   before_action :set_single_message, only: [:show, :edit, :update, :destroy]
-  before_action :set_sms_dispatcher, only: [:create, :update]# remove update after testing
   load_and_authorize_resource except: [:create]
 
 
