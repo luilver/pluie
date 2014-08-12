@@ -19,7 +19,9 @@ Rails.application.routes.draw do
   get 'reports/messages_summary' => 'reports#summary'
   post 'reports/messages_log' => 'reports#search_messages', as: :search_messages
 
-  mount ActionSmser::Engine => '/', as: :action_smser
+  mount ActionSmser::Engine => '/'
+  get 'delivery_reports' => 'action_smser/delivery_reports', as: :delivery_reports
+  get 'delivery_reports/list' => 'action_smser/delivery_reports#list', as: :list_delivery_reports
 
   resources :credits
 
