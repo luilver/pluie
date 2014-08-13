@@ -37,7 +37,7 @@ module ActionSmser::DeliveryMethods
 
         http.callback do
           if sms.delivery_options[:save_delivery_reports]
-            results = JSON.parse(http.response.body["results"])
+            results = JSON.parse(http.response["results"])
             if results
               self.save_delivery_reports(sms, results, dest)
             else
