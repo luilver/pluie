@@ -3,7 +3,6 @@ require 'delivery_methods/delivery_methods'
 class BulkMessagesController < ApplicationController
   include DeliveryMethods
 
-  before_action :set_sms_dispatcher, only: [:create]
   before_action :set_bulk_message, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:create]
 

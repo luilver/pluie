@@ -11,13 +11,7 @@ Rails.application.routes.draw do
       resources :lists
       resources :single_messages
       resources :users
-      resources :delivery_reports
     end
-  end
-
-  match 'delivery_reports/gateway_commit/:gateway' => 'delivery_reports#gateway_commit', via: [:get, :post]
-  resources :delivery_reports, :only => :index do
-    get 'list', :on => :collection
   end
 
   get 'reports/todays_stats' => 'reports#today'
@@ -25,6 +19,9 @@ Rails.application.routes.draw do
   get 'reports/messages_summary' => 'reports#summary'
   post 'reports/messages_log' => 'reports#search_messages', as: :search_messages
 
+  mount ActionSmser::Engine => '/'
+  get 'delivery_reports' => 'action_smser/delivery_reports', as: :delivery_reports
+  get 'delivery_reports/list' => 'action_smser/delivery_reports#list', as: :list_delivery_reports
 
   resources :credits
 
