@@ -3,6 +3,7 @@ require 'em-http'
 require 'em-http/middleware/json_response'
 require_relative 'async_http'
 require 'gateway_error_info'
+require 'json'
 
 module ActionSmser::DeliveryMethods
   class AsyncInfobip < AsyncHttp
@@ -24,6 +25,7 @@ module ActionSmser::DeliveryMethods
       dest = {}# to associates each recipient or destination to the generated messageId
       info = self.sms_info(sms, dest)
       r_body = {authentication: {username: INFOBIP_KEY, password: INFOBIP_PASS }, messages: [info]}
+      r_body = r_body.to_json
       conn_options = self.connection_options()
 
       em_was_running =  EM.reactor_running?
