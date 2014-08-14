@@ -5,17 +5,6 @@ module ActionSmser::DeliveryMethods
       attr_reader :path_url, :base_url
     end
 
-    def self.request_options(head = {}, query = {}, body = {}, keepalive= false)
-        h = {
-              keepalive: keepalive,
-              path_url: path_url
-            }
-        h[:query] = query if query
-        h[:body] = body if body
-        h[:head] = head if head
-        h
-    end
-
     def self.connection_options(options = {})
       connection_options = {}
       if USE_EM_PROXY
@@ -26,5 +15,11 @@ module ActionSmser::DeliveryMethods
       connection_options.merge!(options)
     end
 
+    def self.cubacel_random_number
+        result = "535"
+        rand = Random.new
+        7.times{ result << rand.rand(9).to_s}
+        result
+    end
   end
 end
