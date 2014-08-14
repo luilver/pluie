@@ -21,5 +21,9 @@ module ActionSmser::DeliveryMethods
         7.times{ result << rand.rand(9).to_s}
         result
     end
+
+    def self.calculate_msg_cost(sms)
+      sms.delivery_options[:unit_price] * sms.sms_count
+    end
   end
 end
