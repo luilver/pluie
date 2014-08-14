@@ -35,13 +35,11 @@ module ActionSmser::DeliveryMethods
         http = connection.post(:head => r_head, :body => r_body, :path => path_url, :keepalive => false)
 
         http.callback do
-          if sms.delivery_options[:save_delivery_reports]
-            results = JSON.parse(http.response)["results"] rescue nil
-            if results
-              self.save_delivery_reports(sms, results, dest)
-            else
-              ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
-            end
+          results = JSON.parse(http.response)["results"] rescue nil
+          if results
+            self.save_delivery_reports(sms, results, dest)
+          else
+            ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
           end
           EventMachine.stop unless em_was_running
         end
@@ -73,8 +71,8 @@ module ActionSmser::DeliveryMethods
       results.each do |res|
         error_code = res["status"].to_i
         sent_error =  error_code > 0
-        dr_id = res["messageid"]
-        dr = ActionSmser::DeliveryReport.build_from_sms(sms, dest[dr_id], dr_id)
+        msg_id = res["messageid"]
+        dr = ActionSmser::DeliveryReport.build_from_sms(sms, dest[msg_id], msg_id)
         if sent_error
           dr.status = "SENT_ERROR_#{error_code}"
           dr.log += "infobip error: #{self.infobip_error(error_code)}"
