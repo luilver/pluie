@@ -1,4 +1,3 @@
-require 'delivery_methods/delivery_methods'
 require 'action_smser_utils'
 
 class SingleMessagesController < ApplicationController

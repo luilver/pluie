@@ -1,4 +1,4 @@
-require 'delivery_methods/delivery_methods'
+require 'action_smser_utils'
 
 class BulkMessagesController < ApplicationController
   include DeliveryMethods
