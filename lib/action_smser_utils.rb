@@ -3,7 +3,7 @@ require 'action_smser_utils/user_to_delivery_report'
 #and belongs_to association to ActionSmser::DeliveryReport
 
 module ActionSmserUtils
-  def self.generate_messages(pluie_msg, dlr_method=nil, batch_size = 10)
+  def self.generate_messages(pluie_msg, batch_size = 10, dlr_method=nil)
     text = pluie_msg.message
     receivers = pluie_msg.receivers
     sms = []
