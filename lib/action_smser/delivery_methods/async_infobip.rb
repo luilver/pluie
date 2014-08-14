@@ -21,13 +21,13 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.deliver(sms)
-      r_head = {"host" => host, 'content-type' => 'application/json', "accept" => "*/*"}
       dest = {}# to associates each recipient or destination to the generated messageId
       info = self.sms_info(sms, dest)
+      r_head = {"host" => host, 'content-type' => 'application/json', "accept" => "*/*"}
       r_body = {"authentication" => {"username" => INFOBIP_KEY, "password" => INFOBIP_PASS }, "messages" => [info]}
       r_body = r_body.to_json
       conn_options = self.connection_options()
-
+      user_id = sms.user_id
       em_was_running =  EM.reactor_running?
 
       EM.run do
@@ -37,7 +37,7 @@ module ActionSmser::DeliveryMethods
         http.callback do
           results = JSON.parse(http.response)["results"] rescue nil
           if results
-            self.save_delivery_reports(sms, results, dest)
+            self.save_delivery_reports(sms, results, dest, user_id)
           else
             ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
           end
