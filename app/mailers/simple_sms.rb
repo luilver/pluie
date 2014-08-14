@@ -1,6 +1,7 @@
 class SimpleSms < ActionSmser::Base
 
   attr_accessor :user_id
+  MAX_SIZE = 160
 
   def multiple_receivers(receivers, text, pluie_user_id, dlr_method=nil)
     if dlr_method && ActionsSmser.delivery_options[dlr_method]
@@ -13,6 +14,13 @@ class SimpleSms < ActionSmser::Base
 
   def valid?
     !body.blank? && !to_numbers_array.collect{|number| number.to_s.blank? ? nil : true}.compact.blank?
+  end
+
+  def sms_count
+    #how many messages are necessary to send this sms, to 1 recipient using GSM7 encoding
+    body_size = SimpleSms.message_real_length(body)
+    count = (body_size / MAX_SIZE) + (body_size % MAX_SIZE == 0 ? 0:1)
+    count
   end
 
 end
