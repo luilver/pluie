@@ -67,26 +67,32 @@ module ActionSmser::DeliveryMethods
       msg
     end
 
-    def self.save_delivery_reports(sms, results, dest)
-      results.each do |res|
-        error_code = res["status"].to_i
-        sent_error =  error_code > 0
-        msg_id = res["messageid"]
-        dr = ActionSmser::DeliveryReport.build_from_sms(sms, dest[msg_id], msg_id)
-        if sent_error
-          dr.status = "SENT_ERROR_#{error_code}"
-          dr.log += "infobip error: #{self.infobip_error(error_code)}"
+    def self.save_delivery_reports(sms, results, dest, user_id)
+      cost = 0
+      begin
+        user = User.find(user_id) rescue nil
+        msg_cost = self.calculate_msg_cost(sms)
+
+        results.each do |res|
+          error_code = res["status"].to_i
+          sent_error =  error_code > 0
+          msg_id = res["messageid"]
+          dr = ActionSmser::DeliveryReport.build_from_sms(sms, dest[msg_id], msg_id)
+          dr.user = user
+          if sent_error
+            dr.status = "SENT_ERROR_#{error_code}"
+            dr.log += "infobip error: #{self.infobip_error(error_code)}"
+          else
+            cost+= msg_cost
+          end
+          dr.save
+          sms.delivery_reports.push(dr)
         end
-        dr.save
-        sms.delivery_reports.push(dr)
+      rescue Exception => e
+        ActionSmser::Logger.error "Fail saving DLRs. #{e.message}"
+      ensure
+        user.decrease_balance(cost) if user
       end
     end
-
-    def self.infobip_error(error_code)
-      INFOBIP_HTTP_ERROR_CODES[error_code] || "UNKNOWN_ERROR"
-    end
-
-
-
   end
 end
