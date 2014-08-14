@@ -1,7 +1,6 @@
 require 'action_smser_utils'
 
 class SingleMessagesController < ApplicationController
-  include DeliveryMethods
 
   before_action :set_single_message, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:create]

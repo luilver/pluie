@@ -1,7 +1,6 @@
 require 'action_smser_utils'
 
 class BulkMessagesController < ApplicationController
-  include DeliveryMethods
 
   before_action :set_bulk_message, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:create]
@@ -38,7 +37,10 @@ class BulkMessagesController < ApplicationController
       if @bulk_message.save
         related_numbers
 
-        send_bulk(@bulk_message)
+        sms_list = ActionSmserUtils.generate_messages(@bulk_message, batch_size= 50)
+        sms_list.each do |sms|
+          sms.deliver
+        end
 
         format.html { redirect_to @bulk_message, notice: 'Bulk message was successfully created.' }
         format.json { render :show, status: :created, location: @bulk_message }
