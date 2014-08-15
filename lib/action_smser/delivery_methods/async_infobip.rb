@@ -60,7 +60,8 @@ module ActionSmser::DeliveryMethods
         dest[id] = number
       end
 
-      msg = { "text" => sms.body, "recipients" => recipients}
+      msg = {"text" => sms.body, "recipients" => recipients,
+            "drPushUrl" => ActionSmserUtils.gateway_callback_url(:infobip)}
       if ActionSmser::Base.message_real_length(sms.body) > 160
         msg["type"] = "longSMS"
       end
@@ -94,5 +95,14 @@ module ActionSmser::DeliveryMethods
         user.decrease_balance(cost) if user
       end
     end
+
+    def self.process_delivery_report(params)
+      dlrs_info = []
+      ActionSmser::Logger.info "DeliveryReport update from infobip."
+      ActionSmser::Logger.info "Params: #{params.inspect}"
+      #TODO... return an array with the updated values for the delivery report
+      dlrs_info
+    end
+
   end
 end
