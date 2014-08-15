@@ -14,4 +14,8 @@ module ActionSmserUtils
 
     sms
   end
+
+  def self.gateway_callback_url(gateway)
+    "http://#{PLUIE_HOST}/action_smser/delivery_reports/gateway_commit/#{gateway.to_s}"
+  end
 end

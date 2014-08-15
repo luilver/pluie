@@ -6,6 +6,8 @@ INFOBIP_PASS = ENV['INFOBIP_PASS']
 NEXMO_KEY = ENV['NEXMO_API_KEY']
 NEXMO_PASS = ENV['NEXMO_API_SECRET']
 
+PLUIE_HOST = ENV['PLUIE_HOST'].chomp('/')#to build the callback url for gateway commit
+
 if Rails.env.development? || Rails.env.production?
   require 'action_smser_delivery_methods' #load the DeliveryMethods implemented in this app
   require 'action_smser_utils' #to modify the ActionSmser::DeliveryReport model
