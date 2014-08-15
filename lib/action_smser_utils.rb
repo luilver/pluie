@@ -18,4 +18,9 @@ module ActionSmserUtils
   def self.gateway_callback_url(gateway)
     "http://#{PLUIE_HOST}/action_smser/delivery_reports/gateway_commit/#{gateway.to_s}"
   end
+
+  def self.admin_access(controller)
+    #Allow admin access for every user in order to show delivery reports
+    return true
+  end
 end
