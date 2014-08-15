@@ -8,4 +8,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :alert => exception.message
   end
 
+  def default_url_options
+    if Rails.env.production?
+      { :host => "buzarale.com" }
+    else
+      {}
+    end
 end
