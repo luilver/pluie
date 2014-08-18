@@ -45,4 +45,6 @@ Pluie::Application.configure do
   Paperclip.options[:command_path] = "/usr/bin/"
 
   USE_EM_PROXY = false
+
+  config.default_url_options = { :host => "localhost:3000" }
 end
