@@ -81,7 +81,7 @@ Pluie::Application.configure do
   # Do not dump schema after migrations.
   #config.active_record.dump_schema_after_migration = false
 
-  config.default_url_options = { :host => "ebalmori.com:8080" }
+  config.default_url_options = { :host => "ebalmori.com" }
 
   USE_EM_PROXY = false
 
