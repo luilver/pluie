@@ -90,7 +90,7 @@ module ActionSmser::DeliveryMethods
           sms.delivery_reports.push(dr)
         end
       rescue Exception => e
-        ActionSmser::Logger.error "Fail saving DLRs. #{e.message}"
+        ActionSmser::Logger.error "Fail saving DLRs. #{e.message}.\n Trace: #{e.backtrace.join("\n")}"
       ensure
         user.decrease_balance(cost) if user
       end
