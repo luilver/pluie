@@ -72,7 +72,7 @@ module ActionSmser::DeliveryMethods
       cost = 0
       begin
         user = User.find(user_id) rescue nil
-        msg_cost = self.calculate_msg_cost(sms)
+        msg_cost = self.calculate_msg_cost(sms, :infobip)
 
         results.each do |res|
           error_code = res["status"].to_i
