@@ -76,7 +76,7 @@ module ActionSmser::DeliveryMethods
 
         results.each do |res|
           error_code = res["status"].to_i
-          sent_error =  error_code > 0
+          sent_error =  error_code < 0
           msg_id = res["messageid"]
           dr = ActionSmser::DeliveryReport.build_from_sms(sms, dest[msg_id], msg_id)
           dr.user = user
