@@ -26,3 +26,5 @@ TODO
 #patch file to change gem sources
 Gemfile.patch
 
+/config/local_env.yml
+
