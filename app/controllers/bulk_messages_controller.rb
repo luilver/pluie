@@ -10,6 +10,7 @@ class BulkMessagesController < ApplicationController
   def index
     @bulk_messages = BulkMessage.paginate :page => params[:page],
       :conditions => ['user_id', "%#{current_user.id}"],
+      :order => 'created_at DESC',
       :per_page => 5
   end
 
