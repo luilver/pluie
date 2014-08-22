@@ -89,6 +89,7 @@ module ActionSmser::DeliveryMethods
         end
       rescue Exception => e
         ActionSmser::Logger.error "Fail saving DLRs. #{e.message}.\n Trace: #{e.backtrace.join("\n")}"
+      end
     end
 
     def self.process_delivery_report(params)
