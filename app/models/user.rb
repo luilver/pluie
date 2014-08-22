@@ -35,6 +35,11 @@ class User < ActiveRecord::Base
     self.balance >= amount
   end
 
+  def bill_sms(sms_count, route_id)
+    sms_cost = Route.find(route_id).price * sms_count
+    decrease_balance(sms_cost)
+  end
+
   def decrease_balance(sms_cost, skip_db_update=false)
     return if sms_cost <= 0
     self.balance -= sms_cost

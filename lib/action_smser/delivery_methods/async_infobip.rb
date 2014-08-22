@@ -27,7 +27,7 @@ module ActionSmser::DeliveryMethods
       r_body = {"authentication" => {"username" => INFOBIP_KEY, "password" => INFOBIP_PASS }, "messages" => [info]}
       r_body = r_body.to_json
       conn_options = self.connection_options()
-      user_id = sms.user_id
+      user =  User.find(sms.user_id)
       em_was_running =  EM.reactor_running?
 
       EM.run do
@@ -37,7 +37,8 @@ module ActionSmser::DeliveryMethods
         http.callback do
           results = JSON.parse(http.response)["results"] rescue nil
           if results
-            self.save_delivery_reports(sms, results, dest, user_id)
+            success_sms = self.save_delivery_reports(sms, results, dest, user)
+            user.bill_sms(success_sms, sms.route_id)
           else
             ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
           end
@@ -68,12 +69,9 @@ module ActionSmser::DeliveryMethods
       msg
     end
 
-    def self.save_delivery_reports(sms, results, dest, user_id)
-      cost = 0
+    def self.save_delivery_reports(sms, results, dest, user)
+      count = 0
       begin
-        user = User.find(user_id) rescue nil
-        msg_cost = self.calculate_msg_cost(sms, :infobip)
-
         results.each do |res|
           error_code = res["status"].to_i
           sent_error =  error_code < 0
@@ -84,16 +82,13 @@ module ActionSmser::DeliveryMethods
             dr.status = "SENT_ERROR_#{error_code}"
             dr.log += "infobip error: #{self.infobip_error(error_code)}"
           else
-            cost+= msg_cost
+            count += 1
           end
           dr.save
           sms.delivery_reports.push(dr)
         end
       rescue Exception => e
         ActionSmser::Logger.error "Fail saving DLRs. #{e.message}.\n Trace: #{e.backtrace.join("\n")}"
-      ensure
-        user.decrease_balance(cost) if user
-      end
     end
 
     def self.process_delivery_report(params)
