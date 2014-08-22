@@ -9,7 +9,7 @@ module ActionSmserUtils
     sms = []
 
     receivers.each_slice(batch_size) do |batch|
-      sms << SimpleSms.multiple_receivers(batch, text, pluie_msg.user.id, pluie_msg.route.id dlr_method)
+      sms << SimpleSms.multiple_receivers(batch, text, pluie_msg.user.id, pluie_msg.route.id, dlr_method)
     end
 
     sms
