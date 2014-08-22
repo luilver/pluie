@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819194050) do
+ActiveRecord::Schema.define(version: 20140822185138) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(version: 20140819194050) do
     t.integer  "gateway_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "single_messages", force: true do |t|
