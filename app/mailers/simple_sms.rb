@@ -1,14 +1,15 @@
 class SimpleSms < ActionSmser::Base
 
-  attr_accessor :user_id
+  attr_accessor :user_id, route_id
   MAX_SIZE = 160
 
-  def multiple_receivers(receivers, text, pluie_user_id, dlr_method=nil)
+  def multiple_receivers(receivers, text, pluie_user_id,, pluie_route_id, dlr_method=nil)
     if dlr_method && ActionSmser.delivery_options[dlr_method]
       #update delivery method  for this sms.
       delivery_options[:delivery_method] = dlr_method
     end
     @user_id = pluie_user_id
+    @route_id = pluie_route_id
     sms(:to => receivers, :from => "", :body => text)
   end
 
