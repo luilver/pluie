@@ -1,0 +1,10 @@
+<fieldset>
+  <legend>Sending options</legend>
+  <div class="field">
+    <%= label_tag :route %>:
+    <%= select_tag "route",
+      options_from_collection_for_select(current_user.routes, "id", "name")
+    %>
+  </div>
+</fieldset>
+
