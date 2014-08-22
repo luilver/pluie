@@ -23,8 +23,8 @@
 
 TODO
 
-#patch file to change gem sources
-Gemfile.patch
+#patch files
+*.patch
 
 /config/local_env.yml
 
