@@ -4,6 +4,9 @@ class SingleMessage < ActiveRecord::Base
   has_many :sms, as: :msg
   belongs_to :route
 
+  validates :number, presence: true
+  validates :message, presence: true
+
   def receivers
     self.number.split(" ")
   end
