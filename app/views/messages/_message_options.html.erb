@@ -1,8 +1,8 @@
 <fieldset>
   <legend>Sending options</legend>
   <div class="field">
-    <%= label_tag :route %>:
-    <%= select_tag "route",
+    <%= f.label :route %>:
+    <%= f.select :route_id,
       options_from_collection_for_select(current_user.routes, "id", "name")
     %>
   </div>

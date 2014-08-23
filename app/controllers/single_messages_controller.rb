@@ -91,7 +91,7 @@ class SingleMessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def single_message_params
-      params.require(:single_message).permit(:message, :number)
+      params.require(:single_message).permit(:message, :number, :route_id)
     end
 
     def related_numbers
