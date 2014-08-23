@@ -85,7 +85,7 @@ class BulkMessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bulk_message_params
-      params.require(:bulk_message).permit(:message, :list_id)
+      params.require(:bulk_message).permit(:message, :list_id, :route_id)
     end
 
     # I'm really busy to change method name

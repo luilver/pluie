@@ -10,5 +10,10 @@
   <%= @bulk_message.lists.first %>
 </p>
 
+<p>
+  <strong>Route:</strong>
+  <%= @bulk_message.route %>
+</p>
+
 <%= link_to 'Edit', edit_bulk_message_path(@bulk_message) %> |
 <%= link_to 'Back', bulk_messages_path %>
