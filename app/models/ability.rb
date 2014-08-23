@@ -7,9 +7,14 @@ class Ability
       can :manage, :all
     else
       can :create, [BulkMessage, Contact, GroupMessage, Group, List, SingleMessage]
-      can [:read, :update, :destroy],
+      can :read,
         [BulkMessage, Contact, GroupMessage, Group, List, SingleMessage],
         :user_id => user.id
+      can [:update, :destroy],
+        [Contact, Group, List],
+        :user_id => user.id
+      cannot [:update, :destroy],
+        [BulkMessage, GroupMessage, SingleMessage]
 
       can :read, Credit, :user_id => user.id
       cannot [:create, :update, :destroy], Credit
