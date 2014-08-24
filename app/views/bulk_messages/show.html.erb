@@ -7,7 +7,12 @@
 
 <p>
   <strong>Lists:</strong>
-  <%= @bulk_message.lists.first %>
+  <%= @bulk_message.lists.count %>
+</p>
+
+<p>
+  <strong>Recipients:</strong>
+  <%= @bulk_message.gsm_numbers.count %>
 </p>
 
 <p>
