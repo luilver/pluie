@@ -14,7 +14,9 @@
   <tbody>
     <% @credits.each do |credit| %>
       <tr>
-        <td><%= credit.user %></td>
+        <% if current_user.admin %>
+          <td><%= credit.user %></td>
+        <% end %>
         <td><%= credit.balance %></td>
         <td><%= credit.created_at %></td>
       </tr>
