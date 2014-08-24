@@ -46,6 +46,10 @@ class User < ActiveRecord::Base
     save unless skip_db_update
   end
 
+  def to_s
+    self.email
+  end
+
   after_initialize :defaults
 
   private
