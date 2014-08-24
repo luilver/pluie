@@ -7,6 +7,7 @@ class CreditsController < ApplicationController
   # GET /credits.json
   def index
     @credits = current_user.credits
+    @credits = Credit.all if current_user.admin
   end
 
   # GET /credits/1
