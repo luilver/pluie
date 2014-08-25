@@ -95,11 +95,20 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.process_delivery_report(params)
-      dlrs_info = []
-      ActionSmser::Logger.info "DeliveryReport update from infobip."
-      ActionSmser::Logger.info "Params: #{params.inspect}"
-      #TODO... return an array with the updated values for the delivery report
-      dlrs_info
+      info = []
+      if params["DeliveryReport"] && (msg = params["DeliveryReport"]["message"])
+        dlrs_array = msg.is_a?(Array) ? msg : [msg]
+        dlrs_array.each do |dlr|
+          stat = dlr["status"]
+          stat += "_with_GSM_ERROR_#{dlr["gsmerror"]}" unless dlr["gsmerror"].eql?("0")
+
+          info << {
+                    "msg_id" => dlr["id"], "status" => stat,
+                    "status_updated_at" => DateTime.parse(dlr["donedate"])
+                  }
+        end
+      end
+      info
     end
 
   end
