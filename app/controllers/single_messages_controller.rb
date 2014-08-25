@@ -39,10 +39,7 @@ class SingleMessagesController < ApplicationController
       if @single_message.save
         related_numbers
 
-        sms_list = ActionSmserUtils.generate_messages(@single_message)
-        sms_list.each do |sms|
-          sms.deliver
-        end
+        @single_message.deliver
 
         #test SmsApi
         #send_message(@single_message.user.gateway, @single_message.user, @single_message)
