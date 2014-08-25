@@ -78,3 +78,5 @@ gem 'oneapi-ruby'
 gem 'em-http-request'
 
 gem 'action_smser'
+
+gem 'actionpack-xml_parser' # to parse infobip dlr post

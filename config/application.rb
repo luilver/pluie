@@ -25,5 +25,8 @@ module Pluie
             ENV[key.to_s] = value
         end if File.exists?(env_file)
     end
+
+    #Setup actionpack-xml_parser to load xml-encoded post body into params hash
+    config.middleware.insert_after ActionDispatch::ParamsParser, ActionDispatch::XmlParamsParser
   end
 end
