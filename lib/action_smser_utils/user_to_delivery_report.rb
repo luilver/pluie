@@ -9,13 +9,14 @@ module ActionSmserUtils
 
     module ClassMethods
       def build_with_user(sms, to, msg_id, user)
-        dr = ActionSmser::DeliveryReport.build_from_sms(sms, to, msg_id)
+        dr = ActionSmser::DeliveryReport.build_from_sms(sms, to, msg_id, route_name)
         dr.user = user
+        dr.gateway = route_name
         dr
       end
 
-      def create_with_user(sms, to, msg_id, user)
-        dr = build_with_user(sms, to, msg_id, user)
+      def create_with_user(sms, to, msg_id, user, route_name)
+        dr = build_with_user(sms, to, msg_id, user, route_name)
         dr.save
         dr
       end
