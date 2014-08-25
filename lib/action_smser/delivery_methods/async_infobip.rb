@@ -77,8 +77,7 @@ module ActionSmser::DeliveryMethods
           error_code = res["status"].to_i
           sent_error =  error_code < 0
           msg_id = res["messageid"]
-          dr = ActionSmser::DeliveryReport.build_from_sms(sms, dest[msg_id], msg_id, route_name)
-          dr.user = user
+          dr = ActionSmser::DeliveryReport.build_with_user(sms, dest[msg_id], msg_id, user, route_name)
           if sent_error
             dr.status = "SENT_ERROR_#{error_code}"
             dr.log += "infobip error: #{self.infobip_error(error_code)}"
