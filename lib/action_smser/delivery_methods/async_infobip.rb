@@ -37,8 +37,9 @@ module ActionSmser::DeliveryMethods
         http.callback do
           results = JSON.parse(http.response)["results"] rescue nil
           if results
-            success_sms = self.save_delivery_reports(sms, results, dest, user)
-            user.bill_sms(success_sms, sms.route_id)
+            route = Route.find(sms.route_id)
+            success_sms = self.save_delivery_reports(sms, results, dest, user, route.name)
+            user.bill_sms(success_sms, route.price)
           else
             ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
           end
@@ -69,14 +70,14 @@ module ActionSmser::DeliveryMethods
       msg
     end
 
-    def self.save_delivery_reports(sms, results, dest, user)
+    def self.save_delivery_reports(sms, results, dest, user, route_name)
       count = 0
       begin
         results.each do |res|
           error_code = res["status"].to_i
           sent_error =  error_code < 0
           msg_id = res["messageid"]
-          dr = ActionSmser::DeliveryReport.build_from_sms(sms, dest[msg_id], msg_id)
+          dr = ActionSmser::DeliveryReport.build_from_sms(sms, dest[msg_id], msg_id, route_name)
           dr.user = user
           if sent_error
             dr.status = "SENT_ERROR_#{error_code}"
