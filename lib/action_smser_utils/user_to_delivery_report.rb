@@ -8,14 +8,14 @@ module ActionSmserUtils
 
 
     module ClassMethods
-      def build_with_user(sms, to, msg_id, user_id)
+      def build_with_user(sms, to, msg_id, user)
         dr = ActionSmser::DeliveryReport.build_from_sms(sms, to, msg_id)
-        dr.user = User.find(user_id) rescue nil
+        dr.user = user
         dr
       end
 
-      def create_with_user(sms, to, msg_id, user_id)
-        dr = build_with_user(sms, to, msg_id, user_id)
+      def create_with_user(sms, to, msg_id, user)
+        dr = build_with_user(sms, to, msg_id, user)
         dr.save
         dr
       end
