@@ -1,4 +1,7 @@
+require 'credit_validator'
+
 class SingleMessage < ActiveRecord::Base
+  include ActiveModel::Validations
   belongs_to :user
   has_and_belongs_to_many :gsm_numbers
   has_many :sms, as: :msg
@@ -6,6 +9,7 @@ class SingleMessage < ActiveRecord::Base
 
   validates :number, presence: true
   validates :message, presence: true
+  validates_with Validations::CreditValidator
 
   def receivers
     self.number.split(" ")
