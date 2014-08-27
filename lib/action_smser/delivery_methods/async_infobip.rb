@@ -22,7 +22,9 @@ module ActionSmser::DeliveryMethods
 
     def self.deliver(sms)
       dest = {}# to associates each recipient or destination to the generated messageId
-      info = self.sms_info(sms, dest)
+      info = self.sms_info(sms)
+      self.add_numbers(info, sms.to_numbers_array, dest)
+
       r_head = {"host" => host, 'content-type' => 'application/json', "accept" => "*/*"}
       r_body = {"authentication" => {"username" => INFOBIP_KEY, "password" => INFOBIP_PASS }, "messages" => [info]}
       r_body = r_body.to_json
@@ -54,20 +56,23 @@ module ActionSmser::DeliveryMethods
       end
     end
 
-    def self.sms_info(sms, dest)
-      recipients = []
-      sms.to_numbers_array.each do |number|
-        id = SecureRandom.uuid()
-        recipients << {"gsm" => number, "messageId" => id }
-        dest[id] = number
-      end
-
-      msg = {"text" => sms.body, "recipients" => recipients,
-            "drPushUrl" => ActionSmserUtils.gateway_callback_url(:infobip)}
+    def self.sms_info(sms)
+      msg = {"text" => sms.body, "drPushUrl" => ActionSmserUtils.gateway_callback_url(:infobip)}
       if ActionSmser::Base.message_real_length(sms.body) > 160
         msg["type"] = "longSMS"
       end
       msg
+    end
+
+    def self.add_numbers(msg_info, numbers, dest)
+      recipients = []
+      numbers.each do |number|
+        id = SecureRandom.uuid()
+        recipients << {"gsm" => number, "messageId" => id }
+        dest[id] = number
+      end
+      msg_info["recipients"] = recipients
+      msg_info
     end
 
     def self.save_delivery_reports(sms, results, dest, user, route_name)
