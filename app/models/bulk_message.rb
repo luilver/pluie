@@ -1,3 +1,5 @@
+require 'delayed_job'
+
 class BulkMessage < ActiveRecord::Base
   belongs_to :user
   belongs_to :route
@@ -9,6 +11,11 @@ class BulkMessage < ActiveRecord::Base
 
   def receivers
     self.gsm_numbers.map {|gsm| gsm.number}
+  end
+
+  def deliver(dlr_method=nil)
+    sms = SimpleSms.multiple_receivers(receivers, self.message, self.user.id, self.route.id, dlr_method)
+    Delayed::Job.enqueue(sms)
   end
 
 end
