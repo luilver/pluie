@@ -15,6 +15,6 @@ if Rails.env.development? || Rails.env.production?
   ActionSmser.delivery_options[:delivery_method] = :async_infobip
   ActionSmser.delivery_options[:save_delivery_reports] = true
   ActionSmser.delivery_options[:gateway_commit]['infobip'] = ActionSmser::DeliveryMethods::AsyncInfobip
-  ActionSmser.delivery_options[:infobip] = {unit_price: 0.01, username: INFOBIP_KEY, password: INFOBIP_PASS}
+  ActionSmser.delivery_options[:infobip] = { username: INFOBIP_KEY, password: INFOBIP_PASS, numbers_in_request: 50, parallel_requests: 5 }
   ActionSmser.delivery_options[:admin_access] = ActionSmserUtils
 end
