@@ -15,59 +15,86 @@ module ActionSmser::DeliveryMethods
     @host = 'api.infobip.com'
     @base_url = "http://#{@host}/"
     @path_url = "api/v3/sendsms/json"
+    @gateway_key = :infobip
+    @r_head = {"host" => @host, 'content-type' => 'application/json', "accept" => "*/*"}
+    @r_body = {"authentication" => {"username" => INFOBIP_KEY, "password" => INFOBIP_PASS }}
+
 
     class << self
-      attr_reader :sender_address, :host
+      attr_reader :sender_address, :host, :gateway_key, :r_head, :r_body
     end
 
     def self.deliver(sms)
+      batch_size = sms.delivery_options[gateway_key][:numbers_in_request]
+      concurrent_requests = sms.delivery_options[gateway_key][:parallel_requests]
+      batches = sms.to_numbers_array.each_slice(batch_size).to_a
+      last_request = batches.size
+
       dest = {}# to associates each recipient or destination to the generated messageId
-      info = self.sms_info(sms, dest)
-      r_head = {"host" => host, 'content-type' => 'application/json', "accept" => "*/*"}
-      r_body = {"authentication" => {"username" => INFOBIP_KEY, "password" => INFOBIP_PASS }, "messages" => [info]}
-      r_body = r_body.to_json
-      conn_options = self.connection_options()
+      info = self.sms_info(sms)
       user =  User.find(sms.user_id)
       em_was_running =  EM.reactor_running?
+      count = 0
 
       EM.run do
-        connection = EM::HttpRequest.new(base_url, conn_options)
-        http = connection.post(:head => r_head, :body => r_body, :path => path_url, :keepalive => false)
+        connection = EM::HttpRequest.new(base_url)
 
-        http.callback do
-          results = JSON.parse(http.response)["results"] rescue nil
-          if results
-            route = Route.find(sms.route_id)
-            success_sms = self.save_delivery_reports(sms, results, dest, user, route.name)
-            user.bill_sms(success_sms, route.price)
-          else
-            ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
+        foreach = Proc.new do |numbers, iter|
+          count+=1
+          msg = self.build_msg(info, numbers, dest)
+          body = r_body.dup
+          body["messages"] = [msg]
+
+          http = connection.post(:head => r_head, :body => body.to_json, :path => path_url, :keepalive => count < last_request)
+
+          http.callback do
+            results = JSON.parse(http.response)["results"] rescue nil
+            if results
+              route = Route.find(sms.route_id)
+              success_sms = self.save_delivery_reports(sms, results, dest, user, route.name)
+              user.bill_sms(success_sms, route.price)
+            else
+              ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
+            end
+            iter.next
+            EventMachine.stop unless em_was_running
           end
+
+          http.errback do
+            #TODO... Log de los e
+            ActionSmser::Logger.error "Async infobip conn error: #{http.response.inspect} at #{Time.now}"
+            iter.next
+          end
+
+        end
+
+        final = Proc.new do
+          ActionSmser::Logger.info "Finished sending. #{Time.now}"
           EventMachine.stop unless em_was_running
         end
 
-        http.errback do
-          #TODO... Log de los e
-          ActionSmser::Logger.error "Async infobip conn error: #{http.response.inspect} at #{Time.now}"
-          EventMachine.stop unless em_was_running
-        end
+        EM::Iterator.new(batches, concurrent_requests).each(foreach, final)
       end
     end
 
-    def self.sms_info(sms, dest)
-      recipients = []
-      sms.to_numbers_array.each do |number|
-        id = SecureRandom.uuid()
-        recipients << {"gsm" => number, "messageId" => id }
-        dest[id] = number
-      end
-
-      msg = {"text" => sms.body, "recipients" => recipients,
-            "drPushUrl" => ActionSmserUtils.gateway_callback_url(:infobip)}
+    def self.sms_info(sms)
+      msg = {"text" => sms.body, "drPushUrl" => ActionSmserUtils.gateway_callback_url(gateway_key)}
       if ActionSmser::Base.message_real_length(sms.body) > 160
         msg["type"] = "longSMS"
       end
       msg
+    end
+
+    def self.build_msg(msg_info, numbers, dest)
+      info = msg_info.dup
+      recipients = []
+      numbers.each do |number|
+        id = SecureRandom.uuid()
+        recipients << {"gsm" => number, "messageId" => id }
+        dest[id] = number
+      end
+      info["recipients"] = recipients
+      info
     end
 
     def self.save_delivery_reports(sms, results, dest, user, route_name)

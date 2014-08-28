@@ -38,10 +38,7 @@ class BulkMessagesController < ApplicationController
       if @bulk_message.save
         related_numbers
 
-        sms_list = ActionSmserUtils.generate_messages(@bulk_message, batch_size= 50)
-        sms_list.each do |sms|
-          sms.deliver
-        end
+        @bulk_message.deliver
 
         format.html { redirect_to @bulk_message, notice: 'Bulk message was successfully created.' }
         format.json { render :show, status: :created, location: @bulk_message }

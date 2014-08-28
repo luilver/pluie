@@ -24,4 +24,8 @@ class SimpleSms < ActionSmser::Base
     count
   end
 
+  def perform
+    self.deliver
+  end
+
 end
