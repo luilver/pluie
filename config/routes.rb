@@ -1,6 +1,8 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
+  resources :routes
+
   resources :gateways
 
   namespace :api, :defaults => {:format => 'json'} do
