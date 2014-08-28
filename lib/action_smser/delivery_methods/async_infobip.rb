@@ -21,58 +21,18 @@ module ActionSmser::DeliveryMethods
 
 
     class << self
-      attr_reader :sender_address, :host, :gateway_key, :r_head, :r_body
+      attr_reader :sender_address, :host
     end
 
-    def self.deliver(sms)
-      batch_size = sms.delivery_options[gateway_key][:numbers_in_request]
-      concurrent_requests = sms.delivery_options[gateway_key][:parallel_requests]
-      batches = sms.to_numbers_array.each_slice(batch_size).to_a
-      last_request = batches.size
+    def self.request_body(info, numbers, sms)
+      msg = self.build_msg(info, numbers, sms)
+      body = r_body.dup
+      body["messages"] = [msg]
+      body.to_json
+    end
 
-      info = self.sms_info(sms)
-      user =  User.find(sms.user_id)
-      em_was_running =  EM.reactor_running?
-      count = 0
-
-      EM.run do
-        connection = EM::HttpRequest.new(base_url)
-
-        foreach = Proc.new do |numbers, iter|
-          count +=1
-          msg = self.build_msg(info, numbers, sms)
-          body = r_body.dup
-          body["messages"] = [msg]
-
-          http = connection.post(:head => r_head, :body => body.to_json, :path => path_url, :keepalive => count < last_request)
-
-          http.callback do
-            results = JSON.parse(http.response)["results"] rescue nil
-            if results
-              route = Route.find(sms.route_id)
-              success_sms = self.save_delivery_reports(sms, results, user, route.name)
-              user.bill_sms(success_sms, route.price)
-            else
-              ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
-            end
-            iter.next
-          end
-
-          http.errback do
-            #TODO... Log de los e
-            ActionSmser::Logger.error "Async infobip conn error: #{http.response.inspect} at #{Time.now}"
-            iter.next
-          end
-
-        end
-
-        final = Proc.new do
-          ActionSmser::Logger.info "Finished sending. #{Time.now}"
-          EventMachine.stop unless em_was_running
-        end
-
-        EM::Iterator.new(batches, concurrent_requests).each(foreach, final)
-      end
+    def self.parse_response(response)
+      JSON.parse(response)["results"] rescue nil
     end
 
     def self.sms_info(sms)
