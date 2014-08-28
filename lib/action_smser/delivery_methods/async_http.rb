@@ -54,7 +54,6 @@ module ActionSmser::DeliveryMethods
       end
     end
 
-
     def self.connection_options(options = {})
       connection_options = {}
       if USE_EM_PROXY
@@ -72,8 +71,5 @@ module ActionSmser::DeliveryMethods
         result
     end
 
-    def self.calculate_msg_cost(sms, gateway)
-      sms.delivery_options[gateway][:unit_price] * sms.sms_count
-    end
   end
 end
