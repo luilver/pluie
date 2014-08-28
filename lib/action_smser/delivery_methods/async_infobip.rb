@@ -104,7 +104,7 @@ module ActionSmser::DeliveryMethods
           msg_id = res["messageid"]
           dr = ActionSmser::DeliveryReport.build_with_user(sms, sms.find_receiver_by_id(msg_id), msg_id, user, route_name)
           if sent_error
-            dr.status = "SENT_ERROR_#{error_code}"
+            dr.status = "SENT_ERROR_#{self.infobip_error(error_code)}"
             dr.log += "infobip error: #{self.infobip_error(error_code)}"
           else
             count += 1
