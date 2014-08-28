@@ -57,7 +57,6 @@ module ActionSmser::DeliveryMethods
               ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
             end
             iter.next
-            EventMachine.stop unless em_was_running
           end
 
           http.errback do
