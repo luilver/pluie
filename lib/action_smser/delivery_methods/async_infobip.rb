@@ -30,7 +30,6 @@ module ActionSmser::DeliveryMethods
       batches = sms.to_numbers_array.each_slice(batch_size).to_a
       last_request = batches.size
 
-      dest = {}# to associates each recipient or destination to the generated messageId
       info = self.sms_info(sms)
       user =  User.find(sms.user_id)
       em_was_running =  EM.reactor_running?
@@ -40,8 +39,8 @@ module ActionSmser::DeliveryMethods
         connection = EM::HttpRequest.new(base_url)
 
         foreach = Proc.new do |numbers, iter|
-          count+=1
-          msg = self.build_msg(info, numbers, dest)
+          count +=1
+          msg = self.build_msg(info, numbers, sms)
           body = r_body.dup
           body["messages"] = [msg]
 
@@ -51,7 +50,7 @@ module ActionSmser::DeliveryMethods
             results = JSON.parse(http.response)["results"] rescue nil
             if results
               route = Route.find(sms.route_id)
-              success_sms = self.save_delivery_reports(sms, results, dest, user, route.name)
+              success_sms = self.save_delivery_reports(sms, results, user, route.name)
               user.bill_sms(success_sms, route.price)
             else
               ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
@@ -84,26 +83,26 @@ module ActionSmser::DeliveryMethods
       msg
     end
 
-    def self.build_msg(msg_info, numbers, dest)
+    def self.build_msg(msg_info, numbers, sms)
       info = msg_info.dup
       recipients = []
       numbers.each do |number|
         id = SecureRandom.uuid()
         recipients << {"gsm" => number, "messageId" => id }
-        dest[id] = number
+        sms.receivers_hash[id] = number
       end
       info["recipients"] = recipients
       info
     end
 
-    def self.save_delivery_reports(sms, results, dest, user, route_name)
+    def self.save_delivery_reports(sms, results,  user, route_name)
       count = 0
       begin
         results.each do |res|
           error_code = res["status"].to_i
           sent_error =  error_code < 0
           msg_id = res["messageid"]
-          dr = ActionSmser::DeliveryReport.build_with_user(sms, dest[msg_id], msg_id, user, route_name)
+          dr = ActionSmser::DeliveryReport.build_with_user(sms, sms.find_receiver_by_id(msg_id), msg_id, user, route_name)
           if sent_error
             dr.status = "SENT_ERROR_#{error_code}"
             dr.log += "infobip error: #{self.infobip_error(error_code)}"
