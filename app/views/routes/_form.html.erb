@@ -19,14 +19,18 @@
     <%= f.label :price %><br>
     <%= f.text_field :price %>
   </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :gateway_id %><br>
-    <%= f.number_field :gateway_id %>
-  </div>
+  <fieldset>
+    <legend>User</legend>
+    <%= f.select :user_id,
+      options_from_collection_for_select(User.all, "id", "email")
+    %>
+  </fieldset>
+  <fieldset>
+    <legend>Gateway</legend>
+    <%= f.select :gateway_id,
+      options_from_collection_for_select(Gateway.all, "id", "name")
+    %>
+  </fieldset>
   <div class="actions">
     <%= f.submit %>
   </div>
