@@ -1,6 +1,7 @@
 class SimpleSms < ActionSmser::Base
 
   attr_accessor :user_id, :route_id
+  attr_reader :receivers_hash
   MAX_SIZE = 160
 
   def multiple_receivers(receivers, text, pluie_user_id, pluie_route_id, dlr_method=nil)
@@ -10,6 +11,7 @@ class SimpleSms < ActionSmser::Base
     end
     @user_id = pluie_user_id
     @route_id = pluie_route_id
+    @receivers_hash = {}
     sms(:to => receivers, :from => "", :body => text)
   end
 
@@ -26,6 +28,10 @@ class SimpleSms < ActionSmser::Base
 
   def perform
     self.deliver
+  end
+
+  def find_receiver_by_id(msg_id)
+    @receivers_hash[msg_id]
   end
 
 end
