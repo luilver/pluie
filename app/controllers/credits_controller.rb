@@ -1,6 +1,6 @@
 class CreditsController < ApplicationController
   before_action :set_credit, only: [:show, :edit, :update, :destroy]
-  after_action :credit_user, only: [:create, :update]
+  after_action :credit_user, only: [:create]
   load_and_authorize_resource except: [:create]
 
   # GET /credits
