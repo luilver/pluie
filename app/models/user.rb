@@ -49,12 +49,4 @@ class User < ActiveRecord::Base
     self.email
   end
 
-  after_initialize :defaults
-
-  private
-    def defaults
-      self.gateway ||= Gateway.find_by(name: :infobip) || Gateway.first
-    end
-
-
 end
