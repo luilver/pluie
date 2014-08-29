@@ -26,4 +26,6 @@
 
 <p><%= will_paginate @lists %></p>
 
-<%= link_to 'New Credit', new_credit_path %>
+<% if current_user.admin %>
+  <%= link_to 'New Credit', new_credit_path %>
+<% end %>
