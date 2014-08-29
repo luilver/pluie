@@ -5,5 +5,10 @@
   <%= @credit.balance %>
 </p>
 
+<p>
+  <strong>User:</strong>
+  <%= @credit.user %>
+</p>
+
 <%= link_to 'Edit', edit_credit_path(@credit) %> |
 <%= link_to 'Back', credits_path %>
