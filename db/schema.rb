@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827210039) do
+ActiveRecord::Schema.define(version: 20140829031535) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -199,7 +199,6 @@ ActiveRecord::Schema.define(version: 20140827210039) do
     t.datetime "updated_at"
     t.boolean  "admin"
     t.decimal  "balance",                default: 0.0
-    t.integer  "gateway_id"
     t.decimal  "credit_limit",           default: -10.0
   end
 

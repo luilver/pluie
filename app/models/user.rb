@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
   has_many :lists
   has_many :credits
   has_one :api_setting
-  belongs_to :gateway
   has_many :sms
   has_many :routes
   has_many :gateways,  :through => :routes
