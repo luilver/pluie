@@ -23,6 +23,8 @@ class Ability
       cannot [:create, :update, :destroy], ActionSmser::DeliveryReport
 
       can :balance, User, :user_id => user.id
+
+      cannot :manage, Route
     end
   end
 end
