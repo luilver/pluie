@@ -16,11 +16,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'reports/todays_stats' => 'reports#today'
-  get 'reports/messages_log' => 'reports#messages'
-  get 'reports/messages_summary' => 'reports#summary'
-  post 'reports/messages_log' => 'reports#search_messages', as: :search_messages
-
   mount ActionSmser::Engine => '/'
   get 'delivery_reports' => 'action_smser/delivery_reports', as: :delivery_reports
   get 'delivery_reports/list' => 'action_smser/delivery_reports#list', as: :list_delivery_reports
