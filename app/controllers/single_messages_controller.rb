@@ -88,11 +88,4 @@ class SingleMessagesController < ApplicationController
     def single_message_params
       params.require(:single_message).permit(:message, :number, :route_id)
     end
-
-    def related_numbers
-      @single_message.number.split.each { |num| n = GsmNumber.find_by_number(num) ||
-                                          GsmNumber.create(:number => num);
-                                          @single_message.gsm_numbers << n if not @single_message.gsm_numbers.include?(n)
-      }
-    end
 end
