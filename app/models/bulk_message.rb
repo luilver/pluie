@@ -14,8 +14,13 @@ class BulkMessage < ActiveRecord::Base
   end
 
   def deliver(dlr_method=nil)
-    sms = SimpleSms.multiple_receivers(receivers, self.message, self.user.id, self.route.id, dlr_method)
-    Delayed::Job.enqueue(sms)
+    numbers = receivers.to_a
+    size = [(numbers.size * ActionSmser.delivery_options[:numbers_from_bulk]).to_i, ActionSmser.delivery_options[:min_sms_numbers_count]].max
+    batches = numbers.each_slice(size).to_a
+    batches.each_with_index do |nums, index|
+      sms = SimpleSms.multiple_receivers(nums, self.message, self.user.id, self.route.id, dlr_method)
+      Delayed::Job.enqueue(sms, :priority => bulk_sms_priority(index), :queue => bulk_sms_queue)
+    end
   end
 
 end
