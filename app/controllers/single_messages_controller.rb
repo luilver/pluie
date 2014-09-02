@@ -37,7 +37,6 @@ class SingleMessagesController < ApplicationController
 
     respond_to do |format|
       if @single_message.save
-        related_numbers
 
         @single_message.deliver
 
@@ -59,7 +58,6 @@ class SingleMessagesController < ApplicationController
   def update
     respond_to do |format|
       if @single_message.update(single_message_params)
-        related_numbers
 
         format.html { redirect_to @single_message, notice: 'Single message was successfully updated.' }
         format.json { render :show, status: :ok, location: @single_message }
