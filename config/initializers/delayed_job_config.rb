@@ -8,6 +8,12 @@ def bulk_sms_priority(index)
   index
 end
 
+FIBER = Fiber.new do
+  c = ENV['BULK_SMS_QUEUES_COUNT'].to_i
+  q_names =  (1..c).map { |i| "bulk_sms_#{i}"}
+  q_names.cycle {|name| Fiber.yield name}
+end
+
 def bulk_sms_queue
-  "bulk_sms"
+  FIBER.resume
 end
