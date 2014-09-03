@@ -15,7 +15,7 @@ class BulkMessage < ActiveRecord::Base
 
   def deliver(dlr_method=nil)
     numbers = receivers.to_a
-    size = [(numbers.size * ActionSmser.delivery_options[:numbers_from_bulk]).to_i, ActionSmser.delivery_options[:min_sms_numbers_count]].max
+    size = [(numbers.size * ActionSmser.delivery_options[:numbers_from_bulk]).to_i, ActionSmser.delivery_options[:min_numbers_in_sms]].max
     batches = numbers.each_slice(size).to_a
     batches.each_with_index do |nums, index|
       sms = SimpleSms.multiple_receivers(nums, self.message, self.user.id, self.route.id, dlr_method)
