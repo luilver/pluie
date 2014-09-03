@@ -1,4 +1,5 @@
 require 'delayed_job'
+require 'set'
 
 class BulkMessage < ActiveRecord::Base
   belongs_to :user
@@ -25,13 +26,11 @@ class BulkMessage < ActiveRecord::Base
   end
 
   def gsm_numbers
-    list = []
-    self.lists.each do |l|
-      l.gsm_numbers.each {
-        |n| list << n if not lists.include?(n)
-      }
+    set = Set.new
+    self.lists.each do |list|
+      set.merge list.gsm_numbers
     end
-    list
+    set.to_a
   end
 
 end
