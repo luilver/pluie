@@ -13,7 +13,7 @@
 
   <fieldset>
     <legend>Lists</legend>
-    <%= select_tag :lists,
+    <%= select_tag :list_ids,
       options_from_collection_for_select(current_user.lists, "id", "name"),
       {:multiple => true, :size => 5}
     %>

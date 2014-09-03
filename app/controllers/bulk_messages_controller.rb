@@ -33,10 +33,10 @@ class BulkMessagesController < ApplicationController
   def create
     @bulk_message = BulkMessage.new(bulk_message_params)
     @bulk_message.user = current_user
+    @bulk_message.lists << List.find(params[:list_ids]) if params[:list_ids]
 
     respond_to do |format|
       if @bulk_message.save
-        related_numbers
 
         @bulk_message.deliver
 
@@ -54,7 +54,6 @@ class BulkMessagesController < ApplicationController
   def update
     respond_to do |format|
       if @bulk_message.update(bulk_message_params)
-        related_numbers
         format.html { redirect_to @bulk_message, notice: 'Bulk message was successfully updated.' }
         format.json { render :show, status: :ok, location: @bulk_message }
       else
@@ -82,16 +81,6 @@ class BulkMessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bulk_message_params
-      params.require(:bulk_message).permit(:message, :list_id, :route_id)
-    end
-
-    # I'm really busy to change method name
-    def related_numbers
-      params[:lists].each { |list_id| l = List.find(list_id);
-                            @bulk_message.lists << l
-                            l.gsm_numbers.each {
-                              |n| @bulk_message.gsm_numbers << n if not @bulk_message.gsm_numbers.include?(n)
-                            }
-      }
+      params.require(:bulk_message).permit(:message, :list_ids, :route_id)
     end
 end
