@@ -11,6 +11,8 @@ class SingleMessage < ActiveRecord::Base
   validates :message, presence: true
   validates_with Validations::CreditValidator
 
+  before_save :related_numbers
+
   def receivers
     self.number.split(" ")
   end
@@ -19,5 +21,13 @@ class SingleMessage < ActiveRecord::Base
     sms = SimpleSms.multiple_receivers(receivers, self.message, self.user.id, self.route.id, dlr_method)
     sms.deliver
   end
+
+  private
+    def related_numbers
+      self.number.split.each { |num| n = GsmNumber.find_by_number(num) ||
+                                          GsmNumber.create(:number => num);
+                                          self.gsm_numbers << n if not self.gsm_numbers.include?(n)
+      }
+    end
 
 end

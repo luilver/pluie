@@ -37,7 +37,6 @@ class SingleMessagesController < ApplicationController
 
     respond_to do |format|
       if @single_message.save
-        related_numbers
 
         @single_message.deliver
 
@@ -59,7 +58,6 @@ class SingleMessagesController < ApplicationController
   def update
     respond_to do |format|
       if @single_message.update(single_message_params)
-        related_numbers
 
         format.html { redirect_to @single_message, notice: 'Single message was successfully updated.' }
         format.json { render :show, status: :ok, location: @single_message }
@@ -89,12 +87,5 @@ class SingleMessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def single_message_params
       params.require(:single_message).permit(:message, :number, :route_id)
-    end
-
-    def related_numbers
-      @single_message.number.split.each { |num| n = GsmNumber.find_by_number(num) ||
-                                          GsmNumber.create(:number => num);
-                                          @single_message.gsm_numbers << n if not @single_message.gsm_numbers.include?(n)
-      }
     end
 end
