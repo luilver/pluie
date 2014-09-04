@@ -38,7 +38,7 @@ class BulkMessagesController < ApplicationController
     respond_to do |format|
       if @bulk_message.save
 
-        @bulk_message.deliver
+        @bulk_message.delay(:queue => 'deliver').deliver
 
         format.html { redirect_to @bulk_message, notice: 'Bulk message was successfully created.' }
         format.json { render :show, status: :created, location: @bulk_message }
