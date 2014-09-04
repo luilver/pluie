@@ -10,10 +10,11 @@ end
 
 FIBER = Fiber.new do
   c = ENV['BULK_SMS_QUEUES_COUNT'].to_i
-  q_names =  (1..c).map { |i| "bulk_sms_#{i}"}
+  q = ENV['BULK_SMS_QUEUE']
+  q_names =  (1..c).map { |i| "#{q}_#{i}"}
   q_names.cycle {|name| Fiber.yield name}
 end
 
 def bulk_sms_queue
-  FIBER.resume
+  @@bulk_queue ||= ENV['BULK_SMS_QUEUE']
 end
