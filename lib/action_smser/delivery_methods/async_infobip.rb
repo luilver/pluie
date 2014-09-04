@@ -1,6 +1,4 @@
 require 'securerandom'
-require 'em-http'
-require 'em-http/middleware/json_response'
 require_relative 'async_http'
 require 'gateway_error_info'
 require 'json'
