@@ -15,7 +15,8 @@ class BulkMessage < ActiveRecord::Base
     self.gsm_numbers.map {|gsm| gsm.number}
   end
 
-  def deliver(dlr_method=nil)
+  def deliver
+    dlr_method = self.route.gateway.name
     numbers = receivers.to_a
     size = [(numbers.size * ActionSmser.delivery_options[:numbers_from_bulk]).to_i, ActionSmser.delivery_options[:min_numbers_in_sms]].max
     batches = numbers.each_slice(size).to_a

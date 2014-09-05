@@ -17,7 +17,8 @@ class SingleMessage < ActiveRecord::Base
     self.number.split(" ")
   end
 
-  def deliver(dlr_method=nil)
+  def deliver
+    dlr_method = self.route.gateway.name
     sms = SimpleSms.multiple_receivers(receivers, self.message, self.user.id, self.route.id, dlr_method)
     sms.deliver
   end
