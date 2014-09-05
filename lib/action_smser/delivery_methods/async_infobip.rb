@@ -24,7 +24,7 @@ module ActionSmser::DeliveryMethods
 
     def self.request_body(info, numbers, sms)
       msg = self.build_msg(info, numbers, sms)
-      body = r_body.merge({"message" => [msg]})
+      body = r_body.merge({"messages" => [msg]})
       body.to_json
     end
 
