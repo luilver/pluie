@@ -1,4 +1,5 @@
 require 'em-http'
+require 'action_smser_utils'
 
 module ActionSmser::DeliveryMethods
   class AsyncHttp
@@ -19,6 +20,7 @@ module ActionSmser::DeliveryMethods
       info = self.sms_info(sms)
 
       EM.run do
+        EM::HttpRequest.use ActionSmserUtils::InspectRequest if sms.delivery_options[:inspect_request]
         connection = EM::HttpRequest.new(base_url)
 
         foreach = Proc.new do |numbers, iter|
