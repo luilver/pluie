@@ -94,8 +94,7 @@ module ActionSmser::DeliveryMethods
 
     def self.request_options( query_params, body, keepalive)
       options = super(query_params, body, keepalive)
-      options[:head] = r_head
-      options
+      options.merge!({head: r_head})
     end
 
   end
