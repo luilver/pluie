@@ -20,6 +20,7 @@ class Ability
       cannot [:create, :update, :destroy], Credit
 
       can :read, ActionSmser::DeliveryReport, :user_id => user.id
+      can :list, ActionSmser::DeliveryReport, :user_id => user.id
       cannot [:create, :update, :destroy], ActionSmser::DeliveryReport
 
       can :balance, User, :user_id => user.id
