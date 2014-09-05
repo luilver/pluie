@@ -1,3 +1,5 @@
+require 'em-http'
+
 module ActionSmser::DeliveryMethods
   class AsyncHttp
 
@@ -21,9 +23,11 @@ module ActionSmser::DeliveryMethods
 
         foreach = Proc.new do |numbers, iter|
           count +=1
+          query_params = request_params(info, numbers, sms)
           body = request_body(info, numbers, sms)
+          options = request_options(query_params, body, count < last_request)
 
-          http = connection.post(:head => r_head, :body => body, :path => path_url, :keepalive => count < last_request)
+          http = connection.post(options)
 
           http.callback do
             results = parse_response(http.response)
@@ -59,6 +63,26 @@ module ActionSmser::DeliveryMethods
         rand = Random.new
         7.times{ result << rand.rand(9).to_s}
         result
+    end
+
+    #Default values in case that one of them is not
+    #used to send information to the gateway
+    def self.request_body(info, numbers, sms)
+      nil
+    end
+
+    def self.request_params(info, numbers, sms)
+      nil
+    end
+
+    def self.request_options( query_params, body, keepalive)
+      options = {
+        :path => path_url, :keepalive => keepalive
+      }
+      options[:head] = r_head if r_head
+      options[:query] = query_params if query_params
+      options[:body] = body if body
+      options
     end
 
   end
