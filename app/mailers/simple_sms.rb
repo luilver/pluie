@@ -5,9 +5,9 @@ class SimpleSms < ActionSmser::Base
   MAX_SIZE = 160
 
   def multiple_receivers(receivers, text, pluie_user_id, pluie_route_id, dlr_method=nil)
-    if dlr_method && ActionSmser.delivery_options[dlr_method]
+    if dlr_method && ActionSmser.delivery_options[dlr_method.to_sym]
       #update delivery method  for this sms.
-      delivery_options[:delivery_method] = dlr_method
+      delivery_options[:delivery_method] = "async_#{dlr_method}".to_sym
     end
     @user_id = pluie_user_id
     @route_id = pluie_route_id
