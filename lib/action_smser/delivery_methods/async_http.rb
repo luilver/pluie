@@ -45,7 +45,7 @@ module ActionSmser::DeliveryMethods
 
           http.errback do
             #TODO... Log de los e
-            ActionSmser::Logger.error "Async infobip conn error: #{http.response.inspect} at #{Time.now}"
+            ActionSmser::Logger.error "Async conn error: #{http.response.inspect} at #{Time.now}"
             iter.next
           end
 
