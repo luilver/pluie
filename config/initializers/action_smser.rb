@@ -6,6 +6,9 @@ INFOBIP_PASS = ENV['INFOBIP_PASS']
 NEXMO_KEY = ENV['NEXMO_API_KEY']
 NEXMO_PASS = ENV['NEXMO_API_SECRET']
 
+ROUTESMS_KEY = ENV['ROUTESMS_KEY']
+ROUTESMS_PASS = ENV['ROUTESMS_PASS']
+
 PLUIE_HOST = Pluie::Application.config.default_url_options[:host]
 
 if Rails.env.development? || Rails.env.production?
@@ -19,4 +22,5 @@ if Rails.env.development? || Rails.env.production?
   ActionSmser.delivery_options[:admin_access] = ActionSmserUtils
   ActionSmser.delivery_options[:numbers_from_bulk] = 0.1
   ActionSmser.delivery_options[:min_numbers_in_sms] = 100
+  ActionSmser.delivery_options[:routesms] = { username: ROUTESMS_KEY, password: ROUTESMS_PASS, numbers_in_request: 5, parallel_requests: 10 }
 end
