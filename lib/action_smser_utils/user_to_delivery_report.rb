@@ -1,4 +1,19 @@
 module ActionSmserUtils
+  module ShowDeliveryReportsController
+    extend ActiveSupport::Concern
+
+    included do
+      before_action :set_delivery_report, only: [:show]
+
+      def show
+      end
+
+      def set_delivery_report
+        @delivery_report = ActionSmser::DeliveryReport.find(params[:id])
+      end
+    end
+  end
+
   module UserToDeliveryReport
     extend ActiveSupport::Concern
 
@@ -26,3 +41,4 @@ end
 
 ActionSmser::DeliveryReport.send :include, ActionSmserUtils::UserToDeliveryReport
 
+ActionSmser::DeliveryReportsController.send :include, ActionSmserUtils::ShowDeliveryReportsController

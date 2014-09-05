@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   mount ActionSmser::Engine => '/'
   get 'delivery_reports' => 'action_smser/delivery_reports', as: :delivery_reports
   get 'delivery_reports/list' => 'action_smser/delivery_reports#list', as: :list_delivery_reports
+  get 'delivery_reports/:id' => 'action_smser/delivery_reports#show', as: :delivery_report
 
   resources :credits
 
