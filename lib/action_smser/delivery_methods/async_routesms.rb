@@ -4,7 +4,7 @@ module ActionSmser::DeliveryMethods
   class AsyncRoutesms < AsyncHttp
     #:path_url, :base_url, :r_head, :r_body, :gateway_key
     @path_url = "bulksms/bulksms"
-    @base_url = "http://smpp2.routesms.com:8080/"
+    @base_url = "http://smsplus1.routesms.com:8080/"
     #@r_head =  nil # ver si basta con no declarlo
     @gateway_key = :routesms
 
@@ -27,11 +27,18 @@ module ActionSmser::DeliveryMethods
 
     def self.parse_response(response)
       #devolver array de results
-      ActionSmser::Logger.info "Routesms Response: #{response}"
+      chunks = response.split(",")
+      results = chunks.map do |c|
+        status, dest, msg_id = c.split("|")
+        {status: status.to_i, dest: dest, msg_id: msg_id}
+      end
+      results
     end
 
     def self.save_delivery_reports(sms, results, user, route_name)
-      0
+      count = 0
+
+      count
     end
 
   end
