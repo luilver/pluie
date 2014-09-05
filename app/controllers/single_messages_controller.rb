@@ -10,7 +10,7 @@ class SingleMessagesController < ApplicationController
   # GET /single_messages.json
   def index
     @single_messages = SingleMessage.paginate :page => params[:page],
-      :conditions => ['user_id', "%#{current_user.id}"],
+      :conditions => ['user_id = ?', "#{current_user.id}"],
       :order => 'created_at DESC',
       :per_page => 5
   end
