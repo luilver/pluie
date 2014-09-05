@@ -2,6 +2,7 @@ require_relative 'async_http'
 
 module ActionSmser::DeliveryMethods
   class AsyncRoutesms < AsyncHttp
+    include GatewayErrorInfo::RoutesmsErrors
     #:path_url, :base_url, :r_head, :r_body, :gateway_key
     @path_url = "bulksms/bulksms"
     @base_url = "http://smsplus1.routesms.com:8080/"
@@ -37,6 +38,21 @@ module ActionSmser::DeliveryMethods
 
     def self.save_delivery_reports(sms, results, user, route_name)
       count = 0
+
+      results.each do |res|
+        error_code = res[:status]
+        number = res[:dest]
+        msg_id = res[:msg_id]
+        dr = ActionSmser::DeliveryReport.build_with_user(sms, number, msg_id, user, route_name)
+        if error_code == GatewayErrorInfo::RoutesmsErrors::SUCCESS_CODE
+          count += 1
+        else
+          dr.status= "SENT_ERROR_#{self.routesms_error(error_code)}"
+          dr.log += "batch aborted" if msg_id == nil
+        end
+        dr.save
+        sms.delivery_reports.push(dr)
+      end
 
       count
     end
