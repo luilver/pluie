@@ -1,5 +1,6 @@
 require 'em-http'
 require 'action_smser_utils'
+require 'gateway_error_info'
 
 module ActionSmser::DeliveryMethods
   class AsyncHttp

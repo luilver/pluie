@@ -1,6 +1,5 @@
 require 'securerandom'
 require_relative 'async_http'
-require 'gateway_error_info'
 require 'json'
 
 module ActionSmser::DeliveryMethods
