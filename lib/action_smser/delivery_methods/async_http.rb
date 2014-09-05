@@ -4,7 +4,7 @@ module ActionSmser::DeliveryMethods
   class AsyncHttp
 
     class << self
-      attr_reader :path_url, :base_url, :r_head, :r_body, :gateway_key
+      attr_reader :path_url, :base_url, :r_head, :gateway_key
     end
 
     def self.deliver(sms)
@@ -79,7 +79,6 @@ module ActionSmser::DeliveryMethods
       options = {
         :path => path_url, :keepalive => keepalive
       }
-      options[:head] = r_head if r_head
       options[:query] = query_params if query_params
       options[:body] = body if body
       options

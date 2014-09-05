@@ -19,7 +19,7 @@ module ActionSmser::DeliveryMethods
 
 
     class << self
-      attr_reader :sender_address, :host
+      attr_reader :sender_address, :host, :r_body, :r_head
     end
 
     def self.request_body(info, numbers, sms)
@@ -91,6 +91,12 @@ module ActionSmser::DeliveryMethods
         end
       end
       info
+    end
+
+    def self.request_options( query_params, body, keepalive)
+      options = super(query_params, body, keepalive)
+      options[:head] = r_head
+      options
     end
 
   end
