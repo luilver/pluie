@@ -1,7 +1,9 @@
 module GatewayErrorInfo
   module RoutesmsErrors
+    SUCCESS_CODE = 1701
+
     HTTP_ERROR_CODES = {
-       1701  => "SUCESS",
+       SUCCESS_CODE  => "SUCCESS",
        1702  => "INVALID_URL",
        1703  => "INVALID_USER_OR_PASS",
        1704  => "INVALID_MSG_TYPE",
@@ -11,9 +13,10 @@ module GatewayErrorInfo
        1708  => "INVALID_DLR_FIELD",
        1709  => "USER_VALIDATION_FAILED",
        1710  => "INTERNAL_ERROR",
+       1715  => "RESPONSE_TIMEOUT",
        1025  => "NOT_ENOUGH_CREDITS",
        1032  => "DESTINATION_IN_DND",
-       1033  => "SENDER_TEMPLATE_MISMATCH",
+       1033  => "SENDER_TEMPLATE_MISMATCH"
     }
     module ClassMethods
       def routesms_error(error_code)
