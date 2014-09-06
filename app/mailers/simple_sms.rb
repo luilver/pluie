@@ -4,10 +4,11 @@ class SimpleSms < ActionSmser::Base
   attr_reader :receivers_hash
   MAX_SIZE = 160
 
-  def multiple_receivers(receivers, text, pluie_user_id, pluie_route_id, dlr_method=nil)
-    if dlr_method && ActionSmser.delivery_options[dlr_method.to_sym]
+  def multiple_receivers(receivers, text, pluie_user_id, pluie_route_id, dlr_method)
+    dlm = dlr_method.downcase
+    if ActionSmser.delivery_options[dlm.to_sym]
       #update delivery method  for this sms.
-      delivery_options[:delivery_method] = "async_#{dlr_method}".to_sym
+      delivery_options[:delivery_method] = "async_#{dlm}".to_sym
     end
     @user_id = pluie_user_id
     @route_id = pluie_route_id
@@ -22,8 +23,7 @@ class SimpleSms < ActionSmser::Base
   def sms_count
     #how many messages are necessary to send this sms, to 1 recipient using GSM7 encoding
     body_size = SimpleSms.message_real_length(body)
-    count = (body_size / MAX_SIZE) + (body_size % MAX_SIZE == 0 ? 0:1)
-    count
+    (body_size / MAX_SIZE) + (body_size % MAX_SIZE == 0 ? 0:1)
   end
 
   def perform
