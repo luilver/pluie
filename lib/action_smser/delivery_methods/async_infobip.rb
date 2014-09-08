@@ -79,7 +79,7 @@ module ActionSmser::DeliveryMethods
       if params["DeliveryReport"] && (msg = params["DeliveryReport"]["message"])
         dlrs_array = msg.is_a?(Array) ? msg : [msg]
         dlrs_array.each do |dlr|
-          stat = dlr["status"]
+          stat = dlr["status"].downcase
           stat += "_with_GSM_ERROR_#{dlr["gsmerror"]}" unless dlr["gsmerror"].eql?("0")
 
           info << {
