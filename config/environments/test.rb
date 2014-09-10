@@ -36,4 +36,12 @@ Pluie::Application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  #
+  #Secret key base
+  config.secret_key_base = '4c6ff30c61ca1bef1726dc803bfee01cdda84d169b9b052bdedd4258089fc4109ba285ad7bda391fc7809bb50fc7113b4960bd162979b93ebf
+  637dcaa5'
+
+  USE_EM_PROXY = false
+
+  config.default_url_options = { :host => "localhost:3000" }
 end
