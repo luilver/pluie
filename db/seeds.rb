@@ -7,41 +7,20 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Luilver
-u = User.create([{ email: 'luilver@gmail.com', password: 'luilver8' },
-                 { email: 'pepesenaris@gmail.com', password: 'pepe5678' }])
+users = User.create([{ email: 'luilver@gmail.com', password: 'luilver8' },
+                 { email: 'pepesenaris@gmail.com', password: 'pepe5678' },
+                 { email: 'admin@openbgs.com', password: 'gbsc1234', admin: true}])
 
-# Routesms
-g = Gateway.new
-g.name = 'routesms'
-g.price = 0.0035
-g.save
-r = Route.new
-r.price = 0.008
-r.name = "Plata"
-r.user = User.first
-r.gateway = g
-r.save
-r = Route.new
-r.price = 0.008
-r.name = "Silver"
-r.user = User.last
-r.gateway = g
-r.save
+gateways = Gateway.create([{name: 'routesms', price: 0.0035},
+                           {name: 'infobip', price: 0.0055}])
 
-# Infobip
-g = Gateway.new
-g.name = 'infobip'
-g.price = 0.0055
-g.save
-r = Route.new
-r.price = 0.01
-r.name = "Oro"
-r.user = User.first
-r.gateway = g
-r.save
-r = Route.new
-r.price = 0.01
-r.name = "Gold"
-r.user = User.last
-r.gateway = g
-r.save
+route_data = [{name: 'Silver',price: 0.008}, {name: 'Gold', price: 0.01}]
+
+Route.create(route_data) do |r|
+  users.each do |u|
+    gateways.each do |g|
+      r.gateway = g
+      r.user = u
+    end
+  end
+end
