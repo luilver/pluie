@@ -34,4 +34,9 @@ class SimpleSms < ActionSmser::Base
     @receivers_hash[msg_id]
   end
 
+  def sms(options)
+    @sms_type = options[:type]
+    super(options)
+  end
+
 end
