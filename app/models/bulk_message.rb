@@ -34,4 +34,7 @@ class BulkMessage < ActiveRecord::Base
     set.to_a
   end
 
+  def self.random
+    BulkMessage.all[rand BulkMessage.all.size]
+  end
 end
