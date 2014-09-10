@@ -23,6 +23,10 @@ class SingleMessage < ActiveRecord::Base
     sms.deliver
   end
 
+  def self.random
+    SingleMessage.all[rand BulkMessage.all.size]
+  end
+
   private
     def related_numbers
       self.number.split.each { |num| n = GsmNumber.find_by_number(num) ||
