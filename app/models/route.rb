@@ -12,4 +12,8 @@ class Route < ActiveRecord::Base
   def to_s
     self.name
   end
+
+  def self.random
+    Route.all[rand Route.all.size]
+  end
 end
