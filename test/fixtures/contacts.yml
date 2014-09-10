@@ -2,8 +2,6 @@
 
 one:
   name: MyString
-  gsm_number_id: 1
 
 two:
   name: MyString
-  gsm_number_id: 1
