@@ -82,10 +82,7 @@ module ActionSmser::DeliveryMethods
           stat = dlr["status"].downcase
           stat += "_with_GSM_ERROR_#{dlr["gsmerror"]}" unless dlr["gsmerror"].eql?("0")
 
-          info << {
-                    "msg_id" => dlr["id"], "status" => stat,
-                    "status_updated_at" => DateTime.parse(dlr["donedate"])
-                  }
+          info << {"msg_id" => dlr["id"], "status" => stat}
         end
       end
       info
