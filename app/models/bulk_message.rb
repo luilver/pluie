@@ -34,6 +34,6 @@ class BulkMessage < ActiveRecord::Base
   end
 
   def self.random
-    BulkMessage.all[rand BulkMessage.all.size]
+    BulkMessage.all[rand BulkMessage.count]
   end
 end

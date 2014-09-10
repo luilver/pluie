@@ -23,7 +23,7 @@ class SingleMessage < ActiveRecord::Base
   end
 
   def self.random
-    SingleMessage.all[rand BulkMessage.all.size]
+    SingleMessage.all[rand SingleMessage.count]
   end
 
   private
