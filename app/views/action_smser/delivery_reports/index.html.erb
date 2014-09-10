@@ -1,0 +1,158 @@
+<%
+  params['time_span'] ||= 'Last week'
+  params['redeliveries'] ||= 'Include normally'
+
+  time_span = case params['time_span'].to_s.downcase
+    when 'week before that'
+      2.weeks.ago..1.week.ago
+    when 'last 30 days'
+      30.days.ago..10.minutes.ago
+    when 'this month'
+      Time.now.at_beginning_of_month..10.minutes.ago
+    when '1 month ago'
+      1.month.ago.at_beginning_of_month..1.month.ago.at_end_of_month
+    when '2 months ago'
+      2.month.ago.at_beginning_of_month..2.month.ago.at_end_of_month
+    when 'last 24 hours'
+      1.day.ago..10.minutes.ago
+    when /^(\d\d)-(\d\d) hours/
+      $1.to_i.hours.ago..$2.to_i.hours.ago
+    else
+      1.week.ago..10.minutes.ago
+    end
+
+  ar_timespan = ActionSmser::DeliveryReport.where(["user_id = ?",current_user.id]).where(:created_at => time_span)
+
+  ar_redeliveries = case params['redeliveries'].to_s.downcase
+    when 'ignore redeliveries'
+      ar_timespan.where("re_delivery_of_delivery_report_id IS NULL")
+    when 'only redeliveries'
+      ar_timespan.where("re_delivery_of_delivery_report_id IS NOT NULL")
+    else
+      ar_timespan
+    end
+
+  ar_gateway = ar_redeliveries
+  ar_gateway = ar_gateway.where(:gateway => params[:gateway]) if (params[:gateway] && params[:gateway].to_s != 'all')
+
+%>
+
+
+<h1>Delivery Reports Summary for
+  (<span style="font-size: smaller"><%= "#{time_span.first.to_s(:db)} => #{time_span.last.to_s(:db)}" %></span>)
+  <%= "for #{params[:gateway]}" unless params[:gateway].blank? %>
+</h1>
+
+<p class="selection_links">
+  <strong>Show summary:</strong>
+  <% ['Last 24 hours', '48-24 hours', '72-48 hours', '96-72 hours ago', 'Last week', 'Week before that',
+      'Last 30 days', 'This month', '1 month ago', '2 months ago'].each do |key| %>
+    <%= link_to key, dr_summary_url(:time_span => key), :class => (key == params['time_span'] ? 'selected' : 'not_selected') %>
+  <% end %>
+</p>
+
+<p class="selection_links">
+  <strong>Redeliveries:</strong>
+
+  <% ['Include normally', 'Ignore redeliveries', 'Only redeliveries'].each do |key| %>
+    <%= link_to key, dr_summary_url(:redeliveries => key), :class => (key == params['redeliveries'] ? 'selected' : 'not_selected') %>
+  <% end %>
+</p>
+
+<h2>Select gateway</h2>
+<ul class="selection_links" style="width: 500px;">
+  <li>
+    <strong>
+        <%= link_to('all', dr_summary_url(:gateway => nil) ) %>
+    </strong>
+    &nbsp;&nbsp;
+    <%= total = ar_redeliveries.count %> sms
+    &nbsp;&nbsp;
+    (you can select only gateways that have messages in this period)
+  </li>
+  <% ar_redeliveries.group(:gateway).count.each do |key, val| %>
+    <li class="<%= (key == params['gateway'] ? 'selected' : 'not_selected') -%>">
+      <%= link_to(key, dr_summary_url(:gateway => key) ) %>
+
+      &nbsp;&nbsp;
+      <%= val %> sms
+      &nbsp;&nbsp;
+      (<strong><%= number_to_percentage(100.0 * val / total, :precision => 2) %></strong>)
+      <% if params[:gateway] == key %><strong style="padding-left: 50px;">(selected)</strong><% end %>
+    </li>
+  <% end %>
+</ul>
+
+
+<h2>Delivered Within (hour:min:sec)</h2>
+
+<% if ActiveRecord::Base.connection.adapter_name.downcase.to_s.include?("mysql") %>
+
+  <table>
+    <tr>
+      <th>DeliveryTime</th>
+      <th>Sms</th>
+      <th>% of sent sms</th>
+      <th>% of delivered sms</th>
+    </tr>
+
+    <% ar_delivered = ar_gateway.where(:status => 'delivered')
+       total = ar_gateway.count
+       total_delivered = ar_delivered.count
+    %>
+    <% ["00:00:30", "00:01:00", "00:02:00", "00:10:00", "00:30:00", "00:90:00", "03:00:00", "06:00:00", "24:00:00", "48:00:00"].each do |time| %>
+      <% dev_count = ar_delivered.where('TIMEDIFF(status_updated_at, created_at) < ?', time).count %>
+      <tr>
+        <td><%= time %></td>
+        <td><%= dev_count %></td>
+        <td><%= number_to_percentage(100.0 * dev_count / total, :precision => 2) %></td>
+        <td><%= number_to_percentage(100.0 * dev_count / total_delivered, :precision => 2) %></td>
+      </tr>
+    <% end %>
+
+  </table>
+
+<% else %>
+  Delivery report uses timediff sql and has only been tested with MySql. Disabled with other adapters for now.
+<% end %>
+
+<h2>DeliveryReport Statuses</h2>
+<ul>
+<%
+   total = ar_gateway.count
+   grouped_by_status = ar_gateway.group(:status).count.each do |key, val| %>
+
+    <li>
+      <strong><%= key %></strong>:
+      &nbsp;&nbsp;
+      <%= val %> sms
+      &nbsp;&nbsp;
+      (<strong><%= number_to_percentage(100.0 * val / total, :precision => 2) %></strong>)
+    </li>
+<% end %>
+</ul>
+
+<h2>By Sms Type</h2>
+<table>
+  <tr>
+    <th>SmsType</th>
+    <th>Count</th>
+    <th>% of total</th>
+    <th>Delivered count</th>
+    <th>Delivery %</th>
+  </tr>
+
+<%
+   total = ar_gateway.count
+   grouped_by_status = ar_gateway.group(:sms_type).count.each do |key, val| %>
+   <tr>
+     <td><strong><%= key %></strong></td>
+     <td><%= val %></td>
+     <td><strong><%= number_to_percentage(100.0 * val / total, :precision => 2) %></strong></td>
+     <td><%= sms_count = ar_gateway.where(:sms_type => key).where(:status => 'delivered').count %></td>
+     <td><strong><%= number_to_percentage(100.0 * sms_count / val, :precision => 2) %></strong></td>
+   </tr>
+<% end %>
+</table>
+
+
