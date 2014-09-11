@@ -4,6 +4,11 @@
   <strong>Name:</strong>
   <%= @list.name %>
 </p>
+<p>
+  <strong><%= t('size').capitalize %>:</strong>
+  <%= @list.gsm_numbers.count%>
+</p>
 
 <%= link_to 'Edit', edit_list_path(@list) %> |
-<%= link_to 'Back', lists_path %>
+<%= link_to 'Back', lists_path %> |
+<%= link_to 'New Bulk', new_bulk_message_path %>
