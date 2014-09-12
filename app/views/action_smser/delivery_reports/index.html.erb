@@ -21,7 +21,7 @@
       1.week.ago..10.minutes.ago
     end
 
-  ar_timespan = ActionSmser::DeliveryReport.where(:user => current_user).where(:created_at => time_span)
+  ar_timespan = ActionSmser::DeliveryReport.where(:user_id => current_user.id).where(:created_at => time_span)
 
   ar_redeliveries = case params['redeliveries'].to_s.downcase
     when 'ignore redeliveries'
