@@ -7,10 +7,20 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<% if current_user %>
+  <%= render '/right_menu' %>
+
+  <%= render '/top_menu' %>
+
 <hr>
+<% end %>
 
 <%= yield %>
 
 <hr>
+
+<%= render '/footer_menu' %>
+
 </body>
 </html>
