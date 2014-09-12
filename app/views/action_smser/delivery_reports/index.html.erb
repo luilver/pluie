@@ -38,10 +38,12 @@
 %>
 
 
-<h1>Delivery Reports Summary for
+<h1>Delivery Reports </h1>
+
+<h2>Summary for
   (<span style="font-size: smaller"><%= "#{time_span.first.to_s(:db)} => #{time_span.last.to_s(:db)}" %></span>)
   <%= "for #{params[:gateway]}" unless params[:gateway].blank? %>
-</h1>
+</h2>
 
 <p class="selection_links">
   <strong>Show summary:</strong>
