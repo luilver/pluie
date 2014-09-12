@@ -61,7 +61,7 @@
   <% end %>
 </p>
 
-<h2>Select gateway</h2>
+<h2>Select route</h2>
 <ul class="selection_links" style="width: 500px;">
   <li>
     <strong>
@@ -70,7 +70,7 @@
     &nbsp;&nbsp;
     <%= total = ar_redeliveries.count %> sms
     &nbsp;&nbsp;
-    (you can select only gateways that have messages in this period)
+    (you can select only routes that have messages in this period)
   </li>
   <% ar_redeliveries.group(:gateway).count.each do |key, val| %>
     <li class="<%= (key == params['gateway'] ? 'selected' : 'not_selected') -%>">
