@@ -87,9 +87,6 @@
 
 
 <h2>Delivered Within (hour:min:sec)</h2>
-
-<% if ActiveRecord::Base.connection.adapter_name.downcase.to_s.include?("mysql") %>
-
   <table>
     <tr>
       <th>DeliveryTime</th>
@@ -102,8 +99,8 @@
        total = ar_gateway.count
        total_delivered = ar_delivered.count
     %>
-    <% ["00:00:30", "00:01:00", "00:02:00", "00:10:00", "00:30:00", "00:90:00", "03:00:00", "06:00:00", "24:00:00", "48:00:00"].each do |time| %>
-      <% dev_count = ar_delivered.where('TIMEDIFF(status_updated_at, created_at) < ?', time).count %>
+    <% ["30", "60", "120", "600", "1800", "5400", "10800", "21600", "86400", "172800"].each do |time| %>
+      <% dev_count = ar_delivered.where('SELECT (strftime("%s",status_updated_at) - strftime("%s",created_at)) < ?', time).count %>
       <tr>
         <td><%= time %></td>
         <td><%= dev_count %></td>
@@ -111,12 +108,7 @@
         <td><%= number_to_percentage(100.0 * dev_count / total_delivered, :precision => 2) %></td>
       </tr>
     <% end %>
-
   </table>
-
-<% else %>
-  Delivery report uses timediff sql and has only been tested with MySql. Disabled with other adapters for now.
-<% end %>
 
 <h2>DeliveryReport Statuses</h2>
 <ul>
