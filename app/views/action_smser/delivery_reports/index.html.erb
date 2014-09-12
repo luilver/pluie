@@ -99,8 +99,8 @@
        total = ar_gateway.count
        total_delivered = ar_delivered.count
     %>
-    <% ["30", "60", "120", "600", "1800", "5400", "10800", "21600", "86400", "172800"].each do |time| %>
-      <% dev_count = ar_delivered.where('SELECT (strftime("%s",status_updated_at) - strftime("%s",created_at)) < ?', time).count %>
+  <% [["00:00:30","30"], ["00:01:00","60"], ["00:02:00","120"], ["00:10:00","600"], ["00:30:00","1800"], ["00:90:00","5400"], ["03:00:00","10800"], ["06:00:00","21600"], ["24:00:00","86400"], ["48:00:00","172800"]].each do |time,seconds| %>
+      <% dev_count = ar_delivered.where('SELECT (strftime("%s",status_updated_at) - strftime("%s",created_at)) < ?', seconds).count %>
       <tr>
         <td><%= time %></td>
         <td><%= dev_count %></td>
