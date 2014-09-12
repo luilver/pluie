@@ -44,8 +44,8 @@ class SingleMessagesController < ApplicationController
         #send_message(@single_message.user.gateway, @single_message.user, @single_message)
         #test SmsApi
 
-        format.html { redirect_to @single_message, notice: 'Single message was successfully created.' }
-        format.json { render :show, status: :created, location: @single_message }
+        format.html { redirect_to @single_message, notice: 'Single message was successfully sent.' }
+        format.json { render :show, status: :sent, location: @single_message }
       else
         format.html { render :new }
         format.json { render json: @single_message.errors, status: :unprocessable_entity }
