@@ -12,10 +12,13 @@ users = User.create([{ email: 'luilver@gmail.com', password: 'luilver8' },
                  { email: 'admin@openbgs.com', password: 'gbsc1234', admin: true}])
 
 gateways = Gateway.create([{name: 'routesms', price: 0.0035},
-                           {name: 'infobip', price: 0.0055}])
+                           {name: 'infobip', price: 0.0055},
+                           {name: 'nexmo', price: 0.034}])
 
 route_data = [{name: 'Silver',price: 0.008, gateway: gateways.find { |g| g.name == 'routesms'}},
-              {name: 'Gold', price: 0.01, gateway: gateways.find { |g| g.name == 'infobip'}}]
+              {name: 'Gold', price: 0.01, gateway: gateways.find { |g| g.name == 'infobip'}},
+              {name: 'Diamond', price: 0.10, gateway: gateways.find { |g| g.name == 'nexmo'}}
+            ]
 
 users.each do |u|
   Route.create(route_data) do |r|
