@@ -17,7 +17,7 @@ gateways = Gateway.create([{name: 'routesms', price: 0.0035},
 
 route_data = [{name: 'Silver',price: 0.008, gateway: gateways.find { |g| g.name == 'routesms'}},
               {name: 'Gold', price: 0.01, gateway: gateways.find { |g| g.name == 'infobip'}},
-              {name: 'Diamond', price: 0.10, gateway: gateways.find { |g| g.name == 'nexmo'}}
+              {name: 'Diamond', price: 0.07, gateway: gateways.find { |g| g.name == 'nexmo'}}
             ]
 
 users.each do |u|
