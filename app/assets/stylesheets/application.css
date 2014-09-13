@@ -45,6 +45,7 @@ li.selected {background-color: #ddd;}
 .menu { margin-top: 30px; }
 .menu a { margin-right: 20px; font-size: 1.2em; }
 .right-menu { margin-top: 0px; float: right; }
-.right-menu a { margin-right: 10px; }
+.right-menu a { margin-right: 5px; margin-left: 5px; }
+.right-menu b { margin-right: 5px; }
 .footer-menu { margin-top: 10px; }
 .footer-menu a { margin-right: 10px; font-size: 0.9em; }
