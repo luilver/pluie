@@ -49,4 +49,7 @@ class User < ActiveRecord::Base
     self.email
   end
 
+  def username
+    to_s[0,to_s.index('@')]
+  end
 end
