@@ -22,6 +22,7 @@ if Rails.env.development? || Rails.env.production?
   ActionSmser.delivery_options[:admin_access] = ActionSmserUtils
   ActionSmser.delivery_options[:numbers_from_bulk] = 0.1
   ActionSmser.delivery_options[:min_numbers_in_sms] = 100
+  ActionSmser.delivery_options[:gateway_commit]['routesms'] = ActionSmser::DeliveryMethods::AsyncRoutesms
   ActionSmser.delivery_options[:routesms] = { username: ROUTESMS_KEY, password: ROUTESMS_PASS, numbers_in_request: 5, parallel_requests: 10 }
   ActionSmser.delivery_options[:nexmo] = { username: NEXMO_KEY, password: NEXMO_PASS, numbers_in_request: 1, parallel_requests: 25 }
   ActionSmser.delivery_options[:inspect_request] = Rails.env.development?
