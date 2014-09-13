@@ -15,7 +15,7 @@ module ActionSmser::DeliveryMethods
         :password => sms.delivery_options[gateway_key][:password],
         :type => 0,
         :dlr => 1,
-        :source => cubacel_random_number,
+        :source => '',
         :message => sms.body
       }
       msg
