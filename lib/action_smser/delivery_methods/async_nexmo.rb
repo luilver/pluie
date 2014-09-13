@@ -71,5 +71,9 @@ module ActionSmser::DeliveryMethods
       info
     end
 
+    def self.account_balance_url(key, pass)
+      "https://rest.nexmo.com/account/get-balance/#{key}/#{pass}"
+    end
+
   end
 end

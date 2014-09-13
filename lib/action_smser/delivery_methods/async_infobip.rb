@@ -93,5 +93,9 @@ module ActionSmser::DeliveryMethods
       options.merge!({head: r_head})
     end
 
+    def self.account_balance_url(key, pass)
+      "http://api.infobip.com/api/command?username=#{key}&password=#{pass}&cmd=CREDIT"
+    end
+
   end
 end
