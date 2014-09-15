@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  gateway_id: 
-  user_id: 
-  msg_id: 
+  gateway_id: 1
+  user_id: 1
+  msg_id:
   msg_type: Msg
 
 two:
-  gateway_id: 
-  user_id: 
-  msg_id: 
+  gateway_id: 2
+  user_id: 2
+  msg_id:
   msg_type: Msg

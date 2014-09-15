@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class ContactTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "should have name" do
+    contact = Contact.random
+    assert_not contact.name.blank?
+  end
 end

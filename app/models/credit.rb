@@ -5,4 +5,8 @@ class Credit < ActiveRecord::Base
   def save_owner
     self.user.save
   end
+
+  def self.random
+    Credit.all[rand Credit.count]
+  end
 end

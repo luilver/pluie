@@ -52,4 +52,8 @@ class User < ActiveRecord::Base
   def username
     to_s[0,to_s.index('@')]
   end
+
+  def self.random
+    User.all[rand User.count]
+  end
 end
