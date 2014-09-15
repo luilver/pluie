@@ -4,6 +4,8 @@ Delayed::Worker.max_attempts = 1
 #The failed jobs will be marked with non-null failed_at.
 Delayed::Worker.destroy_failed_jobs = false
 
+Delayed::Worker.logger = Rails.logger
+
 def bulk_sms_priority(index)
   index
 end
