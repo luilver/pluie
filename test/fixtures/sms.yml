@@ -2,12 +2,12 @@
 
 one:
   gateway_id: 1
-  user_id:
+  user_id: 1
   msg_id:
   msg_type: Msg
 
 two:
   gateway_id: 2
-  user_id:
+  user_id: 2
   msg_id:
   msg_type: Msg
