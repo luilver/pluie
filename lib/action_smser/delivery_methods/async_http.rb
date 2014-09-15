@@ -10,6 +10,9 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.deliver(sms)
+      File.open('/tmp/delayed_job.log', "a+") do |file|
+        file.write "AsyncHttp.deliver \n"
+      end
       batch_size = sms.delivery_options[gateway_key][:numbers_in_request]
       concurrent_requests = sms.delivery_options[gateway_key][:parallel_requests]
       batches = sms.to_numbers_array.each_slice(batch_size).to_a
@@ -40,12 +43,18 @@ module ActionSmser::DeliveryMethods
               user.bill_sms(success_sms, route.price)
             else
               ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
+              File.open('/tmp/delayed_job.log', "a+") do |file|
+                file.write "http.callback #{results} \n"
+              end
             end
             iter.next
           end
 
           http.errback do
             #TODO... Log de los e
+              File.open('/tmp/delayed_job.log', "a+") do |file|
+                file.write "http.errback conn error \n"
+              end
             ActionSmser::Logger.error "Async conn error: #{http.response.inspect} at #{Time.now}"
             iter.next
           end

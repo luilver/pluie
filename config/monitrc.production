@@ -1,0 +1,3 @@
+check process delayed_job with pidfile /home/luilver/www/sms.knal.es/tmp/pids/delayed_job.pid
+start program = "/bin/su - luilver -c 'cd /home/luilver/www/sms.knal.es/; bin/delayed_job --queues=deliver,bulksms start >> log/delayed_job.log 2>&1'"
+stop program = "/bin/su - luilver -c 'cd /home/luilver/www/sms.knal.es/; bin/delayed_job --queues=deliver,bulksms stop >> log/delayed_job.log 2>&1'"
