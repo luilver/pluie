@@ -40,4 +40,7 @@ class Sms < ActiveRecord::Base
     sms
   end
 
+  def self.random
+    Sms.all[rand Sms.count]
+  end
 end
