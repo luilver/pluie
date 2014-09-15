@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class CreditTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "should have balance" do
+    credit = Credit.random
+    assert_not credit.balance.blank?
+  end
 end
