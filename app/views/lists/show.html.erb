@@ -5,7 +5,7 @@
   <%= @list.name %>
 </p>
 <p>
-  <strong><%= t('size').capitalize %>:</strong>
+  <strong><%= t('recipient').capitalize.pluralize(@list.gsm_numbers.count) %>:</strong>
   <%= @list.gsm_numbers.count%>
 </p>
 

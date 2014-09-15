@@ -1,6 +1,7 @@
 
 <% items_within_page = 20 %>
-<h1 id="delivery_reports_list"><%= items_within_page %> delivery_reports ordered by created_at</h1>
+<h1>Delivery Reports</h1>
+<h2 id="delivery_reports_list"><%= items_within_page %> delivery reports ordered by creation date</h2>
 
 <%
 offset = params[:offset].to_i
@@ -20,7 +21,7 @@ offset = 0 if offset < -0
     <th>Id</th>
     <th>Created_at</th>
     <th>Msg id</th>
-    <th>Gateway</th>
+    <th>Route</th>
     <th>Status</th>
     <th>Status updated at</th>
     <th>Recipient</th>
@@ -31,7 +32,7 @@ offset = 0 if offset < -0
     <th>&nbsp;O</th>
   </tr>
 
-  <% ActionSmser::DeliveryReport.where(:user => current_user).order('created_at DESC').offset(offset).first(items_within_page).each do |delivery_report| %>
+  <% ActionSmser::DeliveryReport.where(:user_id => current_user.id).order('created_at DESC').offset(offset).first(items_within_page).each do |delivery_report| %>
   <tr>
     <td style="white-space: nowrap;"><%= delivery_report.id %></td>
     <td style="white-space: nowrap;"><%= delivery_report.created_at %></td>
