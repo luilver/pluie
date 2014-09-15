@@ -1,6 +1,7 @@
 
 <% items_within_page = 20 %>
-<h1 id="delivery_reports_list"><%= items_within_page %> delivery_reports ordered by created_at</h1>
+<h1>Delivery Reports</h1>
+<h2 id="delivery_reports_list"><%= items_within_page %> delivery reports ordered by creation date</h2>
 
 <%
 offset = params[:offset].to_i
@@ -20,7 +21,7 @@ offset = 0 if offset < -0
     <th>Id</th>
     <th>Created_at</th>
     <th>Msg id</th>
-    <th>Gateway</th>
+    <th>Route</th>
     <th>Status</th>
     <th>Status updated at</th>
     <th>Recipient</th>

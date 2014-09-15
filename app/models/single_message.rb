@@ -18,9 +18,12 @@ class SingleMessage < ActiveRecord::Base
   end
 
   def deliver
-    dlr_method = self.route.gateway.name
-    sms = SimpleSms.multiple_receivers(receivers, self.message, self.user.id, self.route.id, dlr_method)
+    sms = SimpleSms.multiple_receivers(receivers, self)
     sms.deliver
+  end
+
+  def self.random
+    SingleMessage.all[rand SingleMessage.count]
   end
 
   private

@@ -22,6 +22,9 @@ class BulkMessagesController < ApplicationController
   # GET /bulk_messages/new
   def new
     @bulk_message = BulkMessage.new
+    if params[:list_ids]
+      @list_ids = params[:list_ids].map{|id| id.to_i}.to_a
+    end
   end
 
   # GET /bulk_messages/1/edit

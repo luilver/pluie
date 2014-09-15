@@ -22,7 +22,7 @@ class BulkMessage < ActiveRecord::Base
     size = [(numbers.size * ActionSmser.delivery_options[:numbers_from_bulk]).to_i, ActionSmser.delivery_options[:min_numbers_in_sms]].max
     batches = numbers.each_slice(size).to_a
     batches.each_with_index do |nums, index|
-      sms = SimpleSms.multiple_receivers(nums, self.message, self.user.id, self.route.id, dlr_method)
+      sms = SimpleSms.multiple_receivers(nums, self)
       Delayed::Job.enqueue(sms, :priority => bulk_sms_priority(index), :queue => bulk_sms_queue)
     end
     rescue StandardError => e
@@ -43,4 +43,7 @@ class BulkMessage < ActiveRecord::Base
     set.to_a
   end
 
+  def self.random
+    BulkMessage.all[rand BulkMessage.count]
+  end
 end
