@@ -7,4 +7,8 @@ class Gateway < ActiveRecord::Base
   def to_s
     self.name
   end
+
+  def self.random
+    Gateway.all[rand Gateway.count]
+  end
 end
