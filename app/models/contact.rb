@@ -7,4 +7,7 @@ class Contact < ActiveRecord::Base
     self.name
   end
 
+  def self.random
+    Contact.all[rand Contact.count]
+  end
 end
