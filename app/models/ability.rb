@@ -16,8 +16,8 @@ class Ability
       cannot [:update, :destroy],
         [BulkMessage, GroupMessage, SingleMessage]
 
-      can :read, Credit, :user_id => user.id
-      cannot [:create, :update, :destroy], Credit
+      can :index, Credit, :user_id => user.id
+      cannot [:create, :update, :destroy, :show], Credit
 
       can :read, ActionSmser::DeliveryReport, :user_id => user.id
       can :list, ActionSmser::DeliveryReport, :user_id => user.id
