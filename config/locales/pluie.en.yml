@@ -1,0 +1,9 @@
+en:
+  size: 'size'
+  recipient: 'recipient'
+  home: 'Home'
+  single_mode: 'Single mode'
+  massive_mode: 'Masive Mode'
+  lists: 'List'
+  summary: 'Summary'
+  all_sms: 'All Sms'
