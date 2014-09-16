@@ -12,3 +12,6 @@ es:
   routes: 'Rutas'
   account: 'Cuenta'
   sign_out: 'Salir'
+
+  new: "Nuevo %{item}"
+  single_message: 'mensaje sencillo'

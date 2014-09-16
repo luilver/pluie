@@ -9,3 +9,6 @@ en:
   all_sms: 'All Sms'
   credits: 'Credits'
   routes: 'Routes'
+
+  new: "New %{item}"
+  single_message: 'single message'
