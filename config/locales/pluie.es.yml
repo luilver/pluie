@@ -1,0 +1,10 @@
+es:
+  size: 'cantidad'
+  recipient: 'destinatarios'
+  home: 'Inicio'
+  single_mode: 'Sencillo'
+  massive_mode: 'Masivo'
+  lists: 'Lista'
+  summary: 'Resumen'
+  all_sms: 'Sms'
+  welcome: 'bienvenido'

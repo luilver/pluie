@@ -45,9 +45,6 @@ gem 'devise'
 # Cancan
 gem 'cancan'
 
-gem 'clockworksms'
-gem 'nexmo'
-
 group :development do
   # Better errors & binding of caller
   gem 'better_errors'
@@ -65,18 +62,14 @@ gem 'nokogiri'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
-#async processing
-gem 'sucker_punch'
 
 #Paginate
 gem 'will_paginate'
-
-#Infobip
-gem 'oneapi-ruby'
-
 
 gem 'em-http-request'
 
 gem 'action_smser'
 
 gem 'actionpack-xml_parser' # to parse infobip dlr post
+
+gem 'rails-i18n', '~> 4.0.0' # For 4.0.x
