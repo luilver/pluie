@@ -80,3 +80,5 @@ gem 'em-http-request'
 gem 'action_smser'
 
 gem 'actionpack-xml_parser' # to parse infobip dlr post
+
+gem 'rails-i18n', '~> 4.0.0' # For 4.0.x
