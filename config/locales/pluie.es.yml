@@ -39,7 +39,7 @@ es:
   count: 'Cantidad'
   of_total: 'del total'
   delivered_count: 'Cant. entregada'
-  delivery: 'Entrega'
+  delivery: '% de entrega'
   credits: 'Cr&eacute;ditos'
   routes: 'Rutas'
   account: 'Cuenta'
