@@ -2,6 +2,7 @@ es:
   size: 'cantidad'
   recipient: 'destinatarios'
   home: 'Inicio'
+  welcome: 'bienvenido'
   single_mode: 'Sencillo'
   massive_mode: 'Masivo'
   lists: 'Lista'
@@ -39,3 +40,9 @@ es:
   of_total: 'del total'
   delivered_count: 'Cant. entregada'
   delivery: 'Entrega'
+  credits: 'Cr&eacute;ditos'
+  routes: 'Rutas'
+  account: 'Cuenta'
+  sign_out: 'Salir'
+  new: "Nuevo %{item}"
+  single_message: 'mensaje sencillo'
