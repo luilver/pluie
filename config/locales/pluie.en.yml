@@ -12,3 +12,4 @@ en:
 
   new: "New %{item}"
   single_message: 'single message'
+  not_route_error: 'No route for user'

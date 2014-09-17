@@ -82,3 +82,4 @@ es:
   will_paginate:
     previous_label: 'Anterior'
     next_label: 'Siguiente'
+  not_route_error: 'No se eligio una ruta para el usuario'
