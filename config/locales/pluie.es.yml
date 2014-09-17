@@ -47,3 +47,9 @@ es:
   new: "Nuevo %{item}"
   single_message: 'mensaje sencillo'
   logged_in_as: 'Identificado como'
+  user: 'Usuario'
+  new_credit: 'Añadir cr&eacute;dito'
+  edit: 'Editar'
+  back: 'Atr&aacute;s'
+  listing_credits: 'Cr&eacute;ditos'
+  credit_date: 'Fecha'

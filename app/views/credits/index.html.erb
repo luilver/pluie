@@ -1,13 +1,13 @@
-<h1>Listing credits</h1>
+<h1><%= t('listing_credits').html_safe %></h1>
 
 <table>
   <thead>
     <tr>
       <% if current_user.admin %>
-        <th>User</th>
+        <th><%= t('user') %></th>
       <% end %>
       <th>Balance</th>
-      <th>Date</th>
+      <th><%= t('credit_date') %></th>
     </tr>
   </thead>
 
@@ -27,5 +27,5 @@
 <p><%= will_paginate @lists %></p>
 
 <% if current_user.admin %>
-  <%= link_to 'New Credit', new_credit_path %>
+  <%= link_to t('new_credit').html_safe, new_credit_path %>
 <% end %>

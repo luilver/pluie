@@ -16,7 +16,7 @@
     <%= f.text_field :balance %>
   </div>
   <div class="field">
-    <%= f.label :user %><br>
+    <%= f.label t('user') %><br>
     <%= select_tag :user,
       options_from_collection_for_select(User.all, "id", "email"),
       {:size => [5,User.all.collect.count].min}
