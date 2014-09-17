@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   end
 
 
+  get 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
+  post 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
 
   scope ":locale", locale: /en|es/ do
 
