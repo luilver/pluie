@@ -60,7 +60,7 @@ es:
   account: 'Cuenta'
   sign_out: 'Salir'
   new: "Nuevo %{item}"
-  single_message: 'mensaje sencillo'
+  single_message: 'mensaje puntual'
   logged_in_as: 'Identificado como'
   user: 'Usuario'
   new_credit: 'A&ntilde;adir cr&eacute;dito'
@@ -82,4 +82,4 @@ es:
   will_paginate:
     previous_label: 'Anterior'
     next_label: 'Siguiente'
-  not_route_error: 'No se eligio una ruta para el usuario'
+  not_route_error: 'No se eligi&oacute; una ruta para el usuario'
