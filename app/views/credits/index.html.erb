@@ -7,7 +7,11 @@
         <th><%= t('user') %></th>
       <% end %>
       <th>Balance</th>
+      <th><%= t('description').html_safe %></th>
       <th><%= t('credit_date') %></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -18,7 +22,11 @@
           <td><%= credit.user %></td>
         <% end %>
         <td><%= credit.balance %></td>
+        <td><%= credit.description %></td>
         <td><%= credit.created_at %></td>
+        <td><%= link_to t('show'), credit %></td>
+        <td><%= link_to t('edit'), edit_credit_path(credit) %></td>
+        <td><%= link_to t('destroy'), credit, method: :delete, data: { confirm: t('sure').html_safe } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -69,6 +69,7 @@ es:
   back: 'Atr&aacute;s'
   listing_credits: 'Cr&eacute;ditos'
   credit_date: 'Fecha'
+  description: 'Descripci&oacute;n'
   name: 'Nombre'
   price: 'Precio'
   gateway: 'Proveedor'

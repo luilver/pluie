@@ -16,6 +16,10 @@
     <%= f.text_field :balance %>
   </div>
   <div class="field">
+    <%= t('description').html_safe %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
     <%= f.label t('user') %><br>
     <%= select_tag :user,
       options_from_collection_for_select(User.all, "id", "email"),

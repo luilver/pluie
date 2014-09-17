@@ -1,12 +1,17 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Balance:</strong>
+  <strong><%= t('balance') %>:</strong>
   <%= @credit.balance %>
 </p>
 
 <p>
-  <strong>User:</strong>
+  <strong><%= t('description').html_safe %>:</strong>
+  <%= @credit.description %>
+</p>
+
+<p>
+  <strong><%= t('user') %>:</strong>
   <%= @credit.user %>
 </p>
 
