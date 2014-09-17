@@ -27,7 +27,7 @@ es:
   ignore_redeliveries: 'Ignorarlos'
   only_redeliveries: 'Solo re-env&iacute;os'
   select_route: 'Seleccionar ruta'
-  all: 'todas'
+  all: 'Todas'
   you_can_select: 'solo puede seleccionar rutas con mensajes en este per&iacute;odo'
   delivered_within: 'Entregados en (hora:min:seg)'
   delivery_time: 'Tiempo'
