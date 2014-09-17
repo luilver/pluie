@@ -78,3 +78,6 @@ es:
   destroy: 'Eliminar'
   sure: '&iquest;Est&aacute; seguro?'
   editing_route: 'Editar ruta'
+  will_paginate:
+    previous_label: 'Anterior'
+    next_label: 'Siguiente'
