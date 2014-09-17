@@ -46,3 +46,4 @@ es:
   sign_out: 'Salir'
   new: "Nuevo %{item}"
   single_message: 'mensaje sencillo'
+  logged_in_as: 'Identificado como'
