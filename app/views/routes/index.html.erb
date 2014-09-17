@@ -1,12 +1,12 @@
-<h1>Listing routes</h1>
+<h1><%= t('listing_routes') %></h1>
 
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>User</th>
-      <th>Gateway</th>
+      <th><%= t('name') %></th>
+      <th><%= t('price') %></th>
+      <th><%= t('user') %></th>
+      <th><%= t('gateway') %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -20,9 +20,9 @@
         <td><%= route.price %></td>
         <td><%= route.user %></td>
         <td><%= route.gateway %></td>
-        <td><%= link_to 'Show', route %></td>
-        <td><%= link_to 'Edit', edit_route_path(route) %></td>
-        <td><%= link_to 'Destroy', route, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t('show'), route %></td>
+        <td><%= link_to t('edit'), edit_route_path(route) %></td>
+        <td><%= link_to t('destroy'), route, method: :delete, data: { confirm: t('sure').html_safe } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <p><%= will_paginate @routes %></p>
 
-<%= link_to 'New Route', new_route_path %>
+<%= link_to t('new_route').html_safe, new_route_path %>
