@@ -1,5 +1,5 @@
 <p id="alert"><%= alert %></p>
   <h1><%= t('welcome') %></h1>
   <p>
-    <%= t('.today is ').html_safe %><%= I18n.localize(Time.current, :format => :long).html_safe %>h
+    <%= t('today_is').html_safe %> <%= I18n.localize(Time.current, :format => :long).html_safe %>h
   </p>
