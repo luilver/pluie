@@ -1,24 +1,24 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= t('name') %>:</strong>
   <%= @route.name %>
 </p>
 
 <p>
-  <strong>Price:</strong>
+  <strong><%= t('price') %>:</strong>
   <%= @route.price %>
 </p>
 
 <p>
-  <strong>User:</strong>
+  <strong><%= t('user') %>:</strong>
   <%= @route.user %>
 </p>
 
 <p>
-  <strong>Gateway:</strong>
+  <strong><%= t('gateway') %>:</strong>
   <%= @route.gateway %>
 </p>
 
-<%= link_to 'Edit', edit_route_path(@route) %> |
-<%= link_to 'Back', routes_path %>
+<%= link_to t('edit'), edit_route_path(@route) %> |
+<%= link_to t('back').html_safe, routes_path %>

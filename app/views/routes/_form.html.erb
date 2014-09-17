@@ -12,21 +12,21 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label t('name') %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :price %><br>
+    <%= f.label t('price') %><br>
     <%= f.text_field :price %>
   </div>
   <fieldset>
-    <legend>User</legend>
+    <legend><%= t('user') %></legend>
     <%= f.select :user_id,
       options_from_collection_for_select(User.all, "id", "email")
     %>
   </fieldset>
   <fieldset>
-    <legend>Gateway</legend>
+    <legend><%= t('gateway') %></legend>
     <%= f.select :gateway_id,
       options_from_collection_for_select(Gateway.all, "id", "name")
     %>
