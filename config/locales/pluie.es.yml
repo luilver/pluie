@@ -47,7 +47,7 @@ es:
   to_offset: 'pr&oacute;ximos'
   message_id: 'No. Msg'
   status: 'Estado'
-  route: 'Ruta'
+  route: 'ruta'
   id: 'No.'
   created_at: 'Creado en'
   msg_id: 'No. Mensaje'
@@ -86,3 +86,8 @@ es:
   not_route_error: 'No existe una ruta para el usuario'
 
   message: 'mensaje'
+  send: 'enviar'
+  sending_options: 'opciones de env&iacute;o'
+
+  single_message_plural: 'mensajes puntuales'
+

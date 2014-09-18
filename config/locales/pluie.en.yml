@@ -9,6 +9,7 @@ en:
   all_sms: 'All Sms'
   credits: 'Credits'
   routes: 'Routes'
+  route: 'route'
 
   new: "New %{item}"
   single_message: 'single message'
@@ -16,3 +17,9 @@ en:
   not_route_error: 'No route for user'
 
   message: 'message'
+  send: 'send'
+  sending_options: 'sending options '
+
+  single_message_plural: 'single messages'
+
+  show: "Show"

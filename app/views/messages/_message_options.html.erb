@@ -1,7 +1,7 @@
 <fieldset>
-  <legend>Sending options</legend>
+  <legend><%= t(:sending_options).capitalize.html_safe%></legend>
   <div class="field">
-    <%= f.label :route %>:
+    <%= f.label  t(:route) %>:
     <%= f.select :route_id,
       options_from_collection_for_select(current_user.routes, "id", "name")
     %>
