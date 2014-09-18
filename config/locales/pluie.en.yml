@@ -11,7 +11,8 @@ en:
   routes: 'Routes'
   route: 'route'
 
-  new: "New %{item}"
+  new_item: "New %{item}"
+  editing: "Editing %{item}"
   single_message: 'single message'
   bulk_message: 'bulk message'
   not_route_error: 'No route for user'
@@ -23,3 +24,4 @@ en:
   single_message_plural: 'single messages'
 
   show: "Show"
+  all_m: "all"

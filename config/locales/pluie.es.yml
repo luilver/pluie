@@ -28,6 +28,7 @@ es:
   only_redeliveries: 'Solo re-env&iacute;os'
   select_route: 'Seleccionar ruta'
   all: 'Todas'
+  all_m: 'Todos'
   you_can_select: 'solo puede seleccionar rutas con mensajes en este per&iacute;odo'
   delivered_within: 'Entregados en (hora:min:seg)'
   delivery_time: 'Tiempo'
@@ -59,7 +60,7 @@ es:
   routes: 'Rutas'
   account: 'Cuenta'
   sign_out: 'Salir'
-  new: "Nuevo %{item}"
+  new_item: "Nuevo %{item}"
   single_message: 'mensaje puntual'
   bulk_message: 'mensaje masivo'
   logged_in_as: 'Identificado como'
@@ -87,7 +88,9 @@ es:
 
   message: 'mensaje'
   send: 'enviar'
+  new: 'Nuevo'
   sending_options: 'opciones de env&iacute;o'
 
   single_message_plural: 'mensajes puntuales'
 
+  editing: "Editar %{item}"
