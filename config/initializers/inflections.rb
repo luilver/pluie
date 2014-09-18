@@ -16,7 +16,6 @@
 # end
 
 ActiveSupport::Inflector.inflections(:es) do |inflect|
-  inflect.plural /(ruta)/, '\1s'
   inflect.plural /([^djlnrs])([A-Z]|_|$)/, '\1s\2'
   inflect.plural /([djlnrs])([A-Z]|_|$)/, '\1es\2'
   inflect.plural /(.*)z([A-Z]|_|$)$/i, '\1ces\2'
