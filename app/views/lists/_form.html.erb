@@ -12,17 +12,17 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label t(:name) %><br>
     <%= f.text_field :name %>
   </div>
   <fieldset>
-    <legend>Upload file (.txt):</legend>
+    <legend><%= t(:upload_file)%> (.txt):</legend>
       <%= f.file_field :file %>
       <%= check_box_tag :remove %>
       <%= label_tag :remove %>
   </fieldset>
   <fieldset>
-    <legend>GSM numbers</legend>
+    <legend><% t(:gsm_numbers).html_safe%></legend>
     <%= select_tag :gsm_numbers,
       options_from_collection_for_select(@list.gsm_numbers, "id", "number"),
       {:multiple => true, :size => 5}
