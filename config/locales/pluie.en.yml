@@ -10,6 +10,7 @@ en:
   credits: 'Credits'
   routes: 'Routes'
   route: 'route'
+  gateway: 'Gateway'
 
   new_item: "New %{item}"
   editing: "Editing %{item}"
@@ -19,10 +20,13 @@ en:
 
   message: 'message'
   send: 'send'
-  sending_options: 'sending options '
+  sending_options: 'sending options'
 
   single_message_plural: 'single messages'
   bulk_message_plural: 'bulk_messages'
 
   show: "Show"
   all_m: "all"
+
+  name: 'Name'
+  price: 'Price'

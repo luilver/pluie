@@ -1,14 +1,15 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= t(:name)%>:</strong>
   <%= @gateway.name %>
 </p>
 
 <p>
-  <strong>Price:</strong>
+  <strong><%= t(:price)%>:</strong>
   <%= @gateway.price %>
 </p>
 
-<%= link_to 'Edit', edit_gateway_path(@gateway) %> |
-<%= link_to 'Back', gateways_path %>
+<%= link_to t(:edit), edit_gateway_path(@gateway) %> |
+<%= link_to t(:back).html_safe, gateways_path %>
+
