@@ -14,6 +14,7 @@ en:
 
   new_item_f: "New %{item}"
   new_item: "New %{item}"
+  create_item: "Create %{item}"
   editing: "Editing %{item}"
   single_message: 'single message'
   bulk_message: 'bulk message'
@@ -34,3 +35,5 @@ en:
 
   upload_file: 'Upload file'
   gsm_numbers: 'GSM numbers'
+
+  choose_file: "Choose file"
