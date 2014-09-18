@@ -1,7 +1,9 @@
+require 'credit_validator'
 require 'delayed_job'
 require 'set'
 
 class BulkMessage < ActiveRecord::Base
+  include ActiveModel::Validations
   belongs_to :user
   belongs_to :route
   has_and_belongs_to_many :lists
@@ -10,6 +12,7 @@ class BulkMessage < ActiveRecord::Base
 
   validates :message, presence: true
   validates :lists, presence: true
+  validates_with Validations::CreditValidator
 
   def receivers
     self.gsm_numbers.map {|gsm| gsm.number}
