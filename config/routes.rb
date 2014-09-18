@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   scope ":locale", locale: /en|es/ do
 
+    get 'users' => 'users#index', as: :users
+
     mount ActionSmser::Engine => '/'
     get 'delivery_reports' => 'action_smser/delivery_reports', as: :delivery_reports
     get 'delivery_reports/list' => 'action_smser/delivery_reports#list', as: :list_delivery_reports
