@@ -1,16 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Message:</strong>
+  <strong><%= t(:message).capitalize%>:</strong>
   <%= @single_message.message %>
 </p>
 
 <p>
-  <strong>Recipients:</strong>
+  <strong><%= t(:recipient).capitalize%>:</strong>
   <%= @single_message.number %>
 </p>
 
 <%= render '/messages/message_route' %>
 
-<%= link_to 'New', new_single_message_path %> |
-<%= link_to 'All', single_messages_path %>
+<%= link_to t(:new), new_single_message_path %> |
+<%= link_to t(:all_m).capitalize, single_messages_path %>

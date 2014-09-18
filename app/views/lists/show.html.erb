@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= t(:name)%></strong>
   <%= @list.name %>
 </p>
 <p>
@@ -9,6 +9,6 @@
   <%= @list.gsm_numbers.count%>
 </p>
 
-<%= link_to 'Edit', edit_list_path(@list) %> |
-<%= link_to 'Back', lists_path %> |
-<%= link_to 'New Bulk', new_bulk_message_path(:list_ids => [@list.id]) %>
+<%= link_to t(:edit), edit_list_path(@list) %> |
+<%= link_to t(:back).html_safe, lists_path %> |
+<%= link_to t(:new_item, item: t(:bulk_message).titlecase), new_bulk_message_path(:list_ids => [@list.id]) %>

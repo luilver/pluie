@@ -4,15 +4,36 @@ en:
   home: 'Home'
   single_mode: 'Single mode'
   massive_mode: 'Masive Mode'
-  lists: 'List'
+  lists: 'Lists'
   summary: 'Summary'
   all_sms: 'All Sms'
   credits: 'Credits'
   routes: 'Routes'
+  route: 'route'
+  gateway: 'Gateway'
 
-  new: "New %{item}"
+  new_item_f: "New %{item}"
+  new_item: "New %{item}"
+  create_item: "Create %{item}"
+  editing: "Editing %{item}"
   single_message: 'single message'
   bulk_message: 'bulk message'
   not_route_error: 'No route for user'
 
   message: 'message'
+  send: 'send'
+  sending_options: 'sending options'
+
+  single_message_plural: 'single messages'
+  bulk_message_plural: 'bulk_messages'
+
+  show: "Show"
+  all_m: "all"
+
+  name: 'Name'
+  price: 'Price'
+
+  upload_file: 'Upload file'
+  gsm_numbers: 'GSM numbers'
+
+  choose_file: "Choose file"

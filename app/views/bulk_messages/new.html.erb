@@ -1,5 +1,5 @@
-<h1> <%= t(:new, item: t(:bulk_message)) %> </h1>
+<h1> <%= t(:new_item, item: t(:bulk_message)) %> </h1>
 
 <%= render 'form' %>
 
-<%= link_to 'All', bulk_messages_path %>
+<%= link_to t(:all_m).capitalize, bulk_messages_path %>

@@ -6,19 +6,19 @@
 </p>
 
 <p>
-  <strong>Lists:</strong>
+  <strong><%=t(:lists)%>:</strong>
   <%= @bulk_message.lists.count %>
 </p>
 
 <p>
-  <strong>Recipients:</strong>
+  <strong><%=t(:recipient).pluralize.capitalize%>:</strong>
   <%= @bulk_message.gsm_numbers.count %>
 </p>
 
 <p>
-  <strong>Route:</strong>
+  <strong><%=t(:route).capitalize%>:</strong>
   <%= @bulk_message.route %>
 </p>
 
-<%= link_to 'New', new_bulk_message_path %> |
-<%= link_to 'All', bulk_messages_path %>
+<%= link_to t(:new), new_bulk_message_path %> |
+<%= link_to t(:all_m).capitalize, bulk_messages_path %>
