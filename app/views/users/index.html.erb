@@ -1,0 +1,32 @@
+<h1><%= t('listing_users').html_safe %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= t('user') %></th>
+      <th>Balance</th>
+      <th><%= t('spent').html_safe %></th>
+      <th><%= t('created_at') %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user %></td>
+        <td><%= user.balance %></td>
+        <td><%= user.spent %></td>
+        <td><%= user.created_at %></td>
+        <td><%= link_to t('destroy'), cancel_user_path(user), method: :delete, data: { confirm: t('sure').html_safe } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><%= will_paginate @lists %></p>
+
+<% if current_user.admin %>
+  <%= link_to t('new_user').html_safe, new_user_registration_path %>
+<% end %>
+

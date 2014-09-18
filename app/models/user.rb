@@ -56,4 +56,13 @@ class User < ActiveRecord::Base
   def self.random
     User.all[rand User.count]
   end
+
+  def spent
+    total = 0
+    credits.each { |c| total += c.balance }
+    debt? ? total : total - balance
+  end
+
+  def debt; debt? ? balance * -1 : 0 end
+  def debt?; balance < 0 end
 end
