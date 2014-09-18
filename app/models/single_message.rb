@@ -17,6 +17,10 @@ class SingleMessage < ActiveRecord::Base
     self.number.split(" ")
   end
 
+  def gsm_numbers_count
+    receivers.size
+  end
+
   def deliver
     sms = SimpleSms.multiple_receivers(receivers, self)
     sms.deliver

@@ -46,4 +46,8 @@ class BulkMessage < ActiveRecord::Base
   def self.random
     BulkMessage.all[rand BulkMessage.count]
   end
+
+  def gsm_numbers_count
+    self.lists.inject(0) {|tmp, l| tmp + l.gsm_numbers.count}
+  end
 end
