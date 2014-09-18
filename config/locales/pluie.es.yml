@@ -61,6 +61,7 @@ es:
   sign_out: 'Salir'
   new: "Nuevo %{item}"
   single_message: 'mensaje puntual'
+  bulk_message: 'mensaje masivo'
   logged_in_as: 'Identificado como'
   user: 'Usuario'
   new_credit: 'A&ntilde;adir cr&eacute;dito'
