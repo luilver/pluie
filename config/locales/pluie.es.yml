@@ -84,3 +84,5 @@ es:
     previous_label: 'Anterior'
     next_label: 'Siguiente'
   not_route_error: 'No existe una ruta para el usuario'
+
+  message: 'mensaje'
