@@ -92,5 +92,6 @@ es:
   sending_options: 'opciones de env&iacute;o'
 
   single_message_plural: 'mensajes puntuales'
+  bulk_message_plural: 'mensajes masivos'
 
   editing: "Editar %{item}"

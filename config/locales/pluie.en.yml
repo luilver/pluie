@@ -22,6 +22,7 @@ en:
   sending_options: 'sending options '
 
   single_message_plural: 'single messages'
+  bulk_message_plural: 'bulk_messages'
 
   show: "Show"
   all_m: "all"
