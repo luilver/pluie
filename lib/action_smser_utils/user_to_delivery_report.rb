@@ -32,6 +32,7 @@ module ActionSmserUtils
         dr = ActionSmser::DeliveryReport.build_from_sms(sms, to, msg_id)
         dr.user = user
         dr.gateway = route_name
+        dr.status = "SENT"
         dr
       end
 
