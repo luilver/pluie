@@ -106,5 +106,5 @@ es:
   new_user: 'Nuevo Usuario'
   spent: 'Gasto'
 
-  sent_status: 'Enviado'
+  sent_status: 'Pendiente'
   delivered_status: 'Entregado'
