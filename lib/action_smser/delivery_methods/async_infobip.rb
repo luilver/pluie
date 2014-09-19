@@ -6,8 +6,6 @@ module ActionSmser::DeliveryMethods
   class AsyncInfobip < AsyncHttp
     include GatewayErrorInfo::InfobipErrors
 
-    #http://api.infobip.com/api/v3/sendsms/json
-    #@sender_address = cubacel_random_number
     @sender_address = ""
     @host = 'api.infobip.com'
     @base_url = "http://#{@host}/"
@@ -81,7 +79,6 @@ module ActionSmser::DeliveryMethods
         dlrs_array.each do |dlr|
           stat = dlr["status"].downcase
           stat += "_with_GSM_ERROR_#{dlr["gsmerror"]}" unless dlr["gsmerror"].eql?("0")
-
           info << {"msg_id" => dlr["id"], "status" => stat}
         end
       end
