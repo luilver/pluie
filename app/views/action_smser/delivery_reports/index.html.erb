@@ -116,7 +116,7 @@
    grouped_by_status = ar_gateway.group(:status).count.each do |key, val| %>
 
     <li>
-      <strong><%= key %></strong>:
+      <strong><%= ActionSmserUtils.show_dlr_status(key) %></strong>:
       &nbsp;&nbsp;
       <%= val %> sms
       &nbsp;&nbsp;
