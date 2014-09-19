@@ -26,4 +26,8 @@ module ActionSmserUtils
     #Allow admin access for every user in order to show delivery reports
     return true
   end
+
+  def self.show_dlr_status(status)
+    status == SENT_STATUS ? I18n.translate(:sent_status): status
+  end
 end

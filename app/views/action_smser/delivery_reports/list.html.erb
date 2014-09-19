@@ -38,7 +38,7 @@ offset = 0 if offset < -0
     <td style="white-space: nowrap;"><%= delivery_report.created_at %></td>
     <td><%= delivery_report.msg_id %></td>
     <td><%= delivery_report.gateway %></td>
-    <td><%= delivery_report.status %></td>
+    <td><%= ActionSmserUtils.show_dlr_status(delivery_report.status)%></td>
     <td style="white-space: nowrap;"><%= delivery_report.status_updated_at %></td>
     <td><%= delivery_report.to %></td>
     <td><%= delivery_report.from %></td>
