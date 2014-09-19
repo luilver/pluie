@@ -4,6 +4,8 @@ require 'action_smser_utils/inspect_request'
 #and belongs_to association to ActionSmser::DeliveryReport
 
 module ActionSmserUtils
+  SENT_STATUS =  "SENT"
+
   def self.generate_messages(pluie_msg, batch_size = 10, dlr_method=nil)
     text = pluie_msg.message
     receivers = pluie_msg.receivers
