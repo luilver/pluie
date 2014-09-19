@@ -14,7 +14,7 @@
   <tbody>
     <% @lists.each do |list| %>
       <tr>
-        <td><%= list.name %></td>
+        <td><%= link_to list.name, new_bulk_message_path(:list_ids => [list.id]) %></td>
         <td><%= list.gsm_numbers.count %></td>
         <td><%= link_to t('show'), list %></td>
         <td><%= link_to t('edit'), edit_list_path(list) %></td>
