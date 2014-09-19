@@ -94,7 +94,7 @@
       <th>% <%= t('of_delivered_sms') %></th>
     </tr>
 
-    <% ar_delivered = ar_gateway.where(:status => 'delivered')
+    <% ar_delivered = ar_gateway.where(:status => ActionSmserUtils::DELIVERED_STATUS)
        total = ar_gateway.count
        total_delivered = ar_delivered.count
     %>
@@ -142,7 +142,7 @@
      <td><strong><%= key %></strong></td>
      <td><%= val %></td>
      <td><strong><%= number_to_percentage(100.0 * val / total, :precision => 2) %></strong></td>
-     <td><%= sms_count = ar_gateway.where(:sms_type => key).where(:status => 'delivered').count %></td>
+     <td><%= sms_count = ar_gateway.where(:sms_type => key).where(:status => ActionSmserUtils::DELIVERED_STATUS).count %></td>
      <td><strong><%= number_to_percentage(100.0 * sms_count / val, :precision => 2) %></strong></td>
    </tr>
 <% end %>

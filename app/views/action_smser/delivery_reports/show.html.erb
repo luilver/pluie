@@ -7,7 +7,7 @@
 
 <p>
   <strong><%= t('status') %>:</strong>
-  <%= @delivery_report.status %>
+  <%= ActionSmserUtils.show_dlr_status(@delivery_report.status)%>
 </p>
 
 <p>

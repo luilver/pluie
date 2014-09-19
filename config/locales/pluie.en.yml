@@ -43,4 +43,5 @@ en:
   destroy: 'Destroy'
   sure: 'sure'
 
-  sent_status: "SENT"
+  sent_status: 'Sent'
+  delivered_status: 'Delivered'
