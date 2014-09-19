@@ -3,10 +3,8 @@ require_relative 'async_http'
 module ActionSmser::DeliveryMethods
   class AsyncRoutesms < AsyncHttp
     include GatewayErrorInfo::RoutesmsErrors
-    #:path_url, :base_url, :r_head, :r_body, :gateway_key
     @path_url = "bulksms/bulksms"
     @base_url = "http://smsplus1.routesms.com:8080/"
-    #@r_head =  nil # ver si basta con no declarlo
     @gateway_key = :routesms
 
     def self.sms_info(sms)
@@ -27,7 +25,6 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.parse_response(response)
-      #devolver array de results
       chunks = response.split(",")
       results = chunks.map do |c|
         status, dest, msg_id = c.split("|")
@@ -38,7 +35,6 @@ module ActionSmser::DeliveryMethods
 
     def self.save_delivery_reports(sms, results, user, route_name)
       count = 0
-
       results.each do |res|
         error_code = res[:status]
         number = res[:dest]
@@ -53,7 +49,6 @@ module ActionSmser::DeliveryMethods
         dr.save
         sms.delivery_reports.push(dr)
       end
-
       count
     end
 
