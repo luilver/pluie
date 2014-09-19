@@ -98,7 +98,7 @@ es:
 
   editing: "Editar %{item}"
   upload_file: 'Subir archivo'
-  gsm_numbers: 'n&uacute;umeros GSM'
+  gsm_numbers: 'N&uacute;meros GSM'
 
   create_item: "Crear %{item}"
   choose_file: "Escoger archivo"
