@@ -78,6 +78,7 @@ es:
   gateway: 'Proveedor'
   new_route: 'A&ntilde;adir ruta'
   listing_routes: 'Rutas'
+  listing_users: 'Usuarios'
   show: 'Ver'
   destroy: 'Eliminar'
   sure: '&iquest;Est&aacute; seguro?'
@@ -101,3 +102,6 @@ es:
 
   create_item: "Crear %{item}"
   choose_file: "Escoger archivo"
+
+  new_user: 'Nuevo Usuario'
+  spent: 'Gasto'

@@ -11,6 +11,7 @@ en:
   routes: 'Routes'
   route: 'route'
   gateway: 'Gateway'
+  user: 'User'
 
   new_item_f: "New %{item}"
   new_item: "New %{item}"
@@ -37,3 +38,7 @@ en:
   gsm_numbers: 'GSM numbers'
 
   choose_file: "Choose file"
+  listing_users: 'Users'
+
+  destroy: 'Destroy'
+  sure: 'sure'
