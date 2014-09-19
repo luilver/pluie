@@ -45,7 +45,7 @@ offset = 0 if offset < -0
     <td><%= delivery_report.sms_type %></td>
     <td><%= delivery_report.re_delivered? %></td>
     <td><%= delivery_report.re_delivery_of.msg_id unless delivery_report.re_delivery_of.blank? %></td>
-    <td>&nbsp;O</td>
+    <td title="<%= delivery_report.body %>">&nbsp;O</td>
   </tr>
 <% end %>
 </table>
