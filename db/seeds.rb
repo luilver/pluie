@@ -12,7 +12,7 @@ users = User.create([{ email: 'luilver@gmail.com', password: 'luilver8' },
                  { email: 'admin@openbgs.com', password: 'gbsc1234', admin: true}])
 
 gateways = Gateway.create([{name: 'routesms', price: 0.0035},
-                           {name: 'routesms1', price: 0.0035}
+                           {name: 'routesms1', price: 0.0028}
                            {name: 'infobip', price: 0.0055},
                            {name: 'nexmo', price: 0.034}])
 
