@@ -4,7 +4,8 @@ require 'action_smser_utils/inspect_request'
 #and belongs_to association to ActionSmser::DeliveryReport
 
 module ActionSmserUtils
-  SENT_STATUS =  "SENT"
+  SENT_STATUS =  "sent"
+  DELIVERED_STATUS =  "delivered"
 
   def self.generate_messages(pluie_msg, batch_size = 10, dlr_method=nil)
     text = pluie_msg.message
@@ -28,6 +29,13 @@ module ActionSmserUtils
   end
 
   def self.show_dlr_status(status)
-    status == SENT_STATUS ? I18n.translate(:sent_status): status
+    case status
+    when SENT_STATUS
+      I18n.translate(:sent_status)
+    when DELIVERED_STATUS
+      I18n.translate(:delivered_status)
+    else
+      status
+    end
   end
 end
