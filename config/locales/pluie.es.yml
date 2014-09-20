@@ -104,7 +104,7 @@ es:
   choose_file: "Escoger archivo"
 
   new_user: 'Nuevo Usuario'
-  spent: 'Gasto'
+  spent: 'Gasto Total'
 
   sent_status: 'Pendiente'
   delivered_status: 'Entregado'
