@@ -26,8 +26,6 @@ offset = 0 if offset < -0
     <th><%= t('status_updated_at') %></th>
     <th><%= t('recipient') %></th>
     <th><%= t('sms_type') %></th>
-    <th><%= t('re_delivered') %></th>
-    <th><%= t('re_delivery_of').html_safe %></th>
     <th>&nbsp;O</th>
   </tr>
 
@@ -41,8 +39,6 @@ offset = 0 if offset < -0
     <td style="white-space: nowrap;"><%= delivery_report.status_updated_at %></td>
     <td><%= delivery_report.to %></td>
     <td><%= delivery_report.sms_type %></td>
-    <td><%= delivery_report.re_delivered? %></td>
-    <td><%= delivery_report.re_delivery_of.msg_id unless delivery_report.re_delivery_of.blank? %></td>
     <td title="<%= delivery_report.body %>">&nbsp;O</td>
   </tr>
 <% end %>
