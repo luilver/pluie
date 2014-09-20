@@ -29,9 +29,9 @@ offset = 0 if offset < -0
     <th>&nbsp;O</th>
   </tr>
 
-  <% ActionSmser::DeliveryReport.where(:user_id => current_user.id).order('created_at DESC').offset(offset).first(items_within_page).each do |delivery_report| %>
+  <% ActionSmser::DeliveryReport.where(:user_id => current_user.id).order('created_at DESC').offset(offset).first(items_within_page).each_with_index do |delivery_report, index| %>
   <tr>
-    <td style="white-space: nowrap;"><%= delivery_report.id %></td>
+    <td style="white-space: nowrap;"><%= offset + index %></td>
     <td style="white-space: nowrap;"><%= delivery_report.created_at %></td>
     <td><%= delivery_report.msg_id %></td>
     <td><%= delivery_report.gateway %></td>
