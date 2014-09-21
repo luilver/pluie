@@ -112,7 +112,14 @@ es:
   activerecord:
     models:
       single_message: 'Env&iacute;o puntual'
+      bulk_message: 'Env&iacute;o masivo'
     attributes:
       single_message:
         number: 'Destinatario'
         message: 'Mensaje'
+      bulk_message:
+        message: 'Mensaje'
+        lists: 'Listas'
+  errors:
+    messages:
+      debit_limit_violation: "El costo(%{cost}) del mensaje excede el l&iacute;mite(%{limit}) de d&eacute;bito permitido"

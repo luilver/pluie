@@ -46,3 +46,7 @@ en:
 
   sent_status: 'Pending'
   delivered_status: 'Delivered'
+
+  errors:
+    messages:
+      debit_limit_violation: "Message cost (%{cost}) violates your credit limit (%{limit})"
