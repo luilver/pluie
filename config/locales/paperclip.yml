@@ -1,0 +1,8 @@
+es:
+  paperclip_file_presence: " no puede ser vacio (.txt)"
+  errors:
+    messages:
+      in_between: " debe estar entre %{min} y %{max}"
+      spoofed_media_type: "tiene una extension que no coincide con su contenido"
+en:
+  paperclip_file_presence: "can't be blank (only .txt supported)"
