@@ -116,6 +116,7 @@ es:
       list: 'Lista'
       contact: 'Contacto'
       credit: 'Cr&eacute;dito'
+      route: 'Ruta'
     attributes:
       single_message:
         number: 'Destinatario'
@@ -131,6 +132,9 @@ es:
       credit:
        balance: 'Balance'
        description: 'Descripci&oacute;n'
+      route:
+        name: 'Nombre'
+        price: 'Precio'
 
   errors:
     messages:
