@@ -108,3 +108,11 @@ es:
 
   sent_status: 'Pendiente'
   delivered_status: 'Entregado'
+
+  activerecord:
+    models:
+      single_message: 'Env&iacute;o puntual'
+    attributes:
+      single_message:
+        number: 'Destinatario'
+        message: 'Mensaje'
