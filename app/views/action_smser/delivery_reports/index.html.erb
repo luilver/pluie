@@ -41,7 +41,7 @@
 <h1><%= t('delivery_reports') %> </h1>
 
 <h2><%= t('summary_for').html_safe %>
-  (<span style="font-size: smaller"><%= "#{time_span.first.to_s} => #{time_span.last.to_s}" %></span>)
+  (<span style="font-size: smaller"><%= "#{time_span.first.to_formatted_s(:verbose_day_date)} => #{time_span.last.to_formatted_s(:verbose_day_date)}" %></span>)
   <%= "for #{params[:gateway]}" unless params[:gateway].blank? %>
 </h2>
 
