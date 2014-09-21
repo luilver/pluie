@@ -113,6 +113,7 @@ es:
     models:
       single_message: 'Env&iacute;o puntual'
       bulk_message: 'Env&iacute;o masivo'
+      list: 'Lista'
     attributes:
       single_message:
         number: 'Destinatario'
@@ -120,6 +121,9 @@ es:
       bulk_message:
         message: 'Mensaje'
         lists: 'Listas'
+      list:
+        name: 'Nombre'
+        file: 'El archivo'
   errors:
     messages:
       debit_limit_violation: "El costo(%{cost}) del mensaje excede el l&iacute;mite(%{limit}) de d&eacute;bito permitido"
