@@ -114,6 +114,8 @@ es:
       single_message: 'Env&iacute;o puntual'
       bulk_message: 'Env&iacute;o masivo'
       list: 'Lista'
+      contact: 'Contacto'
+      credit: 'Cr&eacute;dito'
     attributes:
       single_message:
         number: 'Destinatario'
@@ -124,6 +126,12 @@ es:
       list:
         name: 'Nombre'
         file: 'El archivo'
+      contact:
+        name: 'Nombre'
+      credit:
+       balance: 'Balance'
+       description: 'Descripci&oacute;n'
+
   errors:
     messages:
       debit_limit_violation: "El costo(%{cost}) del mensaje excede el l&iacute;mite(%{limit}) de d&eacute;bito permitido"
