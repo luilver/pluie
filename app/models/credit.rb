@@ -1,6 +1,7 @@
 class Credit < ActiveRecord::Base
   belongs_to :user
   before_save :save_owner
+  validates :balance, presence: true
   validates :balance,  numericality: {only_integer: true, greater_than: 0}
   validates :user, presence: true
 
