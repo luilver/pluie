@@ -1,9 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%=t(:name)%>:</strong>
   <%= @group.name %>
 </p>
 
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+<%= link_to t(:edit), edit_group_path(@group) %> |
+<%= link_to t(:back).html_safe, groups_path %>

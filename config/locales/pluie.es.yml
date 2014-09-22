@@ -119,6 +119,7 @@ es:
       route: 'Ruta'
       gateway: 'Proveedor'
       group_message: 'Env&iacute;o a grupo'
+      group: 'Grupo'
     attributes:
       single_message:
         number: 'Destinatario'
