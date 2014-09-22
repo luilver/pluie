@@ -52,6 +52,8 @@ en:
   notice:
     sucess_msg_sent: '%{msg} was successfully sent.'
     sucess_msg_resent: '%{msg} was successfully re-sent.'
+    item_created: '%{item} was successfully created.'
+    item_updated: '%{item} was successfully updated.'
 
   activerecord:
     models:

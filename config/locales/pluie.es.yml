@@ -114,6 +114,8 @@ es:
   notice:
     sucess_msg_sent: 'El %{msg} fue iniciado satisfactoriamente'
     sucess_msg_resent: 'El %{msg} fue reiniciado satisfactoriamente'
+    item_created: '%{item} creado/a satisfactoriamente.'
+    item_updated: '%{item} actualizado/a satisfactoriamente.'
 
   activerecord:
     models:
