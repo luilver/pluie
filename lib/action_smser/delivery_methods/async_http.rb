@@ -18,12 +18,10 @@ module ActionSmser::DeliveryMethods
       route = Route.find(sms.route_id)
       em_was_running =  EM.reactor_running?
       count = 0
-
       info = self.sms_info(sms)
-      inspect = sms.delivery_options[:inspect_request]
 
       EM.run do
-        EM::HttpRequest.use ActionSmserUtils::InspectRequest if inspect
+        setup_middlewares
         connection = EM::HttpRequest.new(base_url)
 
         foreach = Proc.new do |numbers, iter|
@@ -90,6 +88,11 @@ module ActionSmser::DeliveryMethods
 
     def self.log_response(em_http)
       ActionSmser::Logger.error "Response from #{base_url}:\n#Time: #{Time.current}\nStatus:#{em_http.response_header.status}\nHeader:#{em_http.response_header}"
+    end
+
+    def self.setup_middlewares
+      m = ActionSmserUtils::InspectRequest
+      EM::HttpRequest.use m if Rails.env.development? && !EM::HttpRequest.middleware.include?(m.new)
     end
 
 
