@@ -11,6 +11,7 @@ en:
   routes: 'Routes'
   route: 'route'
   gateway: 'Gateway'
+  gateways: 'Gateways'
   user: 'User'
   delivery_reports: 'Delivery reports'
 

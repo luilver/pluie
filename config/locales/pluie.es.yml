@@ -76,6 +76,7 @@ es:
   name: 'Nombre'
   price: 'Precio'
   gateway: 'Proveedor'
+  gateways: 'Proveedores'
   new_route: 'A&ntilde;adir ruta'
   listing_routes: 'Rutas'
   listing_users: 'Usuarios'
