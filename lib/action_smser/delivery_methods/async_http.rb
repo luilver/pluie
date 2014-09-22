@@ -15,6 +15,7 @@ module ActionSmser::DeliveryMethods
       batches = sms.to_numbers_array.each_slice(batch_size).to_a
       last_request = batches.size
       user =  User.find(sms.user_id)
+      route = Route.find(sms.route_id)
       em_was_running =  EM.reactor_running?
       count = 0
 
@@ -35,7 +36,6 @@ module ActionSmser::DeliveryMethods
           http.callback do
             if succesful_response(http)
               results = parse_response(http.response)
-              route = Route.find(sms.route_id)
               success_sms = save_delivery_reports(sms, results, user, route.name)
               user.bill_sms(success_sms, route.price)
             else
