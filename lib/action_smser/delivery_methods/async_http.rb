@@ -10,9 +10,6 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.deliver(sms)
-      File.open('/tmp/delayed_job.log', "a+") do |file|
-        file.write "AsyncHttp.deliver \n"
-      end
       batch_size = sms.delivery_options[gateway_key][:numbers_in_request]
       concurrent_requests = sms.delivery_options[gateway_key][:parallel_requests]
       batches = sms.to_numbers_array.each_slice(batch_size).to_a
