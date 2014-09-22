@@ -31,7 +31,7 @@ class RoutesController < ApplicationController
 
     respond_to do |format|
       if @route.save
-        format.html { redirect_to @route, notice: 'Route was successfully created.' }
+        format.html { redirect_to @route, notice: t('notice.item_created', item: t('activerecord.models.route')).html_safe  }
         format.json { render :show, status: :created, location: @route }
       else
         format.html { render :new }
@@ -45,7 +45,7 @@ class RoutesController < ApplicationController
   def update
     respond_to do |format|
       if @route.update(route_params)
-        format.html { redirect_to @route, notice: 'Route was successfully updated.' }
+        format.html { redirect_to @route, notice: t('notice.item_updated', item: t('activerecord.models.route')).html_safe  }
         format.json { render :show, status: :ok, location: @route }
       else
         format.html { render :edit }

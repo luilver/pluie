@@ -32,7 +32,7 @@ class ListsController < ApplicationController
     respond_to do |format|
       if @list.save
         attach_numbers
-        format.html { redirect_to @list, notice: 'List was successfully created.' }
+        format.html { redirect_to @list, notice: t('notice.item_created', item: t('activerecord.models.list')).html_safe  }
         format.json { render :show, status: :created, location: @list }
       else
         format.html { render :new }
@@ -51,7 +51,7 @@ class ListsController < ApplicationController
         else
           attach_numbers
         end
-        format.html { redirect_to @list, notice: 'List was successfully updated.' }
+        format.html { redirect_to @list, notice: t('notice.item_updated', item: t('activerecord.models.list')).html_safe  }
         format.json { render :show, status: :ok, location: @list }
       else
         format.html { render :edit }
