@@ -1,7 +1,10 @@
 <%= form_for(@group_message) do |f| %>
   <% if @group_message.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@group_message.errors.count, "error") %> prohibited this group_message from being saved:</h2>
+      <h2>
+        <%= raw t('errors.template.header', count: @group_message.errors.count, model: t('activerecord.models.group_message')) %>
+      </h2>
+      <p><%= t('errors.template.body') %></p>
 
       <ul>
       <% @group_message.errors.full_messages.each do |msg| %>

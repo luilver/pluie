@@ -118,6 +118,7 @@ es:
       credit: 'Cr&eacute;dito'
       route: 'Ruta'
       gateway: 'Proveedor'
+      group_message: 'Env&iacute;o a grupo'
     attributes:
       single_message:
         number: 'Destinatario'
@@ -139,6 +140,8 @@ es:
       gateway:
         name: 'Nombre'
         price: 'Precio'
+      group_message:
+        message: 'Mensaje'
 
   errors:
     messages:
