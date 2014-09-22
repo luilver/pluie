@@ -30,7 +30,7 @@ class GroupMessagesController < ApplicationController
 
     respond_to do |format|
       if @group_message.save
-        format.html { redirect_to @group_message, notice: 'Group message was successfully created.' }
+        format.html { redirect_to @group_message, notice: t('notice.item_created', item: t('activerecord.models.group_message')).html_safe }
         format.json { render :show, status: :created, location: @group_message }
       else
         format.html { render :new }
@@ -44,7 +44,7 @@ class GroupMessagesController < ApplicationController
   def update
     respond_to do |format|
       if @group_message.update(group_message_params)
-        format.html { redirect_to @group_message, notice: 'Group message was successfully updated.' }
+        format.html { redirect_to @group_message, notice: t('notice.item_updated', item: t('activerecord.models.group_message')).html_safe }
         format.json { render :show, status: :ok, location: @group_message }
       else
         format.html { render :edit }

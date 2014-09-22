@@ -29,7 +29,7 @@ class GatewaysController < ApplicationController
 
     respond_to do |format|
       if @gateway.save
-        format.html { redirect_to @gateway, notice: 'Gateway was successfully created.' }
+        format.html { redirect_to @gateway, notice: t('notice.item_created', item: t('activerecord.models.gateway')).html_safe }
         format.json { render :show, status: :created, location: @gateway }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class GatewaysController < ApplicationController
   def update
     respond_to do |format|
       if @gateway.update(gateway_params)
-        format.html { redirect_to @gateway, notice: 'Gateway was successfully updated.' }
+        format.html { redirect_to @gateway, notice: t('notice.item_updated', item: t('activerecord.models.gateway')).html_safe }
         format.json { render :show, status: :ok, location: @gateway }
       else
         format.html { render :edit }

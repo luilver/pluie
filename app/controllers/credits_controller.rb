@@ -38,7 +38,7 @@ class CreditsController < ApplicationController
 
     respond_to do |format|
       if @credit.save
-        format.html { redirect_to @credit, notice: 'Credit was successfully created.' }
+        format.html { redirect_to @credit, notice: t('notice.item_created', item: t('activerecord.models.credit')).html_safe }
         format.json { render :show, status: :created, location: @credit }
       else
         format.html { render :new }
@@ -52,7 +52,7 @@ class CreditsController < ApplicationController
   def update
     respond_to do |format|
       if @credit.update(credit_params)
-        format.html { redirect_to @credit, notice: 'Credit was successfully updated.' }
+        format.html { redirect_to @credit, notice: t('notice.item_updated', item: t('activerecord.models.credit')).html_safe }
         format.json { render :show, status: :ok, location: @credit }
       else
         format.html { render :edit }
