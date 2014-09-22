@@ -47,6 +47,13 @@ en:
   sent_status: 'Pending'
   delivered_status: 'Delivered'
 
+  at_route: 'at %{route} route'
+
   errors:
     messages:
       debit_limit_violation: "Message cost (%{cost}) violates your credit limit (%{limit})"
+  time:
+    formats:
+      verbose_date: ! '%a %B %d, %Y'
+      verbose_date_time: ! '%a %B %d, %Y - %H:%M:%S'
+      date_time: ! '%b %d %Y, %H:%M:%S'

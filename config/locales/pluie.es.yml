@@ -109,6 +109,8 @@ es:
   sent_status: 'Pendiente'
   delivered_status: 'Entregado'
 
+  at_route: 'en la ruta: %{route}'
+
   activerecord:
     models:
       single_message: 'Env&iacute;o puntual'
@@ -147,3 +149,8 @@ es:
   errors:
     messages:
       debit_limit_violation: "El costo(%{cost}) del mensaje excede el l&iacute;mite(%{limit}) de d&eacute;bito permitido"
+  time:
+    formats:
+      verbose_date: ! '%a, %d %B %Y'
+      verbose_date_time: ! '%a, %d %B %Y, %H:%M:%S'
+      date_time: ! '%d %b %Y, %H:%M:%S'
