@@ -41,8 +41,8 @@
 <h1><%= t('delivery_reports') %> </h1>
 
 <h2><%= t('summary_for').html_safe %>
-  (<span style="font-size: smaller"><%= "#{time_span.first.to_formatted_s(:verbose_day_date)} => #{time_span.last.to_formatted_s(:verbose_day_date)}" %></span>)
-  <%= "for #{params[:gateway]}" unless params[:gateway].blank? %>
+  (<span style="font-size: smaller"><%= I18n.localize(time_span.first, :format => :verbose_date).html_safe + " => " +I18n.localize(time_span.last, :format => :verbose_date).html_safe %></span>)
+  <%= "#{t(:at_route, route: params[:gateway])}" unless params[:gateway].blank? %>
 </h2>
 
 <p class="selection_links">

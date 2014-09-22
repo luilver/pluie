@@ -32,11 +32,11 @@ offset = 0 if offset < -0
   <% ActionSmser::DeliveryReport.where(:user_id => current_user.id).order('created_at DESC').offset(offset).first(items_within_page).each_with_index do |delivery_report, index| %>
   <tr>
     <td style="white-space: nowrap;"><%= offset + index %></td>
-    <td style="white-space: nowrap;"><%= delivery_report.created_at.to_formatted_s(:date_clock) %></td>
+    <td style="white-space: nowrap;"><%= I18n.localize(delivery_report.created_at, :format => :date_time).html_safe %></td>
     <td><%= delivery_report.msg_id %></td>
     <td><%= delivery_report.gateway %></td>
     <td><%= ActionSmserUtils.show_dlr_status(delivery_report.status)%></td>
-    <td style="white-space: nowrap;"><%= delivery_report.status_updated_at.to_formatted_s(:date_clock) %></td>
+    <td style="white-space: nowrap;"><%= I18n.localize(delivery_report.status_updated_at, :format => :date_time).html_safe %></td>
     <td><%= delivery_report.to %></td>
     <td><%= delivery_report.sms_type %></td>
     <td title="<%= delivery_report.body %>">&nbsp;O</td>
