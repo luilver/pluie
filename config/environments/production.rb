@@ -82,6 +82,11 @@ Pluie::Application.configure do
   #config.active_record.dump_schema_after_migration = false
 
   config.default_url_options = { :host => "sms.knal.es" }
+  config.action_mailer.default_url_options = { :host => "sms.knal.es" }
+
+  # Delivering
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
 
   USE_EM_PROXY = false
 
