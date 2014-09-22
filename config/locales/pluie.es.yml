@@ -117,6 +117,7 @@ es:
       contact: 'Contacto'
       credit: 'Cr&eacute;dito'
       route: 'Ruta'
+      gateway: 'Proveedor'
     attributes:
       single_message:
         number: 'Destinatario'
@@ -133,6 +134,9 @@ es:
        balance: 'Balance'
        description: 'Descripci&oacute;n'
       route:
+        name: 'Nombre'
+        price: 'Precio'
+      gateway:
         name: 'Nombre'
         price: 'Precio'
 
