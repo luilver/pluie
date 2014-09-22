@@ -22,9 +22,10 @@ module ActionSmser::DeliveryMethods
       count = 0
 
       info = self.sms_info(sms)
+      inspect = sms.delivery_options[:inspect_request]
 
       EM.run do
-        EM::HttpRequest.use ActionSmserUtils::InspectRequest if sms.delivery_options[:inspect_request]
+        EM::HttpRequest.use ActionSmserUtils::InspectRequest if inspect
         connection = EM::HttpRequest.new(base_url)
 
         foreach = Proc.new do |numbers, iter|
@@ -32,40 +33,30 @@ module ActionSmser::DeliveryMethods
           query_params = request_params(info, numbers, sms)
           body = request_body(info, numbers, sms)
           options = request_options(query_params, body, count < last_request)
-
           http = connection.post(options)
 
           http.callback do
-            results = parse_response(http.response)
-            if results
+            if succesful_response(http)
+              results = parse_response(http.response)
               route = Route.find(sms.route_id)
               success_sms = save_delivery_reports(sms, results, user, route.name)
               user.bill_sms(success_sms, route.price)
             else
-              ActionSmser::Logger.error "Empty results in http response. #{Time.now}"
-              File.open('/tmp/delayed_job.log', "a+") do |file|
-                file.write "http.callback #{results} \n"
-              end
+              log_response(http)
             end
             iter.next
           end
 
           http.errback do
-            #TODO... Log de los e
-              File.open('/tmp/delayed_job.log', "a+") do |file|
-                file.write "http.errback conn error \n"
-              end
-            ActionSmser::Logger.error "Async conn error: #{http.response.inspect} at #{Time.now}"
+            ActionSmser::Logger.error "Connection error\n"
             iter.next
           end
-
         end
 
         final = Proc.new do
           ActionSmser::Logger.info "Finished sending. #{Time.now}"
           EventMachine.stop unless em_was_running
         end
-
         EM::Iterator.new(batches, concurrent_requests).each(foreach, final)
       end
     end
@@ -95,6 +86,15 @@ module ActionSmser::DeliveryMethods
       options[:body] = body if body
       options
     end
+
+    def self.succesful_response(em_http)
+      em_http.response_header.status == 200
+    end
+
+    def self.log_response(em_http)
+      ActionSmser::Logger.error "Response from #{base_url}:\n#Time: #{Time.current}\nStatus:#{em_http.response_header.status}\nHeader:#{em_http.response_header}"
+    end
+
 
   end
 end
