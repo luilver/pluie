@@ -12,7 +12,7 @@ es:
   devise:
     confirmations:
       new:
-        resend_confirmation_instructions: Reenviar instrucciones de confirmación
+        resend_confirmation_instructions: Instrucciones de confirmación
     mailer:
       confirmation_instructions:
         action: Confirmar mi cuenta
@@ -59,9 +59,9 @@ es:
         didn_t_receive_confirmation_instructions: "¿No ha recibido las instrucciones de confirmación?"
         didn_t_receive_unlock_instructions: No ha recibido instrucciones para desbloquear?
         forgot_your_password: "¿Ha olvidado su contraseña?"
-        sign_in: Iniciar sésion
+        sign_in: Iniciar sesión
         sign_in_with_provider: Iniciar sesión con %{provider}
         sign_up: Registrarse
     unlocks:
       new:
-        resend_unlock_instructions: Reenviar instrucciones para desbloquear
+        resend_unlock_instructions: Instrucciones para desbloquear
