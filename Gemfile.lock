@@ -65,6 +65,7 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-i18n-views (0.3.1)
     em-http-request (1.1.2)
       addressable (>= 2.3.4)
       cookiejar
@@ -177,6 +178,7 @@ DEPENDENCIES
   daemons
   delayed_job_active_record
   devise
+  devise-i18n-views
   em-http-request
   jbuilder (~> 2.0)
   jquery-rails

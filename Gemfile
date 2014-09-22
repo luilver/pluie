@@ -42,6 +42,8 @@ gem 'spring',        group: :development
 # Devise
 gem 'devise'
 
+gem 'devise-i18n-views'
+
 # Cancan
 gem 'cancan'
 
