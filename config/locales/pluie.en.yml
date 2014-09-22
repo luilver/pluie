@@ -49,6 +49,22 @@ en:
 
   at_route: 'at %{route} route'
 
+  notice:
+    sucess_msg_sent: '%{msg} was successfully sent.'
+    sucess_msg_resent: '%{msg} was successfully re-sent.'
+
+  activerecord:
+    models:
+      single_message: 'Single message'
+      bulk_message: 'Bulk message'
+      list: 'List'
+      contact: 'Contact'
+      credit: 'Credit'
+      route: 'Routa'
+      gateway: 'Gateway'
+      group_message: 'Group message'
+      group: 'Group'
+
   errors:
     messages:
       debit_limit_violation: "Message cost (%{cost}) violates your credit limit (%{limit})"

@@ -43,7 +43,7 @@ class BulkMessagesController < ApplicationController
 
         @bulk_message.delay(:queue => 'deliver').deliver
 
-        format.html { redirect_to @bulk_message, notice: 'Bulk message was successfully sent.' }
+        format.html { redirect_to @bulk_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.bulk_message')).html_safe}
         format.json { render :show, status: :created, location: @bulk_message }
       else
         format.html { render :new }
@@ -57,7 +57,7 @@ class BulkMessagesController < ApplicationController
   def update
     respond_to do |format|
       if @bulk_message.update(bulk_message_params)
-        format.html { redirect_to @bulk_message, notice: 'Bulk message was successfully re-sent.' }
+        format.html { redirect_to @bulk_message, notice: t('notice.sucess_msg_resent', msg: t('activerecord.models.bulk_message')).html_safe }
         format.json { render :show, status: :ok, location: @bulk_message }
       else
         format.html { render :edit }
