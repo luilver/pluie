@@ -24,16 +24,16 @@ class BulkMessage < ActiveRecord::Base
 
   def deliver
     begin
-    dlr_method = self.route.gateway.name
-    numbers = receivers()
-    size = [(numbers.size * ActionSmser.delivery_options[:numbers_from_bulk]).to_i, ActionSmser.delivery_options[:min_numbers_in_sms]].max
-    batches = numbers.each_slice(size).to_a
-    batches.each_with_index do |nums, index|
-      sms = SimpleSms.multiple_receivers(nums, self)
-      Delayed::Job.enqueue(sms, :priority => bulk_sms_priority(index), :queue => bulk_sms_queue)
+      dlr_method = self.route.gateway.name
+      numbers = receivers.to_a
+      size = [(numbers.size * ActionSmser.delivery_options[:numbers_from_bulk]).to_i, ActionSmser.delivery_options[:min_numbers_in_sms]].max
+      batches = numbers.each_slice(size).to_a
+      batches.each_with_index do |nums, index|
+        sms = SimpleSms.multiple_receivers(nums, self)
+        Delayed::Job.enqueue(sms, :priority => bulk_sms_priority(index), :queue => bulk_sms_queue)
     end
     rescue StandardError => e
-      Rails.logger "Error on deliver. BulkMessage (self.id). #{e.message}"
+      Rails.logger.info "Error on deliver. BulkMessage (self.id). #{e.message}"
     end
   end
 
