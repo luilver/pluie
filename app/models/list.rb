@@ -28,4 +28,9 @@ class List < ActiveRecord::Base
      #                             self.gsm_numbers.delete(n) if self.gsm_numbers.include?(n)  } if self.file.path
   end
 
+  def receivers
+    return self.list.path ? IO.foreach(self.file.path).map{ |line| line[0,10] }: []
+  end
+  #TODO.... en receivers utilizar los numeros GSM asociados a lista, si esta no esta siendo modificada.
+
 end
