@@ -37,13 +37,15 @@ class User < ActiveRecord::Base
 
   def bill_sms(sms_count, route_price)
     sms_cost = route_price * sms_count
-    decrease_balance(sms_cost)
+    dbt = self.credits.create(balance: sms_cost)
+    if dbt.valid?
+      self.debit += sms_cost
+      self.save
+    end
   end
 
-  def decrease_balance(sms_cost, skip_db_update=false)
-    return if sms_cost <= 0
-    self.balance -= sms_cost
-    save unless skip_db_update
+  def balance
+    self.credit - self.debit
   end
 
   def to_s
@@ -59,11 +61,8 @@ class User < ActiveRecord::Base
   end
 
   def spent
-    total = 0
-    credits.each { |c| total += c.balance }
-    debt? ? total : total - balance
+    self.debits.inject {|sum, d| sum + d.balance}
   end
 
-  def debt; debt? ? balance * -1 : 0 end
-  def debt?; balance < 0 end
+  def debt?; self.debit > 0 end
 end
