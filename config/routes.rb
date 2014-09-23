@@ -44,6 +44,8 @@ Rails.application.routes.draw do
     #resources :contacts
 
     resources :single_messages
+
+    resources :debits
   end
 
   get '/:locale' => "home#index"
