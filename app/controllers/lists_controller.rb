@@ -31,7 +31,7 @@ class ListsController < ApplicationController
 
     respond_to do |format|
       if @list.save
-        attach_numbers
+        @list.delay.attach_numbers
         format.html { redirect_to @list, notice: t('notice.item_created', item: t('activerecord.models.list')).html_safe  }
         format.json { render :show, status: :created, location: @list }
       else
@@ -47,9 +47,9 @@ class ListsController < ApplicationController
     respond_to do |format|
       if @list.update(list_params)
         if params[:remove]
-          remove_numbers
+          @list.delay.remove_numbers
         else
-          attach_numbers
+          @list.delay.attach_numbers
         end
         format.html { redirect_to @list, notice: t('notice.item_updated', item: t('activerecord.models.list')).html_safe  }
         format.json { render :show, status: :ok, location: @list }

@@ -15,13 +15,17 @@ class BulkMessage < ActiveRecord::Base
   validates_with Validations::CreditValidator
 
   def receivers
-    self.gsm_numbers.map {|gsm| gsm.number}
+    set = Set.new
+    self.lists.each do |list|
+      set.merge list.receivers
+    end
+    set.to_a
   end
 
   def deliver
     begin
     dlr_method = self.route.gateway.name
-    numbers = receivers.to_a
+    numbers = receivers()
     size = [(numbers.size * ActionSmser.delivery_options[:numbers_from_bulk]).to_i, ActionSmser.delivery_options[:min_numbers_in_sms]].max
     batches = numbers.each_slice(size).to_a
     batches.each_with_index do |nums, index|
@@ -29,12 +33,7 @@ class BulkMessage < ActiveRecord::Base
       Delayed::Job.enqueue(sms, :priority => bulk_sms_priority(index), :queue => bulk_sms_queue)
     end
     rescue StandardError => e
-      File.open('/tmp/delayed_job.log', "a+") do |file|
-        file.write "Dentro del rescue \n"
-      end
-    end
-    File.open('/tmp/delayed_job.log', "a+") do |file|
-      file.write "Fuera del rescue \n"
+      Rails.logger "Error on deliver. BulkMessage (self.id). #{e.message}"
     end
   end
 
