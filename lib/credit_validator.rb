@@ -7,7 +7,7 @@ module Validations
         cost = record.gsm_numbers_count * record.route.price
         dl = -record.user.max_debt
         if (record.user.balance - cost) < dl
-          record.errors[:base] << I18n.translate('errors.messages.debit_limit_violation', cost: cost, limit: dl).html_safe
+          record.errors[:base] << I18n.translate('errors.messages.debit_limit_violation', cost: cost, limit: -dl).html_safe
         end
       end
     end
