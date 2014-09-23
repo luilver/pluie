@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :sms
   has_many :routes
   has_many :gateways,  :through => :routes
+  has_many :debits
 
   def api_key
     self.api_setting.api_key
