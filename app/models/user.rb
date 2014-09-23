@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
 
   def bill_sms(sms_count, route_price)
     sms_cost = route_price * sms_count
-    dbt = self.credits.create(balance: sms_cost)
+    dbt = self.debits.create(balance: sms_cost)
     #if dbt.valid?
     #  self.debit += sms_cost
     #  self.save
