@@ -5,9 +5,9 @@ module Validations
         record.errors[:base] << I18n.t(:not_route_error)
       else
         cost = record.gsm_numbers_count * record.route.price
-        cl = record.user.credit_limit
-        if (record.user.balance - cost) < cl
-          record.errors[:base] << I18n.translate('errors.messages.debit_limit_violation', cost: cost, limit: cl).html_safe
+        dl = -record.user.max_debt
+        if (record.user.balance - cost) < dl
+          record.errors[:base] << I18n.translate('errors.messages.debit_limit_violation', cost: cost, limit: dl).html_safe
         end
       end
     end
