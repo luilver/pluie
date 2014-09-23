@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140922060236) do
+ActiveRecord::Schema.define(version: 20140923191806) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -83,6 +83,15 @@ ActiveRecord::Schema.define(version: 20140922060236) do
     t.integer  "user_id"
     t.string   "description"
   end
+
+  create_table "debits", force: true do |t|
+    t.integer  "user_id"
+    t.decimal  "balance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "debits", ["user_id"], name: "index_debits_on_user_id"
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -199,12 +208,13 @@ ActiveRecord::Schema.define(version: 20140922060236) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"
-    t.decimal  "balance",                default: 0.0
-    t.decimal  "credit_limit",           default: 0.0
+    t.decimal  "debit_limit",            default: 0.0
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.decimal  "credit",                 default: 0.0
+    t.decimal  "debit",                  default: 0.0
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
