@@ -2,7 +2,7 @@ class CreditsController < ApplicationController
   before_action :set_credit, only: [:show, :edit, :update, :destroy]
   after_action :credit_user, only: [:create]
   load_and_authorize_resource except: [:create]
-  around_action :update_credit, only: [:update]
+  #around_action :update_credit, only: [:update]
 
   # GET /credits
   # GET /credits.json
@@ -95,8 +95,8 @@ class CreditsController < ApplicationController
       old_credit = @credit.balance
       yield
       if @credit.valid?
-        new_balance =  @credit.user.balance - old_credit + @credit.balance
-        @credit.user.update(balance: new_balance)
+        user_credit =  @credit.user.credit - old_credit + @credit.balance
+        @credit.user.update(credit: user_credit)
       end
     end
 end
