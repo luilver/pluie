@@ -87,7 +87,7 @@ class CreditsController < ApplicationController
     end
 
     def credit_user
-      @credit.user.balance += @credit.balance
+      @credit.user.credit += @credit.balance
       @credit.save
     end
 
