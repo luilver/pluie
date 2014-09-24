@@ -4,7 +4,7 @@ class Credit < ActiveRecord::Base
   validates :balance, presence: true
   validates :balance,  numericality: { greater_than: 0}
   validates :user, presence: true
-  around_update :update_user_credit
+  after_create :add_credit_to_user
 
   def save_owner
     self.user.save
@@ -19,12 +19,8 @@ class Credit < ActiveRecord::Base
   end
 
   private
-    def update_user_credit
-      old_c = self.balance
-      yield
-      if self.valid?
-        new_c = self.user.credit - old_c + self.balance
-        self.user.update(credit: new_c)
-      end
+    def add_credit_to_user
+      self.user.credit += self.balance
+      self.user.save
     end
 end
