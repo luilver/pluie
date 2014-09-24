@@ -26,9 +26,6 @@ class SimpleSms < ActionSmser::Base
   end
 
   def perform
-    File.open('/tmp/delayed_job.log', "a+") do |file|
-      file.write "#{ActionSmser.delivery_options[:delivery_method]} | #{self} | #{@user_id} | #{@route_id} \n"
-    end
     self.deliver
   end
 
