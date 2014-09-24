@@ -111,7 +111,7 @@ es:
   delivered_status: 'Entregado'
 
   at_route: 'en la ruta: %{route}'
-  date: Fecha
+  date_field: Fecha
 
   notice:
     sucess_msg_sent: 'El %{msg} fue iniciado satisfactoriamente'

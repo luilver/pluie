@@ -50,7 +50,7 @@ en:
 
   at_route: 'at %{route} route'
 
-  date: Date
+  date_field: Date
 
   notice:
     sucess_msg_sent: '%{msg} was successfully sent.'
