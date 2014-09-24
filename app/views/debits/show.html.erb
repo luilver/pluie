@@ -10,5 +10,10 @@
   <%= @debit.balance %>
 </p>
 
+<p>
+    <strong><%=t(:date)%>:</strong>
+    <%= I18n.localize( @debit.created_at, format: :date_time)%>
+</p>
+
 <%= link_to t('edit'), edit_debit_path(@debit) %> |
 <%= link_to t('back').html_safe, debits_path %>

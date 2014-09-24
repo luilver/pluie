@@ -50,6 +50,8 @@ en:
 
   at_route: 'at %{route} route'
 
+  date: Date
+
   notice:
     sucess_msg_sent: '%{msg} was successfully sent.'
     sucess_msg_resent: '%{msg} was successfully re-sent.'
