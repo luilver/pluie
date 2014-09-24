@@ -14,6 +14,10 @@ class Credit < ActiveRecord::Base
     Credit.all[rand Credit.count]
   end
 
+  def to_s
+    self.balance.to_s
+  end
+
   private
     def update_user_credit
       old_c = self.balance

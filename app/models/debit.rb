@@ -9,6 +9,10 @@ class Debit < ActiveRecord::Base
     Debit.all[rand Credit.count]
   end
 
+  def to_s
+    self.balance.to_s
+  end
+
   #def save_user_debit
   #  self.user.debit += self.balance
   #  self.user.save
