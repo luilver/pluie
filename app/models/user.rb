@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def spent
-    self.debits.inject {|sum, d| sum + d.balance}
+    self.debit
   end
 
   def debt?; self.debit > 0 end
