@@ -129,6 +129,7 @@ es:
       gateway: 'Proveedor'
       group_message: 'Env&iacute;o a grupo'
       group: 'Grupo'
+      debit: Débit
     attributes:
       single_message:
         number: 'Destinatario'
@@ -152,6 +153,9 @@ es:
         price: 'Precio'
       group_message:
         message: 'Mensaje'
+      debit:
+        user: 'Usuario'
+        balance: 'Balance'
 
   errors:
     messages:

@@ -67,6 +67,7 @@ en:
       gateway: 'Gateway'
       group_message: 'Group message'
       group: 'Group'
+      debit: 'Debit'
 
   errors:
     messages:
