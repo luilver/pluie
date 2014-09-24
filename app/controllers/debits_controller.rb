@@ -28,7 +28,7 @@ class DebitsController < ApplicationController
 
     respond_to do |format|
       if @debit.save
-        format.html { redirect_to @debit, notice: 'Debit was successfully created.' }
+        format.html { redirect_to @debit, notice: t('notice.item_created', item: t('activerecord.models.debit')).html_safe }
         format.json { render :show, status: :created, location: @debit }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class DebitsController < ApplicationController
   def update
     respond_to do |format|
       if @debit.update(debit_params)
-        format.html { redirect_to @debit, notice: 'Debit was successfully updated.' }
+        format.html { redirect_to @debit, notice: t('notice.item_updated', item: t('activerecord.models.debit')).html_safe }
         format.json { render :show, status: :ok, location: @debit }
       else
         format.html { render :edit }
