@@ -1,10 +1,17 @@
 class DebitsController < ApplicationController
   before_action :set_debit, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource except: [:create]
 
   # GET /debits
   # GET /debits.json
   def index
-    @debits = Debit.all
+    @debits = Debit.paginate :page => params[:page],
+      :conditions => ['user_id = ?', "#{current_user.id}"],
+      :order => 'created_at DESC',
+      :per_page => 5
+    @debits = Debit.paginate :page => params[:page],
+      :order => 'created_at DESC',
+      :per_page => 5 if current_user.admin
   end
 
   # GET /debits/1
