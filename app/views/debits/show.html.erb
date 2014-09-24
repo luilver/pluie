@@ -1,14 +1,14 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>User:</strong>
+  <strong><%= t(:user)%>:</strong>
   <%= @debit.user %>
 </p>
 
 <p>
-  <strong>Balance:</strong>
+  <strong><%= t(:balance)%>:</strong>
   <%= @debit.balance %>
 </p>
 
-<%= link_to 'Edit', edit_debit_path(@debit) %> |
-<%= link_to 'Back', debits_path %>
+<%= link_to t('edit'), edit_debit_path(@debit) %> |
+<%= link_to t('back').html_safe, debits_path %>

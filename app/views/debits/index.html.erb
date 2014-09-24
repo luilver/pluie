@@ -1,10 +1,10 @@
-<h1>Listing debits</h1>
+<h1> <%= t('activerecord.models.debit').pluralize %></h1>
 
 <table>
   <thead>
     <tr>
-      <th>User</th>
-      <th>Balance</th>
+      <th><%= t(:user)%></th>
+      <th><%= t(:balance)%></th>
       <th></th>
       <th></th>
       <th></th>
@@ -16,9 +16,9 @@
       <tr>
         <td><%= debit.user %></td>
         <td><%= debit.balance %></td>
-        <td><%= link_to 'Show', debit %></td>
-        <td><%= link_to 'Edit', edit_debit_path(debit) %></td>
-        <td><%= link_to 'Destroy', debit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t('show'), debit %></td>
+        <td><%= link_to t('edit'), edit_debit_path(debit) %></td>
+        <td><%= link_to t('destroy'), debit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Debit', new_debit_path %>
+<%= link_to t(:new_item, item: t('activerecord.models.debit')), new_debit_path %>
