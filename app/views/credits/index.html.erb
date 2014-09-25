@@ -10,8 +10,10 @@
       <th><%= t('description').html_safe %></th>
       <th><%= t('credit_date') %></th>
       <th></th>
-      <th></th>
-      <th></th>
+      <% if current_user.admin %>
+        <th></th>
+        <th></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -25,8 +27,10 @@
         <td><%= credit.description %></td>
         <td><%= credit.created_at %></td>
         <td><%= link_to t('show'), credit %></td>
-        <td><%= link_to t('edit'), edit_credit_path(credit) %></td>
-        <td><%= link_to t('destroy'), credit, method: :delete, data: { confirm: t('sure').html_safe } %></td>
+        <% if current_user.admin %>
+          <td><%= link_to t('edit'), edit_credit_path(credit) %></td>
+          <td><%= link_to t('destroy'), credit, method: :delete, data: { confirm: t('sure').html_safe } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
