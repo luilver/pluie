@@ -6,8 +6,6 @@
       <th><%= t(:user)%></th>
       <th><%= t(:balance)%></th>
       <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -17,13 +15,9 @@
         <td><%= debit.user %></td>
         <td><%= debit.balance %></td>
         <td><%= link_to t('show'), debit %></td>
-        <td><%= link_to t('edit'), edit_debit_path(debit) %></td>
-        <td><%= link_to t('destroy'), debit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to t(:new_item, item: t('activerecord.models.debit')), new_debit_path %>
