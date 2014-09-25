@@ -139,7 +139,7 @@
    total = ar_gateway.count
    grouped_by_status = ar_gateway.group(:sms_type).count.each do |key, val| %>
    <tr>
-     <td><strong><%= key %></strong></td>
+     <td><strong><%= SmsHelper.sms_type(key) %></strong></td>
      <td><%= val %></td>
      <td><strong><%= number_to_percentage(100.0 * val / total, :precision => 2) %></strong></td>
      <td><%= sms_count = ar_gateway.where(:sms_type => key).where(:status => ActionSmserUtils::DELIVERED_STATUS).count %></td>
