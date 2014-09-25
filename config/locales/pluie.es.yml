@@ -166,3 +166,5 @@ es:
       verbose_date: ! '%a, %d %B %Y'
       verbose_date_time: ! '%a, %d %B %Y, %H:%M:%S'
       date_time: ! '%d %b %Y, %H:%M:%S'
+  cancan:
+    access_denied: 'No est&aacute; autorizado a acceder a esta p&aacute;gina'

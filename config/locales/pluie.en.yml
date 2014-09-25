@@ -79,3 +79,5 @@ en:
       verbose_date: ! '%a %B %d, %Y'
       verbose_date_time: ! '%a %B %d, %Y - %H:%M:%S'
       date_time: ! '%b %d %Y, %H:%M:%S'
+  cancan:
+    access_denied: 'Your not autorized to see this page'
