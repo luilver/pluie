@@ -3,9 +3,7 @@ module PluieWisper
     include Wisper::Publisher
 
     def notify_msg_to_observers(msg)
-      if msg.valid?
-        publish(:pluie_msg_created, msg)
-      end
+      publish(:pluie_msg_created, msg)
     end
   end
 end
