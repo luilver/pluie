@@ -39,4 +39,18 @@ module ActionSmserUtils
       status
     end
   end
+
+  def self.add_user_info(text, user)
+    name = user.username
+    if name.size + ActionSmser::Base.message_real_length(text) < 160
+
+    end
+
+  end
+
+  def self.sms_count
+    #how many messages are necessary to send this sms, to 1 recipient using GSM7 encoding
+    body_size = ActionSmser::Base.message_real_length(body)
+    (body_size / MAX_SIZE) + (body_size % MAX_SIZE == 0 ? 0:1)
+  end
 end
