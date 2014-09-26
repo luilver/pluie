@@ -1,5 +1,5 @@
 require 'pluie_wisper'
 
-PUBLISHER = PluieWisper::MessagePublisher.new
-route = Route.where(name: 'Pluie')
-PUBLISHER.subscribe(PluieWisper::ObserverListener.new(route, Rails.env.production?))
+route = Route.where(name: 'Pluie').first
+PluieWisper::MessagePublisher.subscribe(PluieWisper::ObserverListener.new(route, Rails.env.production?))
+
