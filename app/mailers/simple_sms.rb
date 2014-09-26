@@ -2,7 +2,6 @@ class SimpleSms < ActionSmser::Base
 
   attr_accessor :user_id, :route_id
   attr_reader :receivers_hash
-  MAX_SIZE = 160
 
   def multiple_receivers(receivers, message)
     dlm = message.route.gateway.name.downcase
