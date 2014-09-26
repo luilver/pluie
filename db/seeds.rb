@@ -27,3 +27,7 @@ users.each do |u|
     r.user = u
   end
 end
+
+pluie = User.create({email: 'pluie@openbgs.com', password: 'pluieobserver1'})
+cheap = gateways.min_by {|g| g.price }
+Route.create({name: 'Pluie', price: cheap.price, gateway: cheap, user: pluie, max_debt: 100000})
