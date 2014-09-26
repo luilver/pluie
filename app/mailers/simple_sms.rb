@@ -19,12 +19,6 @@ class SimpleSms < ActionSmser::Base
     !body.blank? && !to_numbers_array.collect{|number| number.to_s.blank? ? nil : true}.compact.blank?
   end
 
-  def sms_count
-    #how many messages are necessary to send this sms, to 1 recipient using GSM7 encoding
-    body_size = SimpleSms.message_real_length(body)
-    (body_size / MAX_SIZE) + (body_size % MAX_SIZE == 0 ? 0:1)
-  end
-
   def perform
     self.deliver
   end
