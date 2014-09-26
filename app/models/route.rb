@@ -16,4 +16,12 @@ class Route < ActiveRecord::Base
   def self.random
     Route.all[rand Route.all.size]
   end
+
+  def gateway_to_sym
+    self.gateway.name.downcase.to_sym
+  end
+
+  def dlv_to_sym
+    "async_#{self.gateway.name.downcase}".to_sym
+  end
 end
