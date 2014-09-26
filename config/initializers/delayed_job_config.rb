@@ -20,3 +20,7 @@ end
 def bulk_sms_queue
   @@bulk_queue ||= ENV['BULK_SMS_QUEUE']
 end
+
+def pluie_sms_queue
+  "pluie_queue"
+end
