@@ -49,9 +49,9 @@ module ActionSmserUtils
     r
   end
 
-  def self.sms_count
+  def self.sms_count(body)
     #how many messages are necessary to send this sms, to 1 recipient using GSM7 encoding
     body_size = ActionSmser::Base.message_real_length(body)
-    (body_size / MAX_SIZE) + (body_size % MAX_SIZE == 0 ? 0:1)
+    (body_size / MAX_SIZE) + (body_size % MAX_SIZE == 0 ? 0 : 1 )
   end
 end
