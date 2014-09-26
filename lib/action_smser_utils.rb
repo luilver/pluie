@@ -40,12 +40,11 @@ module ActionSmserUtils
     end
   end
 
-  def self.add_user_info(text, user)
-    name = user.username
-    if name.size + ActionSmser::Base.message_real_length(text) < 160
-
+  def self.add_info(text, info)
+    if info.size + ActionSmser::Base.message_real_length(text) < MAX_SIZE
+      text = text.insert(0, info)
     end
-
+    text
   end
 
   def self.sms_count

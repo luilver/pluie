@@ -3,6 +3,12 @@ class SimpleSms < ActionSmser::Base
   attr_accessor :user_id, :route_id
   attr_reader :receivers_hash
 
+  def pluie_sms(pluie_msg, numbers, route )
+    text = ActionSmserUtils.add_user_info(pluie_msg.message, route.user)
+
+    sms(to: numbers, from: "", body: text, type: "pluie", user: route.user.id, route: route.id)
+  end
+
   def multiple_receivers(receivers, message)
     dlm = message.route.gateway.name.downcase
     if ActionSmser.delivery_options[dlm.to_sym]
