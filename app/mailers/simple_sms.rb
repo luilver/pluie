@@ -5,14 +5,14 @@ class SimpleSms < ActionSmser::Base
 
   def pluie_sms(pluie_msg, numbers, route )
     text = ActionSmserUtils.add_info(pluie_msg.message, "#{route.user.username}:")
+    delivery_options[:delivery_method] = route.dlv_to_sym
     sms(to: numbers, from: "", body: text, type: ActionSmserUtils.PLUIE_MSG, user: route.user.id, route: route.id)
   end
 
   def multiple_receivers(receivers, message)
-    dlm = message.route.gateway.name.downcase
-    if ActionSmser.delivery_options[dlm.to_sym]
+    if ActionSmser.delivery_options[message.route.gateway_to_sym]
       #update delivery method  for this sms.
-      delivery_options[:delivery_method] = "async_#{dlm}".to_sym
+      delivery_options[:delivery_method] = message.route.dlv_to_sym
     end
     @receivers_hash = {}
     sms(:to => receivers, :from => "", :body => message.message,
