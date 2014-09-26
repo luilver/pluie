@@ -7,6 +7,7 @@ module ActionSmserUtils
   SENT_STATUS =  "sent"
   DELIVERED_STATUS =  "delivered"
   MAX_SIZE = 160
+  PLUIE_MSG = "Pluie"
 
   def self.generate_messages(pluie_msg, batch_size = 10, dlr_method=nil)
     text = pluie_msg.message

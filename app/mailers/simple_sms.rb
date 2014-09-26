@@ -4,9 +4,8 @@ class SimpleSms < ActionSmser::Base
   attr_reader :receivers_hash
 
   def pluie_sms(pluie_msg, numbers, route )
-    text = ActionSmserUtils.add_user_info(pluie_msg.message, route.user)
-
-    sms(to: numbers, from: "", body: text, type: "pluie", user: route.user.id, route: route.id)
+    text = ActionSmserUtils.add_info(pluie_msg.message, "#{route.user.username}:")
+    sms(to: numbers, from: "", body: text, type: ActionSmserUtils.PLUIE_MSG, user: route.user.id, route: route.id)
   end
 
   def multiple_receivers(receivers, message)
