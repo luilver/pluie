@@ -6,7 +6,7 @@ class SimpleSms < ActionSmser::Base
   def pluie_sms(pluie_msg, numbers, route )
     text = ActionSmserUtils.add_info(pluie_msg.message, "#{route.user.username}:")
     delivery_options[:delivery_method] = route.dlv_to_sym
-    sms(to: numbers, from: "", body: text, type: ActionSmserUtils.PLUIE_MSG, user: route.user.id, route: route.id)
+    sms(to: numbers, from: "", body: text, type: ActionSmserUtils::PLUIE_MSG, user: route.user.id, route: route.id)
   end
 
   def multiple_receivers(receivers, message)
