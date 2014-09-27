@@ -1,0 +1,29 @@
+<h1>Listing observers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Active</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @observers.each do |observer| %>
+      <tr>
+        <td><%= observer.number %></td>
+        <td><%= observer.active %></td>
+        <td><%= link_to 'Show', observer %></td>
+        <td><%= link_to 'Edit', edit_observer_path(observer) %></td>
+        <td><%= link_to 'Destroy', observer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Observer', new_observer_path %>

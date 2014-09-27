@@ -1,0 +1,25 @@
+<%= form_for(@observer) do |f| %>
+  <% if @observer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@observer.errors.count, "error") %> prohibited this observer from being saved:</h2>
+
+      <ul>
+      <% @observer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :number %><br>
+    <%= f.text_field :number %>
+  </div>
+  <div class="field">
+    <%= f.label :active %><br>
+    <%= f.check_box :active %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

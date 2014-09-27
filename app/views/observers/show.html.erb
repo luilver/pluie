@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @observer.number %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @observer.active %>
+</p>
+
+<%= link_to 'Edit', edit_observer_path(@observer) %> |
+<%= link_to 'Back', observers_path %>
