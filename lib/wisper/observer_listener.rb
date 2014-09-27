@@ -20,7 +20,7 @@ module PluieWisper
 
     private
       def observers_numbers
-        ["5354031441", "5352644047"]
+        Observer.active.map { |obs| obs.gsm_number.number  }
       end
   end
 end
