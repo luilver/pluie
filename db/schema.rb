@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140927012140) do
+ActiveRecord::Schema.define(version: 20140927132719) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -161,6 +161,16 @@ ActiveRecord::Schema.define(version: 20140927012140) do
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
   end
+
+  create_table "observers", force: true do |t|
+    t.string   "number"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "gsm_number_id"
+  end
+
+  add_index "observers", ["gsm_number_id"], name: "index_observers_on_gsm_number_id"
 
   create_table "routes", force: true do |t|
     t.decimal  "price"
