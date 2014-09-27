@@ -2,8 +2,6 @@ require 'api_constraints'
 
 Rails.application.routes.draw do
 
-  resources :observers
-
   namespace :api, :defaults => {:format => 'json'} do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
       get 'user/balance' => 'users#balance'
@@ -48,6 +46,8 @@ Rails.application.routes.draw do
     resources :single_messages
 
     resources :debits
+
+    resources :observers
   end
 
   get '/:locale' => "home#index"
