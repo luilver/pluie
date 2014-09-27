@@ -1,7 +1,9 @@
 <%= form_for(@observer) do |f| %>
   <% if @observer.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@observer.errors.count, "error") %> prohibited this observer from being saved:</h2>
+      <h2><%= raw t('errors.template.header', count: @observer.errors.count, model: t('activerecord.models.observer')) %>
+      </h2>
+      <p><%= t('errors.template.body') %></p>
 
       <ul>
       <% @observer.errors.full_messages.each do |msg| %>
@@ -20,6 +22,6 @@
     <%= f.check_box :active %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t(:create_item, item: Observer.model_name.human) %>
   </div>
 <% end %>

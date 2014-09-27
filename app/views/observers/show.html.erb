@@ -1,14 +1,14 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Number:</strong>
+  <strong><%= Observer.human_attribute_name("number") %>:</strong>
   <%= @observer.number %>
 </p>
 
 <p>
-  <strong>Active:</strong>
+  <strong><%= Observer.human_attribute_name("active") %>:</strong>
   <%= @observer.active %>
 </p>
 
-<%= link_to 'Edit', edit_observer_path(@observer) %> |
-<%= link_to 'Back', observers_path %>
+<%= link_to t(:show), edit_observer_path(@observer) %> |
+<%= link_to t(:back).html_safe, observers_path %>
