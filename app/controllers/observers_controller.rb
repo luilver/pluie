@@ -29,7 +29,7 @@ class ObserversController < ApplicationController
 
     respond_to do |format|
       if @observer.save
-        format.html { redirect_to @observer, notice: 'Observer was successfully created.' }
+        format.html { redirect_to @observer,notice: t('notice.item_created', item: t('activerecord.models.observer')).html_safe }
         format.json { render :show, status: :created, location: @observer }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class ObserversController < ApplicationController
   def update
     respond_to do |format|
       if @observer.update(observer_params)
-        format.html { redirect_to @observer, notice: 'Observer was successfully updated.' }
+        format.html { redirect_to @observer, notice: t('notice.item_updated', item: t('activerecord.models.observer')).html_safe }
         format.json { render :show, status: :ok, location: @observer }
       else
         format.html { render :edit }
