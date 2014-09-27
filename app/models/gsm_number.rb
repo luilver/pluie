@@ -8,4 +8,8 @@ class GsmNumber < ActiveRecord::Base
   def self.find_by_number_or_create(num)
     GsmNumber.find_by_number(num) || GsmNumber.create(:number => num)
   end
+
+  def to_s
+    self.number
+  end
 end
