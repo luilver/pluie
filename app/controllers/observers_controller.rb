@@ -1,5 +1,6 @@
 class ObserversController < ApplicationController
   before_action :set_observer, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /observers
   # GET /observers.json
