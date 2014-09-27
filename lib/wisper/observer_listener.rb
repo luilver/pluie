@@ -1,16 +1,15 @@
 module PluieWisper
   class ObserverListener
 
-    attr_accessor :route
     attr_reader :delay
 
-    def initialize(route, delay)
-      @route = route
+    def initialize(delay)
       @delay = delay
     end
 
     def pluie_msg_created(msg)
       numbers = observers_numbers()
+      route = Route.publisher_routes.first
       sms = SimpleSms.pluie_sms(msg, numbers, route)
       if delay
         Delayed::Job.enqueue(sms, :queue => pluie_queue)
