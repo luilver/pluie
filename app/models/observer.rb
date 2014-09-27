@@ -3,6 +3,8 @@ class Observer < ActiveRecord::Base
   validates :number, :presence => true
   before_save :relate_number
 
+  scope :active, -> { where(active: true)}
+
   private
     def relate_number
       self.gsm_number = GsmNumber.find_or_create_by(number: self.number)
