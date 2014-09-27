@@ -131,6 +131,7 @@ es:
       group_message: 'Env&iacute;o a grupo'
       group: 'Grupo'
       debit: Débito
+      observer: Observer
     attributes:
       single_message:
         number: 'Destinatario'
@@ -157,6 +158,9 @@ es:
       debit:
         user: 'Usuario'
         balance: 'Balance'
+      observer:
+        number: Número
+        active: "Activo"
 
   errors:
     messages:

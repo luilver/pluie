@@ -70,6 +70,7 @@ en:
       group_message: 'Group message'
       group: 'Group'
       debit: 'Debit'
+      observer: Observer
 
   errors:
     messages:
