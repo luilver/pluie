@@ -5,7 +5,7 @@ class Gateway < ActiveRecord::Base
   has_many :users, :through => :routes
   validates :name, presence: true
   validates :name, uniqueness: { case_sensitive: false }
-  validates :price, numericality: {only_integer: true, greater_than: 0}
+  validates :price, numericality: { greater_than: 0 }
 
   def to_s
     self.name
