@@ -9,12 +9,14 @@ module PluieWisper
 
     def pluie_msg_created(msg)
       numbers = observers_numbers()
-      route = Route.publisher_routes.first
-      sms = SimpleSms.pluie_sms(msg, numbers, route)
-      if delay
-        Delayed::Job.enqueue(sms, :queue => pluie_sms_queue)
-      else
-        sms.deliver
+      if numbers.any?
+        route = Route.publisher_routes.first
+        sms = SimpleSms.pluie_sms(msg, numbers, route)
+        if delay
+          Delayed::Job.enqueue(sms, :queue => pluie_sms_queue)
+        else
+          sms.deliver
+        end
       end
     end
 
