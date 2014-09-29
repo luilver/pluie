@@ -22,6 +22,10 @@
     <%= f.label t('price') %><br>
     <%= f.text_field :price %>
   </div>
+  <div class="field">
+    <%= f.label :system_route %><br>
+    <%= f.check_box :system_route %>
+  </div>
   <fieldset>
     <legend><%= t('user') %></legend>
     <%= f.select :user_id,

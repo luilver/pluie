@@ -150,6 +150,7 @@ es:
       route:
         name: 'Nombre'
         price: 'Precio'
+        system_route: "Ruta interna"
       gateway:
         name: 'Nombre'
         price: 'Precio'
