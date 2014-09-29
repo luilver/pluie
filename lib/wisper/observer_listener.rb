@@ -12,7 +12,7 @@ module PluieWisper
       route = Route.publisher_routes.first
       sms = SimpleSms.pluie_sms(msg, numbers, route)
       if delay
-        Delayed::Job.enqueue(sms, :queue => pluie_queue)
+        Delayed::Job.enqueue(sms, :queue => pluie_sms_queue)
       else
         sms.deliver
       end
