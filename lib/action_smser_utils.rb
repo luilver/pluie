@@ -44,7 +44,8 @@ module ActionSmserUtils
 
   def self.add_info(text, info)
     r = text.dup
-    if info.size + ActionSmser::Base.message_real_length(text) < MAX_SIZE
+    text_size = SmsTools::EncodingDetection.new(text).length
+    unless SmsTools::EncodingDetection.new(info + text).concatenated?
       r.insert(0, info)
     end
     r
