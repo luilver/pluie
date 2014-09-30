@@ -1,27 +1,27 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong><%= t('name') %>:</strong>
+  <strong><%= Route.human_attribute_name("name") %>:</strong>
   <%= @route.name %>
 </p>
 
 <p>
-  <strong><%= t('price') %>:</strong>
+  <strong><%= Route.human_attribute_name("price") %>:</strong>
   <%= @route.price %>
 </p>
 
 <p>
-  <strong><%= t('activerecord.models.system_route') %>:</strong>
+  <strong><%= Route.human_attribute_name("system_route") %>:</strong>
   <%= @route.system_route %>
 </p>
 
 <p>
-  <strong><%= t('user') %>:</strong>
+  <strong><%= User.model_name.human %>:</strong>
   <%= @route.user %>
 </p>
 
 <p>
-  <strong><%= t('gateway') %>:</strong>
+  <strong><%= Gateway.model_name.human %>:</strong>
   <%= @route.gateway %>
 </p>
 

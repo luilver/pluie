@@ -3,10 +3,10 @@
 <table>
   <thead>
     <tr>
-      <th><%= t('name') %></th>
-      <th><%= t('price') %></th>
-      <th><%= t('user') %></th>
-      <th><%= t('gateway') %></th>
+      <th><%= Route.human_attribute_name("name") %></th>
+      <th><%= Route.human_attribute_name("price") %></th>
+      <th><%= User.model_name.human %></th>
+      <th><%= Gateway.model_name.human%></th>
       <th></th>
       <th></th>
       <th></th>
