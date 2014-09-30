@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong><%= t(:user)%>:</strong>
+  <strong><%= Debit.human_attribute_name("user")%>:</strong>
   <%= @debit.user %>
 </p>
 
 <p>
-  <strong><%= t(:balance)%>:</strong>
+  <strong><%= Debit.human_attribute_name("balance")%>:</strong>
   <%= @debit.balance %>
 </p>
 

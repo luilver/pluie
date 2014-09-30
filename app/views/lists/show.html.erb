@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong><%= t(:name)%></strong>
+  <strong><%=List.human_attribute_name("name")%></strong>
   <%= @list.name %>
 </p>
 <p>

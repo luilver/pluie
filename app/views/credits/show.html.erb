@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong><%= t('balance') %>:</strong>
+  <strong><%= Credit.human_attribute_name("balance") %>:</strong>
   <%= @credit.balance %>
 </p>
 
 <p>
-  <strong><%= t('description').html_safe %>:</strong>
+  <strong><%= Credit.human_attribute_name("description").html_safe %>:</strong>
   <%= @credit.description %>
 </p>
 

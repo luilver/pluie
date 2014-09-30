@@ -15,11 +15,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label t(:name) %><br>
+    <%= f.label :name, Gateway.human_attribute_name("name")  %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label t(:price) %><br>
+    <%= f.label :price, Gateway.human_attribute_name("price") %><br>
     <%= f.text_field :price %>
   </div>
   <div class="actions">

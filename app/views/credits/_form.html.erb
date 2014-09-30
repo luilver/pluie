@@ -15,11 +15,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :balance %><br>
+    <%= f.label :balance, Credit.human_attribute_name("balance") %><br>
     <%= f.text_field :balance %>
   </div>
   <div class="field">
-    <%= t('description').html_safe %><br>
+    <%= f.label :description, Credit.human_attribute_name("description").html_safe %><br>
     <%= f.text_field :description %>
   </div>
   <div class="field">

@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong><%= t(:message).capitalize%>:</strong>
+  <strong><%=  BulkMessage.human_attribute_name("message")%>:</strong>
   <%= @bulk_message.message %>
 </p>
 
 <p>
-  <strong><%=t(:lists)%>:</strong>
+  <strong><%= BulkMessage.human_attribute_name("lists")%>:</strong>
   <%= @bulk_message.lists.count %>
 </p>
 
@@ -16,7 +16,7 @@
 </p>
 
 <p>
-  <strong><%=t(:route).capitalize%>:</strong>
+  <strong><%= Route.model_name.human %>:</strong>
   <%= @bulk_message.route %>
 </p>
 
