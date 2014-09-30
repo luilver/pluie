@@ -14,7 +14,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :number %><br>
+    <%= f.label :number, Observer.human_attribute_name("number").html_safe %><br>
     <%= f.text_field :number %>
   </div>
   <div class="field">

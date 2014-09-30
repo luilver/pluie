@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong><%= Observer.human_attribute_name("number") %>:</strong>
+  <strong><%= Observer.human_attribute_name("number").html_safe %>:</strong>
   <%= @observer.number %>
 </p>
 
