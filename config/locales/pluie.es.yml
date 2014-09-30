@@ -160,7 +160,7 @@ es:
         user: 'Usuario'
         balance: 'Balance'
       observer:
-        number: Número
+        number: "N&uacute;mero"
         active: "Activo"
 
   errors:
