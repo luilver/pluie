@@ -27,7 +27,7 @@
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
   <div class="field">
-    <%= t('max_debt').html_safe %><br>
+    <%= f.label :max_debt, User.human_attribute_name("max_debt").html_safe %><br>
     <%= f.text_field :max_debt %>
   </div>
   <div class="field">
