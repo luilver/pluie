@@ -7,6 +7,7 @@ es:
         password: Contraseña
         password_confirmation: Confirme la contraseña
         remember_me: Recordar contraseña
+        admin: Administrador
     models:
       user: Usuario
   devise:
