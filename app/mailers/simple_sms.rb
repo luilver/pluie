@@ -40,4 +40,9 @@ class SimpleSms < ActionSmser::Base
     super(options)
   end
 
+  def body_parts
+    sms_encoding = SmsTools::EncodingDetection.new body
+    sms_encoding.concatenated_parts
+  end
+
 end
