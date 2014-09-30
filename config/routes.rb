@@ -19,8 +19,7 @@ Rails.application.routes.draw do
 
   scope ":locale", locale: /en|es/ do
 
-    get 'users' => 'users#index', as: :users
-    delete 'users/cancel/:id' => 'users#destroy', as: :cancel_user
+    resources :users, path: '/admin'
 
     mount ActionSmser::Engine => '/'
     get 'delivery_reports' => 'action_smser/delivery_reports', as: :delivery_reports

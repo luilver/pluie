@@ -1,0 +1,6 @@
+<h2><%= t('new_user') %></h2>
+
+<%= render "form" %>
+
+<%= link_to t('show'), @user %> |
+<%= link_to t('back').html_safe, users_path %>
