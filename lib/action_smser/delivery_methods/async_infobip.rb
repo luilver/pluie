@@ -31,7 +31,7 @@ module ActionSmser::DeliveryMethods
 
     def self.sms_info(sms)
       msg = {"text" => sms.body, "drPushUrl" => ActionSmserUtils.gateway_callback_url(gateway_key)}
-      if ActionSmser::Base.message_real_length(sms.body) > 160
+      if sms.concatenated?
         msg["type"] = "longSMS"
       end
       msg
