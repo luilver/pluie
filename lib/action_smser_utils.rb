@@ -50,7 +50,7 @@ module ActionSmserUtils
     r
   end
 
-  def self.sms_count(body)
+  def self.sms_parts(body)
     sms_encoding = SmsTools::EncodingDetection.new body
     sms_encoding.concatenated_parts
   end
