@@ -1,5 +1,6 @@
 require 'action_smser_utils/user_to_delivery_report'
 require 'action_smser_utils/inspect_request'
+require 'smstools'
 #user_to_delivery_report file must be loaded in order to add build_with_user method
 #and belongs_to association to ActionSmser::DeliveryReport
 
@@ -50,8 +51,7 @@ module ActionSmserUtils
   end
 
   def self.sms_count(body)
-    #how many messages are necessary to send this sms, to 1 recipient using GSM7 encoding
-    body_size = ActionSmser::Base.message_real_length(body)
-    (body_size / MAX_SIZE) + (body_size % MAX_SIZE == 0 ? 0 : 1 )
+    sms_encoding = SmsTools::EncodingDetection.new body
+    sms_encoding.concatenated_parts
   end
 end
