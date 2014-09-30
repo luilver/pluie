@@ -35,8 +35,8 @@ class User < ActiveRecord::Base
     self.balance >= amount
   end
 
-  def bill_sms(sms_count, route_price)
-    sms_cost = route_price * sms_count
+  def bill_sms(sms_count, route_price, msg_parts)
+    sms_cost = route_price * sms_count * msg_parts
     dbt = self.debits.create(balance: sms_cost)
   end
 
