@@ -77,3 +77,5 @@ gem 'actionpack-xml_parser' # to parse infobip dlr post
 gem 'rails-i18n', '~> 4.0.0' # For 4.0.x
 
 gem 'wisper' #to implement observers
+
+gem 'smstools' #GSM text size, and other sms utilities
