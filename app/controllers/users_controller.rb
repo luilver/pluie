@@ -39,6 +39,10 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
+    if params[:user][:password].blank?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: t('notice.item_updated', item: t('activerecord.models.user')).html_safe }
