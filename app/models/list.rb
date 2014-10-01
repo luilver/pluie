@@ -10,27 +10,31 @@ class List < ActiveRecord::Base
 
   def attach_numbers
     if self.file.path
+      self.update_attribute(:opened, true)
       numbers = IO.foreach(self.file.path).map{ |line| GsmNumber.find_or_create_by(number: line[0,10]) }
       from_file = Set.new(numbers)
       new_numbers = from_file - self.gsm_numbers.to_a
       self.gsm_numbers << new_numbers.to_a
+      self.update_attribute(:opened, false)
     end
   end
 
   def remove_numbers
     if self.file.path
+      self.update_attribute(:opened, true)
       numbers = IO.foreach(self.file.path).map{ |line| GsmNumber.find_by_number(line[0,10]) }
       from_file = Set.new(numbers)
       erase_this = from_file & self.gsm_numbers.to_a
       self.gsm_numbers.delete(erase_this.to_a)
+      self.update_attribute(:opened, false)
     end
     #IO.foreach(self.file.path) { |line| n = GsmNumber.find_by_number(line[0,10]);
      #                             self.gsm_numbers.delete(n) if self.gsm_numbers.include?(n)  } if self.file.path
   end
 
   def receivers
-    return self.file.path ? IO.foreach(self.file.path).map{ |line| line[0,10] } : []
+    self.opened ?
+          IO.foreach(self.file.path).map{ |line| line[0,10] } :
+          self.gsm_numbers.map {|gsm| gsm.number}
   end
-  #TODO.... en receivers utilizar los numeros GSM asociados a lista, si esta no esta siendo modificada.
-
 end
