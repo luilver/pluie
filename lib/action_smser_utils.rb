@@ -55,4 +55,8 @@ module ActionSmserUtils
     sms_encoding = SmsTools::EncodingDetection.new body
     sms_encoding.concatenated_parts
   end
+
+  def self.sms_cost(number_count, route_price, msg_parts)
+    number_count * route_price * msg_parts
+  end
 end
