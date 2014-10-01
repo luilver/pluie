@@ -5,8 +5,8 @@
   <%= @list.name %>
 </p>
 <p>
-  <strong><%= t('recipient').capitalize.pluralize(@list.gsm_numbers.count) %>:</strong>
-  <%= @list.gsm_numbers.count%>
+  <strong><%= t('recipient').capitalize.pluralize(@list.receivers.count) %>:</strong>
+  <%= @list.receivers.count%>
 </p>
 
 <%= link_to t(:edit), edit_list_path(@list) %> |
