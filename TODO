@@ -1,0 +1,144 @@
+? tests
+    bm: lists not null
+
+? prohibir enviar a otros proveedores (además de Cubacel)
+    fix de PruebaPhone para formato
+
+- Destinatarios: 0
+
+- Lista creado/a
+
+- Usuarios nuevos
+
+- Tener cuenta, para el cálculo del costo del mensaje, la cantidad de caracteres.
+
+- ActionSmser: Gateway_commit not found item with id:
+
+- cobrar por cada 160 caracteres
+
+- Destinatario(s): 5352644047 5354031441
+
+- filtro por estado
+
+- fix
+    credits index solo muestra edit/view/delete if admin
+
+- gms_numbers_count attr de list
+    magia de rails
+
+- Otras pruebas de código
+    was the web request successful?
+    was the user redirected to the right page?
+    was the user successfully authenticated?
+    was the correct object stored in the response template?
+    was the appropriate message displayed to the user in the view?
+
+- User Preferences
+    user_id
+    time_zone
+    others
+    language
+
+- User view
+    new * admin
+    edit * admin
+    show * admin
+
+- simple_form
+
+- JavaScript que cuente 160 chars
+
+- I18n
+
+- Preferencias
+    Tema: (combo)
+        Default
+        Alternate (Boostrap)
+        Classic (Rails Admin)
+
+    Página inicial:
+        Single Mode
+        Massive Mode
+        Lists
+        Summary
+        All Sms
+
+- Boostrap
+
+- Menú * Mode
+    -Sub menu New Message
+    -Sub menu All Messages
+
+###########
+
+sugerencias de la pepa:
+(envios puntuales y masivos)
+1 agregar columna de fecha de envio a los mgs
+2 reordenar las columnas: grupo/destinatario(s)/mgs/fecha/ver
+3 permitir ordenar las filas ACS/DESC en todas las culumnas
+
+------------
+(listas)
+Números GSM no entendi
+porque no puedo introducir no de telef manualmente?? txt no molesta pero y si no me da la gana????
+si la modifico por xtx tambien WAKALA, opciones manuales just in case
+ponle tooltip al vinculo de las listas
+
+---------------------
+(sumario) ESTADISTICAS
+la fecha sta fea
+las listas de abajo quitar el estilo de despues de visitado un vinculo
+ver lo de especificar que tienes seleccionada, la tabla no me es muy intuitiva y por si misma no me dice nada
+Entregados en (hora:min:seg) NO: Historial de Entrega / Delivery Timeline
+
+-------------------------
+(reportes de entrega)
+cambiar No. mgs para Id mgs
+i18n con la columna de re-enviado
+iconito chulo para la columna o
+
+------------------------------
+OJO CON LOS USOS HORARIOS EL MERIDIANO realmente no dice mucho
+
+--------------------------------
+(balance)
+ojo con los roles de usuario no me ensennes la piruleta si no puedo eliminar ver o editar no me digas que se hace
+
+----------------------------
+(credito)
+y lo rompi sumimasen
+en annadir credito faltan validaciones
+no se chequea que el usuario haya sido seleccionado
+ver que no introduzca creditos negativos o ver que si es un debito ponerle limite
+y no mas de 8 dijitos que nadie tiene tanto dinerooo
+
+----------------------
+(sessions)
+hay algun tipo de problemas con las sessiones:
+
+ActionController::InvalidAuthenticityToken at /users/sign_out
+ActionController::InvalidAuthenticityToken
+tengo 2 tabs abiertos del sitio logueado como pepe y en uno de los dos tab me logout de pepe y entre como admin, regrese al otro tab que quedaba y di logout
+
+cuando hay un usuario logueado (pepe) y en otro tab entro con otro usuario cuyas credenciales son validas (lui), entra en el usuario logueado de primero (pepe) y deberia decir algo como luilver tus credenciales son validas pero en esta pc/ip/navegador ya hay otro usuario logueado, o no dejar loguear, o desloguear al primer usuario (pepe) y loguear a (lui)
+
+---------------------
+(usuarios)
+en el vinculo nuevo usuario no hace nada no puedo annadir usuarios (como admin)
+cuando se elimina un usuario hay que eliminar los creditos
+desde el punto de vista de historicos yo debo no eliminar un usuario si no invalidarlo (columna booleana 0 valido 1 invalido)
+teoria: de BD los rows invalidados (1) no se ven en el frontend de las aplicaciones ni si quiera para chequear si ya existe alguien con el mismo nombre a menos que el nombre sea el primary key, se maneja en el backend o en la BD directamente
+
+------------------
+(OJO)
+el vinculo balance del usuario admin no puede llevar a la lista de todos los creditos
+el update de los creditos no actualiza el balance
+
+------------
+
+el admin no deberia listarse a si mismo, para no dar la posibilidad de eliminarse y quedarse sin admin en el sistema
+
+---------------
+traducir los errores y mensajes de session y flash
+
+###########
