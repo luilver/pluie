@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001160807) do
+ActiveRecord::Schema.define(version: 20141001214156) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(version: 20141001160807) do
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
+    t.boolean  "opened",            default: true
   end
 
   create_table "observers", force: true do |t|
