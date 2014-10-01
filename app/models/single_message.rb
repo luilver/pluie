@@ -4,7 +4,6 @@ class SingleMessage < ActiveRecord::Base
   include ActiveModel::Validations
   belongs_to :user
   has_and_belongs_to_many :gsm_numbers
-  has_many :sms, as: :msg
   belongs_to :route
 
   validates :number, presence: true

@@ -8,8 +8,6 @@ class BulkMessage < ActiveRecord::Base
   belongs_to :route
   has_and_belongs_to_many :lists
   #has_and_belongs_to_many :gsm_numbers
-  has_many :sms, as: :msg
-
   validates :message, presence: true
   validates :lists, presence: true
   validates_with Validations::CreditValidator
