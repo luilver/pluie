@@ -1,0 +1,84 @@
+en:
+  size: 'size'
+  recipient: 'recipient'
+  home: 'Home'
+  single_mode: 'Single mode'
+  massive_mode: 'Masive Mode'
+  lists: 'Lists'
+  summary: 'Summary'
+  all_sms: 'All Sms'
+  credits: 'Credits'
+  routes: 'Routes'
+  route: 'route'
+  gateway: 'Gateway'
+  gateways: 'Gateways'
+  user: 'User'
+  delivery_reports: 'Delivery reports'
+
+  new_item_f: "New %{item}"
+  new_item: "New %{item}"
+  create_item: "Create %{item}"
+  editing: "Editing %{item}"
+  single_message: 'single message'
+  bulk_message: 'bulk message'
+  not_route_error: 'No route for user'
+
+  message: 'message'
+  send: 'send'
+  sending_options: 'sending options'
+
+  single_message_plural: 'single messages'
+  bulk_message_plural: 'bulk_messages'
+
+  show: "Show"
+  all_m: "all"
+
+  name: 'Name'
+  price: 'Price'
+
+  upload_file: 'Upload file'
+  gsm_numbers: 'GSM numbers'
+
+  choose_file: "Choose file"
+  listing_users: 'Users'
+
+  destroy: 'Destroy'
+  sure: 'sure'
+
+  sent_status: 'Pending'
+  delivered_status: 'Delivered'
+
+  at_route: 'at %{route} route'
+
+  date_field: Date
+
+  notice:
+    sucess_msg_sent: '%{msg} was successfully sent.'
+    sucess_msg_resent: '%{msg} was successfully re-sent.'
+    item_created: '%{item} was successfully created.'
+    item_updated: '%{item} was successfully updated.'
+
+  activerecord:
+    models:
+      single_message: 'Single message'
+      bulk_message: 'Bulk message'
+      list: 'List'
+      contact: 'Contact'
+      credit: 'Credit'
+      route: 'Route'
+      gateway: 'Gateway'
+      group_message: 'Group message'
+      group: 'Group'
+      debit: 'Debit'
+      observer: Observer
+
+  errors:
+    messages:
+      debit_limit_violation: "Message cost (%{cost}) violates your credit limit (%{limit})"
+  time:
+    formats:
+      verbose_date: ! '%a %B %d, %Y'
+      verbose_date_time: ! '%a %B %d, %Y - %H:%M:%S'
+      date_time: ! '%b %d %Y, %H:%M:%S'
+  cancan:
+    access_denied: 'You are not authorized to see this page'

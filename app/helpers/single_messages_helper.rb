@@ -1,0 +1,2 @@
+module SingleMessagesHelper
+end

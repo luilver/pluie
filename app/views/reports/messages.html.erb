@@ -1,0 +1,15 @@
+<h1>Messages Log</h1>
+
+<%= form_tag search_messages_path(@messages) do %>
+<table>
+  <tbody>
+      <tr>
+        <td>Select log type:
+          <%= radio_button_tag 'log', 'count', false %> Today's log
+          <%= radio_button_tag 'log', 'zip', true %> Export log</td>
+      </tr>
+  </tbody>
+</table>
+
+<%= submit_tag "Submit" %>
+<%end%>

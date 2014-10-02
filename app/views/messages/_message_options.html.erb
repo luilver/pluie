@@ -1,0 +1,10 @@
+<fieldset>
+  <legend><%= t(:sending_options).capitalize.html_safe%></legend>
+  <div class="field">
+    <%= f.label :route, t("activerecord.models.route") %>:
+    <%= f.select :route_id,
+      options_from_collection_for_select(current_user.routes, "id", "name")
+    %>
+  </div>
+</fieldset>
+

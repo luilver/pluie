@@ -1,0 +1,44 @@
+<%= form_for(@route) do |f| %>
+  <% if @route.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= raw t('errors.template.header', count: @route.errors.count, model: t('activerecord.models.route')) %>
+      </h2>
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+      <% @route.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, t('name') %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :price, t('price') %><br>
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :system_route %><br>
+    <%= f.check_box :system_route %>
+  </div>
+  <fieldset>
+    <legend><%= t('user') %></legend>
+    <%= f.select :user_id,
+      options_from_collection_for_select(User.all, "id", "email")
+    %>
+  </fieldset>
+  <fieldset>
+    <legend><%= t('gateway') %></legend>
+    <%= f.select :gateway_id,
+      options_from_collection_for_select(Gateway.all, "id", "name")
+    %>
+  </fieldset>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

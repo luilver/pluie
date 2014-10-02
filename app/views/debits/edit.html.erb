@@ -1,0 +1,6 @@
+<h1> <%= t(:editing, item: t('activerecord.models.debit'))%></h1>
+
+<%= render 'form' %>
+
+<%= link_to t(:show), @debit %> |
+<%= link_to t(:back).html_safe, debits_path %>

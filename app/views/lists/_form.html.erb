@@ -1,0 +1,36 @@
+<%= form_for(@list, :html => { :multipart => true }) do |f| %>
+  <% if @list.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= raw t('errors.template.header', count: @list.errors.count, model: t('activerecord.models.list')) %>
+      </h2>
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+      <% @list.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, List.human_attribute_name("name") %><br>
+    <%= f.text_field :name %>
+  </div>
+  <fieldset>
+    <legend><%= t(:upload_file)%> (.txt):</legend>
+      <%= f.file_field :file %>
+      <%= check_box_tag :remove %>
+      <%= label_tag :remove %>
+  </fieldset>
+  <fieldset>
+    <legend><%= t(:gsm_numbers).html_safe %></legend>
+    <%= select_tag :gsm_numbers,
+      options_from_collection_for_select(@list.gsm_numbers, "id", "number"),
+      {:multiple => true, :size => 5}
+    %>
+  </fieldset>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

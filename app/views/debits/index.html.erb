@@ -1,0 +1,23 @@
+<h1> <%= t('activerecord.models.debit').pluralize %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Debit.human_attribute_name("user") %></th>
+      <th><%= Debit.human_attribute_name("balance") %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @debits.each do |debit| %>
+      <tr>
+        <td><%= debit.user %></td>
+        <td><%= debit.balance %></td>
+        <td><%= link_to t('show'), debit %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

@@ -1,0 +1,6 @@
+<h1> <%= t(:editing, item: t(:single_message))%></h1>
+
+<%= render 'form' %>
+
+<%= link_to t(:show).html_safe, @single_message %> |
+<%= link_to t(:back).html_safe, single_messages_path %>

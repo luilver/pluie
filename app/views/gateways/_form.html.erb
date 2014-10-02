@@ -1,0 +1,28 @@
+<%= form_for(@gateway) do |f| %>
+  <% if @gateway.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= raw t('errors.template.header', count: @gateway.errors.count, model: t('activerecord.models.gateway')) %>
+      </h2>
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+      <% @gateway.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, Gateway.human_attribute_name("name")  %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :price, Gateway.human_attribute_name("price") %><br>
+    <%= f.text_field :price %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

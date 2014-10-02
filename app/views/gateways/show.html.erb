@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%= Gateway.human_attribute_name("name") %>:</strong>
+  <%= @gateway.name %>
+</p>
+
+<p>
+  <strong><%= Gateway.human_attribute_name("price")%>:</strong>
+  <%= @gateway.price %>
+</p>
+
+<%= link_to t(:edit), edit_gateway_path(@gateway) %> |
+<%= link_to t(:back).html_safe, gateways_path %>
+

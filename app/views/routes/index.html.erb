@@ -1,0 +1,33 @@
+<h1><%= t('listing_routes') %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Route.human_attribute_name("name") %></th>
+      <th><%= Route.human_attribute_name("price") %></th>
+      <th><%= User.model_name.human %></th>
+      <th><%= Gateway.model_name.human%></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @routes.each do |route| %>
+      <tr>
+        <td><%= route.name %></td>
+        <td><%= route.price %></td>
+        <td><%= route.user %></td>
+        <td><%= route.gateway %></td>
+        <td><%= link_to t('show'), route %></td>
+        <td><%= link_to t('edit'), edit_route_path(route) %></td>
+        <td><%= link_to t('destroy'), route, method: :delete, data: { confirm: t('sure').html_safe } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><%= will_paginate @routes %></p>
+
+<%= link_to t('new_route').html_safe, new_route_path %>

@@ -1,0 +1,29 @@
+<h1><%= t(:gateways)%></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Gateway.human_attribute_name("name") %></th>
+      <th><%= Gateway.human_attribute_name("price")%></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @gateways.each do |gateway| %>
+      <tr>
+        <td><%= gateway.name %></td>
+        <td><%= gateway.price %></td>
+        <td><%= link_to t(:show), gateway %></td>
+        <td><%= link_to t(:edit), edit_gateway_path(gateway) %></td>
+        <td><%= link_to t(:destroy), gateway, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to t(:new_item, item: t("activerecord.models.gateway")), new_gateway_path %>

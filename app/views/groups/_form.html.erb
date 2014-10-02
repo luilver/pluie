@@ -1,0 +1,32 @@
+<%= form_for(@group) do |f| %>
+  <% if @group.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= raw t('errors.template.header', count: @group.errors.count, model: t('activerecord.models.group')) %>
+      </h2>
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+      <% @group.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name,  t(:name) %><br>
+    <%= f.text_field :name %>
+  </div>
+  <fieldset>
+    <legend><%= t('activerecord.models.contact').pluralize %></legend>
+    <%= f.select :contacts,
+      options_for_select(current_user.contacts, @group.contacts),
+      {},
+      {:multiple => true, :size => 10}
+    %>
+  </fieldset>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

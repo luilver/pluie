@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%=  BulkMessage.human_attribute_name("message")%>:</strong>
+  <%= @bulk_message.message %>
+</p>
+
+<p>
+  <strong><%= BulkMessage.human_attribute_name("lists")%>:</strong>
+  <%= @bulk_message.lists.count %>
+</p>
+
+<p>
+  <strong><%=t(:recipient).pluralize.capitalize%>:</strong>
+  <%= @bulk_message.gsm_numbers.count %>
+</p>
+
+<p>
+  <strong><%= Route.model_name.human %>:</strong>
+  <%= @bulk_message.route %>
+</p>
+
+<%= link_to t(:new), new_bulk_message_path %> |
+<%= link_to t(:all_m).capitalize, bulk_messages_path %>

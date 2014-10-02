@@ -1,0 +1,27 @@
+<h1><%= t(:bulk_message_plural).titlecase %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= t(:message).capitalize%></th>
+      <th><%= t(:lists)%></th>
+      <th><%= t(:recipient).pluralize.capitalize%></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bulk_messages.each do |bulk_message| %>
+      <tr>
+        <td><%= bulk_message.message %></td>
+        <td><%= bulk_message.lists.count %></td>
+        <td><%= bulk_message.gsm_numbers.count %></td>
+        <td><%= link_to t(:show), bulk_message %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><%= will_paginate @bulk_messages %></p>
+
+<%= link_to t(:new_item, item: t(:bulk_message).titlecase), new_bulk_message_path %>

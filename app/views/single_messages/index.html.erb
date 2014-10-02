@@ -1,0 +1,25 @@
+<h1> <%= t(:single_message_plural).capitalize %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= SingleMessage.human_attribute_name("message") %></th>
+      <th><%= SingleMessage.human_attribute_name("number").pluralize %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @single_messages.each do |single_message| %>
+      <tr>
+        <td><%= single_message.message %></td>
+        <td><%= single_message.gsm_numbers.count %></td>
+        <td><%= link_to t(:show), single_message %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><%= will_paginate @lists %></p>
+
+<%= link_to t(:new_item, item: t(:single_message).titlecase ), new_single_message_path %>

@@ -1,0 +1,28 @@
+<%= form_for(@debit) do |f| %>
+  <% if @debit.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= raw t('errors.template.header', count: @credit.errors.count, model: t('activerecord.models.debit')) %>
+      </h2>
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+      <% @debit.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user, User.model_name.human %><br>
+    <%= f.text_field :user %>
+  </div>
+  <div class="field">
+    <%= f.label :balance %><br>
+    <%= f.text_field :balance %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

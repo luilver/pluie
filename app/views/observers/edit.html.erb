@@ -1,0 +1,6 @@
+<h1><%= t(:editing, item: Observer.model_name.human)%></h1>
+
+<%= render 'form' %>
+
+<%= link_to t(:show), @observer %> |
+<%= link_to t(:back).html_safe, observers_path %>

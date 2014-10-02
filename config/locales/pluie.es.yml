@@ -1,0 +1,177 @@
+es:
+  size: 'cantidad'
+  recipient: 'Destinatario'
+  home: 'Inicio'
+  single_mode: 'Env&iacute;o puntual'
+  massive_mode: 'Env&iacute;o masivo'
+  lists: 'Listas'
+  summary: 'Sumario'
+  all_sms: 'Reportes'
+  welcome: 'Bienvenido'
+  today_is: 'Hoy es'
+  delivery_reports: 'Reportes de entrega'
+  summary_for: 'Resumen del per&iacute;odo'
+  show_summary: 'Mostrar el per&iacute;odo'
+  last_24h: '&Uacute;ltimas 24h'
+  2_days: 'De 48h a 24h'
+  3_days: 'De 72h a 48h'
+  4_days: 'De 96h a 72h'
+  last_week: '&Uacute;ltima semana'
+  week_before: 'La semana antes'
+  30_days: '&Uacute;ltimos 30 d&iacute;as'
+  this_month: 'Este mes'
+  1_month: '1 mes atr&aacute;s'
+  2_month: '2 meses atr&aacute;s'
+  redeliveries: 'Re-env&iacute;os'
+  include_normally: 'Incluirlos'
+  ignore_redeliveries: 'Ignorarlos'
+  only_redeliveries: 'Solo re-env&iacute;os'
+  select_route: 'Seleccionar ruta'
+  all: 'Todas'
+  all_m: 'Todos'
+  you_can_select: 'solo puede seleccionar rutas con mensajes en este per&iacute;odo'
+  delivered_within: 'Entregados en (hora:min:seg)'
+  delivery_time: 'Tiempo'
+  of_sent_sms: 'enviado'
+  of_delivered_sms: 'entregado'
+  delivery_report_statuses: 'Estado de los reportes'
+  by_sms_type: 'Por tipo de sms'
+  sms_type: 'Tipo'
+  count: 'Cantidad'
+  of_total: 'del total'
+  delivered_count: 'Cant. entregada'
+  delivery: '% de entrega'
+  last: '&Uacute;ltimos'
+  ordered_by_creation_date: 'ordenados por fecha de env&iacute;o'
+  list_offset: 'Desfasaje'
+  add: 'A&ntilde;adir'
+  to_offset: 'pr&oacute;ximos'
+  message_id: 'No. Msg'
+  status: 'Estado'
+  route: 'ruta'
+  id: 'No.'
+  created_at: 'Creado en'
+  msg_id: 'No. Mensaje'
+  status_updated_at: 'Estado actualizado en'
+  sender: 'Remitente'
+  re_delivered: 'Re-enviado'
+  re_delivery_of: 'No. de re-env&iacute;o'
+  credits: 'Cr&eacute;ditos'
+  routes: 'Rutas'
+  account: 'Cuenta'
+  sign_out: 'Salir'
+  new_item: "Nuevo %{item}"
+  new_item_f: "Nueva %{item}"
+  single_message: 'mensaje puntual'
+  bulk_message: 'mensaje masivo'
+  logged_in_as: 'Identificado como'
+  user: 'Usuario'
+  new_credit: 'A&ntilde;adir cr&eacute;dito'
+  editing_credit: 'Editar cr&eacute;dito'
+  edit: 'Editar'
+  back: 'Atr&aacute;s'
+  listing_credits: 'Cr&eacute;ditos'
+  credit_date: 'Fecha'
+  description: 'Descripci&oacute;n'
+  name: 'Nombre'
+  price: 'Precio'
+  gateway: 'Proveedor'
+  gateways: 'Proveedores'
+  new_route: 'A&ntilde;adir ruta'
+  listing_routes: 'Rutas'
+  listing_users: 'Usuarios'
+  show: 'Ver'
+  destroy: 'Eliminar'
+  sure: '&iquest;Est&aacute; seguro?'
+  editing_route: 'Editar ruta'
+  will_paginate:
+    previous_label: 'Anterior'
+    next_label: 'Siguiente'
+  not_route_error: 'No existe una ruta para el usuario'
+
+  message: 'mensaje'
+  send: 'enviar'
+  new: 'Nuevo'
+  sending_options: 'opciones de env&iacute;o'
+
+  single_message_plural: 'mensajes puntuales'
+  bulk_message_plural: 'mensajes masivos'
+
+  editing: "Editar %{item}"
+  upload_file: 'Subir archivo'
+  gsm_numbers: 'N&uacute;meros GSM'
+
+  create_item: "Crear %{item}"
+  choose_file: "Escoger archivo"
+
+  new_user: 'Nuevo Usuario'
+  spent: 'Gasto Total'
+
+  sent_status: 'Pendiente'
+  delivered_status: 'Entregado'
+
+  at_route: 'en la ruta: %{route}'
+  date_field: Fecha
+
+  notice:
+    sucess_msg_sent: 'El %{msg} fue iniciado satisfactoriamente'
+    sucess_msg_resent: 'El %{msg} fue reiniciado satisfactoriamente'
+    item_created: '%{item} creado satisfactoriamente.'
+    item_updated: "%{item} actualizado satisfactoriamente."
+    item_created_fm: '%{item} creada satisfactoriamente.'
+    item_updated_fm: "%{item} actualizada satisfactoriamente."
+
+  activerecord:
+    models:
+      single_message: 'Env&iacute;o puntual'
+      bulk_message: 'Env&iacute;o masivo'
+      list: 'Lista'
+      contact: 'Contacto'
+      credit: 'Cr&eacute;dito'
+      route: 'Ruta'
+      gateway: 'Proveedor'
+      group_message: 'Env&iacute;o a grupo'
+      group: 'Grupo'
+      debit: Débito
+      observer: Observer
+    attributes:
+      single_message:
+        number: 'Destinatario'
+        message: 'Mensaje'
+      bulk_message:
+        message: 'Mensaje'
+        lists: 'Listas'
+      list:
+        name: 'Nombre'
+        file: 'El archivo'
+      contact:
+        name: 'Nombre'
+      credit:
+       balance: 'Balance'
+       description: 'Descripci&oacute;n'
+      route:
+        name: 'Nombre'
+        price: 'Precio'
+        system_route: "Ruta interna"
+      gateway:
+        name: 'Nombre'
+        price: 'Precio'
+      group_message:
+        message: 'Mensaje'
+      debit:
+        user: 'Usuario'
+        balance: 'Balance'
+      observer:
+        number: "N&uacute;mero"
+        active: "Activo"
+
+  errors:
+    messages:
+      debit_limit_violation: "El costo(%{cost}) del mensaje excede el l&iacute;mite(%{limit}) de d&eacute;bito permitido"
+  time:
+    formats:
+      verbose_date: ! '%a, %d %B %Y'
+      verbose_date_time: ! '%a, %d %B %Y, %H:%M:%S'
+      date_time: ! '%d %b %Y, %H:%M:%S'
+  cancan:
+    access_denied: 'No est&aacute; autorizado a acceder a esta p&aacute;gina'

@@ -1,0 +1,6 @@
+<h1><%= t(:editing, item: t(:lists))%></h1>
+
+<%= render 'form' %>
+
+<%= link_to t(:show), @list %> |
+<%= link_to t(:back).html_safe, lists_path %>

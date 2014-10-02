@@ -1,0 +1,6 @@
+<h1><%= t(:editing, item: t('activerecord.models.group'))%></h1>
+
+<%= render 'form' %>
+
+<%= link_to t(:show), @group %> |
+<%= link_to t(:back).html_safe, groups_path %>

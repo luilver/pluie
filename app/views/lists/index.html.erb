@@ -1,0 +1,29 @@
+<h1><%=t(:lists)%></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= List.human_attribute_name("name") %></th>
+      <th><%= SingleMessage.human_attribute_name("number").pluralize %></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lists.each do |list| %>
+      <tr>
+        <td><%= link_to list.name, new_bulk_message_path(:list_ids => [list.id]) %></td>
+        <td><%= list.receivers.count %></td>
+        <td><%= link_to t('show'), list %></td>
+        <td><%= link_to t('edit'), edit_list_path(list) %></td>
+        <td><%= link_to t('destroy'), list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><%= will_paginate @lists %></p>
+
+<%= link_to t(:new_item_f, item: t(:lists).singularize.capitalize), new_list_path %>

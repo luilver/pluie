@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%= Route.human_attribute_name("name") %>:</strong>
+  <%= @route.name %>
+</p>
+
+<p>
+  <strong><%= Route.human_attribute_name("price") %>:</strong>
+  <%= @route.price %>
+</p>
+
+<p>
+  <strong><%= Route.human_attribute_name("system_route") %>:</strong>
+  <%= @route.system_route %>
+</p>
+
+<p>
+  <strong><%= User.model_name.human %>:</strong>
+  <%= @route.user %>
+</p>
+
+<p>
+  <strong><%= Gateway.model_name.human %>:</strong>
+  <%= @route.gateway %>
+</p>
+
+<%= link_to t('edit'), edit_route_path(@route) %> |
+<%= link_to t('back').html_safe, routes_path %>

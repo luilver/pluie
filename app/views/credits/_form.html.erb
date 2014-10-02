@@ -1,0 +1,35 @@
+<%= form_for(@credit) do |f| %>
+  <% if @credit.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= raw t('errors.template.header', count: @credit.errors.count, model: t('activerecord.models.credit')) %>
+      </h2>
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+      <% @credit.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :balance, Credit.human_attribute_name("balance") %><br>
+    <%= f.text_field :balance %>
+  </div>
+  <div class="field">
+    <%= f.label :description, Credit.human_attribute_name("description").html_safe %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label t('user') %><br>
+    <%= select_tag :user,
+      options_from_collection_for_select(User.all, "id", "email"),
+      {:size => [5,User.all.collect.count].min}
+    %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

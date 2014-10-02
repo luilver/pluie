@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%= Credit.human_attribute_name("balance") %>:</strong>
+  <%= @credit.balance %>
+</p>
+
+<p>
+  <strong><%= Credit.human_attribute_name("description").html_safe %>:</strong>
+  <%= @credit.description %>
+</p>
+
+<p>
+  <strong><%= t('user') %>:</strong>
+  <%= @credit.user %>
+</p>
+
+<%= link_to t('edit'), edit_credit_path(@credit) %> |
+<%= link_to t('back').html_safe, credits_path %>

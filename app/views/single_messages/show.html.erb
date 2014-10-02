@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%= SingleMessage.human_attribute_name("message")%>:</strong>
+  <%= @single_message.message %>
+</p>
+
+<p>
+  <strong><%= SingleMessage.human_attribute_name("number").pluralize %>:</strong>
+  <%= @single_message.number %>
+</p>
+
+<%= render '/messages/message_route' %>
+
+<%= link_to t(:new), new_single_message_path %> |
+<%= link_to t(:all_m).capitalize, single_messages_path %>

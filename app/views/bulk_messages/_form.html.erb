@@ -1,0 +1,29 @@
+<%= form_for(@bulk_message) do |f| %>
+  <% if @bulk_message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= raw t('errors.template.header', count: @bulk_message.errors.count, model: t('activerecord.models.bulk_message')) %></h2>
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+      <% @bulk_message.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <legend><%= t(:lists)%></legend>
+    <%= select_tag :list_ids,
+      options_from_collection_for_select(current_user.lists, "id", "name", @list_ids ),
+      {:multiple => true, :size => 5}
+    %>
+  </fieldset>
+
+  <%= render '/messages/message_text', :f => f %>
+
+  <%= render '/messages/message_options', :f => f %>
+
+  <%= render '/messages/send_button', :f => f %>
+
+<% end %>

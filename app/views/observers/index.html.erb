@@ -1,0 +1,29 @@
+<h1><%= t('activerecord.models.observer').pluralize %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Observer.human_attribute_name("number").html_safe %></th>
+      <th><%= Observer.human_attribute_name("active") %></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @observers.each do |observer| %>
+      <tr>
+        <td><%= observer.number %></td>
+        <td><%= observer.active %></td>
+        <td><%= link_to t(:show), observer %></td>
+        <td><%= link_to t(:edit), edit_observer_path(observer) %></td>
+        <td><%= link_to t(:destroy), observer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to t(:new_item, item: t('activerecord.models.observer')), new_observer_path %>

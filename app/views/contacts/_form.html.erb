@@ -1,0 +1,37 @@
+<%= form_for(@contact) do |f| %>
+  <% if @contact.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= raw t('errors.template.header', count: @contact.errors.count, model: t('activerecord.models.contact')) %>
+      </h2>
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+      <% @contact.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, Contact.human_attribute_name("name") %><br>
+    <%= f.text_field :name %>
+  </div>
+  <% if @contact.gsm_numbers and not @contact.gsm_numbers.empty? %>
+    <fieldset>
+      <legend><%= t(:gsm_numbers).html_safe %></legend>
+      <%= select_tag :gsm_numbers,
+        options_from_collection_for_select(@contact.gsm_numbers, "id", "number"),
+        {:multiple => true, :disabled => true, :size => 2}
+      %>
+    </fieldset>
+  <% end %>
+  <fieldset>
+    <legend>Add mobile numbers here</legend>
+    <%= text_area_tag "new_gsm_numbers" %>
+  </fieldset><br />
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

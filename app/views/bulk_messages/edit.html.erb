@@ -1,0 +1,6 @@
+<h1><%= t(:editing, item: t(:bulk_message))%></h1>
+
+<%= render 'form' %>
+
+<%= link_to t(:show), @bulk_message %> |
+<%= link_to t(:back).html_safe, bulk_messages_path %>

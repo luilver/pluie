@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Balance:</strong>
+  <%= @user.balance %>
+</p>
+
+<p>
+  <strong><%= t('max_debt').html_safe %>:</strong>
+  <%= @user.max_debt %>
+</p>
+
+<p>
+  <strong><%= t('admin') %>:</strong>
+  <%= @user.admin %>
+</p>
+
+<%= link_to t('edit'), edit_user_path(@user) %> |
+<%= link_to t('back').html_safe, users_path %>

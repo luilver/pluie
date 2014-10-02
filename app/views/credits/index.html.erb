@@ -1,0 +1,43 @@
+<h1><%= t('listing_credits').html_safe %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <% if current_user.admin %>
+        <th><%= t('user') %></th>
+      <% end %>
+      <th>Balance</th>
+      <th><%= t('description').html_safe %></th>
+      <th><%= t('credit_date') %></th>
+      <th></th>
+      <% if current_user.admin %>
+        <th></th>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @credits.each do |credit| %>
+      <tr>
+        <% if current_user.admin %>
+          <td><%= credit.user %></td>
+        <% end %>
+        <td><%= credit.balance %></td>
+        <td><%= credit.description %></td>
+        <td><%= credit.created_at %></td>
+        <td><%= link_to t('show'), credit %></td>
+        <% if current_user.admin %>
+          <td><%= link_to t('edit'), edit_credit_path(credit) %></td>
+          <td><%= link_to t('destroy'), credit, method: :delete, data: { confirm: t('sure').html_safe } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><%= will_paginate @lists %></p>
+
+<% if current_user.admin %>
+  <%= link_to t('new_credit').html_safe, new_credit_path %>
+<% end %>

@@ -1,0 +1,7 @@
+<h1>Logs!</h1>
+
+<% if @messages %>
+  <% @messages.each do |msg| %>
+    <%= render_message msg %>
+  <% end %>
+<% end %>

@@ -1,0 +1,47 @@
+
+<% items_within_page = 20 %>
+<h1><%= t('delivery_reports') %></h1>
+<h2 id="delivery_reports_list"><%= t('last').html_safe %> <%= items_within_page %> <%= t('delivery_reports') %> <%= t('ordered_by_creation_date').html_safe %></h2>
+
+<%
+offset = params[:offset].to_i
+offset = 0 if offset < -0
+%>
+
+<p>
+<strong><%= t('list_offset') %>: <%= offset %>.</strong>
+  <%= t('add').html_safe %>
+  <%= link_to("- #{items_within_page}",  list_delivery_reports_path(:offset => offset-items_within_page)) unless offset == 0 %>
+  <%= link_to "+ #{items_within_page}",  list_delivery_reports_path(:offset => offset+items_within_page) %>
+  <%= t('to_offset').html_safe %>
+</p>
+
+<table style="margin-top: 20px; font-size: 10px;">
+  <tr>
+    <th><%= t('id') %></th>
+    <th><%= t('created_at') %></th>
+    <th><%= t('msg_id') %></th>
+    <th><%= t('route').capitalize %></th>
+    <th><%= t('status') %></th>
+    <th><%= t('status_updated_at') %></th>
+    <th><%= t('recipient') %></th>
+    <th><%= t('sms_type') %></th>
+    <th>&nbsp;O</th>
+  </tr>
+
+  <% ActionSmser::DeliveryReport.where(:user_id => current_user.id).order('created_at DESC').offset(offset).first(items_within_page).each_with_index do |delivery_report, index| %>
+  <tr>
+    <td style="white-space: nowrap;"><%= offset + index %></td>
+    <td style="white-space: nowrap;"><%= I18n.localize(delivery_report.created_at, :format => :date_time).html_safe %></td>
+    <td><%= delivery_report.msg_id %></td>
+    <td><%= delivery_report.gateway %></td>
+    <td><%= ActionSmserUtils.show_dlr_status(delivery_report.status)%></td>
+    <td style="white-space: nowrap;"><%= I18n.localize(delivery_report.status_updated_at, :format => :date_time).html_safe %></td>
+    <td><%= delivery_report.to %></td>
+    <td><%= SmsHelper.sms_type( delivery_report.sms_type) %></td>
+    <td title="<%= delivery_report.body %>">&nbsp;O</td>
+  </tr>
+<% end %>
+</table>
+
+

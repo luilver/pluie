@@ -1,4 +1,62 @@
+require 'api_constraints'
+
 Rails.application.routes.draw do
+
+  namespace :api, :defaults => {:format => 'json'} do
+    scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
+      get 'user/balance' => 'users#balance'
+      resources :bulk_messages
+      resources :credits
+      resources :lists
+      resources :single_messages
+      resources :users
+    end
+  end
+
+
+  get 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
+  post 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
+
+  scope ":locale", locale: /en|es/ do
+
+    resources :users, path: '/admin'
+
+    mount ActionSmser::Engine => '/'
+    get 'delivery_reports' => 'action_smser/delivery_reports', as: :delivery_reports
+    get 'delivery_reports/list' => 'action_smser/delivery_reports#list', as: :list_delivery_reports
+    get 'delivery_reports/:id' => 'action_smser/delivery_reports#show', as: :delivery_report
+
+    resources :routes
+
+    resources :gateways
+
+    resources :credits
+
+    resources :bulk_messages
+
+    resources :lists
+
+    #resources :group_messages
+
+    #resources :groups
+
+    #resources :contacts
+
+    resources :single_messages
+
+    resources :debits
+
+    resources :observers
+  end
+
+  get '/:locale' => "home#index"
+  #get '*path', to: redirect("/#{I18n.default_locale}/%{path}"), constraints: lambda { |req| !req.path.starts_with? "/#{I18n.default_locale}/" }
+  #get '', to: redirect("/#{I18n.default_locale}/home#index")
+
+
+  devise_for :users
+  root to: "home#index"
+  #
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

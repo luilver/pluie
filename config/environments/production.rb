@@ -1,4 +1,4 @@
-Rails.application.configure do
+Pluie::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -79,5 +79,17 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Do not dump schema after migrations.
-  config.active_record.dump_schema_after_migration = false
+  #config.active_record.dump_schema_after_migration = false
+
+  config.default_url_options = { :host => "sms.knal.es" }
+  config.action_mailer.default_url_options = { :host => "sms.knal.es" }
+
+  # Delivering
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+
+  USE_EM_PROXY = false
+
+  config.secret_key_base = '4c6ff30c61ca1bef1726dc803bfee01cdda84d169b9b052bdedd4258089fc4109ba285ad7bda391fc7809bb50fc7113b4960bd162979b93ebf87e9ac
+  637dcaa5'
 end
