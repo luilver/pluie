@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(version: 20141001214156) do
     t.integer  "user_id"
   end
 
-  add_index "action_smser_delivery_reports", ["msg_id"], name: "index_action_smser_delivery_reports_on_msg_id"
-  add_index "action_smser_delivery_reports", ["user_id"], name: "index_action_smser_delivery_reports_on_user_id"
+  add_index "action_smser_delivery_reports", ["msg_id"], name: "index_action_smser_delivery_reports_on_msg_id", using: :btree
+  add_index "action_smser_delivery_reports", ["user_id"], name: "index_action_smser_delivery_reports_on_user_id", using: :btree
 
   create_table "api_settings", force: true do |t|
     t.string   "api_key"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20141001214156) do
     t.datetime "updated_at"
   end
 
-  add_index "debits", ["user_id"], name: "index_debits_on_user_id"
+  add_index "debits", ["user_id"], name: "index_debits_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 20141001214156) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "gateways", force: true do |t|
     t.string   "name"
@@ -171,7 +171,7 @@ ActiveRecord::Schema.define(version: 20141001214156) do
     t.integer  "gsm_number_id"
   end
 
-  add_index "observers", ["gsm_number_id"], name: "index_observers_on_gsm_number_id"
+  add_index "observers", ["gsm_number_id"], name: "index_observers_on_gsm_number_id", using: :btree
 
   create_table "routes", force: true do |t|
     t.decimal  "price"
@@ -215,8 +215,8 @@ ActiveRecord::Schema.define(version: 20141001214156) do
     t.decimal  "debit",                  default: 0.0
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
