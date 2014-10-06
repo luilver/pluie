@@ -65,8 +65,17 @@ module ActionSmser::DeliveryMethods
 
     def self.process_delivery_report(params)
       info = []
+      sts = params['status'].downcase
+      status = case sts
+      when "delivered"
+        ActionSmserUtils::DELIVERED_STATUS
+      when "failed"
+        ActionSmserUtils::UNDELIVERED_STATUS
+      else
+        sts
+      end
       if params["messageId"]
-        info << {'msg_id' => params["messageId"], 'status' => params['status'].downcase}
+        info << {'msg_id' => params["messageId"], 'status' => status }
       end
       info
     end
