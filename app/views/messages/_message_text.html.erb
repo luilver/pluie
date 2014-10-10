@@ -3,4 +3,14 @@
   <div class="field">
     <%= f.text_area :message %>
   </div>
+
+  <div id="sms_info">
+    <div id="size_info">
+        <%= t(:sms_size).html_safe %>: <span id="sms_size"> </span>
+    </div>
+    <br>
+    <div id="parts_info">
+        <%= t(:sms_parts).html_safe %>: <span id="sms_parts"></span>
+    </div>
+  </div>
 </fieldset>
