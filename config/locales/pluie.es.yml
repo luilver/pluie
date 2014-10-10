@@ -113,6 +113,9 @@ es:
   at_route: 'en la ruta: %{route}'
   date_field: Fecha
 
+  sms_size: "Tama&ntilde;o"
+  sms_parts: "Cantidad de sms"
+
   notice:
     sucess_msg_sent: 'El %{msg} fue iniciado satisfactoriamente'
     sucess_msg_resent: 'El %{msg} fue reiniciado satisfactoriamente'
