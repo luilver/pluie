@@ -54,8 +54,14 @@ module ActionSmser::DeliveryMethods
 
     def self.process_delivery_report(params)
       info = []
-      status = params[:sStatus]
-      status = ActionSmserUtils::DELIVERED_STATUS if status == "DELIVRD"
+      status = case params[:sStatus]
+      when "DELIVRD"
+        ActionSmserUtils::DELIVERED_STATUS
+      when "UNDELIV"
+        ActionSmserUtils::UNDELIVERED_STATUS
+      else
+        params[:sStatus]
+      end
       msg_id = params[:sMessageId]
       sender = params[:sSender]
       info << {"msg_id" => msg_id, "status" => status, "sender" => sender}
