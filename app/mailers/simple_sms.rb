@@ -2,33 +2,30 @@ class SimpleSms < ActionSmser::Base
 
   attr_accessor :user_id, :route_id
   attr_reader :receivers_hash
-  MAX_SIZE = 160
+
+  def pluie_sms(pluie_msg, numbers, route )
+    text = ActionSmserUtils.add_info(pluie_msg.message, "#{pluie_msg.user.username}:")
+    delivery_options[:delivery_method] = route.dlv_to_sym
+    user = route.user
+    sms(to: numbers, from: user.username, body: text, type: ActionSmserUtils::PLUIE_MSG, user: user.id, route: route.id)
+  end
 
   def multiple_receivers(receivers, message)
-    dlm = message.route.gateway.name.downcase
-    if ActionSmser.delivery_options[dlm.to_sym]
+    if ActionSmser.delivery_options[message.route.gateway_to_sym]
       #update delivery method  for this sms.
-      delivery_options[:delivery_method] = "async_#{dlm}".to_sym
+      delivery_options[:delivery_method] = message.route.dlv_to_sym
     end
     @receivers_hash = {}
-    sms(:to => receivers, :from => "", :body => message.message,
-        :type => message.class.to_s, :user => message.user.id, :route => message.route.id)
+    user = message.user
+    sms(:to => receivers, :from => user.username, :body => message.message,
+        :type => message.class.to_s, :user => user.id, :route => message.route.id)
   end
 
   def valid?
     !body.blank? && !to_numbers_array.collect{|number| number.to_s.blank? ? nil : true}.compact.blank?
   end
 
-  def sms_count
-    #how many messages are necessary to send this sms, to 1 recipient using GSM7 encoding
-    body_size = SimpleSms.message_real_length(body)
-    (body_size / MAX_SIZE) + (body_size % MAX_SIZE == 0 ? 0:1)
-  end
-
   def perform
-    File.open('/tmp/delayed_job.log', "a+") do |file|
-      file.write "#{ActionSmser.delivery_options[:delivery_method]} | #{self} | #{@user_id} | #{@route_id} \n"
-    end
     self.deliver
   end
 
@@ -41,6 +38,16 @@ class SimpleSms < ActionSmser::Base
     @user_id = options[:user]
     @route_id = options[:route]
     super(options)
+  end
+
+  def body_parts
+    sms_encoding = SmsTools::EncodingDetection.new body
+    sms_encoding.concatenated_parts
+  end
+
+  def concatenated?
+    sms_encoding = SmsTools::EncodingDetection.new body
+    sms_encoding.concatenated?
   end
 
 end

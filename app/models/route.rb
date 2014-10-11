@@ -9,11 +9,21 @@ class Route < ActiveRecord::Base
   validates :user_id, presence: true
   validates :gateway_id, presence: true
 
+  scope :publisher_routes , -> { where( system_route: true) }
+
   def to_s
     self.name
   end
 
   def self.random
     Route.all[rand Route.all.size]
+  end
+
+  def gateway_to_sym
+    self.gateway.name.downcase.to_sym
+  end
+
+  def dlv_to_sym
+    "async_#{self.gateway.name.downcase}".to_sym
   end
 end

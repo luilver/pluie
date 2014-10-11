@@ -13,7 +13,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label t(:recipient).capitalize %><br>
+    <%= f.label :number, SingleMessage.human_attribute_name("number")%><br>
     <%= f.text_field :number %>
   </div>
 

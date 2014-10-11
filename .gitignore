@@ -21,7 +21,6 @@
 #ruby version file for rvm
 .ruby-version
 
-TODO
 
 #patch files
 *.patch

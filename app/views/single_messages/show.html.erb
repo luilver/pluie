@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong><%= t(:message).capitalize%>:</strong>
+  <strong><%= SingleMessage.human_attribute_name("message")%>:</strong>
   <%= @single_message.message %>
 </p>
 
 <p>
-  <strong><%= t(:recipient).capitalize%>:</strong>
+  <strong><%= SingleMessage.human_attribute_name("number").pluralize %>:</strong>
   <%= @single_message.number %>
 </p>
 

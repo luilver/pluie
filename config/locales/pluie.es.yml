@@ -109,14 +109,18 @@ es:
 
   sent_status: 'Pendiente'
   delivered_status: 'Entregado'
+  undelivered_status: 'No entregado'
 
   at_route: 'en la ruta: %{route}'
+  date_field: Fecha
 
   notice:
     sucess_msg_sent: 'El %{msg} fue iniciado satisfactoriamente'
     sucess_msg_resent: 'El %{msg} fue reiniciado satisfactoriamente'
-    item_created: '%{item} creado/a satisfactoriamente.'
-    item_updated: '%{item} actualizado/a satisfactoriamente.'
+    item_created: '%{item} creado satisfactoriamente.'
+    item_updated: "%{item} actualizado satisfactoriamente."
+    item_created_fm: '%{item} creada satisfactoriamente.'
+    item_updated_fm: "%{item} actualizada satisfactoriamente."
 
   activerecord:
     models:
@@ -129,6 +133,8 @@ es:
       gateway: 'Proveedor'
       group_message: 'Env&iacute;o a grupo'
       group: 'Grupo'
+      debit: Débito
+      observer: Observer
     attributes:
       single_message:
         number: 'Destinatario'
@@ -147,11 +153,18 @@ es:
       route:
         name: 'Nombre'
         price: 'Precio'
+        system_route: "Ruta interna"
       gateway:
         name: 'Nombre'
         price: 'Precio'
       group_message:
         message: 'Mensaje'
+      debit:
+        user: 'Usuario'
+        balance: 'Balance'
+      observer:
+        number: "N&uacute;mero"
+        active: "Activo"
 
   errors:
     messages:
@@ -161,3 +174,5 @@ es:
       verbose_date: ! '%a, %d %B %Y'
       verbose_date_time: ! '%a, %d %B %Y, %H:%M:%S'
       date_time: ! '%d %b %Y, %H:%M:%S'
+  cancan:
+    access_denied: 'No est&aacute; autorizado a acceder a esta p&aacute;gina'

@@ -2,6 +2,7 @@ require_relative 'async_routesms'
 
 module ActionSmser::DeliveryMethods
   class AsyncRoutesms1 < AsyncRoutesms
+    @path_url = "bulksms/bulksms"
     @base_url = "http://smpp2.routesms.com:8080/"
     @gateway_key = :routesms1
     #En el caso de Routesms, se tienen dos cuentas distintas, que

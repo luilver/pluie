@@ -19,6 +19,7 @@ module ActionSmser::DeliveryMethods
       em_was_running =  EM.reactor_running?
       count = 0
       info = self.sms_info(sms)
+      message_parts = sms.body_parts
 
       EM.run do
         setup_middlewares
@@ -35,7 +36,8 @@ module ActionSmser::DeliveryMethods
             if succesful_response(http)
               results = parse_response(http.response)
               success_sms = save_delivery_reports(sms, results, user, route.name)
-              user.bill_sms(success_sms, route.price)
+              cost = ActionSmserUtils.sms_cost(success_sms, route.price, message_parts)
+              user.bill_sms(cost)
             else
               log_response(http)
             end

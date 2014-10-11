@@ -7,6 +7,8 @@ es:
         password: Contraseña
         password_confirmation: Confirme la contraseña
         remember_me: Recordar contraseña
+        admin: Administrador
+        max_debt: "M&aacute;xima Deuda"
     models:
       user: Usuario
   devise:

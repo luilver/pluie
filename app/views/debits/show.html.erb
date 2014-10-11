@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%= Debit.human_attribute_name("user")%>:</strong>
+  <%= @debit.user %>
+</p>
+
+<p>
+  <strong><%= Debit.human_attribute_name("balance")%>:</strong>
+  <%= @debit.balance %>
+</p>
+
+<p>
+    <strong><%=t(:date_field)%>:</strong>
+    <%= I18n.localize( @debit.created_at, format: :date_time)%>
+</p>
+
+<%= link_to t('back').html_safe, debits_path %>

@@ -3,8 +3,8 @@
 <table>
   <thead>
     <tr>
-      <th><%= t(:message).capitalize %></th>
-      <th><%= t(:recipient).pluralize.capitalize %></th>
+      <th><%= SingleMessage.human_attribute_name("message") %></th>
+      <th><%= SingleMessage.human_attribute_name("number").pluralize %></th>
       <th></th>
     </tr>
   </thead>

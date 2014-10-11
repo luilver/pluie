@@ -11,9 +11,9 @@ class User < ActiveRecord::Base
   has_many :lists
   has_many :credits
   has_one :api_setting
-  has_many :sms
   has_many :routes
   has_many :gateways,  :through => :routes
+  has_many :debits
 
   def api_key
     self.api_setting.api_key
@@ -34,15 +34,12 @@ class User < ActiveRecord::Base
     self.balance >= amount
   end
 
-  def bill_sms(sms_count, route_price)
-    sms_cost = route_price * sms_count
-    decrease_balance(sms_cost)
+  def bill_sms(sms_cost)
+    dbt = self.debits.create(balance: sms_cost)
   end
 
-  def decrease_balance(sms_cost, skip_db_update=false)
-    return if sms_cost <= 0
-    self.balance -= sms_cost
-    save unless skip_db_update
+  def balance
+    self.credit - self.debit
   end
 
   def to_s
@@ -58,11 +55,8 @@ class User < ActiveRecord::Base
   end
 
   def spent
-    total = 0
-    credits.each { |c| total += c.balance }
-    debt? ? total : total - balance
+    self.debit
   end
 
-  def debt; debt? ? balance * -1 : 0 end
-  def debt?; balance < 0 end
+  def debt?; self.debit > 0 end
 end

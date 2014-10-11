@@ -47,8 +47,11 @@ en:
 
   sent_status: 'Pending'
   delivered_status: 'Delivered'
+  undelivered_status: 'Undelivered'
 
   at_route: 'at %{route} route'
+
+  date_field: Date
 
   notice:
     sucess_msg_sent: '%{msg} was successfully sent.'
@@ -63,10 +66,12 @@ en:
       list: 'List'
       contact: 'Contact'
       credit: 'Credit'
-      route: 'Routa'
+      route: 'Route'
       gateway: 'Gateway'
       group_message: 'Group message'
       group: 'Group'
+      debit: 'Debit'
+      observer: Observer
 
   errors:
     messages:
@@ -76,3 +81,5 @@ en:
       verbose_date: ! '%a %B %d, %Y'
       verbose_date_time: ! '%a %B %d, %Y - %H:%M:%S'
       date_time: ! '%b %d %Y, %H:%M:%S'
+  cancan:
+    access_denied: 'You are not authorized to see this page'

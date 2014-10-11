@@ -8,8 +8,6 @@ class BulkMessage < ActiveRecord::Base
   belongs_to :route
   has_and_belongs_to_many :lists
   #has_and_belongs_to_many :gsm_numbers
-  has_many :sms, as: :msg
-
   validates :message, presence: true
   validates :lists, presence: true
   validates_with Validations::CreditValidator
@@ -50,6 +48,11 @@ class BulkMessage < ActiveRecord::Base
   end
 
   def gsm_numbers_count
-    self.lists.inject(0) {|tmp, l| tmp + l.gsm_numbers.count}
+    #TODO. ver que esto sea mas eficiente.
+    #si los gsm_numbers se asocian a la lista con DJ, puede darse el caso de que no
+    #esten todos relacionados con  lista cuando se intenta enviar el mensaje.
+    #Esto es significativo, pues una de las validaciones  implica contar la cantidad
+    #de destinatarios para ver si el balance del usuario es suficiente.
+    receivers.size
   end
 end

@@ -1,0 +1,27 @@
+<%= form_for(@observer) do |f| %>
+  <% if @observer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= raw t('errors.template.header', count: @observer.errors.count, model: t('activerecord.models.observer')) %>
+      </h2>
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+      <% @observer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :number, Observer.human_attribute_name("number").html_safe %><br>
+    <%= f.text_field :number %>
+  </div>
+  <div class="field">
+    <%= f.label :active %><br>
+    <%= f.check_box :active %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

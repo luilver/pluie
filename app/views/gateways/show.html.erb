@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong><%= t(:name)%>:</strong>
+  <strong><%= Gateway.human_attribute_name("name") %>:</strong>
   <%= @gateway.name %>
 </p>
 
 <p>
-  <strong><%= t(:price)%>:</strong>
+  <strong><%= Gateway.human_attribute_name("price")%>:</strong>
   <%= @gateway.price %>
 </p>
 

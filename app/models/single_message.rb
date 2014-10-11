@@ -4,7 +4,6 @@ class SingleMessage < ActiveRecord::Base
   include ActiveModel::Validations
   belongs_to :user
   has_and_belongs_to_many :gsm_numbers
-  has_many :sms, as: :msg
   belongs_to :route
 
   validates :number, presence: true
@@ -32,8 +31,7 @@ class SingleMessage < ActiveRecord::Base
 
   private
     def related_numbers
-      self.number.split.each { |num| n = GsmNumber.find_by_number(num) ||
-                                          GsmNumber.create(:number => num);
+      self.number.split.each { |num| n = GsmNumber.find_or_create_by(:number => num);
                                           self.gsm_numbers << n if not self.gsm_numbers.include?(n)
       }
     end

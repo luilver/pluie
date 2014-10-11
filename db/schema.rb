@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140922060236) do
+ActiveRecord::Schema.define(version: 20141001214156) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(version: 20140922060236) do
     t.integer  "user_id"
   end
 
-  add_index "action_smser_delivery_reports", ["msg_id"], name: "index_action_smser_delivery_reports_on_msg_id"
-  add_index "action_smser_delivery_reports", ["user_id"], name: "index_action_smser_delivery_reports_on_user_id"
+  add_index "action_smser_delivery_reports", ["msg_id"], name: "index_action_smser_delivery_reports_on_msg_id", using: :btree
+  add_index "action_smser_delivery_reports", ["user_id"], name: "index_action_smser_delivery_reports_on_user_id", using: :btree
 
   create_table "api_settings", force: true do |t|
     t.string   "api_key"
@@ -84,6 +84,15 @@ ActiveRecord::Schema.define(version: 20140922060236) do
     t.string   "description"
   end
 
+  create_table "debits", force: true do |t|
+    t.integer  "user_id"
+    t.decimal  "balance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "debits", ["user_id"], name: "index_debits_on_user_id", using: :btree
+
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
@@ -98,7 +107,7 @@ ActiveRecord::Schema.define(version: 20140922060236) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "gateways", force: true do |t|
     t.string   "name"
@@ -151,7 +160,18 @@ ActiveRecord::Schema.define(version: 20140922060236) do
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
+    t.boolean  "opened",            default: true
   end
+
+  create_table "observers", force: true do |t|
+    t.string   "number"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "gsm_number_id"
+  end
+
+  add_index "observers", ["gsm_number_id"], name: "index_observers_on_gsm_number_id", using: :btree
 
   create_table "routes", force: true do |t|
     t.decimal  "price"
@@ -160,6 +180,7 @@ ActiveRecord::Schema.define(version: 20140922060236) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.boolean  "system_route", default: false
   end
 
   create_table "single_messages", force: true do |t|
@@ -170,20 +191,6 @@ ActiveRecord::Schema.define(version: 20140922060236) do
     t.integer  "user_id"
     t.integer  "route_id"
   end
-
-  create_table "sms", force: true do |t|
-    t.integer  "gateway_id"
-    t.integer  "user_id"
-    t.integer  "msg_id"
-    t.string   "msg_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "receiver"
-  end
-
-  add_index "sms", ["gateway_id"], name: "index_sms_on_gateway_id"
-  add_index "sms", ["msg_id", "msg_type"], name: "index_sms_on_msg_id_and_msg_type"
-  add_index "sms", ["user_id"], name: "index_sms_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",  null: false
@@ -199,16 +206,17 @@ ActiveRecord::Schema.define(version: 20140922060236) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"
-    t.decimal  "balance",                default: 0.0
-    t.decimal  "credit_limit",           default: 0.0
+    t.decimal  "max_debt",               default: 0.0
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.decimal  "credit",                 default: 0.0
+    t.decimal  "debit",                  default: 0.0
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

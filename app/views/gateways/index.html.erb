@@ -3,8 +3,8 @@
 <table>
   <thead>
     <tr>
-      <th><%= t(:name)%></th>
-      <th><%= t(:price)%></th>
+      <th><%= Gateway.human_attribute_name("name") %></th>
+      <th><%= Gateway.human_attribute_name("price")%></th>
       <th></th>
       <th></th>
       <th></th>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to t(:new_item, item: t(:gateway).capitalize), new_gateway_path %>
+<%= link_to t(:new_item, item: t("activerecord.models.gateway")), new_gateway_path %>

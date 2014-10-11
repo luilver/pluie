@@ -14,7 +14,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label t(:name) %><br>
+    <%= f.label :name, List.human_attribute_name("name") %><br>
     <%= f.text_field :name %>
   </div>
   <fieldset>
@@ -24,13 +24,13 @@
       <%= label_tag :remove %>
   </fieldset>
   <fieldset>
-    <legend><%= t(:gsm_numbers).html_safe%></legend>
+    <legend><%= t(:gsm_numbers).html_safe %></legend>
     <%= select_tag :gsm_numbers,
       options_from_collection_for_select(@list.gsm_numbers, "id", "number"),
       {:multiple => true, :size => 5}
     %>
   </fieldset>
   <div class="actions">
-    <%= f.submit t(:create_item, item: t(:lists).singularize) %>
+    <%= f.submit %>
   </div>
 <% end %>

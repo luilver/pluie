@@ -84,31 +84,6 @@
   <% end %>
 </ul>
 
-
-<h2><%= t('delivered_within') %></h2>
-  <table>
-    <tr>
-      <th><%= t('delivery_time') %></th>
-      <th>Sms</th>
-      <th>% <%= t('of_sent_sms') %></th>
-      <th>% <%= t('of_delivered_sms') %></th>
-    </tr>
-
-    <% ar_delivered = ar_gateway.where(:status => ActionSmserUtils::DELIVERED_STATUS)
-       total = ar_gateway.count
-       total_delivered = ar_delivered.count
-    %>
-  <% [["00:00:30","30"], ["00:01:00","60"], ["00:02:00","120"], ["00:10:00","600"], ["00:30:00","1800"], ["00:90:00","5400"], ["03:00:00","10800"], ["06:00:00","21600"], ["24:00:00","86400"], ["48:00:00","172800"]].each do |time,seconds| %>
-      <% dev_count = ar_delivered.where('SELECT (strftime("%s",status_updated_at) - strftime("%s",created_at)) < ?', seconds).count %>
-      <tr>
-        <td><%= time %></td>
-        <td><%= dev_count %></td>
-        <td><%= number_to_percentage(100.0 * dev_count / total, :precision => 2) %></td>
-        <td><%= number_to_percentage(100.0 * dev_count / total_delivered, :precision => 2) %></td>
-      </tr>
-    <% end %>
-  </table>
-
   <h2><%= t('delivery_report_statuses') %></h2>
 <ul>
 <%
@@ -139,7 +114,7 @@
    total = ar_gateway.count
    grouped_by_status = ar_gateway.group(:sms_type).count.each do |key, val| %>
    <tr>
-     <td><strong><%= key %></strong></td>
+     <td><strong><%= SmsHelper.sms_type(key) %></strong></td>
      <td><%= val %></td>
      <td><strong><%= number_to_percentage(100.0 * val / total, :precision => 2) %></strong></td>
      <td><%= sms_count = ar_gateway.where(:sms_type => key).where(:status => ActionSmserUtils::DELIVERED_STATUS).count %></td>

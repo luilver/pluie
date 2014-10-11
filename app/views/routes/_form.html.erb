@@ -15,12 +15,16 @@
   <% end %>
 
   <div class="field">
-    <%= f.label t('name') %><br>
+    <%= f.label :name, t('name') %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label t('price') %><br>
+    <%= f.label :price, t('price') %><br>
     <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :system_route %><br>
+    <%= f.check_box :system_route %>
   </div>
   <fieldset>
     <legend><%= t('user') %></legend>
@@ -35,6 +39,6 @@
     %>
   </fieldset>
   <div class="actions">
-    <%= f.submit t(:create_item, item: t('activerecord.models.route')) %>
+    <%= f.submit %>
   </div>
 <% end %>

@@ -1,6 +1,5 @@
 class CreditsController < ApplicationController
   before_action :set_credit, only: [:show, :edit, :update, :destroy]
-  after_action :credit_user, only: [:create]
   load_and_authorize_resource except: [:create]
   around_action :update_credit, only: [:update]
 
@@ -86,17 +85,12 @@ class CreditsController < ApplicationController
       @credit.user = User.find(params[:user])
     end
 
-    def credit_user
-      @credit.user.balance += @credit.balance
-      @credit.save
-    end
-
     def update_credit
       old_credit = @credit.balance
       yield
       if @credit.valid?
-        new_balance =  @credit.user.balance - old_credit + @credit.balance
-        @credit.user.update(balance: new_balance)
+        user_credit =  @credit.user.credit - old_credit + @credit.balance
+        @credit.user.update(credit: user_credit)
       end
     end
 end
