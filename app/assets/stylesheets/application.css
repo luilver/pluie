@@ -49,3 +49,6 @@ li.selected {background-color: #ddd;}
 .right-menu b { margin-right: 5px; }
 .footer-menu { margin-top: 10px; }
 .footer-menu a { margin-right: 10px; font-size: 0.9em; }
+
+.message_text .field {float: left; margin-right:  20px;}
+.message_text { width: 100%;}
