@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001214156) do
+ActiveRecord::Schema.define(version: 20141009200558) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20141001214156) do
     t.text     "log"
     t.string   "to"
     t.string   "from"
-    t.string   "body"
+    t.text     "body"
     t.string   "gateway"
     t.integer  "re_delivery_of_delivery_report_id"
     t.boolean  "re_delivered"

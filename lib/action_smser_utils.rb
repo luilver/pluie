@@ -7,6 +7,7 @@ require 'smstools'
 module ActionSmserUtils
   SENT_STATUS =  "sent"
   DELIVERED_STATUS =  "delivered"
+  UNDELIVERED_STATUS = "undelivered"
   MAX_SIZE = 160
   PLUIE_MSG = "Pluie"
 
@@ -37,6 +38,8 @@ module ActionSmserUtils
       I18n.translate(:sent_status)
     when DELIVERED_STATUS
       I18n.translate(:delivered_status)
+    when UNDELIVERED_STATUS
+      I18n.translate(:undelivered_status)
     else
       status
     end

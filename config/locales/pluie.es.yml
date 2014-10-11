@@ -109,6 +109,7 @@ es:
 
   sent_status: 'Pendiente'
   delivered_status: 'Entregado'
+  undelivered_status: 'No entregado'
 
   at_route: 'en la ruta: %{route}'
   date_field: Fecha
