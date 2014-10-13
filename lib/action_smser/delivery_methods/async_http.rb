@@ -20,6 +20,7 @@ module ActionSmser::DeliveryMethods
       count = 0
       info = self.sms_info(sms)
       message_parts = sms.body_parts
+      success = 0
 
       EM.run do
         setup_middlewares
@@ -35,9 +36,7 @@ module ActionSmser::DeliveryMethods
           http.callback do
             if succesful_response(http)
               results = parse_response(http.response)
-              success_sms = save_delivery_reports(sms, results, user, route.name)
-              cost = ActionSmserUtils.sms_cost(success_sms, route.price, message_parts)
-              user.bill_sms(cost)
+              success += save_delivery_reports(sms, results, user, route.name)
             else
               log_response(http)
             end
@@ -51,7 +50,12 @@ module ActionSmser::DeliveryMethods
         end
 
         final = Proc.new do
-          ActionSmser::Logger.info "Finished sending. #{Time.now}"
+          ActionSmser::Logger.info "Finished sending with route #{route}. #{Time.now}"
+          if success > 0
+            cost = ActionSmserUtils.sms_cost(success, route.price, message_parts)
+            user.bill_sms(cost)
+            ActionSmser::Logger.info "#{success} numbers accepted in Gateway. Charged #{cost} to #{user.username}."
+          end
           EventMachine.stop unless em_was_running
         end
         EM::Iterator.new(batches, concurrent_requests).each(foreach, final)
