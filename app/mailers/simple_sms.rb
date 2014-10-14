@@ -20,7 +20,7 @@ class SimpleSms < ActionSmser::Base
     type = message.class.to_s
     sms(:to => receivers, :from => user.username, :body => message.message,
         :type => type, :user => user.id, :route => message.route.id,
-        :message_id => "#{type}_#{message.id}")
+        :message_id => message.pluie_message_id)
   end
 
   def valid?
