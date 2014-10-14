@@ -2,6 +2,7 @@ require 'credit_validator'
 
 class SingleMessage < ActiveRecord::Base
   include ActiveModel::Validations
+  include PluieMessageId
   belongs_to :user
   has_and_belongs_to_many :gsm_numbers
   belongs_to :route
@@ -22,6 +23,7 @@ class SingleMessage < ActiveRecord::Base
 
   def deliver
     sms = SimpleSms.multiple_receivers(receivers, self)
+    Bill.create(number_of_sms: 1, message_id: self.pluie_message_id, user: self.user)
     sms.deliver
   end
 
