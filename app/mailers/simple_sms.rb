@@ -1,6 +1,6 @@
 class SimpleSms < ActionSmser::Base
 
-  attr_accessor :user_id, :route_id
+  attr_accessor :user_id, :route_id, :pluie_message_id
   attr_reader :receivers_hash
 
   def pluie_sms(pluie_msg, numbers, route )
@@ -17,8 +17,10 @@ class SimpleSms < ActionSmser::Base
     end
     @receivers_hash = {}
     user = message.user
+    type = message.class.to_s
     sms(:to => receivers, :from => user.username, :body => message.message,
-        :type => message.class.to_s, :user => user.id, :route => message.route.id)
+        :type => type, :user => user.id, :route => message.route.id,
+        :message_id => "#{type}_#{message.id}")
   end
 
   def valid?
@@ -37,6 +39,7 @@ class SimpleSms < ActionSmser::Base
     @sms_type = options[:type]
     @user_id = options[:user]
     @route_id = options[:route]
+    @pluie_message_id = options[:message_id]
     super(options)
   end
 
