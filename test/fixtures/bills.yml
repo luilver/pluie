@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  number_of_sms: 1
+  finished_sms: 1
+  accepted_numbers: 1
+  message_id: MyString
+  user_id: 
+
+two:
+  number_of_sms: 1
+  finished_sms: 1
+  accepted_numbers: 1
+  message_id: MyString
+  user_id: 
