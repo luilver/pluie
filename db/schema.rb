@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141014191449) do
+ActiveRecord::Schema.define(version: 20141014195641) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -43,12 +43,12 @@ ActiveRecord::Schema.define(version: 20141014191449) do
 
   create_table "bills", force: true do |t|
     t.integer  "number_of_sms"
-    t.integer  "finished_sms"
-    t.integer  "accepted_numbers"
     t.string   "message_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "finished_sms",     default: 0
+    t.integer  "accepted_numbers", default: 0
   end
 
   add_index "bills", ["message_id"], name: "index_bills_on_message_id", using: :btree
