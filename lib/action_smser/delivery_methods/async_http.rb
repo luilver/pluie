@@ -17,9 +17,8 @@ module ActionSmser::DeliveryMethods
       user =  User.find(sms.user_id)
       route = Route.find(sms.route_id)
       em_was_running =  EM.reactor_running?
-      count = 0
+      request_counter = 0
       info = self.sms_info(sms)
-      message_parts = sms.body_parts
       success = 0
 
       EM.run do
@@ -27,10 +26,10 @@ module ActionSmser::DeliveryMethods
         connection = EM::HttpRequest.new(base_url)
 
         foreach = Proc.new do |numbers, iter|
-          count +=1
+          request_counter +=1
           query_params = request_params(info, numbers, sms)
           body = request_body(info, numbers, sms)
-          options = request_options(query_params, body, count < last_request)
+          options = request_options(query_params, body, request_counter < last_request)
           http = connection.post(options)
 
           http.callback do
@@ -51,11 +50,8 @@ module ActionSmser::DeliveryMethods
 
         final = Proc.new do
           ActionSmser::Logger.info "Finished sending with route #{route}. #{Time.now}"
-          if success > 0
-            cost = ActionSmserUtils.sms_cost(success, route.price, message_parts)
-            user.bill_sms(cost)
-            ActionSmser::Logger.info "#{success} numbers accepted in Gateway. Charged #{cost} to #{user.username}."
-          end
+          pub = PluieWisper::MessagePublisher.new
+          pub.sms_sent(sms, success)
           EventMachine.stop unless em_was_running
         end
         EM::Iterator.new(batches, concurrent_requests).each(foreach, final)
