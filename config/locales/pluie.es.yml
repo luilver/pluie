@@ -5,6 +5,7 @@ es:
   single_mode: 'Env&iacute;o puntual'
   massive_mode: 'Env&iacute;o masivo'
   lists: 'Listas'
+  jobs: 'Tareas'
   summary: 'Sumario'
   all_sms: 'Reportes'
   welcome: 'Bienvenido'
