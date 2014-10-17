@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <title>Sms</title>
+    <%= stylesheet_link_tag 'delayed/web/application' %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+      <% if current_user %>
+        <nav class="navbar" role="navigation">
+          <div class="navbar-inner">
+            <%= link_to t(:home), "/#{I18n.locale}", :class => "brand" %>
+            <ul class="nav">
+              <li class="active">
+                <%= link_to t(:back).html_safe, :back %>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      <% end %>
+    <div class="container">
+        <% flash.each do |type, message| %>
+          <div class="alert <%= flash_dom_class(type) %>">
+            <%= flash[type] %>
+          </div>
+        <% end %>
+        <%= yield %>
+    </div>
+
+  </body>
+</html>
