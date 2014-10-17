@@ -1,0 +1,10 @@
+es:
+  delayed/web:
+    flashes:
+      jobs:
+        queued:
+          alert: 'La tarea no puede ser encolada porque ya se encuentra %{status}'
+          notice: 'Tarea almacenada'
+        destroyed:
+          alert: 'La tarea no puede ser eliminada porque ya se encuentra %{status}'
+          notice: 'Tarea eliminada'
