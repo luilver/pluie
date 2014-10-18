@@ -59,7 +59,7 @@ class RoutesController < ApplicationController
   def destroy
     @route.destroy
     respond_to do |format|
-      format.html { redirect_to routes_url }
+      format.html { redirect_to routes_url, notice: t('notice.item_removed_fm', item: t('activerecord.models.route')).html_safe }
       format.json { head :no_content }
     end
   end
