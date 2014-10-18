@@ -65,7 +65,7 @@ class CreditsController < ApplicationController
   def destroy
     @credit.destroy
     respond_to do |format|
-      format.html { redirect_to credits_url }
+      format.html { redirect_to credits_url, notice: t('notice.item_removed', item: t('activerecord.models.credit')).html_safe }
       format.json { head :no_content }
     end
   end
