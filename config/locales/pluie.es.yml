@@ -124,6 +124,7 @@ es:
     item_updated: "%{item} actualizado satisfactoriamente."
     item_created_fm: '%{item} creada satisfactoriamente.'
     item_updated_fm: "%{item} actualizada satisfactoriamente."
+    item_removed: "%{item} %{name} eliminada satisfactoriamente."
 
   activerecord:
     models:
