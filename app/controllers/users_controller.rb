@@ -58,7 +58,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_path }
+      format.html { redirect_to users_path, notice: t('notice.item_removed', item: t('activerecord.models.user')).html_safe }
       format.json { head :no_content }
     end
   end
