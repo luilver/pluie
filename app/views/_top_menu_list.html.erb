@@ -1,0 +1,18 @@
+  <li>
+    <%= link_to t('single_mode').html_safe, main_app.new_single_message_path %>
+  </li>
+  <li>
+    <%= link_to t('massive_mode').html_safe, main_app.new_bulk_message_path %>
+  </li>
+  <li>
+    <%= link_to t('lists'), main_app.lists_path %>
+  </li>
+  <li>
+    <%= link_to t('summary'), main_app.delivery_reports_path -%>
+  </li>
+  <li>
+    <%= link_to t('all_sms'), main_app.list_delivery_reports_path %>
+  </li>
+  <% if current_user and current_user.admin%>
+      <%= render '/admin_links_list' %>
+  <% end %>
