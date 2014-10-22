@@ -1,0 +1,22 @@
+es:
+  delayed/web:
+    jobs: 'Tareas'
+    status:
+        failed: 'Fallido'
+        executing: 'En ejecuci&oacute;n'
+        queued: 'Pendiente'
+    created_at: 'Fecha de creaci&oacute;n'
+    run_at: 'Fecha de ejecuci&oacute;n'
+    attempts: 'Intentos'
+    last_error: '&Uacute;ltimo Error'
+    actions: 'Acciones'
+    run_next: 'Ejecutar'
+    good_queue: 'Una cola vac&iacute;a no es una cola de Cuba.'
+    flashes:
+      jobs:
+        queued:
+          alert: 'La tarea no puede ser encolada porque ya se encuentra %{status}'
+          notice: 'Tarea almacenada'
+        destroyed:
+          alert: 'La tarea no puede ser eliminada porque ya se encuentra %{status}'
+          notice: 'Tarea eliminada'
