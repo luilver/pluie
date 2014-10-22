@@ -11,7 +11,7 @@
           <div class="navbar-inner">
             <%= link_to t(:home), "/#{I18n.locale}", :class => "brand" %>
             <ul class="nav">
-              <li class="active">
+              <li>
                 <%= link_to t(:back).html_safe, :back %>
               </li>
             </ul>
@@ -26,6 +26,5 @@
         <% end %>
         <%= yield %>
     </div>
-
   </body>
 </html>
