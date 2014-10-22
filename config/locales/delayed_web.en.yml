@@ -1,2 +1,8 @@
 en:
   delayed/web:
+    jobs: 'Jobs'
+    created_at: 'Created at'
+    run_at: 'Run at'
+    attempts: 'Attempts'
+    run_next: 'Run Next'
+    good_queue: 'An empty queue is a good queue.'

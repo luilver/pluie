@@ -1,5 +1,13 @@
 es:
   delayed/web:
+    jobs: 'Tareas'
+    created_at: 'Fecha de creaci&oacute;n'
+    run_at: 'Fecha de ejecuci&oacute;n'
+    attempts: 'Intentos'
+    last_error: '&Uacute;ltimo Error'
+    actions: 'Acciones'
+    run_next: 'Ejecutar'
+    good_queue: 'Una cola vac&iacute; no cola de Cuba.'
     flashes:
       jobs:
         queued:
