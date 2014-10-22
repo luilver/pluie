@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     resources :users, path: '/admin'
 
     authenticated :user, -> user { user.admin } do
-      mount Delayed::Web::Engine, at: '/jobs'
+      mount Delayed::Web::Engine, at: '/dj_web'
     end
 
     mount ActionSmser::Engine => '/'
