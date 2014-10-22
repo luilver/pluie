@@ -11,7 +11,7 @@ es:
     last_error: '&Uacute;ltimo Error'
     actions: 'Acciones'
     run_next: 'Ejecutar'
-    good_queue: 'Una cola vac&iacute; no cola de Cuba.'
+    good_queue: 'Una cola vac&iacute;a no es una cola de Cuba.'
     flashes:
       jobs:
         queued:
