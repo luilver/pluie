@@ -1,6 +1,10 @@
 en:
   delayed/web:
     jobs: 'Jobs'
+    status:
+        failed:
+        executing:
+        queued:
     created_at: 'Created at'
     run_at: 'Run at'
     attempts: 'Attempts'

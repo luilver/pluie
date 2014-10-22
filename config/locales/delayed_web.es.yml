@@ -1,6 +1,10 @@
 es:
   delayed/web:
     jobs: 'Tareas'
+    status:
+        failed: 'Fallido'
+        executing: 'En ejecuci&oacute;n'
+        queued: 'Pendiente'
     created_at: 'Fecha de creaci&oacute;n'
     run_at: 'Fecha de ejecuci&oacute;n'
     attempts: 'Intentos'
