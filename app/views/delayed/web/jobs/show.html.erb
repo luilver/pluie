@@ -1,0 +1,21 @@
+<% title t("delayed/web.jobs").singularize + " ##{job.id}" %>
+
+<div class="page-header">
+  <h1>
+    <%= link_to t("delayed/web.jobs"), jobs_path %> / <%= title %>
+  </h1>
+  <div class="btn-group">
+    <% if job.can_queue? %>
+      <%= button_to t('delayed/web.run_next'), queue_job_path(job), method: :put, class: 'btn', form_class: 'btn-rails pull-left' %>
+    <% end %>
+    <% if job.can_destroy? %>
+      <%= button_to t(:destroy), job_path(job), method: :delete, class: 'btn btn-danger', form_class: 'btn-rails pull-right' %>
+    <% end %>
+  </div>
+</div>
+
+<h2><%= t('delayed/web.last_error').html_safe %></h2>
+<pre><%= job.last_error %></pre>
+
+<h2>Handler</h2>
+<pre><%= job.handler %></pre>

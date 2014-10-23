@@ -21,6 +21,10 @@ Rails.application.routes.draw do
 
     resources :users, path: '/admin'
 
+    authenticated :user, -> user { user.admin } do
+      mount Delayed::Web::Engine, at: '/dj_web'
+    end
+
     mount ActionSmser::Engine => '/'
     get 'delivery_reports' => 'action_smser/delivery_reports', as: :delivery_reports
     get 'delivery_reports/list' => 'action_smser/delivery_reports#list', as: :list_delivery_reports

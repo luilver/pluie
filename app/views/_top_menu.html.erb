@@ -1,9 +1,9 @@
 <div class="menu">
-  <%= link_to t('home'), "/#{params[:locale]}" %>
+  <%= link_to t('home'), "/#{I18n.locale}" %>
   <%= link_to t('single_mode').html_safe, main_app.new_single_message_path %>
   <%= link_to t('massive_mode').html_safe, main_app.new_bulk_message_path %>
   <%= link_to t('lists'), main_app.lists_path %>
-  <%= link_to t('summary'), delivery_reports_path -%>
+  <%= link_to t('summary'), main_app.delivery_reports_path -%>
   <%= link_to t('all_sms'), main_app.list_delivery_reports_path %>
   <% if current_user and current_user.admin%>
       <%= render '/admin_links' %>

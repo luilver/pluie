@@ -1,0 +1,51 @@
+<% title t('delayed/web.jobs') %>
+
+<div class="page-header">
+  <h1><%= title %></h1>
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th><%= t(:status)%></th>
+      <th><%= t("delayed/web.created_at").html_safe%></th>
+      <th><%= t("delayed/web.run_at").html_safe%></th>
+      <th><%= t("delayed/web.attempts")%></th>
+      <th style="width: 190px;"><%= t("delayed/web.last_error").html_safe%></th>
+      <th style="width: 115px;"><%= t("delayed/web.actions")%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if jobs.any? %>
+      <% jobs.each do |job| %>
+        <tr>
+          <td><%= link_to "##{job.id}", job_path(job) %></td>
+          <td>
+            <span class="<%= status_dom_class(job.status) %>">
+              <%= t("delayed/web.status.#{job.status}").html_safe %>
+            </span>
+          </td>
+          <td> <%= I18n.localize(job.created_at, :format => :date_time).html_safe %></td>
+          <td><%= I18n.localize(job.run_at, :format => :date_time).html_safe %></td>
+          <td><%= job.attempts %></td>
+          <td><%= link_to_if job.last_error.present?, truncate(job.last_error), job_path(job) %></td>
+          <td>
+            <% if job.can_queue? %>
+              <%= button_to t('delayed/web.run_next'), queue_job_path(job), method: :put, class: 'btn btn-mini', form_class: 'btn-rails pull-left' %>
+            <% end %>
+            <% if job.can_destroy? %>
+              <%= button_to t(:destroy), job_path(job), method: :delete, class: 'btn btn-danger btn-mini', form_class: 'btn-rails pull-right' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="7">
+          <%=t('delayed/web.good_queue').html_safe%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

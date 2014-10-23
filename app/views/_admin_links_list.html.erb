@@ -1,0 +1,21 @@
+<li>
+  <%= link_to t('credits').html_safe, main_app.credits_path %>
+</li>
+<li>
+  <%= link_to t('activerecord.models.debit').pluralize.html_safe, main_app.debits_path %>
+</li>
+<li>
+  <%= link_to t('routes').capitalize, main_app.routes_path %>
+</li>
+<li>
+  <%= link_to t('gateways'), main_app.gateways_path %>
+</li>
+<li>
+  <%= link_to t('user').pluralize, main_app.users_path %>
+</li>
+<li>
+  <%= link_to t('activerecord.models.observer').pluralize, main_app.observers_path %>
+</li>
+<li>
+  <%= link_to t(:jobs), main_app.delayed_web_path%>
+</li>
