@@ -11,7 +11,7 @@ ROUTESMS_PASS = ENV['ROUTESMS_PASS']
 
 PLUIE_HOST = Pluie::Application.config.default_url_options[:host]
 
-if Rails.env.development? || Rails.env.production?
+if Rails.env.development? || Rails.env.staging? || Rails.env.production?
   require 'action_smser_delivery_methods' #load the DeliveryMethods implemented in this app
   require 'action_smser_utils' #to modify the ActionSmser::DeliveryReport model
 
