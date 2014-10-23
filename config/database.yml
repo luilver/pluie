@@ -23,6 +23,10 @@ test:
   <<: *default
   database: pluie_test
 
+staging:
+  <<: *default
+  database: pluie_staging
+
 production:
   <<: *default
   database: pluie_production
