@@ -8,21 +8,13 @@ module PluieWisper
     end
 
     def pluie_msg_created(msg)
-      numbers = observers_numbers()
-      if numbers.any?
-        route = Route.publisher_routes.first
-        sms = SimpleSms.pluie_sms(msg, numbers, route)
-        if delay
-          Delayed::Job.enqueue(sms, :queue => pluie_sms_queue)
-        else
-          sms.deliver
-        end
+      text = ActionSmserUtils.add_info(msg.message, "#{msg.user.username}:")
+      job = ObserverSmsJob.new(text, msg)
+      if delay
+        Delayed::Job.enqueue(job, :queue => pluie_sms_queue)
+      else
+        job.perform
       end
     end
-
-    private
-      def observers_numbers
-        Observer.active.map { |obs| obs.gsm_number.number  }
-      end
   end
 end
