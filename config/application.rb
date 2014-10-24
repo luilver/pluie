@@ -31,5 +31,8 @@ module Pluie
 
     #Setup actionpack-xml_parser to load xml-encoded post body into params hash
     config.middleware.insert_after ActionDispatch::ParamsParser, ActionDispatch::XmlParamsParser
+
+    #autoload folder for custom jobs
+    config.autoload_paths += %W( #{config.root}/app/jobs)
   end
 end
