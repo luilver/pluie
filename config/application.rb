@@ -8,6 +8,8 @@ Bundler.require(*Rails.groups)
 
 module Pluie
   class Application < Rails::Application
+    config.assets.precompile << 'delayed/web/application.css'
+    config.assets.precompile += ['delayed/bootstrap-responsive.min.css', 'delayed/bootstrap.min.js']
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -30,5 +32,8 @@ module Pluie
 
     #Setup actionpack-xml_parser to load xml-encoded post body into params hash
     config.middleware.insert_after ActionDispatch::ParamsParser, ActionDispatch::XmlParamsParser
+
+    #autoload folder for custom jobs
+    config.autoload_paths += %W( #{config.root}/app/jobs)
   end
 end

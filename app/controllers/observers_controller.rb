@@ -57,7 +57,7 @@ class ObserversController < ApplicationController
   def destroy
     @observer.destroy
     respond_to do |format|
-      format.html { redirect_to observers_url }
+      format.html { redirect_to observers_url, notice: t('notice.item_removed', item: t('activerecord.models.observer')).html_safe }
       format.json { head :no_content }
     end
   end

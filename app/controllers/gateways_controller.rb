@@ -57,7 +57,7 @@ class GatewaysController < ApplicationController
   def destroy
     @gateway.destroy
     respond_to do |format|
-      format.html { redirect_to gateways_url }
+      format.html { redirect_to gateways_url, notice: t('notice.item_removed', item: t('activerecord.models.gateway')).html_safe }
       format.json { head :no_content }
     end
   end

@@ -65,7 +65,7 @@ class ListsController < ApplicationController
   def destroy
     @list.destroy
     respond_to do |format|
-      format.html { redirect_to lists_url }
+      format.html { redirect_to lists_url, notice: t('notice.item_removed_fm', item: t('activerecord.models.list')).html_safe }
       format.json { head :no_content }
     end
   end

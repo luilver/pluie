@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/thebestday/delayed-web.git
+  revision: ce98c42140c689dd712878290bfa7ede58341cc9
+  specs:
+    delayed-web (0.0.1)
+      rails (>= 3.2.13, < 4.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -179,6 +186,7 @@ DEPENDENCIES
   cancan
   coffee-rails (~> 4.0.0)
   daemons
+  delayed-web!
   delayed_job_active_record
   devise
   devise-i18n-views

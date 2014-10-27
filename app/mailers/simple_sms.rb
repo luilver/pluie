@@ -3,8 +3,7 @@ class SimpleSms < ActionSmser::Base
   attr_accessor :user_id, :route_id, :pluie_message_id
   attr_reader :receivers_hash
 
-  def pluie_sms(pluie_msg, numbers, route )
-    text = ActionSmserUtils.add_info(pluie_msg.message, "#{pluie_msg.user.username}:")
+  def pluie_sms(text, numbers, route )
     delivery_options[:delivery_method] = route.dlv_to_sym
     user = route.user
     sms(to: numbers, from: user.username, body: text, type: ActionSmserUtils::PLUIE_MSG, user: user.id, route: route.id)

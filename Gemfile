@@ -68,7 +68,7 @@ gem 'nokogiri'
 #delayed_job -> async jobs
 gem 'delayed_job_active_record'
 gem 'daemons'
-
+gem 'delayed-web', github: 'thebestday/delayed-web'
 
 #Paginate
 gem 'will_paginate'

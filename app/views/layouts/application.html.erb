@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang= "<%= I18n.locale %>">
 <head>
   <title>Sms</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -15,6 +15,9 @@
 
 <hr>
 <% end %>
+
+<p id="notice"><%= notice %></p>
+<p id="alert"><%= alert %></p>
 
 <%= yield %>
 
