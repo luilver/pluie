@@ -42,7 +42,9 @@ class BulkMessagesController < ApplicationController
     respond_to do |format|
       if @bulk_message.save
 
-        @bulk_message.delay(:queue => 'deliver').deliver
+        delay_options = {:queue => 'deliver'}
+        job = DelayDeliveryJob.new(@bulk_message.class.to_s, @bulk_message.id)
+        Delayed::Job.enqueue(job, delay_options)
 
         format.html { redirect_to @bulk_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.bulk_message')).html_safe}
         format.json { render :show, status: :created, location: @bulk_message }
