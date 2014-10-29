@@ -22,6 +22,8 @@ development:
 test:
   <<: *default
   database: pluie_test
+  username: pluie_tester
+  password: tester
 
 staging:
   <<: *default
