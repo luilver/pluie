@@ -96,7 +96,5 @@ module ActionSmser::DeliveryMethods
       m = ActionSmserUtils::InspectRequest
       EM::HttpRequest.use m if Rails.env.development? && !EM::HttpRequest.middleware.include?(m.new)
     end
-
-
   end
 end

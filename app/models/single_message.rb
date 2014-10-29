@@ -38,5 +38,4 @@ class SingleMessage < ActiveRecord::Base
                                           self.gsm_numbers << n if not self.gsm_numbers.include?(n)
       }
     end
-
 end
