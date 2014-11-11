@@ -10,10 +10,18 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def cubacel_random_number
+    result = "535"
+    rand = Random.new
+    7.times{ result << rand.rand(9).to_s}
+    result
+  end
 end
 
 #to set locale in url build during tests
 class ActionController::TestCase
+  include Devise::TestHelpers
+
   def process_with_default_locale(action, http_method = 'GET', parameters = nil, session = nil, flash = nil)
     parameters = {:locale=> I18n.locale }.merge(parameters||{})
     process_without_default_locale(action, http_method,  parameters, session, flash)
