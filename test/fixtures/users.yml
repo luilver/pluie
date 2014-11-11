@@ -5,9 +5,11 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
-  id: 1
-  email: one@foo.bar
+  email: testuser1@openbgs.com
 
 two:
-  id: 2
-  email: two@foo.bar
+  email: testuser2@openbgs.com
+
+admin:
+    email: test_admin@openbgs.com
+    admin: true

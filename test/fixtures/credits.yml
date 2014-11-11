@@ -2,8 +2,8 @@
 
 one:
   balance: 9.99
-  user_id: 1
+  user: one
 
 two:
   balance: 9.99
-  user_id: 1
+  user: two
