@@ -14,6 +14,7 @@ require "paperclip/matchers"
 class ActiveSupport::TestCase
     ActiveRecord::Migration.check_pending!
     extend Paperclip::Shoulda::Matchers
+    include ActionDispatch::TestProcess
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
@@ -26,6 +27,14 @@ class ActiveSupport::TestCase
     rand = Random.new
     7.times{ result << rand.rand(9).to_s}
     result
+  end
+
+  def file_from_fixtures_dir(filename)
+    File.new(File.join(fixture_dir, filename))
+  end
+
+  def fixture_dir
+    File.join(Rails.root, "test/fixtures")
   end
 end
 
