@@ -1,7 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
+  name: random3
 
 two:
-  name: MyString
+  name: random500
+
+list_1000_for_one:
+  name: random1000
+  user: one
+
+list_5000_for_one:
+  name: random5000
+  user: one
+
+admin_list:
+  name: admin_numbers
+  user: admin
