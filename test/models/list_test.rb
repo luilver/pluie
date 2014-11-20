@@ -14,16 +14,14 @@ class ListTest < ActiveSupport::TestCase
   end
 
   test "receiver match list count" do
-    @list_1k.file = file_from_fixtures_dir("1000.txt")
-    @list_1k.save
+    attach_file_from_fixture(@list_1k, "1000.txt")
     assert_equal @list_1k.gsm_numbers.count, 0
     assert_equal @list_1k.receivers.count, 1000
   end
 
   test "repeated numbers not in gsm_number" do
     @l2 = lists(:two)
-    @l2.file = file_from_fixtures_dir("some-duplicates.txt")
-    @l2.save
+    attach_file_from_fixture(@l2, "some-duplicates.txt")
 
     set = Set.new(@l2.receivers)
     @l2.attach_numbers
@@ -32,20 +30,17 @@ class ListTest < ActiveSupport::TestCase
 
   test "attach and remove numbers using several files" do
     @l1 = lists(:one)
-    @l1.file = file_from_fixtures_dir("random3.txt")
-    @l1.save
+    attach_file_from_fixture(@l1, "random3.txt")
     @l1.attach_numbers
     assert_equal @l1.gsm_numbers.count, 3
 
-    @l1.file = file_from_fixtures_dir("six_numbers.txt")
-    @l1.save
+    attach_file_from_fixture(@l1, "six_numbers.txt")
     @l1.attach_numbers
 
     assert_equal @l1.gsm_numbers.count, 9
 
     assert_difference '@l1.gsm_numbers.count', -3 do
-      @l1.file = file_from_fixtures_dir("random3.txt")
-      @l1.save
+      attach_file_from_fixture(@l1, "random3.txt")
       @l1.remove_numbers
     end
   end

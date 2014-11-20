@@ -29,12 +29,9 @@ class ActiveSupport::TestCase
     result
   end
 
-  def file_from_fixtures_dir(filename)
-    File.new(File.join(fixture_dir, filename))
-  end
-
-  def fixture_dir
-    File.join(Rails.root, "test/fixtures")
+  def attach_file_from_fixture(list, filename)
+    list.file = File.new(File.join(Rails.root, "test/fixtures", filename))
+    list.save
   end
 end
 
