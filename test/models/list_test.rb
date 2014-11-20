@@ -9,6 +9,10 @@ class ListTest < ActiveSupport::TestCase
     @list_1k = lists(:list_1k_for_one)
   end
 
+  teardown do
+    FileUtils.rm_rf(Dir["#{Rails.root}/public/system/test_files/"])
+  end
+
   test "receiver match list count" do
     @list_1k.file = file_from_fixtures_dir("1000.txt")
     @list_1k.save
