@@ -3,9 +3,6 @@ require_relative 'async_http'
 module ActionSmser::DeliveryMethods
   class AsyncRoutesms < AsyncHttp
     include GatewayErrorInfo::RoutesmsErrors
-    @path_url = "bulksms/bulksms"
-    @base_url = "http://smsplus1.routesms.com:8080/"
-    @gateway_key = :routesms
 
     def self.sms_info(sms)
       msg = {
@@ -67,5 +64,17 @@ module ActionSmser::DeliveryMethods
       info << {"msg_id" => msg_id, "status" => status, "sender" => sender}
     end
 
+    protected
+      def self.path_url
+        "bulksms/bulksms"
+      end
+
+      def self.base_url
+        "http://smsplus1.routesms.com:8080/"
+      end
+
+      def self.gateway_key
+        :routesms
+      end
   end
 end
