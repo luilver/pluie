@@ -89,28 +89,27 @@ module ActionSmser::DeliveryMethods
       "http://api.infobip.com/api/command?username=#{key}&password=#{pass}&cmd=CREDIT"
     end
 
-    protected
-      def self.host
-        'api.infobip.com'
-      end
-      def self.r_head
-        {"host" => host, 'content-type' => 'application/json', "accept" => "*/*"}
-      end
+    def self.host
+      'api.infobip.com'
+    end
+    def self.r_head
+      {"host" => host, 'content-type' => 'application/json', "accept" => "*/*"}
+    end
 
-      def self.r_body
-        {"authentication" => {"username" => INFOBIP_KEY, "password" => INFOBIP_PASS }}
-      end
+    def self.r_body
+      {"authentication" => {"username" => INFOBIP_KEY, "password" => INFOBIP_PASS }}
+    end
 
-      def self.gateway_key
-        :infobip
-      end
+    def self.gateway_key
+      :infobip
+    end
 
-      def self.base_url
-        "http://#{host}/"
-      end
+    def self.base_url
+      "http://#{host}/"
+    end
 
-      def self.path_url
-        "api/v3/sendsms/json"
-      end
+    def self.path_url
+      "api/v3/sendsms/json"
+    end
   end
 end

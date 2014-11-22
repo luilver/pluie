@@ -93,19 +93,18 @@ module ActionSmser::DeliveryMethods
       EM::HttpRequest.use m if Rails.env.development? && !EM::HttpRequest.middleware.include?(m.new)
     end
 
-    protected
-      #:path_url, :base_url, :r_head, :gateway_key
-      def self.path_url
-      end
+    #:path_url, :base_url, :r_head, :gateway_key
+    def self.path_url
+    end
 
-      def self.base_url
-      end
+    def self.base_url
+    end
 
-      def self.r_head
-      end
+    def self.r_head
+    end
 
-      def self.gateway_key
-      end
+    def self.gateway_key
+    end
 
 
   end

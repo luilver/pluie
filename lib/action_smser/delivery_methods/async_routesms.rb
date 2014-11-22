@@ -64,17 +64,16 @@ module ActionSmser::DeliveryMethods
       info << {"msg_id" => msg_id, "status" => status, "sender" => sender}
     end
 
-    protected
-      def self.path_url
-        "bulksms/bulksms"
-      end
+    def self.path_url
+      "bulksms/bulksms"
+    end
 
-      def self.base_url
-        "http://smsplus1.routesms.com:8080/"
-      end
+    def self.base_url
+      "http://smsplus1.routesms.com:8080/"
+    end
 
-      def self.gateway_key
-        :routesms
-      end
+    def self.gateway_key
+      :routesms
+    end
   end
 end

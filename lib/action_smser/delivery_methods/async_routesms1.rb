@@ -9,17 +9,16 @@ module ActionSmser::DeliveryMethods
     #Para parsear la respuesta de DLR, se puede utilizar una sola de las
     #clases pues en ese caso no importa con que credenciales, ni a que
     #endpoint se envio el mensaje
-    protected
-      def self.path_url
-        "bulksms/bulksms"
-      end
+    def self.path_url
+      "bulksms/bulksms"
+    end
 
-      def self.base_url
-        "http://smpp2.routesms.com:8080/"
-      end
+    def self.base_url
+      "http://smpp2.routesms.com:8080/"
+    end
 
-      def self.gateway_key
-        :routesms1
-      end
+    def self.gateway_key
+      :routesms1
+    end
   end
 end

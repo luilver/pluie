@@ -76,21 +76,20 @@ module ActionSmser::DeliveryMethods
       "https://rest.nexmo.com/account/get-balance/#{key}/#{pass}"
     end
 
-    protected
-      def self.gateway_key
-        :nexmo
-      end
+    def self.gateway_key
+      :nexmo
+    end
 
-      def self.base_url
-        "https://rest.nexmo.com/"
-      end
+    def self.base_url
+      "https://rest.nexmo.com/"
+    end
 
-      def self.path_url
-        "sms/json"
-      end
+    def self.path_url
+      "sms/json"
+    end
 
-      def self.r_head
-        {'content-type' => 'application/json', "accept" => "*/*"}
-      end
+    def self.r_head
+      {'content-type' => 'application/json', "accept" => "*/*"}
+    end
   end
 end
