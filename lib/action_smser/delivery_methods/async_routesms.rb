@@ -17,8 +17,7 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.request_params(info, numbers, sms)
-      destination =  numbers.join(",")
-      info.merge({:destination => destination})
+      info.merge({:destination => numbers.join(",")})
     end
 
     def self.parse_response(response)
