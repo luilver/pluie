@@ -38,6 +38,10 @@ class ActiveSupport::TestCase
   def gateway_url_for_tests
     ActionSmser::DeliveryMethods::AsyncTest.full_url
   end
+
+  def simple_response(request)
+    ActionSmser::DeliveryMethods::AsyncTest.generate_response_from_body(request.body)
+  end
 end
 
 #to set locale in url build during tests
