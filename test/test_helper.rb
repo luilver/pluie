@@ -3,6 +3,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "minitest/rails"
 require "paperclip/matchers"
+require "webmock/minitest"
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -32,6 +33,10 @@ class ActiveSupport::TestCase
   def attach_file_from_fixture(list, filename)
     list.file = File.new(File.join(Rails.root, "test/fixtures", filename))
     list.save
+  end
+
+  def gateway_url_for_tests
+    ActionSmser::DeliveryMethods::AsyncTest.full_url
   end
 end
 
