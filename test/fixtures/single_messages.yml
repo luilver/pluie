@@ -8,6 +8,6 @@ one:
 
 two:
   message: message-two
-  number: 5358888888
+  number: "5358888888 5354031441"
   user: one
   route: one
