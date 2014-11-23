@@ -15,10 +15,12 @@ ROUTESMS_PASS = ENV['ROUTESMS_PASS']
 PLUIE_HOST = Pluie::Application.config.default_url_options[:host]
 
 if Rails.env.test?
+  require 'action_smser/delivery_methods/async_test'
+
   ActionSmser.delivery_options[:delivery_method] = :async_test
   ActionSmser.delivery_options[:numbers_from_bulk] = 0.2
   ActionSmser.delivery_options[:min_numbers_in_sms] = 5
-  ActionSmser.delivery_options[:async_test] = {username: "user", password: "password", numbers_in_request: 5, parallel_requests: 5 }
+  ActionSmser.delivery_options[:test] = {username: "user", password: "password", numbers_in_request: 5, parallel_requests: 5 }
 end
 
 if Rails.env.development? || Rails.env.staging? || Rails.env.production?
