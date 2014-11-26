@@ -1,9 +1,1 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  user: one
-  balance: 1
-
-two:
-  user: one
-  balance: 0.3
