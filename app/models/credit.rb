@@ -4,7 +4,7 @@ class Credit < ActiveRecord::Base
   validates :balance, presence: true
   validates :balance,  numericality: { greater_than: 0}
   validates :user, presence: true
-  after_create :add_credit_to_user
+  after_create :increase_user_credit
 
   def save_owner
     self.user.save
@@ -18,9 +18,8 @@ class Credit < ActiveRecord::Base
     self.balance.to_s
   end
 
-  private
-    def add_credit_to_user
-      self.user.credit += self.balance
-      self.user.save
-    end
+  def increase_user_credit
+    self.user.credit += self.balance
+    self.user.save
+  end
 end
