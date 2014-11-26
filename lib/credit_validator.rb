@@ -6,8 +6,7 @@ module Validations
       unless record.route
         record.errors[:base] << I18n.t(:not_route_error)
       else
-        parts = ActionSmserUtils.sms_parts(record.message)
-        cost = ActionSmserUtils.sms_cost(record.gsm_numbers_count, record.route.price, parts)
+        cost = record.message_cost
         dl = -record.user.max_debt
         if (record.user.balance - cost) < dl
           record.errors[:base] << I18n.translate('errors.messages.debit_limit_violation', cost: cost, limit: -dl).html_safe

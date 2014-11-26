@@ -5,6 +5,7 @@ require 'set'
 class BulkMessage < ActiveRecord::Base
   include ActiveModel::Validations
   include Gsmeable
+  include Chargeable
   belongs_to :user
   belongs_to :route
   has_and_belongs_to_many :lists

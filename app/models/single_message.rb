@@ -3,6 +3,7 @@ require 'credit_validator'
 class SingleMessage < ActiveRecord::Base
   include ActiveModel::Validations
   include Gsmeable
+  include Chargeable
   belongs_to :user
   has_and_belongs_to_many :gsm_numbers
   belongs_to :route
