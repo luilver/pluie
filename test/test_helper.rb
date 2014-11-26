@@ -42,6 +42,10 @@ class ActiveSupport::TestCase
   def simple_response(request)
     ActionSmser::DeliveryMethods::AsyncTest.generate_response_from_body(request.body)
   end
+
+  def add_credit_to_user(user, amount)
+    credit = Credit.create(description: "test credit", balance: amount, user: user)
+  end
 end
 
 #to set locale in url build during tests
