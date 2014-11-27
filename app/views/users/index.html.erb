@@ -1,4 +1,4 @@
-<h1><%= t(:listing_users).html_safe %></h1>
+<h1><%= t(:listing_users).html_safe %> (<%= User.count %>)</h1>
 
 <table>
   <thead>
@@ -6,7 +6,8 @@
       <th><%= t('user') %></th>
       <th>Balance</th>
       <th><%= t('spent').html_safe %></th>
-      <th><%= t('created_at') %></th>
+      <th><%= t('max_debt').html_safe %></th>
+      <th><%= t('is_admin').html_safe %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -19,7 +20,8 @@
         <td><%= user %></td>
         <td><%= user.balance %></td>
         <td><%= user.spent %></td>
-        <td><%= user.created_at %></td>
+        <td><%= user.max_debt %></td>
+        <td><%= user.admin or "" %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to t('destroy'), user, method: :delete, data: { confirm: t('sure').html_safe } %></td>

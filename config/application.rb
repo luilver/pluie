@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups)
 module Pluie
   class Application < Rails::Application
     config.assets.precompile << 'delayed/web/application.css'
+    config.assets.precompile += ['delayed/bootstrap-responsive.min.css', 'delayed/bootstrap.min.js']
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
