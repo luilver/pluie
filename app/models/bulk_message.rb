@@ -5,6 +5,7 @@ require 'set'
 class BulkMessage < ActiveRecord::Base
   include ActiveModel::Validations
   include Gsmeable
+  include Chargeable
   belongs_to :user
   belongs_to :route
   has_and_belongs_to_many :lists
@@ -42,10 +43,6 @@ class BulkMessage < ActiveRecord::Base
       set.merge list.gsm_numbers
     end
     set.to_a
-  end
-
-  def self.random
-    BulkMessage.all[rand BulkMessage.count]
   end
 
   def gsm_numbers_count

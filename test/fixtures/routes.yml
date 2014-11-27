@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
-  price: 9.99
-  user_id: 1
-  gateway_id: 1
+  name: Gold
+  price: 0.01
+  user: one
+  gateway: two
 
 two:
-  name: MyString
-  price: 9.99
-  user_id: 1
-  gateway_id: 1
+  name: Silver
+  price: 0.009
+  user: one
+  gateway: one

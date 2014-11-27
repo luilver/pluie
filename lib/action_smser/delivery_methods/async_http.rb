@@ -5,10 +5,6 @@ require 'gateway_error_info'
 module ActionSmser::DeliveryMethods
   class AsyncHttp
 
-    class << self
-      attr_reader :path_url, :base_url, :r_head, :gateway_key
-    end
-
     def self.deliver(sms)
       batch_size = sms.delivery_options[gateway_key][:numbers_in_request]
       concurrent_requests = sms.delivery_options[gateway_key][:parallel_requests]
@@ -95,6 +91,19 @@ module ActionSmser::DeliveryMethods
     def self.setup_middlewares
       m = ActionSmserUtils::InspectRequest
       EM::HttpRequest.use m if Rails.env.development? && !EM::HttpRequest.middleware.include?(m.new)
+    end
+
+    #:path_url, :base_url, :r_head, :gateway_key
+    def self.path_url
+    end
+
+    def self.base_url
+    end
+
+    def self.r_head
+    end
+
+    def self.gateway_key
     end
 
 
