@@ -5,10 +5,6 @@ class Debit < ActiveRecord::Base
   validates :user, presence: true
   after_create :increase_user_debit
 
-  def self.random
-    Debit.all[rand Credit.count]
-  end
-
   def to_s
     self.balance.to_s
   end

@@ -45,10 +45,6 @@ class BulkMessage < ActiveRecord::Base
     set.to_a
   end
 
-  def self.random
-    BulkMessage.all[rand BulkMessage.count]
-  end
-
   def gsm_numbers_count
     #TODO. ver que esto sea mas eficiente.
     #si los gsm_numbers se asocian a la lista con DJ, puede darse el caso de que no

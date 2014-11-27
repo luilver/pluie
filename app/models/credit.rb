@@ -10,10 +10,6 @@ class Credit < ActiveRecord::Base
     self.user.save
   end
 
-  def self.random
-    Credit.all[rand Credit.count]
-  end
-
   def to_s
     self.balance.to_s
   end

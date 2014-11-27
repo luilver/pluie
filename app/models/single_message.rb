@@ -27,10 +27,6 @@ class SingleMessage < ActiveRecord::Base
     sms.deliver
   end
 
-  def self.random
-    SingleMessage.all[rand SingleMessage.count]
-  end
-
   private
     def related_numbers
       self.number.split.each { |num| n = GsmNumber.find_or_create_by(:number => num);
