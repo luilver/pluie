@@ -107,6 +107,8 @@ es:
 
   new_user: 'Nuevo Usuario'
   spent: 'Gasto Total'
+  max_debt: 'Deuda M&aacute;x'
+  is_admin: 'Es Admin'
 
   sent_status: 'Pendiente'
   delivered_status: 'Entregado'
