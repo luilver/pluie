@@ -4,8 +4,7 @@ class SingleMessageTest < ActiveSupport::TestCase
 
   setup do
     @one = single_messages(:one)
-    @numbers = []
-    Random.new.rand(2..5).times { |i| @numbers << cubacel_random_number }
+    @numbers =  cubacel_numbers(Random.new.rand(2..5))
     stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
     fix_users_credit
   end
@@ -58,6 +57,25 @@ class SingleMessageTest < ActiveSupport::TestCase
     assert_difference 'User.find(id).balance', -expected do
       @one.deliver
       @two.deliver
+    end
+  end
+
+  test "gsm_numbers equivalent to receivers" do
+    @one.save
+    gsm_numbers_equals_receivers(@one)
+    nums = cubacel_numbers(Random.new.rand(10))
+    @one.number = nums.join(" ")
+    @one.save
+    gsm_numbers_equals_receivers(@one)
+  end
+
+  def gsm_numbers_equals_receivers(msg)
+    gsm_nums = msg.gsm_numbers.map { |gsm| gsm.number  }
+    gsm_nums.each do |gsm|
+      assert_includes msg.receivers, gsm
+    end
+    msg.receivers.each do |num|
+      assert_includes gsm_nums, num
     end
   end
 end
