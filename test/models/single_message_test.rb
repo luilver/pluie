@@ -11,12 +11,12 @@ class SingleMessageTest < ActiveSupport::TestCase
   end
 
   test "should have message" do
-    sm = SingleMessage.random
+    sm = SingleMessage.choose_random
     assert_not sm.message.blank?
   end
 
   test "should have number" do
-    sm = SingleMessage.random
+    sm = SingleMessage.choose_random
     assert_not sm.number.blank?
   end
 
