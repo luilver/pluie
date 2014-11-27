@@ -43,8 +43,14 @@ class ActiveSupport::TestCase
     ActionSmser::DeliveryMethods::AsyncTest.generate_response_from_body(request.body)
   end
 
-  def add_credit_to_user(user, amount)
+  def add_credit(user, amount)
     credit = Credit.create(description: "test credit", balance: amount, user: user)
+  end
+
+  def fix_users_credit
+    #If fixtures are used to load the data, the callbacks are not runned
+    #therefor the credit field in user must be exec manually
+    Credit.all.each {|c| c.increase_user_credit}
   end
 end
 
