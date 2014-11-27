@@ -29,6 +29,7 @@ class SingleMessage < ActiveRecord::Base
 
   private
     def related_numbers
+      self.gsm_numbers.delete_all if self.gsm_numbers.any?
       self.number.split.each { |num| n = GsmNumber.find_or_create_by(:number => num);
                                           self.gsm_numbers << n if not self.gsm_numbers.include?(n)
       }
