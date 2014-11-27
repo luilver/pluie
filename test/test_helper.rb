@@ -30,6 +30,12 @@ class ActiveSupport::TestCase
     result
   end
 
+  def cubacel_numbers(amount)
+    l = []
+    amount.times {|t| l << cubacel_random_number }
+    l
+  end
+
   def attach_file_from_fixture(list, filename)
     list.file = File.new(File.join(Rails.root, "test/fixtures", filename))
     list.save
