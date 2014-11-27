@@ -78,6 +78,7 @@ es:
   price: 'Precio'
   gateway: 'Proveedor'
   gateways: 'Proveedores'
+  observers: 'Observadores'
   new_route: 'A&ntilde;adir ruta'
   listing_routes: 'Rutas'
   listing_users: 'Usuarios'
@@ -140,7 +141,7 @@ es:
       group_message: 'Env&iacute;o a grupo'
       group: 'Grupo'
       debit: Débito
-      observer: Observer
+      observer: 'Observador'
     attributes:
       single_message:
         number: 'Destinatario'
