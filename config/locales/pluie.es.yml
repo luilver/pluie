@@ -13,6 +13,7 @@ es:
   delivery_reports: 'Reportes de entrega'
   summary_for: 'Resumen del per&iacute;odo'
   show_summary: 'Mostrar el per&iacute;odo'
+  last_hour: '&Uacute;ltima hora'
   last_24h: '&Uacute;ltimas 24h'
   2_days: 'De 48h a 24h'
   3_days: 'De 72h a 48h'
