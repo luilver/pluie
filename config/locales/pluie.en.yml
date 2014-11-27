@@ -87,3 +87,5 @@ en:
       date_time: ! '%b %d %Y, %H:%M:%S'
   cancan:
     access_denied: 'You are not authorized to see this page'
+  will_paginate:
+    page_gap: '...'

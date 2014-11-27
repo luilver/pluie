@@ -186,3 +186,5 @@ es:
       date_time: ! '%d %b %Y, %H:%M:%S'
   cancan:
     access_denied: 'No est&aacute; autorizado a acceder a esta p&aacute;gina'
+  will_paginate:
+    page_gap: '...'
