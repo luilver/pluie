@@ -56,7 +56,11 @@ class ActiveSupport::TestCase
   def fix_users_credit
     #If fixtures are used to load the data, the callbacks are not runned
     #therefor the credit field in user must be exec manually
-    Credit.all.each {|c| c.increase_user_credit}
+    Credit.all.each {|c| c.user.credit += c.balance; c.save_owner}
+  end
+
+  def user_accounting_info(user)
+    "balance: #{user.balance} credit: #{user.credit} debit: #{user.debit}"
   end
 end
 
