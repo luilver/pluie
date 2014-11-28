@@ -10,7 +10,7 @@ class ListTest < ActiveSupport::TestCase
   end
 
   teardown do
-    FileUtils.rm_rf(Dir["#{Rails.root}/public/system/test_files/"])
+    clean_paperclip_file_directory
   end
 
   test "receiver match list count" do

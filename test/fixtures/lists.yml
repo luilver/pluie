@@ -19,3 +19,7 @@ list_5k_for_one:
 admin_list:
   name: admin_numbers
   user: admin
+
+list_10K_for_one:
+  name: random10000
+  user: one
