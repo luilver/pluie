@@ -41,6 +41,10 @@ class ActiveSupport::TestCase
     list.save
   end
 
+  def clean_paperclip_file_directory
+    FileUtils.rm_rf(Dir["#{Rails.root}/public/system/test_files/"])
+  end
+
   def gateway_url_for_tests
     ActionSmser::DeliveryMethods::AsyncTest.full_url
   end
