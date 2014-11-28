@@ -13,3 +13,6 @@ two:
 admin:
     email: test_admin@openbgs.com
     admin: true
+
+without_credits:
+    email: testuser3@openbgs.com
