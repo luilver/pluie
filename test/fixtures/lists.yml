@@ -8,18 +8,22 @@ two:
   name: list_2
   user: two
 
-list_1k_for_one:
-  name: random1000
-  user: one
+list500:
+  name: list_500
+  user: two
 
-list_5k_for_one:
+list_1k:
+  name: random1000
+  user: two
+
+list_5k:
   name: random5000
-  user: one
+  user: two
 
 admin_list:
   name: admin_numbers
-  user: admin
+  user: twoin
 
-list_10K_for_one:
+list_10K:
   name: random10000
-  user: one
+  user: two
