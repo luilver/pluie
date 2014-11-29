@@ -5,5 +5,5 @@ one:
   user: one
 
 two:
-  balance: 9.99
+  balance: 100
   user: two

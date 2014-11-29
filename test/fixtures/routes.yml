@@ -11,3 +11,15 @@ two:
   price: 0.009
   user: one
   gateway: one
+
+bulk:
+  name: Bulk
+  price: 0.008
+  user: two
+  gateway: two
+
+expensive:
+  name: Expensive
+  price: 1000
+  user: one
+  gateway: two

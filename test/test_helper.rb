@@ -36,13 +36,21 @@ class ActiveSupport::TestCase
     l
   end
 
-  def attach_file_from_fixture(list, filename)
-    list.file = File.new(File.join(Rails.root, "test/fixtures", filename))
-    list.save
+  def attach_file_from_fixture(list, filename=nil)
+    filename ||= "#{list.name}.txt"
+    list.update(file: File.new(File.join(Rails.root, "test/fixtures", filename)))
+    list
+  end
+
+  def setup_list(fixture_key, attach_nums=true)
+    list = attach_file_from_fixture(lists(fixture_key))
+    list.attach_numbers if attach_nums
+    list
   end
 
   def clean_paperclip_file_directory
-    FileUtils.rm_rf(Dir["#{Rails.root}/public/system/test_files/"])
+    dir = Paperclip::Attachment.default_options[:path].sub(":class/:id_partition/:style.:extension","")
+    FileUtils.rm_rf(Dir[dir])
   end
 
   def gateway_url_for_tests

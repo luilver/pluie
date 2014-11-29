@@ -5,33 +5,26 @@ class ListTest < ActiveSupport::TestCase
   should validate_attachment_content_type(:file).allowing('text/plain')
   should validate_attachment_presence(:file)
 
-  setup do
-    @list_1k = lists(:list_1k_for_one)
-  end
-
   teardown do
     clean_paperclip_file_directory
   end
 
   test "receiver match list count" do
-    attach_file_from_fixture(@list_1k, "1000.txt")
-    assert_equal @list_1k.gsm_numbers.count, 0
-    assert_equal @list_1k.receivers.count, 1000
+    list_1k = lists(:l_1k)
+    attach_file_from_fixture(list_1k, "1000.txt")
+    assert_equal list_1k.gsm_numbers.count, 0
+    assert_equal list_1k.receivers.count, 1000
   end
 
   test "repeated numbers not in gsm_number" do
-    @l2 = lists(:two)
-    attach_file_from_fixture(@l2, "some-duplicates.txt")
-
+    @l2 = setup_list(:dup, false)
     set = Set.new(@l2.receivers)
     @l2.attach_numbers
     assert_equal set.size, @l2.gsm_numbers.count
   end
 
   test "attach and remove numbers using several files" do
-    @l1 = lists(:one)
-    attach_file_from_fixture(@l1, "random3.txt")
-    @l1.attach_numbers
+    @l1 = setup_list(:one)
     assert_equal @l1.gsm_numbers.count, 3
 
     attach_file_from_fixture(@l1, "six_numbers.txt")
@@ -44,5 +37,4 @@ class ListTest < ActiveSupport::TestCase
       @l1.remove_numbers
     end
   end
-
 end

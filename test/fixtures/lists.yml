@@ -1,25 +1,41 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: list_1
+  name: random3
   user: one
 
 two:
-  name: list_2
+  name: six_numbers
   user: two
 
-list_1k_for_one:
-  name: random1000
+dup:
+  name: some-duplicates
   user: one
 
-list_5k_for_one:
-  name: random5000
-  user: one
+dup_two:
+  name: some-duplicates
+  user: two
 
-admin_list:
-  name: admin_numbers
-  user: admin
+l_3:
+  name: random3
+  user: two
 
-list_10K_for_one:
-  name: random10000
-  user: one
+l_500:
+  name: "500"
+  user: two
+
+l_1k:
+  name: "1000"
+  user: two
+
+list_5000:
+  name: "5000"
+  user: two
+
+list_admins:
+  name: admins
+  user: two
+
+list_10000:
+  name: "10000"
+  user: two
