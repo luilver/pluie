@@ -12,6 +12,10 @@ dup:
   name: some-duplicates
   user: one
 
+dup_two:
+  name: some-duplicates
+  user: two
+
 l_3:
   name: random3
   user: two
