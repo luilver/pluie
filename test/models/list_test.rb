@@ -6,7 +6,7 @@ class ListTest < ActiveSupport::TestCase
   should validate_attachment_presence(:file)
 
   setup do
-    @list_1k = lists(:list_1k_for_one)
+    @list_1k = lists(:list_1k)
   end
 
   teardown do
@@ -44,5 +44,4 @@ class ListTest < ActiveSupport::TestCase
       @l1.remove_numbers
     end
   end
-
 end
