@@ -42,7 +42,8 @@ class ActiveSupport::TestCase
   end
 
   def clean_paperclip_file_directory
-    FileUtils.rm_rf(Dir["#{Rails.root}/public/system/test_files/"])
+    dir = Paperclip::Attachment.default_options[:path].sub(":class/:id_partition/:style.:extension","")
+    FileUtils.rm_rf(Dir[dir])
   end
 
   def gateway_url_for_tests
