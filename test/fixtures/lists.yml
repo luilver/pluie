@@ -22,7 +22,7 @@ list_5k:
 
 admin_list:
   name: admin_numbers
-  user: twoin
+  user: two
 
 list_10K:
   name: random10000
