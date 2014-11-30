@@ -4,7 +4,7 @@ class SingleMessageTest < ActiveSupport::TestCase
 
   setup do
     @one = single_messages(:one)
-    @numbers =  cubacel_numbers(Random.new.rand(2..5))
+    @numbers =  cubacel_numbers(5)
     stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
     fix_users_credit
   end
@@ -63,7 +63,7 @@ class SingleMessageTest < ActiveSupport::TestCase
   test "gsm_numbers equivalent to receivers" do
     @one.save
     gsm_numbers_equals_receivers(@one)
-    nums = cubacel_numbers(Random.new.rand(1..10))
+    nums = cubacel_numbers(10)
     @one.number = nums.join(" ")
     @one.save
     gsm_numbers_equals_receivers(@one)
