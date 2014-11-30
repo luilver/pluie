@@ -41,6 +41,7 @@ class BulkMessageTest < ActiveSupport::TestCase
     list = lists(:one)
     attach_file_from_fixture(list, "10000.txt")
     bm = bulk_messages(:one)
+    bm.route = r
     bm.lists << list
     assert bm.invalid?
 
