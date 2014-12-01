@@ -74,6 +74,19 @@ class ActiveSupport::TestCase
   def user_accounting_info(user)
     "balance: #{user.balance} credit: #{user.credit} debit: #{user.debit}"
   end
+
+  def assert_differences(expression_array, message = nil, &block)
+    b = block.send(:binding)
+    before = expression_array.map { |expr| eval(expr[0], b) }
+    yield
+    expression_array.each_with_index do |pair, i|
+      e = pair[0]
+      difference = pair[1]
+      error = "#{e.inspect} didn't change by #{difference}"
+      error = "#{message}\n#{error}" if message
+      assert_equal(before[i] + difference, eval(e, b), error)
+    end
+  end
 end
 
 #to set locale in url build during tests
