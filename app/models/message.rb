@@ -2,6 +2,7 @@ class Message < ActiveRecord::Base
   self.abstract_class = true
   include Gsmeable
   include Chargeable
+  include PluieMessageId
 
   belongs_to :route
   belongs_to :user
