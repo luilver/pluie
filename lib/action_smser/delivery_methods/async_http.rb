@@ -5,10 +5,6 @@ require 'gateway_error_info'
 module ActionSmser::DeliveryMethods
   class AsyncHttp
 
-    class << self
-      attr_reader :path_url, :base_url, :r_head, :gateway_key
-    end
-
     def self.deliver(sms)
       batch_size = sms.delivery_options[gateway_key][:numbers_in_request]
       concurrent_requests = sms.delivery_options[gateway_key][:parallel_requests]
@@ -17,27 +13,25 @@ module ActionSmser::DeliveryMethods
       user =  User.find(sms.user_id)
       route = Route.find(sms.route_id)
       em_was_running =  EM.reactor_running?
-      count = 0
+      request_counter = 0
       info = self.sms_info(sms)
-      message_parts = sms.body_parts
+      success = 0
 
       EM.run do
         setup_middlewares
         connection = EM::HttpRequest.new(base_url)
 
         foreach = Proc.new do |numbers, iter|
-          count +=1
+          request_counter +=1
           query_params = request_params(info, numbers, sms)
           body = request_body(info, numbers, sms)
-          options = request_options(query_params, body, count < last_request)
+          options = request_options(query_params, body, request_counter < last_request)
           http = connection.post(options)
 
           http.callback do
             if succesful_response(http)
               results = parse_response(http.response)
-              success_sms = save_delivery_reports(sms, results, user, route.name)
-              cost = ActionSmserUtils.sms_cost(success_sms, route.price, message_parts)
-              user.bill_sms(cost)
+              success += save_delivery_reports(sms, results, user, route.name)
             else
               log_response(http)
             end
@@ -51,7 +45,9 @@ module ActionSmser::DeliveryMethods
         end
 
         final = Proc.new do
-          ActionSmser::Logger.info "Finished sending. #{Time.now}"
+          ActionSmser::Logger.info "Finished sending with route #{route}. #{Time.now}"
+          pub = PluieWisper::MessagePublisher.new
+          pub.sms_sent(sms, success)
           EventMachine.stop unless em_was_running
         end
         EM::Iterator.new(batches, concurrent_requests).each(foreach, final)
@@ -97,6 +93,16 @@ module ActionSmser::DeliveryMethods
       EM::HttpRequest.use m if Rails.env.development? && !EM::HttpRequest.middleware.include?(m.new)
     end
 
+    def self.path_url
+    end
 
+    def self.base_url
+    end
+
+    def self.r_head
+    end
+
+    def self.gateway_key
+    end
   end
 end

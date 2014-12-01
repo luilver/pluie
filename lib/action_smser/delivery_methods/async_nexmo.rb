@@ -4,14 +4,6 @@ require 'json'
 module ActionSmser::DeliveryMethods
   class AsyncNexmo < AsyncHttp
     include GatewayErrorInfo::NexmoErrors
-    @base_url = "https://rest.nexmo.com/"
-    @path_url = "sms/json"
-    @gateway_key = :nexmo
-    @r_head = {'content-type' => 'application/json', "accept" => "*/*"}
-
-    class << self
-      attr_reader :r_head
-    end
 
     def self.sms_info(sms)
       {
@@ -84,5 +76,20 @@ module ActionSmser::DeliveryMethods
       "https://rest.nexmo.com/account/get-balance/#{key}/#{pass}"
     end
 
+    def self.gateway_key
+      :nexmo
+    end
+
+    def self.base_url
+      "https://rest.nexmo.com/"
+    end
+
+    def self.path_url
+      "sms/json"
+    end
+
+    def self.r_head
+      {'content-type' => 'application/json', "accept" => "*/*"}
+    end
   end
 end

@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  message: MyText
-  number: MyString
+  message: message-one
+  number: 5354031441
+  user: one
+  route: one
 
 two:
-  message: MyText
-  number: MyString
+  message: message-two
+  number: "5358888888 5354031441"
+  user: one
+  route: one

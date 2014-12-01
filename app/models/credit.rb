@@ -1,17 +1,13 @@
 class Credit < ActiveRecord::Base
   belongs_to :user
-  before_save :save_owner
+  before_save :save_owner if :new_record?
   validates :balance, presence: true
   validates :balance,  numericality: { greater_than: 0}
   validates :user, presence: true
-  after_create :add_credit_to_user
+  after_save :update_credit_on_user
 
   def save_owner
     self.user.save
-  end
-
-  def self.random
-    Credit.all[rand Credit.count]
   end
 
   def to_s
@@ -19,8 +15,10 @@ class Credit < ActiveRecord::Base
   end
 
   private
-    def add_credit_to_user
-      self.user.credit += self.balance
-      self.user.save
+    def update_credit_on_user
+      if balance_changed?
+        user.credit += (balance - (balance_was || 0))
+        user.save
+      end
     end
 end

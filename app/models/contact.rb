@@ -6,8 +6,4 @@ class Contact < ActiveRecord::Base
   def to_s
     self.name
   end
-
-  def self.random
-    Contact.all[rand Contact.count]
-  end
 end

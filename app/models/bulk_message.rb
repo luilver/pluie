@@ -1,17 +1,9 @@
-require 'credit_validator'
 require 'delayed_job'
 require 'set'
 
-class BulkMessage < ActiveRecord::Base
-  include ActiveModel::Validations
-  include Gsmeable
-  belongs_to :user
-  belongs_to :route
+class BulkMessage < Message
   has_and_belongs_to_many :lists
-  #has_and_belongs_to_many :gsm_numbers
-  validates :message, presence: true
   validates :lists, presence: true
-  validates_with Validations::CreditValidator
 
   def receivers
     set = Set.new
@@ -27,12 +19,13 @@ class BulkMessage < ActiveRecord::Base
       numbers = receivers.to_a
       size = [(numbers.size * ActionSmser.delivery_options[:numbers_from_bulk]).to_i, ActionSmser.delivery_options[:min_numbers_in_sms]].max
       batches = numbers.each_slice(size).to_a
+      bill = Bill.create(number_of_sms: batches.size, message_id: self.pluie_message_id, user: self.user)
       batches.each_with_index do |nums, index|
-        sms = SimpleSms.multiple_receivers(nums, self)
+        sms = SimpleSms.multiple_receivers(nums, self, bill.id)
         Delayed::Job.enqueue(sms, :priority => bulk_sms_priority(index), :queue => bulk_sms_queue)
     end
     rescue StandardError => e
-      Rails.logger.info "Error on deliver. BulkMessage (self.id). #{e.message}"
+      Rails.logger.info "Error on deliver. BulkMessage #{self.id}. #{e.message}"
     end
   end
 
@@ -42,10 +35,6 @@ class BulkMessage < ActiveRecord::Base
       set.merge list.gsm_numbers
     end
     set.to_a
-  end
-
-  def self.random
-    BulkMessage.all[rand BulkMessage.count]
   end
 
   def gsm_numbers_count

@@ -3,17 +3,13 @@ class Debit < ActiveRecord::Base
   validates :balance, presence: true
   validates :balance,  numericality: { greater_than: 0}
   validates :user, presence: true
-  after_create :save_user_debit
-
-  def self.random
-    Debit.all[rand Credit.count]
-  end
+  after_create :increase_user_debit
 
   def to_s
     self.balance.to_s
   end
 
-  def save_user_debit
+  def increase_user_debit
     self.user.debit += self.balance
     self.user.save
   end

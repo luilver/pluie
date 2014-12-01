@@ -6,19 +6,6 @@ module ActionSmser::DeliveryMethods
   class AsyncInfobip < AsyncHttp
     include GatewayErrorInfo::InfobipErrors
 
-    @sender_address = ""
-    @host = 'api.infobip.com'
-    @base_url = "http://#{@host}/"
-    @path_url = "api/v3/sendsms/json"
-    @gateway_key = :infobip
-    @r_head = {"host" => @host, 'content-type' => 'application/json', "accept" => "*/*"}
-    @r_body = {"authentication" => {"username" => INFOBIP_KEY, "password" => INFOBIP_PASS }}
-
-
-    class << self
-      attr_reader :sender_address, :host, :r_body, :r_head
-    end
-
     def self.request_body(info, numbers, sms)
       msg = self.build_msg(info, numbers, sms)
       body = r_body.merge({"messages" => [msg]})
@@ -102,5 +89,27 @@ module ActionSmser::DeliveryMethods
       "http://api.infobip.com/api/command?username=#{key}&password=#{pass}&cmd=CREDIT"
     end
 
+    def self.host
+      'api.infobip.com'
+    end
+    def self.r_head
+      {"host" => host, 'content-type' => 'application/json', "accept" => "*/*"}
+    end
+
+    def self.r_body
+      {"authentication" => {"username" => INFOBIP_KEY, "password" => INFOBIP_PASS }}
+    end
+
+    def self.gateway_key
+      :infobip
+    end
+
+    def self.base_url
+      "http://#{host}/"
+    end
+
+    def self.path_url
+      "api/v3/sendsms/json"
+    end
   end
 end

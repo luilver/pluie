@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :routes
   has_many :gateways,  :through => :routes
   has_many :debits
+  has_many :bills
 
   def api_key
     self.api_setting.api_key
@@ -48,10 +49,6 @@ class User < ActiveRecord::Base
 
   def username
     to_s[0,to_s.index('@')]
-  end
-
-  def self.random
-    User.all[rand User.count]
   end
 
   def spent

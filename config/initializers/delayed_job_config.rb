@@ -5,6 +5,7 @@ Delayed::Worker.max_attempts = 1
 Delayed::Worker.destroy_failed_jobs = false
 
 Delayed::Worker.logger = Rails.logger
+Delayed::Worker.delay_jobs = !Rails.env.test?
 
 def bulk_sms_priority(index)
   index

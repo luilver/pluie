@@ -15,10 +15,6 @@ class Route < ActiveRecord::Base
     self.name
   end
 
-  def self.random
-    Route.all[rand Route.all.size]
-  end
-
   def gateway_to_sym
     self.gateway.name.downcase.to_sym
   end

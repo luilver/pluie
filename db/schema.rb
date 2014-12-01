@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009200558) do
+ActiveRecord::Schema.define(version: 20141014195641) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -40,6 +40,19 @@ ActiveRecord::Schema.define(version: 20141009200558) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "bills", force: true do |t|
+    t.integer  "number_of_sms"
+    t.string   "message_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "finished_sms",     default: 0
+    t.integer  "accepted_numbers", default: 0
+  end
+
+  add_index "bills", ["message_id"], name: "index_bills_on_message_id", using: :btree
+  add_index "bills", ["user_id"], name: "index_bills_on_user_id", using: :btree
 
   create_table "bulk_messages", force: true do |t|
     t.text     "message"
