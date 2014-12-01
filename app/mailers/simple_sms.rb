@@ -1,6 +1,6 @@
 class SimpleSms < ActionSmser::Base
 
-  attr_accessor :user_id, :route_id, :pluie_message_id
+  attr_accessor :user_id, :route_id, :bill_id
   attr_reader :receivers_hash
 
   def pluie_sms(text, numbers, route )
@@ -9,7 +9,7 @@ class SimpleSms < ActionSmser::Base
     sms(to: numbers, from: user.username, body: text, type: ActionSmserUtils::PLUIE_MSG, user: user.id, route: route.id)
   end
 
-  def multiple_receivers(receivers, message)
+  def multiple_receivers(receivers, message, bill_id)
     if ActionSmser.delivery_options[message.route.gateway_to_sym]
       #update delivery method  for this sms.
       delivery_options[:delivery_method] = message.route.dlv_to_sym
@@ -19,7 +19,7 @@ class SimpleSms < ActionSmser::Base
     type = message.class.to_s
     sms(:to => receivers, :from => user.username, :body => message.message,
         :type => type, :user => user.id, :route => message.route.id,
-        :message_id => message.pluie_message_id)
+        :bill_id => bill_id)
   end
 
   def valid?
@@ -38,7 +38,7 @@ class SimpleSms < ActionSmser::Base
     @sms_type = options[:type]
     @user_id = options[:user]
     @route_id = options[:route]
-    @pluie_message_id = options[:message_id]
+    @bill_id = options[:bill_id]
     super(options)
   end
 

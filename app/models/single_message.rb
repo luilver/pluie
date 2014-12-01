@@ -12,8 +12,8 @@ class SingleMessage < Message
   end
 
   def deliver
-    sms = SimpleSms.multiple_receivers(receivers, self)
-    Bill.create(number_of_sms: 1, message_id: self.pluie_message_id, user: self.user)
+    bill = Bill.create(number_of_sms: 1, message_id: self.pluie_message_id, user: self.user)
+    sms = SimpleSms.multiple_receivers(receivers, self, bill.id)
     sms.deliver
   end
 
