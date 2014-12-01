@@ -84,6 +84,15 @@ class BulkMessageTest < ActiveSupport::TestCase
     assert counter.values.all? {|v| v == 1 }
   end
 
+  test "generates debit and bill when sending" do
+    bm = bulk_messages(:bulk)
+    bm.lists << setup_list(:l_500)
+    user_id = bm.user.id
+    assert_difference ['Debit.count', 'User.find(user_id).bills.count'] do
+      bm.deliver
+    end
+  end
+
   def assert_msg_is_charged(bm)
     cost = bm.message_cost
     id = bm.user.id

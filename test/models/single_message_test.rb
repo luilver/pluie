@@ -42,8 +42,9 @@ class SingleMessageTest < ActiveSupport::TestCase
     end
   end
 
-  test "generates debits when sending" do
-    assert_difference 'Debit.count' do
+  test "generates debit and bill when sending" do
+    user_id = @one.user.id
+    assert_difference ['Debit.count', 'User.find(user_id).bills.count'] do
       @one.deliver
     end
   end
