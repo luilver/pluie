@@ -23,9 +23,31 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "billing creates debit" do
+    #TODO use fractional quantities
     user = users(:one)
-    assert_difference ['Debit.count', 'User.find(user.id).debits.count'] do
-      user.bill_sms(1)
+    id = user.id
+    n = 5
+    amounts = []
+    n.times {amounts << @rnd.rand(1..10)}
+    total = amounts.sum
+    expressions = [['Debit.count', n], ['User.find(id).debits.count', n], ['User.find(id).debit', total]]
+    assert_differences expressions do
+      amounts.each {|a| user.bill_sms(a)}
     end
+  end
+
+  test "balance equals credits minus debits" do
+    u = users(:without_credits)
+    n = 20
+    #u.credits.create(balance: n*(n-1)/2, description: "test credit: #{n}")
+    n.times do |i|
+      v = @rnd.rand(0.0..i.succ)
+      if @rnd.rand < 0.5
+        Credit.create!(balance: v, description: "test credit: #{v}", user: u)
+      else
+        Debit.create!(balance: v, user: u)
+      end
+    end
+    assert_equal u.balance, (u.credit - u.debit)
   end
 end
