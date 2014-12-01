@@ -1,7 +1,6 @@
 class CreditsController < ApplicationController
   before_action :set_credit, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:create]
-  around_action :update_credit, only: [:update]
 
   # GET /credits
   # GET /credits.json
@@ -83,14 +82,5 @@ class CreditsController < ApplicationController
 
     def relate_user
       @credit.user = User.find(params[:user])
-    end
-
-    def update_credit
-      old_credit = @credit.balance
-      yield
-      if @credit.valid?
-        user_credit =  @credit.user.credit - old_credit + @credit.balance
-        @credit.user.update(credit: user_credit)
-      end
     end
 end

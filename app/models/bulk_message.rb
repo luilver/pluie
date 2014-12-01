@@ -1,18 +1,9 @@
-require 'credit_validator'
 require 'delayed_job'
 require 'set'
 
-class BulkMessage < ActiveRecord::Base
-  include ActiveModel::Validations
-  include PluieMessageId
-  include Gsmeable
-  belongs_to :user
-  belongs_to :route
+class BulkMessage < Message
   has_and_belongs_to_many :lists
-  #has_and_belongs_to_many :gsm_numbers
-  validates :message, presence: true
   validates :lists, presence: true
-  validates_with Validations::CreditValidator
 
   def receivers
     set = Set.new
@@ -44,10 +35,6 @@ class BulkMessage < ActiveRecord::Base
       set.merge list.gsm_numbers
     end
     set.to_a
-  end
-
-  def self.random
-    BulkMessage.all[rand BulkMessage.count]
   end
 
   def gsm_numbers_count

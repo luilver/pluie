@@ -51,10 +51,6 @@ class User < ActiveRecord::Base
     to_s[0,to_s.index('@')]
   end
 
-  def self.random
-    User.all[rand User.count]
-  end
-
   def spent
     self.debit
   end

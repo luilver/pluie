@@ -13,6 +13,7 @@ es:
   delivery_reports: 'Reportes de entrega'
   summary_for: 'Resumen del per&iacute;odo'
   show_summary: 'Mostrar el per&iacute;odo'
+  last_hour: '&Uacute;ltima hora'
   last_24h: '&Uacute;ltimas 24h'
   2_days: 'De 48h a 24h'
   3_days: 'De 72h a 48h'
@@ -78,6 +79,7 @@ es:
   price: 'Precio'
   gateway: 'Proveedor'
   gateways: 'Proveedores'
+  observers: 'Observadores'
   new_route: 'A&ntilde;adir ruta'
   listing_routes: 'Rutas'
   listing_users: 'Usuarios'
@@ -107,6 +109,8 @@ es:
 
   new_user: 'Nuevo Usuario'
   spent: 'Gasto Total'
+  max_debt: 'Deuda M&aacute;x'
+  is_admin: 'Es Admin'
 
   sent_status: 'Pendiente'
   delivered_status: 'Entregado'
@@ -140,7 +144,7 @@ es:
       group_message: 'Env&iacute;o a grupo'
       group: 'Grupo'
       debit: Débito
-      observer: Observer
+      observer: 'Observador'
     attributes:
       single_message:
         number: 'Destinatario'
@@ -175,6 +179,7 @@ es:
   errors:
     messages:
       debit_limit_violation: "El costo(%{cost}) del mensaje excede el l&iacute;mite(%{limit}) de d&eacute;bito permitido"
+      valid_gsm_number_format: "Solo se aceptan n&uacute;meros de Cuba, por ejemplo 5352134312"
   time:
     formats:
       verbose_date: ! '%a, %d %B %Y'
@@ -182,3 +187,5 @@ es:
       date_time: ! '%d %b %Y, %H:%M:%S'
   cancan:
     access_denied: 'No est&aacute; autorizado a acceder a esta p&aacute;gina'
+  will_paginate:
+    page_gap: '...'

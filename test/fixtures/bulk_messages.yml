@@ -1,7 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  message: MyText
+  message: Bulk1
+  route: one
+  user: one
 
-two:
-  message: MyText
+bulk:
+  message: Bulk2
+  route: bulk
+  user: two
+
+multi_lists:
+  message: bulk lists
+  route: bulk
+  user: two
+  lists: list_admins, l_3, two

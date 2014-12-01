@@ -44,4 +44,6 @@ Pluie::Application.configure do
   USE_EM_PROXY = false
 
   config.default_url_options = { :host => "localhost:3000" }
+
+  Paperclip::Attachment.default_options[:path] = "#{Rails.root}/public/system/test_files/:class/:id_partition/:style.:extension"
 end
