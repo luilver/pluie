@@ -179,6 +179,7 @@ es:
   errors:
     messages:
       debit_limit_violation: "El costo(%{cost}) del mensaje excede el l&iacute;mite(%{limit}) de d&eacute;bito permitido"
+      valid_gsm_number_format: "Solo se aceptan n&uacute;meros de Cuba, por ejemplo 5352134312"
   time:
     formats:
       verbose_date: ! '%a, %d %B %Y'
