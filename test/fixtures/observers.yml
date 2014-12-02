@@ -7,3 +7,7 @@ one:
 two:
   number: 5352222222
   active: false
+
+three:
+  number: 5353333333
+  active: true

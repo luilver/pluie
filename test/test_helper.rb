@@ -71,6 +71,10 @@ class ActiveSupport::TestCase
     Credit.all.each {|c| c.user.credit += c.balance; c.save_owner}
   end
 
+  def run_observers_save_callback
+    Observer.all.each {|obs| obs.save}
+  end
+
   def user_accounting_info(user)
     "balance: #{user.balance} credit: #{user.credit} debit: #{user.debit}"
   end
