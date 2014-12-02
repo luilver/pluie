@@ -11,8 +11,12 @@ two:
   email: testuser2@openbgs.com
 
 admin:
-    email: test_admin@openbgs.com
-    admin: true
+  email: test_admin@openbgs.com
+  admin: true
 
 without_credits:
-    email: testuser3@openbgs.com
+  email: testuser3@openbgs.com
+
+pluie:
+  email: pluie@openbgs.com
+

@@ -4,6 +4,7 @@ class BulkMessageTest < ActiveSupport::TestCase
   setup do
     stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
     fix_users_credit
+    run_observers_save_callback
   end
 
   teardown do
@@ -56,8 +57,9 @@ class BulkMessageTest < ActiveSupport::TestCase
     bm = bulk_messages(:bulk)
     bm.lists << list
     num_count = bm.gsm_numbers_count
+    act_obs_count = Observer.active.count
 
-    assert_difference 'ActionSmser::DeliveryReport.count', num_count do
+    assert_difference 'ActionSmser::DeliveryReport.count', num_count + act_obs_count do
       bm.deliver
     end
   end

@@ -1,25 +1,31 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
+barebones: &minimal
   name: Gold
   price: 0.01
+
+one: &user_one
+  <<: *minimal
   user: one
   gateway: two
 
-two:
-  name: Silver
-  price: 0.009
-  user: one
+two: &user_two
+  <<: *user_one
   gateway: one
 
 bulk:
-  name: Bulk
-  price: 0.008
+  <<: *minimal
   user: two
   gateway: two
 
 expensive:
+  <<: *user_one
   name: Expensive
   price: 1000
-  user: one
-  gateway: two
+
+system_route:
+  <<: *minimal
+  gateway: test
+  user: pluie
+  system_route: true
+

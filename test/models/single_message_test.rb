@@ -7,6 +7,7 @@ class SingleMessageTest < ActiveSupport::TestCase
     @numbers =  cubacel_numbers(5)
     stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
     fix_users_credit
+    run_observers_save_callback
   end
 
   test "should have message" do
@@ -33,10 +34,12 @@ class SingleMessageTest < ActiveSupport::TestCase
   end
 
   test "creates DLR" do
-    assert_difference 'ActionSmser::DeliveryReport.count' do
+    id = @one.user.id
+    act_obs_count = Observer.active.count
+    assert_difference 'ActionSmser::DeliveryReport.count', 1 + act_obs_count do
       @one.deliver
     end
-    assert_difference 'ActionSmser::DeliveryReport.count', @numbers.size do
+    assert_difference 'ActionSmser::DeliveryReport.count', @numbers.size + act_obs_count do
       @one.number = @numbers.join(" ")
       @one.deliver
     end

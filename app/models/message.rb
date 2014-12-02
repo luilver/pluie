@@ -10,6 +10,11 @@ class Message < ActiveRecord::Base
   validates :route, presence: true
   validate :message_cost_is_on_budget
 
+  def deliver
+    publisher =  PluieWisper::MessagePublisher.new
+    publisher.notify_msg_to_observers(self)
+  end
+
   private
     def message_cost_is_on_budget
       if route

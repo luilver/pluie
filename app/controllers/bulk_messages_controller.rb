@@ -4,7 +4,6 @@ class BulkMessagesController < ApplicationController
 
   before_action :set_bulk_message, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:create]
-  after_action :notify_observers, only: [:create]
 
   # GET /bulk_messages
   # GET /bulk_messages.json
