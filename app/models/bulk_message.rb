@@ -27,6 +27,7 @@ class BulkMessage < Message
     rescue StandardError => e
       Rails.logger.info "Error on deliver. BulkMessage #{self.id}. #{e.message}"
     end
+    super()
   end
 
   def gsm_numbers
