@@ -55,5 +55,5 @@ class User < ActiveRecord::Base
     self.debit
   end
 
-  def debt?; self.debit > 0 end
+  def debt?; balance < 0 end
 end
