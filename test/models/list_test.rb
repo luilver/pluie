@@ -37,4 +37,20 @@ class ListTest < ActiveSupport::TestCase
       @l1.remove_numbers
     end
   end
+
+  test "should ignore invalid numbers from list" do
+    l1 = setup_list(:wrong_nums_in_list)
+    l1.update_attribute(:opened, true)
+    m = /535[0-9]{7}/
+    l1.receivers.each do |num|
+      assert_match m, num
+    end
+    l1.update_attribute(:opened, false)
+    l1.receivers.each do |num|
+      assert_match m, num
+    end
+    l1.gsm_numbers.each do |gsm|
+      assert_match m, gsm.number
+    end
+  end
 end
