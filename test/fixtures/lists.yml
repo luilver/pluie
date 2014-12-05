@@ -39,3 +39,7 @@ list_admins:
 list_10000:
   name: "10000"
   user: two
+
+wrong_nums_in_list:
+  name: "three_wrong_numbers"
+  user: one
