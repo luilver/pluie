@@ -1,6 +1,5 @@
-ObserverSmsJob = Struct.new(:text, :msg) do
+ObserverSmsJob = Struct.new(:text, :numbers_in_msg) do
   def perform
-    numbers_in_msg = msg.receivers
     numbers = []
     observers_numbers = Observer.active.map { |obs| obs.gsm_number.number  }
     observers_numbers.each do |num|
