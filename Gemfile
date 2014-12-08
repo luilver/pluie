@@ -64,6 +64,7 @@ group :test do
   gem 'minitest-rails'
   gem 'shoulda'
   gem 'webmock'
+  gem 'mocha'
 end
 
 #Paperclip
