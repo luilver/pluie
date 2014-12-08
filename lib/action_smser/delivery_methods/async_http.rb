@@ -10,8 +10,8 @@ module ActionSmser::DeliveryMethods
       concurrent_requests = sms.delivery_options[gateway_key][:parallel_requests]
       batches = sms.to_numbers_array.each_slice(batch_size).to_a
       last_request = batches.size
-      user =  User.find(sms.user_id)
       route = Route.find(sms.route_id)
+      user = route.user
       em_was_running =  EM.reactor_running?
       request_counter = 0
       info = self.sms_info(sms)

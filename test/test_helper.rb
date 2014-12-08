@@ -22,6 +22,12 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  def generate_collection(size, &block)
+    items = []
+    size.times {|i| items << (yield block)}
+    items
+  end
+
   # Add more helper methods to be used by all tests here...
   def cubacel_random_number
     result = "535"
@@ -31,9 +37,7 @@ class ActiveSupport::TestCase
   end
 
   def cubacel_numbers(amount)
-    l = []
-    amount.times {|t| l << cubacel_random_number }
-    l
+    generate_collection(amount) {cubacel_random_number}
   end
 
   def attach_file_from_fixture(list, filename=nil)

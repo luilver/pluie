@@ -1,12 +1,12 @@
 class SimpleSms < ActionSmser::Base
 
-  attr_accessor :user_id, :route_id, :bill_id
+  attr_accessor :route_id, :bill_id
   attr_reader :receivers_hash
 
   def pluie_sms(text, numbers, route )
     delivery_options[:delivery_method] = route.dlv_to_sym
     user = route.user
-    sms(to: numbers, from: user.username, body: text, type: ActionSmserUtils::PLUIE_MSG, user: user.id, route: route.id)
+    sms(to: numbers, from: user.username, body: text, type: ActionSmserUtils::PLUIE_MSG, route: route.id)
   end
 
   def custom(text, receivers, route, bill_id, type)
@@ -16,7 +16,7 @@ class SimpleSms < ActionSmser::Base
     @receivers_hash = {}
     user = route.user
     sms(:to => receivers, :from => user.username, :body => text,
-        :type => type, :user => user.id, :route => route.id,
+        :type => type, :route => route.id,
         :bill_id => bill_id)
   end
 
@@ -34,7 +34,6 @@ class SimpleSms < ActionSmser::Base
 
   def sms(options)
     @sms_type = options[:type]
-    @user_id = options[:user]
     @route_id = options[:route]
     @bill_id = options[:bill_id]
     super(options)
