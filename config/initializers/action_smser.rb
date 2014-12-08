@@ -14,6 +14,10 @@ ROUTESMS_PASS = ENV['ROUTESMS_PASS']
 
 PLUIE_HOST = Pluie::Application.config.default_url_options[:host]
 
+def gateway_defined?(key)
+  ActionSmser.delivery_options.has_key?(key)
+end
+
 if Rails.env.test?
   require 'action_smser/delivery_methods/async_test'
 

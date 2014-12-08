@@ -9,16 +9,14 @@ class SimpleSms < ActionSmser::Base
     sms(to: numbers, from: user.username, body: text, type: ActionSmserUtils::PLUIE_MSG, user: user.id, route: route.id)
   end
 
-  def multiple_receivers(receivers, message, bill_id)
-    if ActionSmser.delivery_options[message.route.gateway_to_sym]
-      #update delivery method  for this sms.
-      delivery_options[:delivery_method] = message.route.dlv_to_sym
+  def custom(text, receivers, route, bill_id, type)
+    if gateway_defined?(route.gateway_to_sym)
+      delivery_options[:delivery_method] = route.dlv_to_sym
     end
     @receivers_hash = {}
-    user = message.user
-    type = message.class.to_s
-    sms(:to => receivers, :from => user.username, :body => message.message,
-        :type => type, :user => user.id, :route => message.route.id,
+    user = route.user
+    sms(:to => receivers, :from => user.username, :body => text,
+        :type => type, :user => user.id, :route => route.id,
         :bill_id => bill_id)
   end
 
