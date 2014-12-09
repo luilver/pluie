@@ -10,7 +10,7 @@ class List < ActiveRecord::Base
 
   def attach_numbers
     self.update_attribute(:opened, true)
-    numbers = valid_cubacel_numbers_from_file.map{ |line| GsmNumber.find_or_create_by(number: line[0,10]) }
+    numbers = lines_with_cubacel_numbers.map{ |line| GsmNumber.find_or_create_by(number: line[0,10]) }
     from_file = Set.new(numbers)
     new_numbers = from_file - self.gsm_numbers.to_a
     self.gsm_numbers << new_numbers.to_a
@@ -19,7 +19,7 @@ class List < ActiveRecord::Base
 
   def remove_numbers
     self.update_attribute(:opened, true)
-    numbers = IO.foreach(self.file.path).map{ |line| GsmNumber.find_by_number(line[0,10]) }
+    numbers = lines_with_cubacel_numbers.map{ |line| GsmNumber.find_by_number(line[0,10]) }
     from_file = Set.new(numbers)
     erase_this = from_file & self.gsm_numbers.to_a
     self.gsm_numbers.delete(erase_this.to_a)
@@ -28,14 +28,18 @@ class List < ActiveRecord::Base
 
   def receivers
     self.opened ?
-          valid_cubacel_numbers_from_file.map{ |line| line[0,10] } :
+          lines_with_cubacel_numbers.map{ |line| line[0,10] } :
           self.gsm_numbers.map {|gsm| gsm.number}
   end
 
   private
-    def valid_cubacel_numbers_from_file
+    def lines_with_cubacel_numbers
       return file.path ?
-                       IO.foreach(self.file.path).select {|line| /535[0-9]{7}/ =~ line}
+                       lines_from_file.select {|line| /535[0-9]{7}/ =~ line}
                        : []
+    end
+
+    def lines_from_file
+      IO.foreach(self.file.path)
     end
 end
