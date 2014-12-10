@@ -6,8 +6,9 @@ ObserverSmsJob = Struct.new(:text, :numbers_in_msg) do
       numbers << num unless numbers_in_msg.include?(num)
     end
     if numbers.any?
-      route = Route.publisher_routes.first
-      sms = SimpleSms.pluie_sms(text, numbers, route)
+      route = Route.notifications_route
+      bill = Bill.create(number_of_sms: 1, user: route.user)
+      sms = SimpleSms.pluie_sms(text, numbers, route, bill.id)
       sms.deliver
     end
   end
