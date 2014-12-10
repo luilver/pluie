@@ -1,4 +1,5 @@
 class SimpleSms < ActionSmser::Base
+  include Wisper::Publisher
 
   attr_accessor :route_id, :bill_id
   attr_reader :receivers_hash
@@ -48,4 +49,7 @@ class SimpleSms < ActionSmser::Base
     sms_encoding.concatenated?
   end
 
+  def after_delivery(response)
+    publish(:finish_sending_sms, self, response )
+  end
 end
