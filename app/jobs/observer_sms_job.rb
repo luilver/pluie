@@ -12,5 +12,4 @@ ObserverSmsJob = Struct.new(:text, :numbers_in_msg) do
       sms.deliver
     end
   end
-
 end

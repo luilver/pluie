@@ -3,6 +3,7 @@ require 'test_helper'
 class ObserverTest < ActiveSupport::TestCase
 
   setup do
+    #to run callback on gsm_number
     Observer.all.each do |single|
       single.save
     end
@@ -36,6 +37,18 @@ class ObserverTest < ActiveSupport::TestCase
     end
   end
 
+  test "should update observers" do
+    observer_numbers = Observer.active.map { |e| e.gsm_number.number  }
+    stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
+    sm = single_messages(:one)
+    assert_observers_are_notified(sm, SingleDeliverer)
+    Observer.all.each do |obs|
+      status = obs.active
+      obs.update_attribute(:active, !status)
+    end
+    assert_observers_are_notified(sm, SingleDeliverer)
+  end
+
   test "should notify active observers after sending" do
     stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
     sm = single_messages(:one)
@@ -50,9 +63,12 @@ class ObserverTest < ActiveSupport::TestCase
 
   def assert_observers_are_notified(msg, deliverer)
     user_id = Route.notifications_route.user.id
-    observers_count = Observer.active.to_a.size
+    observers_nums = Observer.active.map{|n| n.gsm_number.number}
+    observers_count = observers_nums.count
     cost = ActionSmserUtils.sms_cost(observers_count, Route.notifications_route.price, 1)
-    data = [['User.find(user_id).delivery_reports.count', observers_count],
+    data = [
+            #['User.find(user_id).delivery_reports.count', observers_count],
+            ["ActionSmser::DeliveryReport.where(user_id: #{user_id}).where(to: #{observers_nums}).count", observers_count],
             ['User.find(user_id).bills.count', 1],
             ['User.find(user_id).balance', -cost]]
     assert_differences data do
