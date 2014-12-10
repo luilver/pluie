@@ -11,6 +11,10 @@ class Route < ActiveRecord::Base
 
   scope :publisher_routes , -> { where( system_route: true) }
 
+  def self.notifications_route
+    publisher_routes.to_a.first
+  end
+
   def to_s
     self.name
   end
