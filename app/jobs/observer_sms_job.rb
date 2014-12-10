@@ -1,7 +1,7 @@
 ObserverSmsJob = Struct.new(:text, :numbers_in_msg) do
   def perform
     numbers = []
-    observers_numbers = Observer.active.map { |obs| obs.gsm_number.number  }
+    observers_numbers = Observer.active_numbers
     observers_numbers.each do |num|
       numbers << num unless numbers_in_msg.include?(num)
     end

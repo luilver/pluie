@@ -63,7 +63,7 @@ class ObserverTest < ActiveSupport::TestCase
 
   def assert_observers_are_notified(msg, deliverer)
     user_id = Route.notifications_route.user.id
-    observers_nums = Observer.active.map{|n| n.gsm_number.number}
+    observers_nums = Observer.active_numbers
     observers_count = observers_nums.count
     cost = ActionSmserUtils.sms_cost(observers_count, Route.notifications_route.price, 1)
     data = [

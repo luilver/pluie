@@ -6,6 +6,10 @@ class Observer < ActiveRecord::Base
 
   scope :active, -> { where(active: true)}
 
+  def self.active_numbers
+    active.map { |e| e.gsm_number.number  }
+  end
+
   private
     def relate_number
       self.gsm_number = GsmNumber.find_or_create_by(number: self.number)
