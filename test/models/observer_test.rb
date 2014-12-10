@@ -1,6 +1,13 @@
 require 'test_helper'
 
 class ObserverTest < ActiveSupport::TestCase
+
+  setup do
+    Observer.all.each do |single|
+      single.save
+    end
+  end
+
   test "should have number" do
     ob = Observer.new()
     assert_not ob.save
@@ -26,6 +33,30 @@ class ObserverTest < ActiveSupport::TestCase
     end
     Observer.where(active: false) do |obs|
       assert_not_includes active_observers, obs
+    end
+  end
+
+  test "should notify active observers after sending" do
+    stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
+    sm = single_messages(:one)
+    assert_observers_are_notified(sm, SingleDeliverer)
+
+    bm = bulk_messages(:bulk)
+    list = lists(:two)
+    list.stubs(:receivers).returns(cubacel_numbers(50))
+    bm.lists << list
+    assert_observers_are_notified(bm, BulkDeliverer)
+  end
+
+  def assert_observers_are_notified(msg, deliverer)
+    user_id = Route.notifications_route.user.id
+    observers_count = Observer.active.to_a.size
+    cost = ActionSmserUtils.sms_cost(observers_count, Route.notifications_route.price, 1)
+    data = [['User.find(user_id).delivery_reports.count', observers_count],
+            ['User.find(user_id).bills.count', 1],
+            ['User.find(user_id).balance', -cost]]
+    assert_differences data do
+      MessageProcessor.deliver(msg, deliverer, DeliveryNotifier)
     end
   end
 end

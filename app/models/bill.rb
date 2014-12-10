@@ -16,7 +16,7 @@ class Bill < ActiveRecord::Base
     route_price = Route.find(route_id).price
     cost = ActionSmserUtils.sms_cost(self.accepted_numbers, route_price, sms_parts)
     self.user.bill_sms(cost) if cost > 0
-    Rails.logger.info "Charged #{cost} to #{self.user.username} for msg #{self.message_id}. #{self.accepted_numbers} numbers accepted in Gateway."
+    Rails.logger.info "Charged #{cost} to #{self.user.username}. #{self.accepted_numbers} numbers accepted in Gateway."
   end
 
   private
