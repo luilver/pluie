@@ -4,11 +4,11 @@ class SingleMessage < Message
   before_save :related_numbers
 
   def receivers
-    self.number.split(" ")
+    self.gsm_numbers.map { |gsm| gsm.number }
   end
 
   def gsm_numbers_count
-    receivers.size
+    gsm_numbers.count
   end
 
   def deliver
@@ -18,8 +18,12 @@ class SingleMessage < Message
   private
     def related_numbers
       self.gsm_numbers.delete_all if self.gsm_numbers.any?
-      self.number.split.each { |num| n = GsmNumber.find_or_create_by(:number => num);
+      valid_gsm_numbers_from_field.each { |num| n = GsmNumber.find_or_create_by(:number => num);
                                           self.gsm_numbers << n if not self.gsm_numbers.include?(n)
       }
+    end
+
+    def valid_gsm_numbers_from_field
+      self.number.split(" ").select { |num| /535[0-9]{7}/ =~ num }
     end
 end
