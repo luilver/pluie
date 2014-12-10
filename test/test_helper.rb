@@ -96,6 +96,14 @@ class ActiveSupport::TestCase
       assert_equal(before[i] + difference, eval(e, b), error)
     end
   end
+
+  def assert_message_is_charged(msg, deliverer)
+    cost = msg.message_cost
+    id = msg.user.id
+    assert_differences [['User.find(id).balance', -cost], ['User.find(id).debits.count', 1], ['User.find(id).bills.count', 1]] do
+      MessageProcessor.deliver(msg, deliverer)
+    end
+  end
 end
 
 #to set locale in url build during tests
