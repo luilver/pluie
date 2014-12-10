@@ -46,18 +46,18 @@ module ActionSmser::DeliveryMethods
 
         final = Proc.new do
           ActionSmser::Logger.info "Finished sending with route #{route}. #{Time.now}"
+          sms.broadcast_delivery_finished(success)
           EventMachine.stop unless em_was_running
         end
         EM::Iterator.new(batches, concurrent_requests).each(foreach, final)
       end
-      success
     end
 
     def self.cubacel_random_number
-        result = "535"
-        rand = Random.new
-        7.times{ result << rand.rand(9).to_s}
-        result
+      result = "535"
+      rand = Random.new
+      7.times{ result << rand.rand(9).to_s}
+      result
     end
 
     #Default values in case that one of them is not

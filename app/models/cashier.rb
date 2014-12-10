@@ -7,6 +7,8 @@ class Cashier
     if cost > 0
       user.debits.create(balance: cost)
       Rails.logger.info "Charged #{cost} to #{user.username}. #{numbers_count} numbers accepted in #{route.gateway.name} gateway."
+    else
+      Rails.logger.info "Cost for sms in route #{route_id} is #{cost}"
     end
 
   end

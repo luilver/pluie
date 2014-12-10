@@ -49,7 +49,7 @@ class SimpleSms < ActionSmser::Base
     sms_encoding.concatenated?
   end
 
-  def after_delivery(response)
-    publish(:finish_sending_sms, self, response )
+  def broadcast_delivery_finished(successfull_numbers)
+    publish(:finish_sending_sms, self, successfull_numbers)
   end
 end
