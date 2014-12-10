@@ -11,10 +11,6 @@ class SingleMessage < Message
     gsm_numbers.count
   end
 
-  def deliver
-    MessageProcessor.deliver(self, SingleDeliverer, DeliveryNotifier)
-  end
-
   private
     def related_numbers
       self.gsm_numbers.delete_all if self.gsm_numbers.any?

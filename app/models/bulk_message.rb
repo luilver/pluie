@@ -13,10 +13,6 @@ class BulkMessage < Message
     set.to_a
   end
 
-  def deliver
-    MessageProcessor.deliver(self, BulkDeliverer, DeliveryNotifier)
-  end
-
   def gsm_numbers
     set = Set.new
     self.lists.each do |list|
