@@ -46,12 +46,11 @@ module ActionSmser::DeliveryMethods
 
         final = Proc.new do
           ActionSmser::Logger.info "Finished sending with route #{route}. #{Time.now}"
-          pub = PluieWisper::MessagePublisher.new
-          pub.sms_sent(sms, success)
           EventMachine.stop unless em_was_running
         end
         EM::Iterator.new(batches, concurrent_requests).each(foreach, final)
       end
+      success
     end
 
     def self.cubacel_random_number
