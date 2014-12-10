@@ -24,6 +24,6 @@ class SingleMessage < Message
     end
 
     def valid_gsm_numbers_from_field
-      self.number.split(" ").select { |num| /535[0-9]{7}/ =~ num }
+      self.number.split(/[[:blank:]]/).select { |num| /535[0-9]{7}/ =~ num }
     end
 end
