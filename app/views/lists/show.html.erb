@@ -9,4 +9,5 @@
 
 <%= link_to t(:edit), edit_list_path(@list) %> |
 <%= link_to t(:back).html_safe, lists_path %> |
-<%= link_to t(:new_item, item: t(:bulk_message).titlecase), new_bulk_message_path(:list_ids => [@list.id]) %>
+<%= link_to t(:new_item, item: t(:bulk_message).titlecase), new_bulk_message_path(:list_ids => [@list.id]) %> |
+<%= link_to t(:new_item_f, item: t(:lists).singularize.capitalize), new_list_path %>
