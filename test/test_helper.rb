@@ -66,6 +66,10 @@ class ActiveSupport::TestCase
     ActionSmser::DeliveryMethods::AsyncTest.generate_response_from_body(request.body)
   end
 
+  def stub_request_for_async_test
+    stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
+  end
+
   def add_credit(user, amount)
     credit = Credit.create(description: "test credit", balance: amount, user: user)
   end
