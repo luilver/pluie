@@ -72,7 +72,8 @@ class ObserverTest < ActiveSupport::TestCase
             ['User.find(user_id).bills.count', 1],
             ['User.find(user_id).balance', -cost]]
     assert_differences data do
-      MessageProcessor.deliver(msg, deliverer, DeliveryNotifier)
+      cmd = DeliverMessage.new(deliverer, DeliveryNotifier)
+      cmd.deliver(msg)
     end
   end
 end
