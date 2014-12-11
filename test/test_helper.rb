@@ -101,7 +101,8 @@ class ActiveSupport::TestCase
     cost = msg.message_cost
     id = msg.user.id
     assert_differences [['User.find(id).balance', -cost], ['User.find(id).debits.count', 1], ['User.find(id).bills.count', 1]] do
-      MessageProcessor.deliver(msg, deliverer)
+      cmd = DeliverMessage.new(deliverer)
+      cmd.deliver(msg)
     end
   end
 end

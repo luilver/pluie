@@ -37,7 +37,8 @@ class SingleMessagesController < ApplicationController
     respond_to do |format|
       if @single_message.save
 
-        MessageProcessor.deliver(@single_message, SingleDeliverer, DeliveryNotifier)
+        command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
+        command.deliver(@single_message)
 
         format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
         format.json { render :show, status: :sent, location: @single_message }
