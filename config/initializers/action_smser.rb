@@ -18,6 +18,10 @@ def gateway_defined?(key)
   ActionSmser.delivery_options.has_key?(key)
 end
 
+def deliveries_test_array
+  ActionSmser::DeliveryMethods::AsyncTest.deliveries
+end
+
 if Rails.env.test?
   require 'action_smser/delivery_methods/async_test'
 
