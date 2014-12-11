@@ -81,6 +81,7 @@ en:
     messages:
       debit_limit_violation: "Message cost (%{cost}) violates your credit limit (%{limit})"
       valid_gsm_number_format: "Only gsm numbers from cubacel allowed, ie 5352134312"
+      invalid_cubacel_number: "%{num} is not a valid Cubacel number"
   time:
     formats:
       verbose_date: ! '%a %B %d, %Y'

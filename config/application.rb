@@ -34,6 +34,6 @@ module Pluie
     config.middleware.insert_after ActionDispatch::ParamsParser, ActionDispatch::XmlParamsParser
 
     #autoload folder for custom jobs
-    config.autoload_paths += %W( #{config.root}/app/jobs)
+    config.autoload_paths += %W( #{config.root}/app/jobs #{config.root}/app/models/validators)
   end
 end

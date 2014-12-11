@@ -1,7 +1,8 @@
 class SingleMessage < Message
   has_and_belongs_to_many :gsm_numbers
-  validates :number, presence: true
+  validates :number, presence: true, gsm: true
   before_save :related_numbers
+  before_validation :remove_extra_whitespaces
 
   def receivers
     self.gsm_numbers.map { |gsm| gsm.number }
@@ -22,4 +23,10 @@ class SingleMessage < Message
     def valid_gsm_numbers_from_field
       self.number.split(/[[:blank:]]/).select { |num| /535[0-9]{7}/ =~ num }
     end
+
+    def remove_extra_whitespaces
+      number.strip!
+      number.gsub!(/[[:blank:]]+/, " ")
+    end
 end
+
