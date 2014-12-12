@@ -35,11 +35,11 @@ class List < ActiveRecord::Base
   private
     def lines_with_cubacel_numbers
       return file.path ?
-                       lines_from_file.select {|line| /535[0-9]{7}/ =~ line}
+                       lines_from_file.select {|line| /^535[0-9]{7}/ =~ line}
                        : []
     end
 
     def lines_from_file
-      IO.foreach(self.file.path)
+      IO.foreach(self.file.path).map { |l| l.strip }
     end
 end
