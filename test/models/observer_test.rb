@@ -61,6 +61,26 @@ class ObserverTest < ActiveSupport::TestCase
     assert_delivery_notified_to_observers(bm, BulkDeliverer)
   end
 
+  test "should notify status update" do
+    stub_request_for_async_test
+    observer = Observer.new(number: cubacel_random_number)
+    observer.subscribe(ObserverStatusListener.default_instance)
+    assert_difference 'deliveries_test_array.size' do
+      observer.save
+      assert deliveries_test_array.last.body.include?("añadido")
+    end
+    assert_difference 'deliveries_test_array.size', 2 do
+      observer.update_attribute(:active, true)
+      assert deliveries_test_array.last.body.include?("activado")
+      observer.update(active: false)
+      assert deliveries_test_array.last.body.include?("desactivado")
+    end
+    assert_difference 'deliveries_test_array.size' do
+      observer.destroy
+      assert deliveries_test_array.last.body.include?("eliminado")
+    end
+  end
+
   def assert_delivery_notified_to_observers(msg, deliverer)
     deliveries_test_array.clear
     user_id = Route.notifications_route.user.id
