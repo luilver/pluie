@@ -41,27 +41,28 @@ class ObserverTest < ActiveSupport::TestCase
     observer_numbers = Observer.active.map { |e| e.gsm_number.number  }
     stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
     sm = single_messages(:one)
-    assert_observers_are_notified(sm, SingleDeliverer)
+    assert_delivery_notified_to_observers(sm, SingleDeliverer)
     Observer.all.each do |obs|
       status = obs.active
       obs.update_attribute(:active, !status)
     end
-    assert_observers_are_notified(sm, SingleDeliverer)
+    assert_delivery_notified_to_observers(sm, SingleDeliverer)
   end
 
   test "should notify active observers after sending" do
-    stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
+    stub_request_for_async_test
     sm = single_messages(:one)
-    assert_observers_are_notified(sm, SingleDeliverer)
+    assert_delivery_notified_to_observers(sm, SingleDeliverer)
 
     bm = bulk_messages(:bulk)
     list = lists(:two)
     list.stubs(:receivers).returns(cubacel_numbers(50))
     bm.lists << list
-    assert_observers_are_notified(bm, BulkDeliverer)
+    assert_delivery_notified_to_observers(bm, BulkDeliverer)
   end
 
-  def assert_observers_are_notified(msg, deliverer)
+  def assert_delivery_notified_to_observers(msg, deliverer)
+    deliveries_test_array.clear
     user_id = Route.notifications_route.user.id
     observers_nums = Observer.active_numbers
     observers_count = observers_nums.count

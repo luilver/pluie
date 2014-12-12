@@ -6,7 +6,7 @@ class SingleMessageTest < ActiveSupport::TestCase
     @one = single_messages(:one)
     @one.save # triggers callback to store gsm numbers
     @numbers =  cubacel_numbers(5)
-    stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
+    stub_request_for_async_test
   end
 
   test "should have message" do

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class BulkMessageTest < ActiveSupport::TestCase
   setup do
-    stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
+    stub_request_for_async_test
   end
 
   test "should have message" do

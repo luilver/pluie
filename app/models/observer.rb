@@ -1,4 +1,5 @@
 class Observer < ActiveRecord::Base
+  include Wisper.model
   belongs_to :gsm_number
   validates :number, :presence => true
   validates :number, format: { with: /535[0-9]{7}/, message: I18n.t('errors.messages.valid_gsm_number_format').html_safe}

@@ -4,6 +4,10 @@ require 'securerandom'
 
 module ActionSmser::DeliveryMethods
   class AsyncTest < AsyncHttp
+    @@deliveries = []
+    def self.deliveries
+      @@deliveries
+    end
 
     def self.full_url
       "#{base_url}/#{path_url}"
@@ -39,11 +43,13 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.save_delivery_reports(sms, results, user, route_name)
+      self.deliveries << sms
       count = 0
       results.each do |result|
         count += 1
         dr = ActionSmser::DeliveryReport.build_with_user(sms, result["number"], result["id"], user, route_name)
         dr.save
+        sms.delivery_reports.push(dr)
       end
       count
     end
