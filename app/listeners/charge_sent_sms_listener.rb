@@ -1,4 +1,4 @@
-class SmsProcessor
+class ChargeSentSmsListener
   attr_reader :cashier
 
   def initialize(cashier)

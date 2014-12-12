@@ -10,7 +10,5 @@ class Cashier
     else
       Rails.logger.info "Cost for sms in route #{route_id} is #{cost}"
     end
-
   end
-
 end
