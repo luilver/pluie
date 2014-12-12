@@ -26,6 +26,7 @@ class ObserversController < ApplicationController
   # POST /observers.json
   def create
     @observer = Observer.new(observer_params)
+    @observer.subscribe(ObserverStatusListener.default_instance)
 
     respond_to do |format|
       if @observer.save
