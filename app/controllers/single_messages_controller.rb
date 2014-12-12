@@ -1,7 +1,6 @@
 require 'action_smser_utils'
 
 class SingleMessagesController < ApplicationController
-
   before_action :set_single_message, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:create]
 
@@ -83,12 +82,5 @@ class SingleMessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def single_message_params
       params.require(:single_message).permit(:message, :number, :route_id)
-    end
-
-    def notify_observers
-      if @single_message.valid?
-        message_publisher =  PluieWisper::MessagePublisher.new
-        message_publisher.notify_msg_to_observers(@single_message)
-      end
     end
 end
