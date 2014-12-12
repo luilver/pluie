@@ -172,6 +172,8 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     sqlite3 (1.3.9)
+    test_after_commit (0.4.0)
+      activerecord (>= 3.2)
     thin (1.6.1)
       daemons (>= 1.0.9)
       eventmachine (>= 1.0.0)
@@ -230,6 +232,7 @@ DEPENDENCIES
   smstools
   spring
   sqlite3
+  test_after_commit
   thin
   turbolinks
   uglifier (>= 1.3.0)
