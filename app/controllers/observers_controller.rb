@@ -42,7 +42,6 @@ class ObserversController < ApplicationController
   # PATCH/PUT /observers/1
   # PATCH/PUT /observers/1.json
   def update
-    @observer.subscribe(ObserverStatusListener.default_instance)
     respond_to do |format|
       if @observer.update(observer_params)
         format.html { redirect_to @observer, notice: t('notice.item_updated', item: t('activerecord.models.observer')).html_safe }
@@ -57,7 +56,6 @@ class ObserversController < ApplicationController
   # DELETE /observers/1
   # DELETE /observers/1.json
   def destroy
-    @observer.subscribe(ObserverStatusListener.default_instance)
     @observer.destroy
     respond_to do |format|
       format.html { redirect_to observers_url, notice: t('notice.item_removed', item: t('activerecord.models.observer')).html_safe }
@@ -69,6 +67,7 @@ class ObserversController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_observer
       @observer = Observer.find(params[:id])
+      @observer.subscribe(ObserverStatusListener.default_instance)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

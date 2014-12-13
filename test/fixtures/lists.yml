@@ -8,38 +8,10 @@ two:
   name: six_numbers
   user: two
 
-dup:
-  name: some-duplicates
-  user: one
-
-dup_two:
-  name: some-duplicates
-  user: two
-
 l_3:
   name: random3
-  user: two
-
-l_500:
-  name: "500"
-  user: two
-
-l_1k:
-  name: "1000"
-  user: two
-
-list_5000:
-  name: "5000"
   user: two
 
 list_admins:
   name: admins
   user: two
-
-list_10000:
-  name: "10000"
-  user: two
-
-wrong_nums_in_list:
-  name: "three_wrong_numbers"
-  user: one

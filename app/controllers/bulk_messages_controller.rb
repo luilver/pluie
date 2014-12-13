@@ -1,7 +1,6 @@
 require 'action_smser_utils'
 
 class BulkMessagesController < ApplicationController
-
   before_action :set_bulk_message, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:create]
 
@@ -87,12 +86,5 @@ class BulkMessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def bulk_message_params
       params.require(:bulk_message).permit(:message, :route_id)
-    end
-
-    def notify_observers
-      if @bulk_message.valid?
-        message_publisher =  PluieWisper::MessagePublisher.new
-        message_publisher.notify_msg_to_observers(@bulk_message)
-      end
     end
 end

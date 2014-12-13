@@ -1,27 +1,14 @@
 require 'test_helper'
 
 class ObserverTest < ActiveSupport::TestCase
+  should validate_presence_of :number
+  should allow_value("5354231267").for(:number)
 
   setup do
     #to run callback on gsm_number
     Observer.all.each do |single|
       single.save
     end
-  end
-
-  test "should have number" do
-    ob = Observer.new()
-    assert_not ob.save
-    ob.number =  cubacel_random_number
-    assert ob.save
-  end
-
-  test "should be a cubacel number" do
-    ob = Observer.new(number: "2123234131")
-    assert ob.invalid?
-    assert_includes ob.errors[:number], I18n.t('errors.messages.valid_gsm_number_format').html_safe
-    ob.number = cubacel_random_number
-    assert ob.save
   end
 
   test "should obtain active observers" do
@@ -59,6 +46,26 @@ class ObserverTest < ActiveSupport::TestCase
     list.stubs(:receivers).returns(cubacel_numbers(50))
     bm.lists << list
     assert_delivery_notified_to_observers(bm, BulkDeliverer)
+  end
+
+  test "should notify status update" do
+    stub_request_for_async_test
+    observer = Observer.new(number: cubacel_random_number)
+    observer.subscribe(ObserverStatusListener.default_instance)
+    assert_difference 'deliveries_test_array.size' do
+      observer.save
+      assert deliveries_test_array.last.body.include?("añadido")
+    end
+    assert_difference 'deliveries_test_array.size', 2 do
+      observer.update_attribute(:active, true)
+      assert deliveries_test_array.last.body.include?("activado")
+      observer.update(active: false)
+      assert deliveries_test_array.last.body.include?("desactivado")
+    end
+    assert_difference 'deliveries_test_array.size' do
+      observer.destroy
+      assert deliveries_test_array.last.body.include?("eliminado")
+    end
   end
 
   def assert_delivery_notified_to_observers(msg, deliverer)

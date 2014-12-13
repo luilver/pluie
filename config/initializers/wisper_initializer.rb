@@ -1,1 +1,1 @@
-SimpleSms.subscribe(SmsProcessor.new(Cashier))
+SimpleSms.subscribe(ChargeSentSmsListener.new(Cashier))

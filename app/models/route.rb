@@ -5,9 +5,9 @@ class Route < ActiveRecord::Base
   has_many :bulk_messages
 
   validates :name, presence: true
-  validates :price, presence: true
-  validates :user_id, presence: true
-  validates :gateway_id, presence: true
+  validates :price, presence: true, numericality: {greater_than: 0}
+  validates :user, presence: true
+  validates :gateway, presence: true
 
   scope :publisher_routes , -> { where( system_route: true) }
 

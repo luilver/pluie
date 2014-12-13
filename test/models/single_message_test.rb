@@ -1,22 +1,15 @@
 require 'test_helper'
 
 class SingleMessageTest < ActiveSupport::TestCase
+  should validate_presence_of :route
+  should validate_presence_of :message
+  should validate_presence_of :number
 
   setup do
     @one = single_messages(:one)
     @one.save # triggers callback to store gsm numbers
     @numbers =  cubacel_numbers(5)
     stub_request_for_async_test
-  end
-
-  test "should have message" do
-    sm = SingleMessage.choose_random
-    assert_not sm.message.blank?
-  end
-
-  test "should have number" do
-    sm = SingleMessage.choose_random
-    assert_not sm.number.blank?
   end
 
   test "receivers with multiple numbers" do

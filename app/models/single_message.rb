@@ -25,8 +25,10 @@ class SingleMessage < Message
     end
 
     def remove_extra_whitespaces
-      number.strip!
-      number.gsub!(/[[:blank:]]+/, " ")
+      if number
+        number.strip!
+        number.gsub!(/[[:blank:]]+/, " ")
+      end
     end
 end
 

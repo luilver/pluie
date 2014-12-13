@@ -1,31 +1,11 @@
 require 'test_helper'
 
 class RouteTest < ActiveSupport::TestCase
-  test "should have gateway" do
-    r = routes(:barebones)
-    r.user = users(:one)
-    assert r.invalid?
-    r.gateway = gateways(:one)
-    assert r.valid?
-  end
-
-  test "should have user" do
-    r = routes(:barebones)
-    r.gateway = gateways(:one)
-    assert_not r.valid?
-    r.user = users(:one)
-    assert r.valid?
-  end
-
-  test "should have price" do
-    r = Route.choose_random
-    assert_not r.price.blank?
-  end
-
-  test "should have name" do
-    r = Route.choose_random
-    assert_not r.name.blank?
-  end
+  should validate_presence_of :gateway
+  should validate_presence_of :user
+  should validate_presence_of :price
+  should validate_presence_of :name
+  should validate_numericality_of(:price).is_greater_than(0)
 
   test "should use gateway name to create symbols" do
     r = routes(:one)

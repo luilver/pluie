@@ -65,6 +65,7 @@ group :test do
   gem 'shoulda'
   gem 'webmock'
   gem 'mocha'
+  gem 'test_after_commit' # run after_commit callbacks in tests. Needed for Wisper.model
 end
 
 #Paperclip
