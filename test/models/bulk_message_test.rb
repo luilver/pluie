@@ -1,34 +1,12 @@
 require 'test_helper'
 
 class BulkMessageTest < ActiveSupport::TestCase
+  should validate_presence_of :lists
+  should validate_presence_of :route
+  should validate_presence_of :message
+
   setup do
     stub_request_for_async_test
-  end
-
-  test "should have message" do
-    l = lists(:one)
-    bm = BulkMessage.new( user: l.user, route: routes(:one))
-    bm.lists << l
-    assert bm.invalid?
-    bm.message = "hello"
-    assert bm.valid?
-  end
-
-  test "should have route" do
-    l = lists(:one)
-    bm = BulkMessage.new(message: "hello", user: l.user)
-    bm.lists << l
-    assert bm.invalid?
-    bm.route = routes(:one)
-    assert bm.valid?
-  end
-
-  test "should have list" do
-    l = lists(:one)
-    bm = BulkMessage.new(message: "hello", user: l.user, route: routes(:one))
-    assert_not bm.save
-    bm.lists << l
-    assert bm.valid?
   end
 
   test "creates msg only if user has balance to paid" do

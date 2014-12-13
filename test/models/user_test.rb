@@ -39,7 +39,6 @@ class UserTest < ActiveSupport::TestCase
   test "balance equals credits minus debits" do
     u = users(:without_credits)
     n = 20
-    #u.credits.create(balance: n*(n-1)/2, description: "test credit: #{n}")
     n.times do |i|
       v = @rnd.rand(0.0..i.succ)
       if @rnd.rand < 0.5
