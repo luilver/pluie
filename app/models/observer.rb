@@ -8,7 +8,7 @@ class Observer < ActiveRecord::Base
   scope :active, -> { where(active: true)}
 
   def self.active_numbers
-    active.map { |e| e.gsm_number.number  }
+    active.pluck(:number)
   end
 
   private
