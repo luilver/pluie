@@ -1,13 +1,7 @@
 require 'test_helper'
 
 class GatewayTest < ActiveSupport::TestCase
-  test "should have price" do
-    gateway = Gateway.choose_random
-    assert_not gateway.price.blank?
-  end
-
-  test "should have name" do
-    gateway = Gateway.choose_random
-    assert_not gateway.name.blank?
-  end
+  should validate_presence_of :name
+  should validate_uniqueness_of(:name).case_insensitive
+  should validate_numericality_of(:price).is_greater_than(0)
 end
