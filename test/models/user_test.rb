@@ -1,13 +1,10 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
+  should validate_presence_of :email
+
   setup do
     @rnd = Random.new
-  end
-
-  test "should have email" do
-    user = User.choose_random
-    assert_not user.email.blank?
   end
 
   test "credits sum should equals user credit" do
