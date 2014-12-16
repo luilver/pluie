@@ -1,5 +1,8 @@
 module ActionSmser
-  class DeliveryReportsController < ActionSmser::ApplicationController
+  class DeliveryReportsController < Pluie::ApplicationController
+    before_filter :admin_access_only, :except => :gateway_commit
+    before_action :set_delivery_report, only: [:show]
+    load_and_authorize_resource except: [:gateway_commit]
     helper_method :items_within_page
 
     def gateway_commit
@@ -56,27 +59,13 @@ module ActionSmser
       end
     end
 
-
-    before_filter :admin_access_only, :except => :gateway_commit
-
-    def index
-
+    def summary
     end
 
-    def list
+    def index
       offset = params[:offset].to_i || 0
       offset =  0 if offset < 0
       @delivery_reports = ActionSmser::DeliveryReport.where(:user_id => current_user.id).order('created_at DESC').paginate(:page => params[:page], :per_page => items_within_page)
-    end
-
-
-    def admin_access_only
-      if !ActionSmser.delivery_options[:admin_access].blank? && ActionSmser.delivery_options[:admin_access].send(:admin_access, self)
-        return true
-      else
-        render :text => "Forbidden, only for admins", :status => 403
-        return false
-      end
     end
 
     private
@@ -84,5 +73,17 @@ module ActionSmser
         params[:per_page] || 20
       end
 
+      def set_delivery_report
+        @delivery_report = ActionSmser::DeliveryReport.find(params[:id])
+      end
+
+      def admin_access_only
+        if !ActionSmser.delivery_options[:admin_access].blank? && ActionSmser.delivery_options[:admin_access].send(:admin_access, self)
+          return true
+        else
+          render :text => "Forbidden, only for admins", :status => 403
+          return false
+        end
+      end
   end
 end
