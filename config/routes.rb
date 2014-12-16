@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
   post 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
 
-  scope ":locale", locale: /en|es/ do
+  scope "(:locale)", locale: /en|es/ do
 
     resources :users, path: '/admin'
 
