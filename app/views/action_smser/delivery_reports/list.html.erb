@@ -1,20 +1,10 @@
-
-<% items_within_page = 20 %>
 <h1><%= t('delivery_reports') %></h1>
-<h2 id="delivery_reports_list"><%= t('last').html_safe %> <%= items_within_page %> <%= t('delivery_reports') %> <%= t('ordered_by_creation_date').html_safe %></h2>
+<h2 id="delivery_reports_list"><%= t('last').html_safe %> <%= t('delivery_reports') %> <%= t('ordered_by_creation_date').html_safe %></h2>
 
 <%
-offset = params[:offset].to_i
-offset = 0 if offset < -0
+  offset = (params[:page].to_i - 1) * items_within_page
+  offset = 0 if offset < 0
 %>
-
-<p>
-<strong><%= t('list_offset') %>: <%= offset %>.</strong>
-  <%= t('add').html_safe %>
-  <%= link_to("- #{items_within_page}",  list_delivery_reports_path(:offset => offset-items_within_page)) unless offset == 0 %>
-  <%= link_to "+ #{items_within_page}",  list_delivery_reports_path(:offset => offset+items_within_page) %>
-  <%= t('to_offset').html_safe %>
-</p>
 
 <table style="margin-top: 20px; font-size: 10px;">
   <tr>
@@ -29,7 +19,7 @@ offset = 0 if offset < -0
     <th>&nbsp;O</th>
   </tr>
 
-  <% ActionSmser::DeliveryReport.where(:user_id => current_user.id).order('created_at DESC').offset(offset).first(items_within_page).each_with_index do |delivery_report, index| %>
+  <% @delivery_reports.each_with_index do |delivery_report, index| %>
   <tr>
     <td style="white-space: nowrap;"><%= offset + index %></td>
     <td style="white-space: nowrap;"><%= I18n.localize(delivery_report.created_at, :format => :date_time).html_safe %></td>
@@ -44,4 +34,5 @@ offset = 0 if offset < -0
 <% end %>
 </table>
 
+<p><%=will_paginate @delivery_reports %></p>
 
