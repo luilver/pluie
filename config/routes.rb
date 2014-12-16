@@ -25,10 +25,9 @@ Rails.application.routes.draw do
       mount Delayed::Web::Engine, at: '/dj_web'
     end
 
-    mount ActionSmser::Engine => '/'
-    get 'delivery_reports' => 'action_smser/delivery_reports', as: :delivery_reports
-    get 'delivery_reports/list' => 'action_smser/delivery_reports#list', as: :list_delivery_reports
-    get 'delivery_reports/:id' => 'action_smser/delivery_reports#show', as: :delivery_report
+    resources :delivery_reports,  only: [:index, :show], controller: "action_smser/delivery_reports" do
+      match :summary,  via: :get, on: :collection
+    end
 
     resources :routes
 
