@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :deliverable do
+    get 'deliveries' => 'action_smser/delivery_reports#message_deliveries', as: :deliveries
+  end
 
   get 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
   post 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
@@ -35,7 +38,7 @@ Rails.application.routes.draw do
 
     resources :credits
 
-    resources :bulk_messages
+    resources :bulk_messages, concerns: :deliverable
 
     resources :lists
 
@@ -45,7 +48,7 @@ Rails.application.routes.draw do
 
     #resources :contacts
 
-    resources :single_messages
+    resources :single_messages, concerns: :deliverable
 
     resources :debits
 
