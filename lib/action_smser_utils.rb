@@ -1,3 +1,4 @@
+require 'action_smser_utils/scopes_to_delivery_report'
 require 'action_smser_utils/user_to_delivery_report'
 require 'action_smser_utils/inspect_request'
 require 'smstools'
