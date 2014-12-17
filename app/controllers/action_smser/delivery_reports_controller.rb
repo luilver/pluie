@@ -63,9 +63,16 @@ module ActionSmser
     end
 
     def index
-      offset = params[:offset].to_i || 0
-      offset =  0 if offset < 0
-      @delivery_reports = ActionSmser::DeliveryReport.where(:user_id => current_user.id).order('created_at DESC').paginate(:page => params[:page], :per_page => items_within_page)
+      @delivery_reports = ActionSmser::DeliveryReport.from_user(current_user).latest.paginate(:page => params[:page], :per_page => items_within_page)
+    end
+
+    def message_deliveries
+      finder = MessageClassAndIdFinder.new(%w(single bulk))
+      type, id = finder.execute {|class_name| params["#{class_name}_id"]}
+      Rails.logger.info "type: #{type} -- id:#{id}"
+      query = MessageDeliveriesQuery.new(type, id, ActionSmser::DeliveryReport.from_user(current_user).latest)
+      @delivery_reports = query.find_each
+      #paginate(:page => params[:page], :per_page => items_within_page)
     end
 
     private
