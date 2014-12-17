@@ -9,7 +9,7 @@ class BulkDeliverer
     batches = numbers.each_slice(size).to_a
     bill = Bill.create(number_of_sms: batches.size, message_id: message.pluie_message_id, user: message.user)
     batches.each_with_index do |nums, index|
-      sms = SimpleSms.custom(text, nums, route, bill.id, type)
+      sms = SimpleSms.custom(text, nums, route, bill.id, type, message.id)
       Delayed::Job.enqueue(sms, :priority => bulk_sms_priority(index), :queue => bulk_sms_queue)
     end
   end

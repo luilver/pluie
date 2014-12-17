@@ -190,3 +190,5 @@ es:
     access_denied: 'No est&aacute; autorizado a acceder a esta p&aacute;gina'
   will_paginate:
     page_gap: '...'
+    previous_label: "&#8592; Anterior"
+    next_label: "Siguiente &#8594;"

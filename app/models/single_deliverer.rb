@@ -5,7 +5,7 @@ class SingleDeliverer
     text = message.message
     route = message.route
     type = message.pluie_type
-    sms = SimpleSms.custom(text, message.receivers, route, bill.id, type)
+    sms = SimpleSms.custom(text, message.receivers, route, bill.id, type, message.id)
     sms.deliver
   end
 end

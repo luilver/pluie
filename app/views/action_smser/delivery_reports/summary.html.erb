@@ -1,0 +1,128 @@
+<%
+  params['time_span'] ||= 'Last week'
+  params['redeliveries'] ||= 'Include normally'
+
+  time_span = case params['time_span'].to_s.downcase
+    when 'week before that'
+      2.weeks.ago..1.week.ago
+    when 'last 30 days'
+      30.days.ago..Time.current
+    when 'this month'
+      Time.current.at_beginning_of_month..Time.current
+    when '1 month ago'
+      1.month.ago.at_beginning_of_month..1.month.ago.at_end_of_month
+    when '2 months ago'
+      2.month.ago.at_beginning_of_month..2.month.ago.at_end_of_month
+    when 'last 24 hours'
+      1.day.ago..Time.current
+    when 'last hour'
+      1.hour.ago..Time.current
+    when /^(\d\d)-(\d\d) hours/
+      $1.to_i.hours.ago..$2.to_i.hours.ago
+    else
+      1.week.ago..Time.current
+    end
+
+  ar_timespan = ActionSmser::DeliveryReport.where(:user_id => current_user.id).where(:created_at => time_span)
+
+  ar_redeliveries = case params['redeliveries'].to_s.downcase
+    when 'ignore redeliveries'
+      ar_timespan.where("re_delivery_of_delivery_report_id IS NULL")
+    when 'only redeliveries'
+      ar_timespan.where("re_delivery_of_delivery_report_id IS NOT NULL")
+    else
+      ar_timespan
+    end
+
+  ar_gateway = ar_redeliveries
+  ar_gateway = ar_gateway.where(:gateway => params[:gateway]) if (params[:gateway] && params[:gateway].to_s != 'all')
+
+%>
+
+
+<h1><%= t('delivery_reports') %> </h1>
+
+<h2><%= t('summary_for').html_safe %>
+  (<span style="font-size: smaller"><%= I18n.localize(time_span.first, :format => :verbose_date).html_safe + " => " +I18n.localize(time_span.last, :format => :verbose_date).html_safe %></span>)
+  <%= "#{t(:at_route, route: params[:gateway])}" unless params[:gateway].blank? %>
+</h2>
+
+<p class="selection_links">
+  <strong><%= t('show_summary').html_safe %>:</strong>
+  <% {t('last_hour').html_safe => 'Last hour', t('last_24h').html_safe => 'Last 24 hours', t('2_days').html_safe =>'48-24 hours', t('3_days').html_safe =>'72-48 hours', t('4_days').html_safe =>'96-72 hours ago', t('last_week').html_safe =>'Last week', t('week_before').html_safe =>'Week before that', t('30_days').html_safe =>'Last 30 days', t('this_month').html_safe =>'This month', t('1_month').html_safe =>'1 month ago', t('2_month').html_safe =>'2 months ago'}.each do |key,value| %>
+    <%= link_to key, dr_summary_url(:time_span => value), :class => (value == params['time_span'] ? 'selected' : 'not_selected') %>
+  <% end %>
+</p>
+
+<p class="selection_links">
+  <strong><%= t('redeliveries').html_safe %>:</strong>
+
+  <% {t('include_normally').html_safe =>'Include normally', t('ignore_redeliveries').html_safe =>'Ignore redeliveries', t('only_redeliveries').html_safe =>'Only redeliveries'}.each do |key,value| %>
+    <%= link_to key, dr_summary_url(:redeliveries => value), :class => (value == params['redeliveries'] ? 'selected' : 'not_selected') %>
+  <% end %>
+</p>
+
+<h2><%= t('select_route') %></h2>
+<ul class="selection_links" style="width: 500px;">
+  <li>
+    <strong>
+        <%= link_to(t('all'), dr_summary_url(:gateway => nil) ) %>
+    </strong>
+    &nbsp;&nbsp;
+    <%= total = ar_redeliveries.count %> sms
+    &nbsp;&nbsp;
+    (<%= t('you_can_select').html_safe %>)
+  </li>
+  <% ar_redeliveries.group(:gateway).count.each do |key, val| %>
+    <li class="<%= (key == params['gateway'] ? 'selected' : 'not_selected') -%>">
+      <%= link_to(key, dr_summary_url(:gateway => key) ) %>
+
+      &nbsp;&nbsp;
+      <%= val %> sms
+      &nbsp;&nbsp;
+      (<strong><%= number_to_percentage(100.0 * val / total, :precision => 2) %></strong>)
+      <% if params[:gateway] == key %><strong style="padding-left: 50px;">(selected)</strong><% end %>
+    </li>
+  <% end %>
+</ul>
+
+  <h2><%= t('delivery_report_statuses') %></h2>
+<ul>
+<%
+   total = ar_gateway.count
+   grouped_by_status = ar_gateway.group(:status).count.each do |key, val| %>
+
+    <li>
+      <strong><%= ActionSmserUtils.show_dlr_status(key) %></strong>:
+      &nbsp;&nbsp;
+      <%= val %> sms
+      &nbsp;&nbsp;
+      (<strong><%= number_to_percentage(100.0 * val / total, :precision => 2) %></strong>)
+    </li>
+<% end %>
+</ul>
+
+<h2><%= t('by_sms_type') %></h2>
+<table>
+  <tr>
+    <th><%= t('sms_type') %></th>
+    <th><%= t('count') %></th>
+    <th>% <%= t('of_total') %></th>
+    <th><%= t('delivered_count') %></th>
+    <th><%= t('delivery') %></th>
+  </tr>
+
+<%
+   total = ar_gateway.count
+   grouped_by_status = ar_gateway.group(:sms_type).count.each do |key, val| %>
+   <tr>
+     <td><strong><%= SmsHelper.sms_type(key) %></strong></td>
+     <td><%= val %></td>
+     <td><strong><%= number_to_percentage(100.0 * val / total, :precision => 2) %></strong></td>
+     <td><%= sms_count = ar_gateway.where(:sms_type => key).where(:status => ActionSmserUtils::DELIVERED_STATUS).count %></td>
+     <td><strong><%= number_to_percentage(100.0 * sms_count / val, :precision => 2) %></strong></td>
+   </tr>
+<% end %>
+</table>
+
+

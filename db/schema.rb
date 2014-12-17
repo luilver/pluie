@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141014195641) do
+ActiveRecord::Schema.define(version: 20141214025157) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -28,9 +28,11 @@ ActiveRecord::Schema.define(version: 20141014195641) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "pluie_id"
   end
 
   add_index "action_smser_delivery_reports", ["msg_id"], name: "index_action_smser_delivery_reports_on_msg_id", using: :btree
+  add_index "action_smser_delivery_reports", ["pluie_id"], name: "index_action_smser_delivery_reports_on_pluie_id", using: :btree
   add_index "action_smser_delivery_reports", ["user_id"], name: "index_action_smser_delivery_reports_on_user_id", using: :btree
 
   create_table "api_settings", force: true do |t|
