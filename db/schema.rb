@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20141219194642) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "gsm_number_id"
   end
 
   create_table "contacts_groups", id: false, force: true do |t|

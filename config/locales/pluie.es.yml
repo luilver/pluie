@@ -158,6 +158,8 @@ es:
         file: 'El archivo'
       contact:
         name: 'Nombre'
+        main_number: 'N&uacute;mero principal'
+        gsm_numbers: 'N&uacute;meros Gsm'
       credit:
        balance: 'Balance'
        description: 'Descripci&oacute;n'

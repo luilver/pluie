@@ -8,6 +8,12 @@
     <%= link_to t('lists'), main_app.lists_path %>
   </li>
   <li>
+    <%= link_to Contact.model_name.human.pluralize, main_app.contacts_path%>
+  </li>
+  <li>
+    <%= link_to Group.model_name.human.pluralize, main_app.groups_path%>
+  </li>
+  <li>
     <%= link_to t('summary'), main_app.summary_delivery_reports_path -%>
   </li>
   <li>
