@@ -44,9 +44,9 @@ Rails.application.routes.draw do
 
     #resources :group_messages
 
-    #resources :groups
+    resources :groups
 
-    #resources :contacts
+    resources :contacts
 
     resources :single_messages, concerns: :deliverable
 
