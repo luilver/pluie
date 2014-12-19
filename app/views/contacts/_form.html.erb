@@ -20,16 +20,16 @@
   </div>
   <% if @contact.gsm_numbers and not @contact.gsm_numbers.empty? %>
     <fieldset>
-      <legend><%= t(:gsm_numbers).html_safe %></legend>
-      <%= select_tag :gsm_numbers,
+      <legend><%= Contact.human_attribute_name(:main_number) %></legend>
+      <%= select_tag :main_number,
         options_from_collection_for_select(@contact.gsm_numbers, "id", "number"),
-        {:multiple => true, :disabled => true, :size => 2}
+        {:multiple => false, :disabled => true, :size => 2}
       %>
     </fieldset>
   <% end %>
   <fieldset>
-    <legend>Add mobile numbers here</legend>
-    <%= text_area_tag "new_gsm_numbers" %>
+    <legend><%= Contact.human_attribute_name("gsm_numbers").html_safe %></legend>
+    <%= text_area_tag "extra_gsm_numbers"%>
   </fieldset><br />
   <div class="actions">
     <%= f.submit %>

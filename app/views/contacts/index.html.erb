@@ -1,10 +1,10 @@
-<h1>Listing contacts</h1>
+<h1><%= Contact.model_name.human.pluralize %></h1>
 
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Gsm number</th>
+      <th><%= Contact.human_attribute_name(:name)%></th>
+      <th><%= Contact.human_attribute_name(:gsm_numbers)%></th>
       <th></th>
       <th></th>
       <th></th>
