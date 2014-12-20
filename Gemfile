@@ -82,6 +82,7 @@ gem 'delayed-web', github: 'thebestday/delayed-web'
 gem 'will_paginate'
 
 gem 'em-http-request'
+gem 'em-synchrony', '~> 1.0.3' #to be used with httpi in savon gem
 
 gem 'action_smser'
 
@@ -93,3 +94,4 @@ gem 'wisper' #to implement observers
 gem 'wisper-activerecord'
 
 gem 'smstools' #GSM text size, and other sms utilities
+gem 'savon', '~> 2.8.0'#soap client
