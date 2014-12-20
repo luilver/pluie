@@ -7,3 +7,7 @@ one:
 two:
   balance: 100
   user: two
+
+pluie:
+  user: pluie
+  balance: 10

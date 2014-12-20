@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  number: 5354031441
+  number: 5351111111
   active: true
 
 two:
-  number: 5352644047
+  number: 5352222222
   active: false
+
+three:
+  number: 5353333333
+  active: true

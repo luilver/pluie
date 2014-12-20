@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :gateways,  :through => :routes
   has_many :debits
   has_many :bills
+  has_many :delivery_reports, class_name: "ActionSmser::DeliveryReport"
 
   def api_key
     self.api_setting.api_key
@@ -55,5 +56,5 @@ class User < ActiveRecord::Base
     self.debit
   end
 
-  def debt?; self.debit > 0 end
+  def debt?; balance < 0 end
 end

@@ -9,32 +9,38 @@ class List < ActiveRecord::Base
   validates_attachment :file, content_type: { content_type: ["text/plain"]}
 
   def attach_numbers
-    if self.file.path
-      self.update_attribute(:opened, true)
-      numbers = IO.foreach(self.file.path).map{ |line| GsmNumber.find_or_create_by(number: line[0,10]) }
-      from_file = Set.new(numbers)
-      new_numbers = from_file - self.gsm_numbers.to_a
-      self.gsm_numbers << new_numbers.to_a
-      self.update_attribute(:opened, false)
-    end
+    self.update_attribute(:opened, true)
+    nums_in_file = Set.new(numbers_from_file)
+    nums_in_list =  self.gsm_numbers.pluck(:number)
+    new_nums = nums_in_file - nums_in_list
+    self.gsm_numbers << new_nums.map { |n| GsmNumber.find_or_create_by(number: n)  }
+    self.update_attribute(:opened, false)
   end
 
   def remove_numbers
-    if self.file.path
-      self.update_attribute(:opened, true)
-      numbers = IO.foreach(self.file.path).map{ |line| GsmNumber.find_by_number(line[0,10]) }
-      from_file = Set.new(numbers)
-      erase_this = from_file & self.gsm_numbers.to_a
-      self.gsm_numbers.delete(erase_this.to_a)
-      self.update_attribute(:opened, false)
-    end
-    #IO.foreach(self.file.path) { |line| n = GsmNumber.find_by_number(line[0,10]);
-     #                             self.gsm_numbers.delete(n) if self.gsm_numbers.include?(n)  } if self.file.path
+    self.update_attribute(:opened, true)
+    from_file = Set.new( numbers_from_file.map { |n| GsmNumber.find_by_number(n) })
+    erase_this = from_file & self.gsm_numbers.to_a
+    self.gsm_numbers.delete(erase_this.to_a)
+    self.update_attribute(:opened, false)
   end
 
   def receivers
-    self.opened ?
-          IO.foreach(self.file.path).map{ |line| line[0,10] } :
-          self.gsm_numbers.map {|gsm| gsm.number}
+    self.opened ? numbers_from_file : self.gsm_numbers.pluck(:number)
   end
+
+  private
+    def numbers_from_file
+      lines_with_cubacel_numbers.map { |line| line[0,10] }
+    end
+
+    def lines_with_cubacel_numbers
+      return file.path ?
+                       lines_from_file.select {|line| /^535[0-9]{7}/ =~ line}
+                       : []
+    end
+
+    def lines_from_file
+      IO.foreach(self.file.path).lazy
+    end
 end

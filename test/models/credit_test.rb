@@ -1,20 +1,14 @@
 require 'test_helper'
 
 class CreditTest < ActiveSupport::TestCase
+  should validate_presence_of :user
+  should validate_presence_of :balance
+  should validate_numericality_of(:balance).is_greater_than(0)
 
   setup do
     fix_users_credit
     @user = users(:two)
     @rnd = Random.new
-  end
-  test "should have user" do
-    credit = Credit.choose_random
-    assert_not credit.user.blank?
-  end
-
-  test "should have balance" do
-    credit = Credit.choose_random
-    assert_not credit.balance.blank?
   end
 
   test "new credits increase user credit" do
@@ -26,13 +20,6 @@ class CreditTest < ActiveSupport::TestCase
       Credit.create(balance: amounts.last, user: @user, description: "testing")
     end
     assert_equal @user.credit, initial_credit + amounts.sum
-  end
-
-  test "balance should be positive" do
-    credit = Credit.new(balance: -1, user: @user, description: "testing")
-    assert credit.invalid?
-    credit.balance = 1
-    assert credit.valid?
   end
 
   test "should update user balance when credit is updated" do

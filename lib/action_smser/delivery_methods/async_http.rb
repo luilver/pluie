@@ -10,8 +10,8 @@ module ActionSmser::DeliveryMethods
       concurrent_requests = sms.delivery_options[gateway_key][:parallel_requests]
       batches = sms.to_numbers_array.each_slice(batch_size).to_a
       last_request = batches.size
-      user =  User.find(sms.user_id)
       route = Route.find(sms.route_id)
+      user = route.user
       em_was_running =  EM.reactor_running?
       request_counter = 0
       info = self.sms_info(sms)
@@ -46,8 +46,7 @@ module ActionSmser::DeliveryMethods
 
         final = Proc.new do
           ActionSmser::Logger.info "Finished sending with route #{route}. #{Time.now}"
-          pub = PluieWisper::MessagePublisher.new
-          pub.sms_sent(sms, success)
+          sms.broadcast_delivery_finished(success)
           EventMachine.stop unless em_was_running
         end
         EM::Iterator.new(batches, concurrent_requests).each(foreach, final)
@@ -55,10 +54,10 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.cubacel_random_number
-        result = "535"
-        rand = Random.new
-        7.times{ result << rand.rand(9).to_s}
-        result
+      result = "535"
+      rand = Random.new
+      7.times{ result << rand.rand(9).to_s}
+      result
     end
 
     #Default values in case that one of them is not

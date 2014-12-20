@@ -1,25 +1,25 @@
 class SimpleSms < ActionSmser::Base
+  include Wisper::Publisher
 
-  attr_accessor :user_id, :route_id, :bill_id
+  attr_accessor :route_id, :bill_id, :pluie_id
   attr_reader :receivers_hash
 
-  def pluie_sms(text, numbers, route )
+  def pluie_sms(text, numbers, route, bill_id )
     delivery_options[:delivery_method] = route.dlv_to_sym
     user = route.user
-    sms(to: numbers, from: user.username, body: text, type: ActionSmserUtils::PLUIE_MSG, user: user.id, route: route.id)
+    sms(to: numbers, from: user.username, body: text,
+        type: ActionSmserUtils::SYSTEM_MSG,
+        route: route.id, bill_id: bill_id)
   end
 
-  def multiple_receivers(receivers, message, bill_id)
-    if ActionSmser.delivery_options[message.route.gateway_to_sym]
-      #update delivery method  for this sms.
-      delivery_options[:delivery_method] = message.route.dlv_to_sym
+  def custom(text, receivers, route, bill_id, type, message_id)
+    if gateway_defined?(route.gateway_to_sym)
+      delivery_options[:delivery_method] = route.dlv_to_sym
     end
-    @receivers_hash = {}
-    user = message.user
-    type = message.class.to_s
-    sms(:to => receivers, :from => user.username, :body => message.message,
-        :type => type, :user => user.id, :route => message.route.id,
-        :bill_id => bill_id)
+    user = route.user
+    sms(:to => receivers, :from => user.username, :body => text,
+        :type => type, :route => route.id,
+        :bill_id => bill_id, :pluie_id => message_id.to_s)
   end
 
   def valid?
@@ -34,11 +34,16 @@ class SimpleSms < ActionSmser::Base
     @receivers_hash[msg_id]
   end
 
+  #Los sms creados a partir un modelo del sistema(BulkMessage, Single.., etc)
+  #deben tener como pluie_id, el id del record. Aquellos que se crean para enviar
+  #notificaciones del sistema(por ejemplo a los observers) tendran como
+  #id, un string fijo no numerico.
   def sms(options)
     @sms_type = options[:type]
-    @user_id = options[:user]
     @route_id = options[:route]
     @bill_id = options[:bill_id]
+    @pluie_id = options[:pluie_id] || ActionSmserUtils::SYSTEM_MSG
+    @receivers_hash = {}
     super(options)
   end
 
@@ -51,4 +56,7 @@ class SimpleSms < ActionSmser::Base
     sms_encoding.concatenated?
   end
 
+  def broadcast_delivery_finished(successfull_numbers)
+    publish(:finish_sending_sms, self, successfull_numbers)
+  end
 end

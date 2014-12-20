@@ -64,6 +64,8 @@ group :test do
   gem 'minitest-rails'
   gem 'shoulda'
   gem 'webmock'
+  gem 'mocha'
+  gem 'test_after_commit' # run after_commit callbacks in tests. Needed for Wisper.model
 end
 
 #Paperclip
@@ -88,5 +90,6 @@ gem 'actionpack-xml_parser' # to parse infobip dlr post
 gem 'rails-i18n', '~> 4.0.0' # For 4.0.x
 
 gem 'wisper' #to implement observers
+gem 'wisper-activerecord'
 
 gem 'smstools' #GSM text size, and other sms utilities

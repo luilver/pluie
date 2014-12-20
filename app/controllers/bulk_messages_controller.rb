@@ -1,10 +1,8 @@
 require 'action_smser_utils'
 
 class BulkMessagesController < ApplicationController
-
   before_action :set_bulk_message, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:create]
-  after_action :notify_observers, only: [:create]
 
   # GET /bulk_messages
   # GET /bulk_messages.json
@@ -43,7 +41,7 @@ class BulkMessagesController < ApplicationController
       if @bulk_message.save
 
         delay_options = {:queue => 'deliver'}
-        job = DelayDeliveryJob.new(@bulk_message.class.to_s, @bulk_message.id)
+        job = DelayDeliveryJob.new(@bulk_message.type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier))
         Delayed::Job.enqueue(job, delay_options)
 
         format.html { redirect_to @bulk_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.bulk_message')).html_safe}
@@ -88,12 +86,5 @@ class BulkMessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def bulk_message_params
       params.require(:bulk_message).permit(:message, :route_id)
-    end
-
-    def notify_observers
-      if @bulk_message.valid?
-        message_publisher =  PluieWisper::MessagePublisher.new
-        message_publisher.notify_msg_to_observers(@bulk_message)
-      end
     end
 end

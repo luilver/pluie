@@ -12,6 +12,7 @@ module ActionSmserUtils
         dr.user = user
         dr.gateway = route_name
         dr.status = ActionSmserUtils::SENT_STATUS
+        dr.pluie_id = sms.pluie_id
         dr
       end
 

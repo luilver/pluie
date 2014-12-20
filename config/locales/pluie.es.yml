@@ -5,6 +5,7 @@ es:
   single_mode: 'Env&iacute;o puntual'
   massive_mode: 'Env&iacute;o masivo'
   lists: 'Listas'
+  topups: 'Recargas'
   jobs: 'Tareas'
   summary: 'Sumario'
   all_sms: 'Reportes'
@@ -157,6 +158,8 @@ es:
         file: 'El archivo'
       contact:
         name: 'Nombre'
+        main_number: 'N&uacute;mero principal'
+        gsm_numbers: 'N&uacute;meros Gsm'
       credit:
        balance: 'Balance'
        description: 'Descripci&oacute;n'
@@ -180,6 +183,7 @@ es:
     messages:
       debit_limit_violation: "El costo(%{cost}) del mensaje excede el l&iacute;mite(%{limit}) de d&eacute;bito permitido"
       valid_gsm_number_format: "Solo se aceptan n&uacute;meros de Cuba, por ejemplo 5352134312"
+      invalid_cubacel_number: "%{num} no es un n&uacute;mero de Cubacel"
   time:
     formats:
       verbose_date: ! '%a, %d %B %Y'
@@ -189,3 +193,5 @@ es:
     access_denied: 'No est&aacute; autorizado a acceder a esta p&aacute;gina'
   will_paginate:
     page_gap: '...'
+    previous_label: "&#8592; Anterior"
+    next_label: "Siguiente &#8594;"

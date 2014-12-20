@@ -1,26 +1,19 @@
 require 'test_helper'
 
 class SingleMessageTest < ActiveSupport::TestCase
+  should validate_presence_of :route
+  should validate_presence_of :message
+  should validate_presence_of :number
 
   setup do
     @one = single_messages(:one)
+    @one.save # triggers callback to store gsm numbers
     @numbers =  cubacel_numbers(5)
-    stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
-    fix_users_credit
-  end
-
-  test "should have message" do
-    sm = SingleMessage.choose_random
-    assert_not sm.message.blank?
-  end
-
-  test "should have number" do
-    sm = SingleMessage.choose_random
-    assert_not sm.number.blank?
+    stub_request_for_async_test
   end
 
   test "receivers with multiple numbers" do
-    @one.number = @numbers.join(" ")
+    change_number_field(@one, @numbers)
     @numbers.each do |num|
       assert_includes @one.receivers, num
     end
@@ -28,45 +21,24 @@ class SingleMessageTest < ActiveSupport::TestCase
 
   test "gsm_numbers_count equals receivers count" do
     assert_equal @one.receivers.count, @one.gsm_numbers_count
-    @one.number = @numbers.join(" ")
+    change_number_field(@one, @numbers)
     assert_equal @one.receivers.count, @one.gsm_numbers_count
   end
 
-  test "creates DLR" do
-    assert_difference 'ActionSmser::DeliveryReport.count' do
-      @one.deliver
-    end
-    assert_difference 'ActionSmser::DeliveryReport.count', @numbers.size do
-      @one.number = @numbers.join(" ")
-      @one.deliver
-    end
-  end
-
-  test "generates debit and bill when sending" do
-    user_id = @one.user.id
-    assert_difference ['Debit.count', 'User.find(user_id).bills.count'] do
-      @one.deliver
-    end
-  end
-
-  test "charge after deliver" do
-    expected = @one.message_cost
+  test "creates DLR and charge to user" do
     id = @one.user.id
-    @two = single_messages(:two)
-    @two.number = @numbers.join(" ")
-    expected += @two.message_cost
-    assert_difference 'User.find(id).balance', -expected do
-      @one.deliver
-      @two.deliver
+    change_number_field(@one, @numbers)
+    c = @one.receivers.count
+
+    assert_difference 'ActionSmser::DeliveryReport.count', c  do
+      assert_message_is_charged(@one, SingleDeliverer)
     end
   end
 
   test "gsm_numbers equivalent to receivers" do
-    @one.save
     gsm_numbers_equals_receivers(@one)
     nums = cubacel_numbers(10)
-    @one.number = nums.join(" ")
-    @one.save
+    change_number_field(@one, nums)
     gsm_numbers_equals_receivers(@one)
   end
 
@@ -78,5 +50,10 @@ class SingleMessageTest < ActiveSupport::TestCase
     msg.receivers.each do |num|
       assert_includes gsm_nums, num, "Receiver number not in gsm_numbers"
     end
+  end
+
+  def change_number_field(msg, numbers)
+    msg.number = numbers.join(" ")
+    msg.save
   end
 end

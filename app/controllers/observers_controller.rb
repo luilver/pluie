@@ -26,6 +26,7 @@ class ObserversController < ApplicationController
   # POST /observers.json
   def create
     @observer = Observer.new(observer_params)
+    @observer.subscribe(ObserverStatusListener.default_instance)
 
     respond_to do |format|
       if @observer.save
@@ -66,6 +67,7 @@ class ObserversController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_observer
       @observer = Observer.find(params[:id])
+      @observer.subscribe(ObserverStatusListener.default_instance)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

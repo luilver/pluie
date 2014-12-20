@@ -4,6 +4,7 @@ require "rails/test_help"
 require "minitest/rails"
 require "paperclip/matchers"
 require "webmock/minitest"
+require 'mocha/mini_test'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -22,6 +23,12 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  def generate_collection(size, &block)
+    items = []
+    size.times {|i| items << (yield block)}
+    items
+  end
+
   # Add more helper methods to be used by all tests here...
   def cubacel_random_number
     result = "535"
@@ -31,9 +38,7 @@ class ActiveSupport::TestCase
   end
 
   def cubacel_numbers(amount)
-    l = []
-    amount.times {|t| l << cubacel_random_number }
-    l
+    generate_collection(amount) {cubacel_random_number}
   end
 
   def attach_file_from_fixture(list, filename=nil)
@@ -61,6 +66,10 @@ class ActiveSupport::TestCase
     ActionSmser::DeliveryMethods::AsyncTest.generate_response_from_body(request.body)
   end
 
+  def stub_request_for_async_test
+    stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
+  end
+
   def add_credit(user, amount)
     credit = Credit.create(description: "test credit", balance: amount, user: user)
   end
@@ -69,6 +78,10 @@ class ActiveSupport::TestCase
     #If fixtures are used to load the data, the callbacks are not runned
     #therefor the credit field in user must be exec manually
     Credit.all.each {|c| c.user.credit += c.balance; c.save_owner}
+  end
+
+  def run_observers_save_callback
+    Observer.all.each {|obs| obs.save}
   end
 
   def user_accounting_info(user)
@@ -85,6 +98,15 @@ class ActiveSupport::TestCase
       error = "#{e.inspect} didn't change by #{difference}"
       error = "#{message}\n#{error}" if message
       assert_equal(before[i] + difference, eval(e, b), error)
+    end
+  end
+
+  def assert_message_is_charged(msg, deliverer)
+    cost = msg.message_cost
+    id = msg.user.id
+    assert_differences [['User.find(id).balance', -cost], ['User.find(id).debits.count', 1], ['User.find(id).bills.count', 1]] do
+      cmd = DeliverMessage.new(deliverer)
+      cmd.deliver(msg)
     end
   end
 end

@@ -2,6 +2,8 @@ require 'api_constraints'
 
 Rails.application.routes.draw do
 
+  resources :topups
+
   namespace :api, :defaults => {:format => 'json'} do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
       get 'user/balance' => 'users#balance'
@@ -13,11 +15,14 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :deliverable do
+    get 'deliveries' => 'action_smser/delivery_reports#message_deliveries', as: :deliveries
+  end
 
   get 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
   post 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
 
-  scope ":locale", locale: /en|es/ do
+  scope "(:locale)", locale: /en|es/ do
 
     resources :users, path: '/admin'
 
@@ -25,10 +30,9 @@ Rails.application.routes.draw do
       mount Delayed::Web::Engine, at: '/dj_web'
     end
 
-    mount ActionSmser::Engine => '/'
-    get 'delivery_reports' => 'action_smser/delivery_reports', as: :delivery_reports
-    get 'delivery_reports/list' => 'action_smser/delivery_reports#list', as: :list_delivery_reports
-    get 'delivery_reports/:id' => 'action_smser/delivery_reports#show', as: :delivery_report
+    resources :delivery_reports,  only: [:index, :show], controller: "action_smser/delivery_reports" do
+      match :summary,  via: :get, on: :collection
+    end
 
     resources :routes
 
@@ -36,17 +40,17 @@ Rails.application.routes.draw do
 
     resources :credits
 
-    resources :bulk_messages
+    resources :bulk_messages, concerns: :deliverable
 
     resources :lists
 
     #resources :group_messages
 
-    #resources :groups
+    resources :groups
 
-    #resources :contacts
+    resources :contacts
 
-    resources :single_messages
+    resources :single_messages, concerns: :deliverable
 
     resources :debits
 

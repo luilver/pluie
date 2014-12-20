@@ -1,20 +1,12 @@
 require 'test_helper'
 
 class DebitTest < ActiveSupport::TestCase
+  should validate_presence_of :user
+  should validate_presence_of :balance
+  should validate_numericality_of(:balance).is_greater_than(0)
+
   setup do
     @user = users(:one)
-  end
-  test "should take positive balance only" do
-    dbt = Debit.new(balance: -1, user: @user)
-    assert dbt.invalid?
-    dbt.balance = 4
-    assert dbt.valid?
-    assert Debit.new(user: @user).invalid?
-  end
-
-  test "should have user related" do
-    d = Debit.new(balance: 3)
-    assert d.invalid?
   end
 
   test "new debits increase user debit" do

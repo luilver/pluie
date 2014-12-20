@@ -1,45 +1,18 @@
 require 'test_helper'
 
 class BulkMessageTest < ActiveSupport::TestCase
+  should validate_presence_of :lists
+  should validate_presence_of :route
+  should validate_presence_of :message
+
   setup do
-    stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
-    fix_users_credit
-  end
-
-  teardown do
-    clean_paperclip_file_directory
-  end
-
-  test "should have message" do
-    l = setup_list(:one)
-    bm = BulkMessage.new( user: l.user, route: routes(:one))
-    bm.lists << l
-    assert bm.invalid?
-    bm.message = "hello"
-    assert bm.valid?
-  end
-
-  test "should have route" do
-    l = setup_list(:one)
-    bm = BulkMessage.new(message: "hello", user: l.user)
-    bm.lists << l
-    assert bm.invalid?
-    bm.route = routes(:one)
-    assert bm.valid?
-  end
-
-  test "should have list" do
-    l = setup_list(:one)
-    bm = BulkMessage.new(message: "hello", user: l.user, route: routes(:one))
-    assert_not bm.save
-    bm.lists << l
-    assert bm.valid?
+    stub_request_for_async_test
   end
 
   test "creates msg only if user has balance to paid" do
     r = routes(:expensive)
     list = lists(:one)
-    attach_file_from_fixture(list, "10000.txt")
+    list.stubs(:receivers).returns(cubacel_numbers(50))
     bm = bulk_messages(:one)
     bm.route = r
     bm.lists << list
@@ -51,53 +24,34 @@ class BulkMessageTest < ActiveSupport::TestCase
     assert bm2.valid?
   end
 
-  test "should create DLRs" do
-    list = setup_list(:two)
+  test "should create DLRs and charge cost to user" do
+    list = lists(:two)
+    numbers = Set.new(cubacel_numbers(300)).to_a
+    list.stubs(:receivers).returns(numbers)
     bm = bulk_messages(:bulk)
     bm.lists << list
-    num_count = bm.gsm_numbers_count
 
-    assert_difference 'ActionSmser::DeliveryReport.count', num_count do
-      bm.deliver
+    assert_difference 'ActionSmser::DeliveryReport.count', 300  do
+      assert_message_is_charged(bm, BulkDeliverer)
     end
-  end
-
-  test "should charge msg cost to user" do
-    bm = bulk_messages(:bulk)
-    list = setup_list(:l_500)
-    bm.lists << list
-    assert_msg_is_charged(bm)
   end
 
   test "should send from multiple lists" do
     bm = bulk_messages(:multi_lists)
-    bm.lists.each {|l| attach_file_from_fixture(l)}
-    assert_msg_is_charged(bm)
+    bm.lists.each {|l| l.stubs(:receivers).returns(cubacel_numbers(3))}
+    assert_message_is_charged(bm, BulkDeliverer)
   end
 
   test "should not repeat numbers from lists" do
-    bm = bulk_messages(:multi_lists)
-    bm.lists << lists(:dup_two)
+    bm = bulk_messages(:bulk)
+    lists = generate_collection(4) {List.new(user: bm.user)}
+    numbers = [cubacel_numbers(3), cubacel_numbers(3)]
+    lists.each do |l|
+      l.stubs(:receivers).returns(numbers.sample)
+      bm.lists << l
+    end
     counter = Hash.new(0)
-    bm.lists.each {|l| attach_file_from_fixture(l); l.attach_numbers;}
     bm.receivers.each {|num| counter[num]+=1 }
     assert counter.values.all? {|v| v == 1 }
-  end
-
-  test "generates debit and bill when sending" do
-    bm = bulk_messages(:bulk)
-    bm.lists << setup_list(:l_500)
-    user_id = bm.user.id
-    assert_difference ['Debit.count', 'User.find(user_id).bills.count'] do
-      bm.deliver
-    end
-  end
-
-  def assert_msg_is_charged(bm)
-    cost = bm.message_cost
-    id = bm.user.id
-    assert_difference 'User.find(id).balance', -cost do
-      bm.deliver
-    end
   end
 end

@@ -4,15 +4,25 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+
+#User's credit should match the sum of credit's balance loaded in the credits fixtures
 one:
   email: testuser1@openbgs.com
+  credit: 9.99
 
+#test message sending with this user
 two:
   email: testuser2@openbgs.com
+  credit: 100
 
 admin:
-    email: test_admin@openbgs.com
-    admin: true
+  email: test_admin@openbgs.com
+  admin: true
 
 without_credits:
-    email: testuser3@openbgs.com
+  email: testuser3@openbgs.com
+
+pluie:
+  email: pluie@openbgs.com
+  credit: 10
+
