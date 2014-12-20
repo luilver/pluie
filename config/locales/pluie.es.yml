@@ -144,7 +144,7 @@ es:
       gateway: 'Proveedor'
       group_message: 'Env&iacute;o a grupo'
       group: 'Grupo'
-      debit: Débito
+      debit: 'D&eacute;bito'
       observer: 'Observador'
     attributes:
       single_message:

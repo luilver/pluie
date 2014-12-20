@@ -29,3 +29,5 @@ TODO
 
 /config/local_env.yml
 
+#Recharge api wsdl
+*.wsdl
