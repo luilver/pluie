@@ -6,6 +6,17 @@
   <strong><%= t('recipient').capitalize.pluralize(@list.receivers.count) %>:</strong>
   <%= @list.receivers.count%>
 </p>
+<p>
+  <div id="hidder">
+    <%= link_to_function t('show_number').capitalize.pluralize(@list.receivers.count).html_safe, "unHide()" %>
+  </div>
+  <div class="hidden" id="numbers">
+    <strong><%= t("number").capitalize.pluralize(@list.receivers.count).html_safe %>:</strong>
+    <% @list.receivers.each do |num| %>
+      <%= num %>
+    <% end %>
+  </div>
+</p>
 
 <%= link_to t(:edit), edit_list_path(@list) %> |
 <%= link_to t(:back).html_safe, lists_path %> |

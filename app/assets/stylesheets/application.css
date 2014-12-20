@@ -52,3 +52,5 @@ li.selected {background-color: #ddd;}
 
 .message_text .field {float: left; margin-right:  20px;}
 .message_text { width: 100%;}
+
+.hidden { display: none; }
