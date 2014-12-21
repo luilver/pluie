@@ -2,7 +2,8 @@ module ActionSmser
   class DeliveryReportsController < Pluie::ApplicationController
     before_filter :admin_access_only, :except => :gateway_commit
     before_action :set_delivery_report, only: [:show]
-    load_and_authorize_resource except: [:gateway_commit]
+    protect_from_forgery :except => :gateway_commit
+    skip_before_filter :authenticate_user!, only: [:gateway_commit]
     helper_method :items_within_page
 
     def gateway_commit
