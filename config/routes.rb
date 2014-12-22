@@ -22,42 +22,39 @@ Rails.application.routes.draw do
   get 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
   post 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
 
-  scope "(:locale)", locale: /en|es/ do
+  resources :users, path: '/admin'
 
-    resources :users, path: '/admin'
-
-    authenticated :user, -> user { user.admin } do
-      mount Delayed::Web::Engine, at: '/dj_web'
-    end
-
-    resources :delivery_reports,  only: [:index, :show], controller: "action_smser/delivery_reports" do
-      match :summary,  via: :get, on: :collection
-    end
-
-    resources :routes
-
-    resources :gateways
-
-    resources :credits
-
-    resources :bulk_messages, concerns: :deliverable
-
-    resources :lists
-
-    #resources :group_messages
-
-    resources :groups
-
-    resources :contacts
-
-    resources :single_messages, concerns: :deliverable
-
-    resources :debits
-
-    resources :observers
+  authenticated :user, -> user { user.admin } do
+    mount Delayed::Web::Engine, at: '/dj_web'
   end
 
-  get '/:locale' => "home#index"
+  resources :delivery_reports,  only: [:index, :show], controller: "action_smser/delivery_reports" do
+    match :summary,  via: :get, on: :collection
+  end
+
+  resources :routes
+
+  resources :gateways
+
+  resources :credits
+
+  resources :bulk_messages, concerns: :deliverable
+
+  resources :lists
+
+  #resources :group_messages
+
+  resources :groups
+
+  resources :contacts
+
+  resources :single_messages, concerns: :deliverable
+
+  resources :debits
+
+  resources :observers
+
+  #get '/:locale' => "home#index"
   #get '*path', to: redirect("/#{I18n.default_locale}/%{path}"), constraints: lambda { |req| !req.path.starts_with? "/#{I18n.default_locale}/" }
   #get '', to: redirect("/#{I18n.default_locale}/home#index")
 
