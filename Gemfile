@@ -93,3 +93,4 @@ gem 'wisper' #to implement observers
 gem 'wisper-activerecord'
 
 gem 'smstools' #GSM text size, and other sms utilities
+gem 'http_accept_language' # to check for locale in HTTP_ACCEPT_HEADER
