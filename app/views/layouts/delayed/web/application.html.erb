@@ -19,7 +19,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </a>
-              <%= link_to t(:home), "/#{I18n.locale}", :class => "brand" %>
+              <%= link_to t(:home), main_app.root_path(locale: I18n.locale), :class => "brand" %>
               <div class="nav-collapse collapse">
                 <ul class="nav">
                   <%= render '/top_menu_list'%>
