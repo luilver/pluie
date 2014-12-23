@@ -18,7 +18,7 @@
   <div class="field">
     <%= f.label :amount %><br>
     <%= f.select :amount,
-      Topup::RECHARGE_TYPES
+        (10..50).step(5).to_a
   %>
   </div>
   <div class="actions">
