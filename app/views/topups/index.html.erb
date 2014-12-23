@@ -3,10 +3,8 @@
 <table>
   <thead>
     <tr>
-      <th>Number</th>
-      <th>Amount</th>
-      <th></th>
-      <th></th>
+      <th><%= Topup.human_attribute_name("number") %></th>
+      <th><%= Topup.human_attribute_name("amount") %></th>
       <th></th>
     </tr>
   </thead>
@@ -16,9 +14,7 @@
       <tr>
         <td><%= topup.number %></td>
         <td><%= topup.amount %></td>
-        <td><%= link_to 'Show', topup %></td>
-        <td><%= link_to 'Edit', edit_topup_path(topup) %></td>
-        <td><%= link_to 'Destroy', topup, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t(:show), topup %></td>
       </tr>
     <% end %>
   </tbody>
