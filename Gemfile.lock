@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/jcasimir/locale_setter.git
+  revision: 82a4a210b59b5913689ef7c077aa50998551c8bd
+  specs:
+    locale_setter (0.4.0)
+
+GIT
   remote: git://github.com/thebestday/delayed-web.git
   revision: ce98c42140c689dd712878290bfa7ede58341cc9
   specs:
@@ -248,6 +254,7 @@ DEPENDENCIES
   em-synchrony (~> 1.0.3)
   jbuilder (~> 2.0)
   jquery-rails
+  locale_setter!
   minitest-rails
   mocha
   nokogiri

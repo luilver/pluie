@@ -1,5 +1,7 @@
 es:
   size: 'cantidad'
+  number: "N&uacute;mero"
+  show_number: "Mostrar n&uacute;mero"
   recipient: 'Destinatario'
   home: 'Inicio'
   single_mode: 'Env&iacute;o puntual'
@@ -146,6 +148,7 @@ es:
       group: 'Grupo'
       debit: 'D&eacute;bito'
       observer: 'Observador'
+      topup: 'Recarga'
     attributes:
       single_message:
         number: 'Destinatario'
@@ -178,6 +181,15 @@ es:
       observer:
         number: "N&uacute;mero"
         active: "Activo"
+      topup:
+        number: "N&uacute;mero"
+        amount: 'Cantidad'
+      user:
+        locale: "Lenguaje"
+        credit: 'Cr&eacute;dito'
+        debit: 'D&eacute;bito'
+        max_debt: 'Deuda M&aacute;x'
+        admin: 'Es Admin'
 
   errors:
     messages:

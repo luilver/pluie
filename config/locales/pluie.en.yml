@@ -13,6 +13,7 @@ en:
   route: 'route'
   gateway: 'Gateway'
   gateways: 'Gateways'
+  observers: 'Observers'
   user: 'User'
   delivery_reports: 'Delivery reports'
 
@@ -76,6 +77,7 @@ en:
       group: 'Group'
       debit: 'Debit'
       observer: Observer
+      topup: 'Topup'
 
   errors:
     messages:

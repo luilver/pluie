@@ -1,5 +1,5 @@
 <div class="menu">
-  <%= link_to t('home'), "/#{I18n.locale}" %>
+  <%= link_to t('home'), main_app.root_path %>
   <%= link_to t('single_mode').html_safe, main_app.new_single_message_path %>
   <%= link_to t('massive_mode').html_safe, main_app.new_bulk_message_path %>
   <%= link_to t('lists'), main_app.lists_path %>
