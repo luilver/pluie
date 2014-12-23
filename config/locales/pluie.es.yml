@@ -148,6 +148,7 @@ es:
       group: 'Grupo'
       debit: 'D&eacute;bito'
       observer: 'Observador'
+      topup: 'Recarga'
     attributes:
       single_message:
         number: 'Destinatario'
@@ -180,6 +181,9 @@ es:
       observer:
         number: "N&uacute;mero"
         active: "Activo"
+      topup:
+        number: "N&uacute;mero"
+        amount: 'Cantidad'
 
   errors:
     messages:

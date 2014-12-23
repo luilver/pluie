@@ -76,6 +76,7 @@ en:
       group: 'Group'
       debit: 'Debit'
       observer: Observer
+      topup: 'Topup'
 
   errors:
     messages:
