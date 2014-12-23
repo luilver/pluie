@@ -54,3 +54,4 @@ li.selected {background-color: #ddd;}
 .message_text { width: 100%;}
 
 .hidden { display: none; }
+.inline-field {float: left;}

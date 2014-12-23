@@ -11,13 +11,15 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field inline-field">
     <%= f.label :number %><br>
     <%= f.text_field :number %>
   </div>
   <div class="field">
     <%= f.label :amount %><br>
-    <%= f.number_field :amount %>
+    <%= f.select :amount,
+      Topup::RECHARGE_TYPES
+  %>
   </div>
   <div class="actions">
     <%= f.submit %>
