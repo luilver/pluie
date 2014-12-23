@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field inline-field">
-    <%= f.label :number %><br>
+    <%= f.label :number, Topup.human_attribute_name("number").html_safe %><br>
     <%= f.text_field :number %>
   </div>
   <div class="field">
