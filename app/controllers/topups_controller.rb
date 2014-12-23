@@ -1,10 +1,14 @@
 class TopupsController < ApplicationController
   before_action :set_topup, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource except: [:create]
 
   # GET /topups
   # GET /topups.json
   def index
-    @topups = Topup.all
+    @topups = Topup.paginate :page => params[:page],
+      :conditions => ['user_id = ?', "#{current_user.id}"],
+      :order => 'created_at DESC',
+      :per_page => 5
   end
 
   # GET /topups/1
@@ -25,6 +29,7 @@ class TopupsController < ApplicationController
   # POST /topups.json
   def create
     @topup = Topup.new(topup_params)
+    @topup.user = current_user
 
     respond_to do |format|
       if @topup.save
