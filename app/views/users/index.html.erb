@@ -8,6 +8,7 @@
       <th><%= t('spent').html_safe %></th>
       <th><%= t('max_debt').html_safe %></th>
       <th><%= t('is_admin').html_safe %></th>
+      <th><%= User.human_attribute_name("locale")%></th>
       <th></th>
       <th></th>
       <th></th>
@@ -22,6 +23,7 @@
         <td><%= user.spent %></td>
         <td><%= user.max_debt %></td>
         <td><%= user.admin or "" %></td>
+        <td><%= user.locale %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to t('destroy'), user, method: :delete, data: { confirm: t('sure').html_safe } %></td>

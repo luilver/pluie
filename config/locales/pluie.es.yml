@@ -184,6 +184,12 @@ es:
       topup:
         number: "N&uacute;mero"
         amount: 'Cantidad'
+      user:
+        locale: "Lenguaje"
+        credit: 'Cr&eacute;dito'
+        debit: 'D&eacute;bito'
+        max_debt: 'Deuda M&aacute;x'
+        admin: 'Es Admin'
 
   errors:
     messages:
