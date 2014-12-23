@@ -12,16 +12,4 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, :alert => I18n.t('cancan.access_denied').html_safe
   end
-
-  before_action :set_locale
-
-  def set_locale
-    I18n.locale = I18n.available_locales.map(&:to_s).include?(params[:locale]) ?
-                  params[:locale] :
-                  http_accept_language.compatible_language_from(I18n.available_locales) || I18n.default_locale
-  end
-
-  def default_url_options(options = {})
-    {locale: I18n.locale}
-  end
 end
