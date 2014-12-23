@@ -14,7 +14,7 @@ class Ability
         [Contact, Group, List],
         :user_id => user.id
       cannot [:update, :destroy],
-        [BulkMessage, GroupMessage, SingleMessage]
+        [BulkMessage, GroupMessage, SingleMessage, Topup]
 
       can :index, [Credit, Topup], :user_id => user.id
       cannot [:create, :update, :destroy, :show], Credit
