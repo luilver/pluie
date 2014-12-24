@@ -1,6 +1,6 @@
 class SingleMessage < Message
   has_and_belongs_to_many :gsm_numbers
-  validates :number, presence: true, gsm: true
+  validates :number, presence: true, multi_gsm: true
   before_save :related_numbers
   before_validation :remove_extra_whitespaces
 
