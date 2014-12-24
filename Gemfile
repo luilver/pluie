@@ -82,7 +82,7 @@ gem 'delayed-web', github: 'thebestday/delayed-web'
 gem 'will_paginate'
 
 gem 'em-http-request'
-gem 'em-synchrony', '~> 1.0.3' #to be used with httpi in savon gem
+gem 'httpclient' #for savon gem, througth httpi
 
 gem 'action_smser'
 
