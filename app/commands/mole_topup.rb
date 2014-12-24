@@ -15,42 +15,47 @@ class MoleTopup
   end
 
   def recharge(topups)
-    #TODO!!! esto esta incompleto.
-    #El metodo de session ticket ya funciona pero el de recargar no lo he terminado
-    if ticket
-      topups.each_with_index do |tup, index|
-        data = recharge_phone(ticket, tup)
-        if data
-          code, msg = get_code_and_message(data)
-          case code
-          when 1
-            publish(:topup_api_recharge_success, tup)
-          when 2
-            ticket = session_ticket()
-
-            publish(:topup_api_error, msg)
-          when 3..4
-            publish(:topup_api_error, msg)
-          end
-          
-        end
+    if current_ticket
+      topups.each do |tup|
+        recharge_phone(current_ticket, tup)
       end
     end
-    
   end
 
-  def ticket
-    @ticket ||= session_ticket
+  def current_ticket
+    @current_ticket ||= session_ticket
   end
 
   private
-    def recharge_phone(ticket, topup)
+    def invalidate_ticket
+      @current_ticket = nil
+    end
+
+    def recharge_phone(ticket, topup, second_attempt=false)
       msg_data = {quantity: tup.amount, phoneNumber: tup.number, ticket: ticket}
-      call_and_fail_gracefully(:recharge_phone, msg_data)
+      data = call_and_fail_gracefully(:recharge_phone, msg_data)
+      if data
+        code, msg = get_code_and_message(data)
+        case code
+        when 1
+          publish(:topup_api_recharge_success, tup)
+        when 2..3
+          if second_attempt
+            error_msg = "Ticket was regenerated, but an error persist: #{msg}"
+            publish(:failed_topup_api_operation, :recharge_phone, error_msg)
+          else
+            invalidate_ticket
+            recharge_phone(current_ticket, topup, true)
+          end
+          publish(:topup_api_error, msg)
+        when 4
+          publish(:topup_api_error, msg)
+        end
+      end
     end
 
     def session_ticket
-      ticket = nil
+     result = nil
       response_data = call_and_fail_gracefully(:get_session_ticket,
                                             message: {username: username,
                                                       password: password,
@@ -58,11 +63,11 @@ class MoleTopup
       if response_data
         code, msg = get_code_and_message(response_data)
         if code == 1
-          ticket = msg
-          publish(:topup_api_ticket_success, ticket)
+         result = msg
+          publish(:topup_api_ticket_success, result)
         end
       end
-      ticket
+     result
     end
 
     def call_and_fail_gracefully(*args, &block)
