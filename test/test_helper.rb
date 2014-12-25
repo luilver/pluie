@@ -29,12 +29,15 @@ class ActiveSupport::TestCase
     items
   end
 
-  # Add more helper methods to be used by all tests here...
-  def cubacel_random_number
+  def self.cubacel_random_number
     result = "535"
     rand = Random.new
     7.times{ result << rand.rand(9).to_s}
     result
+  end
+
+  def cubacel_random_number
+    self.class.cubacel_random_number
   end
 
   def cubacel_numbers(amount)
