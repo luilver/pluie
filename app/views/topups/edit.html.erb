@@ -1,6 +1,6 @@
-<h1>Editing topup</h1>
+<h1><%= t(:editing, item: Topup.model_name.human)%></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @topup %> |
-<%= link_to 'Back', topups_path %>
+<%= link_to t(:show), @topup %> |
+<%= link_to t(:back).html_safe, topups_path %>

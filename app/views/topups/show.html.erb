@@ -8,5 +8,5 @@
   <%= @topup.amount %>
 </p>
 
-<%= link_to t(:new_item_f , item: t(:topup).titlecase ), new_topup_path %> |
+<%= link_to t(:new_item_f , item: Topup.model_name.human.titlecase ), new_topup_path %> |
 <%= link_to t(:all).capitalize, topups_path %>

@@ -1,4 +1,4 @@
-<h1> <%= t(:topups).capitalize %></h1>
+<h1> <%= Topup.model_name.human.pluralize %></h1>
 
 <table>
   <thead>
@@ -22,4 +22,4 @@
 
 <br>
 
-<%= link_to t(:new_item_f, item: t(:topup).titlecase ), new_topup_path %>
+<%= link_to t(:new_item_f, item: Topup.model_name.human.titlecase ), new_topup_path %>
