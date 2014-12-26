@@ -1,6 +1,6 @@
 require 'savon'
 
-class MoleTopup
+class TopupApiService
   include Wisper::Publisher
   attr_reader :username, :password, :email
 
@@ -32,13 +32,13 @@ class MoleTopup
     end
 
     def recharge_phone(ticket, topup, second_attempt=false)
-      msg_data = {quantity: tup.amount, phoneNumber: tup.number, ticket: ticket}
+      msg_data = {quantity: topup.amount, phoneNumber: topup.number, ticket: ticket}
       data = call_and_fail_gracefully(:recharge_phone, msg_data)
       if data
         code, msg = get_code_and_message(data)
         case code
         when 1
-          publish(:topup_api_recharge_success, tup)
+          publish(:topup_api_recharge_success, topup)
         when 2..3
           if second_attempt
             error_msg = "Ticket was regenerated, but an error persist: #{msg}"
@@ -80,7 +80,7 @@ class MoleTopup
         if response
           response_data = response.body[resp_key][result_key]
         else
-          publish(:failed_topup_api_operation, operation, "Empty response from topup api")  
+          publish(:failed_topup_api_operation, operation, "Empty response from topup api")
         end
       rescue Savon::SOAPFault, StandardError  => e
         publish(:failed_topup_api_operation, operation, e.message)
