@@ -17,7 +17,8 @@ class TopupTest < ActiveSupport::TestCase
     total_price = topups.to_a.reduce(0) { |sum, t| sum + price_strategy.calculate_price(t)  }
     @api_client.stubs(:call_and_fail_gracefully).returns({code: 1, message: "recarga exitosa"})
     assert_differences [['User.find(u.id).balance', -total_price], ['User.find(u.id).debits.count', topups.count]] do
-      RechargePhonesService.execute(topups, @api_client)
+      recharge_service = RechargePhonesService.new(@api_client)
+      recharge_service.execute(topups)
     end
   end
 
@@ -26,7 +27,8 @@ class TopupTest < ActiveSupport::TestCase
     user_id = topup.user.id
     @api_client.stubs(:call_and_fail_gracefully).returns({code: 0, message: "service unavailable"})
     assert_difference ['User.find(user_id).balance', 'User.find(user_id).debits.count'], 0 do
-      RechargePhonesService.execute(topups, @api_client)
+      recharge_service = RechargePhonesService.new(@api_client)
+      recharge_service.execute(topups)
     end
   end
 end
