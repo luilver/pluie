@@ -28,18 +28,24 @@ class TopupsController < ApplicationController
   # POST /topups
   # POST /topups.json
   def create
-    @topup = Topup.new(topup_params)
-    @topup.user = current_user
-
-    respond_to do |format|
-      if @topup.save
-        format.html { redirect_to @topup, notice: 'Topup was successfully created.' }
+    create_topup_service.on(:success) do |topup|
+      @topup = topup
+      respond_to do |format|
+        format.html { redirect_to @topup, notice: t('notice.item_created_fm', item: Topup.model_name.human.html_safe)}
         format.json { render :show, status: :created, location: @topup }
-      else
-        format.html { render :new }
-        format.json { render json: @topup.errors, status: :unprocessable_entity }
       end
     end
+    create_topup_service.on(:failure) do |topup|
+      @topup = topup
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: topup.errors, status: :unprocessable_entity }
+      end
+    end
+    create_topup_service.subscribe(recharge_listener,
+                                  on: :success,
+                                  with: :topup_created)
+    create_topup_service.execute(current_user, topup_params)
   end
 
   # PATCH/PUT /topups/1
@@ -47,7 +53,7 @@ class TopupsController < ApplicationController
   def update
     respond_to do |format|
       if @topup.update(topup_params)
-        format.html { redirect_to @topup, notice: 'Topup was successfully updated.' }
+        format.html { redirect_to @topup, notice: t('notice.item_updated_fm', item: Topup.model_name.human.html_safe) }
         format.json { render :show, status: :ok, location: @topup }
       else
         format.html { render :edit }
@@ -67,6 +73,14 @@ class TopupsController < ApplicationController
   end
 
   private
+    def recharge_listener
+      RechargePhoneListener.new
+    end
+
+    def create_topup_service
+      @create_topup_service ||= CreateTopupCommand.new
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_topup
       @topup = Topup.find(params[:id])
