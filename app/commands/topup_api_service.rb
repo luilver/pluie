@@ -5,9 +5,12 @@ class TopupApiService
   attr_reader :username, :password, :email
 
   def initialize(wsdl_path = ENV['MOLE_TOPUP_API_WSDL_PATH'], user_name = ENV['MOLE_TOPUP_API_USER'], pass = ENV['MOLE_TOPUP_API_PASS'], email = ENV['MOLE_TOPUP_API_EMAIL'])
-    @client = Savon.client do
+    options = {
+      env_namespace: :soap, #Add 'soap:' to Envelope & Body tags
+      element_form_default: :unqualified #remove 'tns:' from fields, ex username, password, etc
+    }
+    @client = Savon.client(options) do
       wsdl wsdl_path
-      convert_request_keys_to :camelcase
     end
     @username = user_name
     @password = pass
@@ -57,7 +60,7 @@ class TopupApiService
     def session_ticket
      result = nil
       response_data = call_and_fail_gracefully(:get_session_ticket,
-                                            message: {username: username,
+                                              {username: username,
                                                       password: password,
                                                       email: email})
       if response_data
@@ -70,14 +73,37 @@ class TopupApiService
      result
     end
 
-    def call_and_fail_gracefully(*args, &block)
+    #The request built by savon is not exactly the same that
+    #the one expected by the api. In particular savon appends
+    #tns: prefix to some tags(operation tag and data fields)
+    #it also miss the xmlns attribute in the operation tag
+    #I don't know if there is a missing configuration for savon or what
+    #Anyway, i came up with this hack to fix the request
+    def build_custom_message(operation_name, op_data)
+      body = @client.build_request(operation_name, op_data).body
+      soap_xml_tag = operation_name.to_s.camelcase
+      result = remove_tns_prefix(soap_xml_tag, body)
+      result = insert_xmlns_attribute(soap_xml_tag ,result)
+      result
+    end
+
+    def remove_tns_prefix(soap_xml_tag, request_body)
+      request_body.gsub("tns:#{soap_xml_tag}", soap_xml_tag)
+    end
+
+    def insert_xmlns_attribute(soap_xml_tag, request_body)
+      request_body.gsub("<#{soap_xml_tag}>", "<#{soap_xml_tag} xmlns=\"http://tempuri.org/\">")
+    end
+
+    def call_and_fail_gracefully(operation, op_data)
       response_data = nil
       begin
-        operation = args.first
-        resp_key = "#{operation}_response".to_sym
-        result_key = "#{operation}_result".to_sym
-        response = @client.call(*args, &block)
+        msg = build_custom_message(operation, message: op_data)
+        Rails.logger.info msg
+        response = @client.call(operation, xml: msg)
         if response
+          resp_key = "#{operation}_response".to_sym
+          result_key = "#{operation}_result".to_sym
           response_data = response.body[resp_key][result_key]
         else
           publish(:failed_topup_api_operation, operation, "Empty response from topup api")
