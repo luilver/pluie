@@ -10,6 +10,10 @@ class RechargePhonesService
     api_client.recharge(topups)
   end
 
+  def execute_single(topup)
+    execute([topup])
+  end
+
   private
     def api_client
       @api_client ||= TopupApiService.new
