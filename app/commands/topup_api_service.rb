@@ -99,7 +99,6 @@ class TopupApiService
       response_data = nil
       begin
         msg = build_custom_message(operation, message: op_data)
-        Rails.logger.info msg
         response = @client.call(operation, xml: msg)
         if response
           resp_key = "#{operation}_response".to_sym
