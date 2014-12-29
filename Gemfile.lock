@@ -229,7 +229,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
     will_paginate (3.0.5)
-    wisper (1.4.0)
+    wisper (1.6.0)
     wisper-activerecord (0.2.0)
       activerecord (>= 3.0.0)
       wisper (~> 1.3)
