@@ -4,7 +4,7 @@ class TopupApiService
   include Wisper::Publisher
   attr_reader :username, :password, :email
 
-  def initialize(wsdl_path = ENV['MOLE_TOPUP_API_WSDL_PATH'], user_name = ENV['MOLE_TOPUP_API_USER'], pass = ENV['MOLE_TOPUP_API_PASS'], email = ENV['MOLE_TOPUP_API_EMAIL'])
+  def initialize(wsdl_path = ENV['MOLE_TOPUP_API_WSDL_PATH'], username: ENV['MOLE_TOPUP_API_USER'], password: ENV['MOLE_TOPUP_API_PASS'], email: ENV['MOLE_TOPUP_API_EMAIL'])
     options = {
       env_namespace: :soap, #Add 'soap:' to Envelope & Body tags
       element_form_default: :unqualified #remove 'tns:' from fields, ex username, password, etc
@@ -12,8 +12,8 @@ class TopupApiService
     @client = Savon.client(options) do
       wsdl wsdl_path
     end
-    @username = user_name
-    @password = pass
+    @username = username
+    @password = password
     @email = email
     @lock = Mutex.new
   end
