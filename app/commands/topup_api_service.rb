@@ -18,6 +18,9 @@ class TopupApiService
   end
 
   def recharge(topups)
+    unless topups.respond_to? :each
+      topups = [topups]
+    end
     if current_ticket
       topups.each do |tup|
         recharge_phone(current_ticket, tup)
