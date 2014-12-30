@@ -5,7 +5,7 @@ class TopupCashier
     @default ||= TopupCashier.new
   end
 
-  def initialize(topup_price_strategy= TopupPriceCalculator.default_instance)
+  def initialize(topup_price_strategy= TopupPriceCalculator.new)
     @price_strategy = topup_price_strategy
   end
 
