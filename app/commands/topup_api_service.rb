@@ -15,6 +15,7 @@ class TopupApiService
     @username = user_name
     @password = pass
     @email = email
+    @lock = Mutex.new
   end
 
   def recharge(topups)
@@ -29,12 +30,16 @@ class TopupApiService
   end
 
   def current_ticket
-    @current_ticket ||= session_ticket
+    @lock.synchronize do
+      @current_ticket ||= session_ticket
+    end
   end
 
   private
     def invalidate_ticket
-      @current_ticket = nil
+      @lock.synchronize do
+        @current_ticket = nil
+      end
     end
 
     def recharge_phone(ticket, topup, second_attempt=false)
