@@ -91,6 +91,12 @@ class ActiveSupport::TestCase
     "balance: #{user.balance} credit: #{user.credit} debit: #{user.debit}"
   end
 
+  def stub_soap_response(operation, data = {code: 1, message: "message"})
+    resp_key = "#{operation}_response".to_sym
+    result_key = "#{operation}_result".to_sym
+    stub(body: {resp_key => {result_key => data}})
+  end
+
   def assert_differences(expression_array, message = nil, &block)
     b = block.send(:binding)
     before = expression_array.map { |expr| eval(expr[0], b) }

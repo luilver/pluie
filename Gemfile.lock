@@ -122,6 +122,8 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.6.0)
     minitest (4.7.5)
+    minitest-colorize (0.0.5)
+      minitest (>= 2.0)
     minitest-rails (1.0.1)
       minitest (~> 4.7)
       minitest-test (~> 1.0)
@@ -262,6 +264,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   locale_setter!
+  minitest-colorize
   minitest-rails
   mocha
   nokogiri
