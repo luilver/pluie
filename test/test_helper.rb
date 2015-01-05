@@ -5,6 +5,7 @@ require "minitest/rails"
 require "paperclip/matchers"
 require "webmock/minitest"
 require 'mocha/mini_test'
+require "minitest/rails/capybara"
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:

@@ -67,6 +67,7 @@ group :test do
   gem 'mocha'
   gem 'test_after_commit' # run after_commit callbacks in tests. Needed for Wisper.model
   gem 'minitest-colorize'
+  gem 'minitest-rails-capybara'
 end
 
 #Paperclip
