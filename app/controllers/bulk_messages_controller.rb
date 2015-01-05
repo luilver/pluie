@@ -7,10 +7,7 @@ class BulkMessagesController < ApplicationController
   # GET /bulk_messages
   # GET /bulk_messages.json
   def index
-    @bulk_messages = BulkMessage.paginate :page => params[:page],
-      :conditions => ['user_id = ?', "#{current_user.id}"],
-      :order => 'created_at DESC',
-      :per_page => 5
+    @bulk_messages = BulkMessage.latest_from_user(current_user).paginate(:page => params[:page], :per_page => 5)
   end
 
   # GET /bulk_messages/1

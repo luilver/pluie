@@ -3,9 +3,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.paginate :page => params[:page],
-      :order => 'created_at DESC',
-      :per_page => 10
+    @users = User.order(created_at: :desc).paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /users/new

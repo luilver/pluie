@@ -5,13 +5,8 @@ class CreditsController < ApplicationController
   # GET /credits
   # GET /credits.json
   def index
-    @credits = Credit.paginate :page => params[:page],
-      :conditions => ['user_id = ?', "#{current_user.id}"],
-      :order => 'created_at DESC',
-      :per_page => 5
-    @credits = Credit.paginate :page => params[:page],
-      :order => 'created_at DESC',
-      :per_page => 5 if current_user.admin
+    @credits = (current_user.admin ? Credit.order(created_at: :desc) :
+                                     Credit.latest_from_user(current_user)).paginate(page: params[:page], per_page: 5)
   end
 
   # GET /credits/1

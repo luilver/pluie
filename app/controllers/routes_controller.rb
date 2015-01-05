@@ -5,9 +5,7 @@ class RoutesController < ApplicationController
   # GET /routes
   # GET /routes.json
   def index
-    @routes = Route.paginate :page => params[:page],
-      :order => 'created_at DESC',
-      :per_page => 5
+    @routes = Route.order(created_at: :desc).paginate(:page => params[:page], :per_page => 5)
   end
 
   # GET /routes/1
