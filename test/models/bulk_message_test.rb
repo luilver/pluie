@@ -31,7 +31,7 @@ class BulkMessageTest < ActiveSupport::TestCase
     bm = bulk_messages(:bulk)
     bm.lists << list
 
-    assert_difference 'ActionSmser::DeliveryReport.count', 300  do
+    assert_difference 'ActionSmser::DeliveryReport.count', numbers.size  do
       assert_message_is_charged(bm, BulkDeliverer)
     end
   end
