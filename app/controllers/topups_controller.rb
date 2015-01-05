@@ -5,10 +5,7 @@ class TopupsController < ApplicationController
   # GET /topups
   # GET /topups.json
   def index
-    @topups = Topup.paginate :page => params[:page],
-      :conditions => ['user_id = ?', "#{current_user.id}"],
-      :order => 'created_at DESC',
-      :per_page => 5
+    @topups = Topup.latest_from_user(current_user).paginate(page: params[:page], per_page: 5)
   end
 
   # GET /topups/1
