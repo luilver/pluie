@@ -5,8 +5,7 @@ class ListsController < ApplicationController
   # GET /lists
   # GET /lists.json
   def index
-    @lists = List.paginate :page => params[:page], :per_page => 5,
-      :conditions => ['user_id = ?', "#{current_user.id}"]
+    @lists  = List.where(user: current_user).paginate(:page => params[:page], :per_page => 5)
   end
 
   # GET /lists/1

@@ -20,6 +20,6 @@
   </tbody>
 </table>
 
-<br>
+<p><%= will_paginate @topups %></p>
 
 <%= link_to t(:new_item_f, item: Topup.model_name.human.titlecase ), new_topup_path %>

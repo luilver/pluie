@@ -5,6 +5,7 @@ require "minitest/rails"
 require "paperclip/matchers"
 require "webmock/minitest"
 require 'mocha/mini_test'
+require "minitest/rails/capybara"
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -89,6 +90,12 @@ class ActiveSupport::TestCase
 
   def user_accounting_info(user)
     "balance: #{user.balance} credit: #{user.credit} debit: #{user.debit}"
+  end
+
+  def stub_soap_response(operation, data = {code: 1, message: "message"})
+    resp_key = "#{operation}_response".to_sym
+    result_key = "#{operation}_result".to_sym
+    stub(body: {resp_key => {result_key => data}})
   end
 
   def assert_differences(expression_array, message = nil, &block)

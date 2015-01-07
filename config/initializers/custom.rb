@@ -5,4 +5,8 @@ class ActiveRecord::Base
     constant = self.to_s.constantize
     constant.limit(1).offset(rand(constant.count)).first
   end
+
+  def self.latest_from_user(user, field: :created_at, ordering: :desc)
+    where(user: user).order(field => ordering)
+  end
 end

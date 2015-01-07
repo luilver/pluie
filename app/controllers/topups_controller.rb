@@ -5,10 +5,7 @@ class TopupsController < ApplicationController
   # GET /topups
   # GET /topups.json
   def index
-    @topups = Topup.paginate :page => params[:page],
-      :conditions => ['user_id = ?', "#{current_user.id}"],
-      :order => 'created_at DESC',
-      :per_page => 5
+    @topups = Topup.latest_from_user(current_user).paginate(page: params[:page], per_page: 5)
   end
 
   # GET /topups/1
@@ -42,9 +39,7 @@ class TopupsController < ApplicationController
         format.json { render json: topup.errors, status: :unprocessable_entity }
       end
     end
-    create_topup_service.subscribe(recharge_listener,
-                                  on: :success,
-                                  with: :topup_created)
+    create_topup_service.subscribe(recharge_listener, async: true, on: :success, with: :recharge )
     create_topup_service.execute(current_user, topup_params)
   end
 
@@ -74,7 +69,11 @@ class TopupsController < ApplicationController
 
   private
     def recharge_listener
-      RechargePhoneListener.new
+      unless @recharge_listener
+        @recharge_listener = TopupApiService.new
+        @recharge_listener.subscribe(TopupCashier.new,  on: :topup_api_recharge_success, with: :charge)
+      end
+      @recharge_listener
     end
 
     def create_topup_service

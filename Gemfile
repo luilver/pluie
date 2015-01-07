@@ -66,6 +66,10 @@ group :test do
   gem 'webmock'
   gem 'mocha'
   gem 'test_after_commit' # run after_commit callbacks in tests. Needed for Wisper.model
+  gem 'minitest-colorize'
+  gem 'minitest-rails-capybara'
+  gem 'selenium-webdriver'
+  gem 'capybara-webkit'
 end
 
 #Paperclip
@@ -92,6 +96,7 @@ gem 'rails-i18n', '~> 4.0.0' # For 4.0.x
 
 gem 'wisper' #to implement observers
 gem 'wisper-activerecord'
+gem 'wisper-celluloid' #async processing
 
 gem 'smstools' #GSM text size, and other sms utilities
 gem 'savon', '~> 2.8.0'#soap client

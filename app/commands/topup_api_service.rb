@@ -4,20 +4,21 @@ class TopupApiService
   include Wisper::Publisher
   attr_reader :username, :password, :email
 
-  def initialize(wsdl_path = ENV['MOLE_TOPUP_API_WSDL_PATH'], user_name = ENV['MOLE_TOPUP_API_USER'], pass = ENV['MOLE_TOPUP_API_PASS'], email = ENV['MOLE_TOPUP_API_EMAIL'])
-    options = {
-      env_namespace: :soap, #Add 'soap:' to Envelope & Body tags
-      element_form_default: :unqualified #remove 'tns:' from fields, ex username, password, etc
-    }
-    @client = Savon.client(options) do
-      wsdl wsdl_path
-    end
-    @username = user_name
-    @password = pass
+  def initialize(client = nil, username: ENV['MOLE_TOPUP_API_USER'], password: ENV['MOLE_TOPUP_API_PASS'], email: ENV['MOLE_TOPUP_API_EMAIL'])
+    wsdl_path = ENV['MOLE_TOPUP_API_WSDL_PATH']
+    @client = client || Savon.client(env_namespace: :soap, #Add 'soap:' to Envelope & Body tags
+                                     element_form_default: :unqualified, #remove 'tns:' from fields, ex username, password, etc
+                                     wsdl: wsdl_path)
+    @username = username
+    @password = password
     @email = email
+    @lock = Mutex.new
   end
 
   def recharge(topups)
+    unless topups.respond_to? :each
+      topups = [topups]
+    end
     if current_ticket
       topups.each do |tup|
         recharge_phone(current_ticket, tup)
@@ -26,12 +27,16 @@ class TopupApiService
   end
 
   def current_ticket
-    @current_ticket ||= session_ticket
+    @lock.synchronize do
+      @current_ticket ||= session_ticket
+    end
   end
 
   private
     def invalidate_ticket
-      @current_ticket = nil
+      @lock.synchronize do
+        @current_ticket = nil
+      end
     end
 
     def recharge_phone(ticket, topup, second_attempt=false)
