@@ -2,5 +2,5 @@
   <%= t('logged_in_as') %> <b><%= current_user.username %></b>
   <%= link_to t('account'), main_app.edit_user_registration_path %>
   <%= link_to t('sign_out'), main_app.destroy_user_session_path, :method => :delete %>
-  <%= link_to t('balance:'), main_app.credits_path %> <b><%= current_user.balance %></b>
+  <%= link_to t('balance:'), main_app.credits_path %> <b><span class='user_balance'><%= current_user.balance %></span></b>
 </div>
