@@ -69,6 +69,7 @@ group :test do
   gem 'minitest-colorize'
   gem 'minitest-rails-capybara'
   gem 'selenium-webdriver'
+  gem 'capybara-webkit'
 end
 
 #Paperclip
