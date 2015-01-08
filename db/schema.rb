@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141223194926) do
+ActiveRecord::Schema.define(version: 20150108215134) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -230,7 +230,6 @@ ActiveRecord::Schema.define(version: 20141223194926) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"
-    t.decimal  "max_debt",               default: 0.0
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"

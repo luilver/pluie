@@ -8,6 +8,7 @@
 #User's credit should match the sum of credit's balance loaded in the credits fixtures
 barebones: &minimal
   confirmed_at: <%= Time.current %>
+  encrypted_password: <%= Devise.bcrypt(User, 'pass5678') %>
 
 one:
   <<: *minimal

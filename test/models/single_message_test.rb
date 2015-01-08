@@ -23,6 +23,7 @@ class SingleMessageTest < ActiveSupport::TestCase
     assert_equal @one.receivers.count, @one.gsm_numbers_count
     change_number_field(@one, @numbers)
     assert_equal @one.receivers.count, @one.gsm_numbers_count
+    assert_equal @one.gsm_numbers_count, @numbers.size
   end
 
   test "creates DLR and charge to user" do
