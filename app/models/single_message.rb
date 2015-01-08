@@ -9,7 +9,7 @@ class SingleMessage < Message
   end
 
   def gsm_numbers_count
-    gsm_numbers.count
+    gsm_numbers.any? ? gsm_numbers.count : valid_gsm_numbers_from_field.count
   end
 
   private
