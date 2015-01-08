@@ -15,3 +15,7 @@ l_3:
 list_admins:
   name: admins
   user: two
+
+without_credits:
+  name: 'for user without credits'
+  user: without_credits
