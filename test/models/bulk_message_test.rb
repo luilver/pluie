@@ -24,6 +24,14 @@ class BulkMessageTest < ActiveSupport::TestCase
     assert bm2.valid?
   end
 
+  test "should calculate message_cost" do
+    bm = bulk_messages(:one)
+    nums = Set.new(cubacel_numbers(20)).to_a
+    bm.expects(:receivers).returns(nums)
+    bm.stubs(:route).returns(stub(:price => 2))
+    assert_equal ActionSmserUtils.sms_cost(nums.size, 2, 1), bm.message_cost
+  end
+
   test "should create DLRs and charge cost to user" do
     list = lists(:two)
     numbers = Set.new(cubacel_numbers(300)).to_a
