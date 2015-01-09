@@ -21,12 +21,7 @@ class BulkMessage < Message
     set.to_a
   end
 
-  def gsm_numbers_count
-    #TODO. ver que esto sea mas eficiente.
-    #si los gsm_numbers se asocian a la lista con DJ, puede darse el caso de que no
-    #esten todos relacionados con  lista cuando se intenta enviar el mensaje.
-    #Esto es significativo, pues una de las validaciones  implica contar la cantidad
-    #de destinatarios para ver si el balance del usuario es suficiente.
-    receivers.size
+  def message_cost(&block)
+    MessagePriceCalculator.new(BulkMsgReceiversCounter).calculate_price(self, &block)
   end
 end

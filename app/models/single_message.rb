@@ -8,8 +8,12 @@ class SingleMessage < Message
     self.gsm_numbers.map { |gsm| gsm.number }
   end
 
-  def gsm_numbers_count
-    gsm_numbers.any? ? gsm_numbers.count : valid_gsm_numbers_from_field.count
+  def valid_gsm_numbers_from_field
+    self.number.split(/[[:blank:]]/).select { |num| /535[0-9]{7}/ =~ num }
+  end
+
+  def message_cost(&block)
+    MessagePriceCalculator.new(SingleMsgReceiversCounter).calculate_price(self, &block)
   end
 
   private
@@ -18,10 +22,6 @@ class SingleMessage < Message
       valid_gsm_numbers_from_field.each { |num| n = GsmNumber.find_or_create_by(:number => num);
                                           self.gsm_numbers << n if not self.gsm_numbers.include?(n)
       }
-    end
-
-    def valid_gsm_numbers_from_field
-      self.number.split(/[[:blank:]]/).select { |num| /535[0-9]{7}/ =~ num }
     end
 
     def remove_extra_whitespaces
