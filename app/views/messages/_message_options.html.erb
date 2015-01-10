@@ -3,7 +3,9 @@
   <div class="field">
     <%= f.label :route, t("activerecord.models.route") %>:
     <%= f.select :route_id,
-      options_from_collection_for_select(current_user.routes, "id", "name")
+      options_from_collection_for_select(current_user.routes, "id", "name"),
+      {},
+      :class => "message_route_select"
     %>
   </div>
 </fieldset>
