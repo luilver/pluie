@@ -22,8 +22,8 @@
         <td><%= user.spent %></td>
         <td><%= user.admin or "" %></td>
         <td><%= user.locale %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td><%= link_to t(:show), user %></td>
+        <td><%= link_to t(:edit), edit_user_path(user) %></td>
         <td><%= link_to t('destroy'), user, method: :delete, data: { confirm: t('sure').html_safe } %></td>
       </tr>
     <% end %>

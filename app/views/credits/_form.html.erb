@@ -26,7 +26,7 @@
     <%= f.label t('user') %><br>
     <%= select_tag :user,
       options_from_collection_for_select(User.all, "id", "email"),
-      {:size => [5,User.all.collect.count].min}
+      {:size => [5,User.all.collect.count].min, :class => "credit_user_select"}
     %>
   </div>
   <div class="actions">
