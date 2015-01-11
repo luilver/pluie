@@ -39,11 +39,12 @@ gem 'spring',        group: :development
 
 # Devise
 gem 'devise'
-
 gem 'devise-i18n-views'
 
 # Cancan
 gem 'cancan'
+
+gem 'select2-rails'
 
 group :development do
   # Use sqlite3 as the database for Active Record

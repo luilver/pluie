@@ -14,5 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require sms_tools
+//= require select2
+//= require select2_locale_es
 //= require_tree .
 

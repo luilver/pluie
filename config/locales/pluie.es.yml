@@ -126,6 +126,8 @@ es:
   sms_size: "Tama&ntilde;o"
   sms_parts: "Cantidad de sms"
 
+  select_lists: "Seleccione 1 o m&aacute;s listas"
+
   notice:
     sucess_msg_sent: 'El %{msg} fue iniciado satisfactoriamente'
     sucess_msg_resent: 'El %{msg} fue reiniciado satisfactoriamente'
