@@ -8,3 +8,7 @@ $(document).on "page:change", ->
         $('#sms_size').text(message.length)
         $('#sms_parts').text(message.concatenatedPartsCount)
     )
+    $('#list_ids').select2({
+        placeholder: $('#list_ids').data('phtext')
+    })
+
