@@ -23,6 +23,7 @@ class ActiveSupport::TestCase
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
   fixtures :all
+  @@random = Random.new
 
   def generate_collection(size, &block)
     items = []
@@ -31,10 +32,7 @@ class ActiveSupport::TestCase
   end
 
   def self.cubacel_random_number
-    result = "535"
-    rand = Random.new
-    7.times{ result << rand.rand(9).to_s}
-    result
+    @@random.rand(5350000000..5359999999).to_s
   end
 
   def cubacel_random_number
