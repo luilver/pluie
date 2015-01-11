@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th><%= Contact.human_attribute_name(:name)%></th>
-      <th><%= Contact.human_attribute_name(:gsm_numbers)%></th>
+      <th><%= Contact.human_attribute_name(:gsm_numbers).html_safe%></th>
       <th></th>
       <th></th>
       <th></th>
@@ -16,9 +16,9 @@
       <tr>
         <td><%= contact.name %></td>
         <td><%= contact.gsm_numbers.first %></td>
-        <td><%= link_to 'Show', contact %></td>
-        <td><%= link_to 'Edit', edit_contact_path(contact) %></td>
-        <td><%= link_to 'Destroy', contact, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t(:show), contact %></td>
+        <td><%= link_to t(:edit), edit_contact_path(contact) %></td>
+        <td><%= link_to t(:destroy), contact, method: :delete, data:{ confirm: t('sure').html_safe} %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Contact', new_contact_path %>
+<%= link_to t(:new_item, item: Contact.model_name.human), new_contact_path %>
