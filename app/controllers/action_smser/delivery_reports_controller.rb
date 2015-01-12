@@ -5,6 +5,7 @@ module ActionSmser
     protect_from_forgery :except => :gateway_commit
     skip_before_filter :authenticate_user!, only: [:gateway_commit]
     helper_method :items_within_page
+    helper_method :selected_user
 
     def gateway_commit
 
@@ -64,7 +65,7 @@ module ActionSmser
     end
 
     def index
-      @delivery_reports = ActionSmser::DeliveryReport.from_user(current_user).latest.paginate(:page => params[:page], :per_page => items_within_page)
+      @delivery_reports = ActionSmser::DeliveryReport.from_user(selected_user).latest.paginate(:page => params[:page], :per_page => items_within_page)
     end
 
     def message_deliveries
@@ -77,6 +78,10 @@ module ActionSmser
     end
 
     private
+      def selected_user
+        @user ||= (current_user.admin && params[:user] && User.find(params[:user]) || current_user)
+      end
+
       def items_within_page
         params[:per_page] || 20
       end
