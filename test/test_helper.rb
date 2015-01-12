@@ -6,6 +6,7 @@ require "paperclip/matchers"
 require "webmock/minitest"
 require 'mocha/mini_test'
 require "minitest/rails/capybara"
+require 'shoulda/context'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -23,7 +24,14 @@ class ActiveSupport::TestCase
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
   fixtures :all
-  @@random = Random.new
+
+  def self.random
+    @random ||= Random.new
+  end
+
+  def random
+    ActiveSupport::TestCase.random
+  end
 
   def generate_collection(size, &block)
     items = []
@@ -32,7 +40,7 @@ class ActiveSupport::TestCase
   end
 
   def self.cubacel_random_number
-    @@random.rand(5350000000..5359999999).to_s
+    random.rand(5350000000..5359999999).to_s
   end
 
   def cubacel_random_number
@@ -70,20 +78,6 @@ class ActiveSupport::TestCase
 
   def stub_request_for_async_test
     stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
-  end
-
-  def add_credit(user, amount)
-    credit = Credit.create(description: "test credit", balance: amount, user: user)
-  end
-
-  def fix_users_credit
-    #If fixtures are used to load the data, the callbacks are not runned
-    #therefor the credit field in user must be exec manually
-    Credit.all.each {|c| c.user.credit += c.balance; c.save_owner}
-  end
-
-  def run_observers_save_callback
-    Observer.all.each {|obs| obs.save}
   end
 
   def user_accounting_info(user)

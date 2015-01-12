@@ -42,8 +42,12 @@ module ActionSmser::DeliveryMethods
       res = JSON.parse(response)
     end
 
-    def self.save_delivery_reports(sms, results, user, route_name)
+    def self.deliver(sms)
       self.deliveries << sms
+      super(sms)
+    end
+
+    def self.save_delivery_reports(sms, results, user, route_name)
       count = 0
       results.each do |result|
         count += 1

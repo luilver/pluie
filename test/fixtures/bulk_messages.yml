@@ -4,14 +4,10 @@ one:
   message: Bulk1
   route: one
   user: one
+  lists: one
 
 bulk:
   message: Bulk2
   route: bulk
   user: two
-
-multi_lists:
-  message: bulk lists
-  route: bulk
-  user: two
-  lists: list_admins, l_3, two
+  lists: two

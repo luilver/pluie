@@ -4,12 +4,7 @@ class ObserverTest < ActiveSupport::TestCase
   should validate_presence_of :number
   should allow_value("5354231267").for(:number)
 
-  setup do
-    #to run callback on gsm_number
-    Observer.all.each do |single|
-      single.save
-    end
-  end
+  #TODO... decrease DB access HERE
 
   test "should obtain active observers" do
     Observer.create(number: cubacel_random_number, active: true)
@@ -75,8 +70,7 @@ class ObserverTest < ActiveSupport::TestCase
     observers_count = observers_nums.count
     cost = ActionSmserUtils.sms_cost(observers_count, Route.notifications_route.price, 1)
     data = [
-            #['User.find(user_id).delivery_reports.count', observers_count],
-            ["ActionSmser::DeliveryReport.where(user_id: #{user_id}).where(to: #{observers_nums}).count", observers_count],
+            ['User.find(user_id).delivery_reports.count', observers_count],
             ['User.find(user_id).bills.count', 1],
             ['User.find(user_id).balance', -cost]]
     assert_differences data do
