@@ -5,55 +5,40 @@ class SingleMessageTest < ActiveSupport::TestCase
   should validate_presence_of :message
   should validate_presence_of :number
 
-  setup do
-    @one = single_messages(:one)
-    @one.save # triggers callback to store gsm numbers
-    @numbers =  cubacel_numbers(5)
-    stub_request_for_async_test
-  end
+  context "New SingleMessage" do
+    setup do
+      @numbers = %w(5354033333 5351111112 5352523689 5351242611 5352789076)
+    end
 
-  test "receivers with multiple numbers" do
-    change_number_field(@one, @numbers)
-    @numbers.each do |num|
-      assert_includes @one.receivers, num
+    should "create gsm_numbers and receivers" do
+      user = User.new
+      user.stubs(:balance => 5)
+      route = Route.new(price: 1)
+      sm = SingleMessage.new(user: user, message: "hi folks", route: route, number: @numbers.join(" "))
+      assert_difference 'sm.gsm_numbers.count', 5 do
+        sm.save
+      end
+      assert_same_elements(@numbers, sm.receivers)
+    end
+
+    should "use only valid gsm from number field" do
+      input = "53423 3 323 #{@numbers.join(" ")} 2021887  53543321 535"
+      sm = SingleMessage.new(number: input)
+      assert_same_elements(@numbers, sm.valid_gsm_numbers_from_field)
     end
   end
 
-  test "gsm_numbers_count equals receivers count" do
-    assert_equal @one.receivers.count, @one.gsm_numbers_count
-    change_number_field(@one, @numbers)
-    assert_equal @one.receivers.count, @one.gsm_numbers_count
-  end
-
-  test "creates DLR and charge to user" do
-    id = @one.user.id
-    change_number_field(@one, @numbers)
-    c = @one.receivers.count
-
-    assert_difference 'ActionSmser::DeliveryReport.count', c  do
-      assert_message_is_charged(@one, SingleDeliverer)
+  context "SingleMessage" do
+    setup do
+      @msg = single_messages(:with_three_numbers)
     end
-  end
 
-  test "gsm_numbers equivalent to receivers" do
-    gsm_numbers_equals_receivers(@one)
-    nums = cubacel_numbers(10)
-    change_number_field(@one, nums)
-    gsm_numbers_equals_receivers(@one)
-  end
-
-  def gsm_numbers_equals_receivers(msg)
-    gsm_nums = msg.gsm_numbers.map { |gsm| gsm.number  }
-    gsm_nums.each do |gsm|
-      assert_includes msg.receivers, gsm, "Gsm number not in receiver"
+    should "have the same gsm_numbers and receivers" do
+      assert_same_elements(@msg.gsm_numbers.pluck(:number), @msg.receivers)
     end
-    msg.receivers.each do |num|
-      assert_includes gsm_nums, num, "Receiver number not in gsm_numbers"
-    end
-  end
 
-  def change_number_field(msg, numbers)
-    msg.number = numbers.join(" ")
-    msg.save
+    should "estimate message cost" do
+      assert_equal @msg.route.price * 3 , @msg.message_cost
+    end
   end
 end

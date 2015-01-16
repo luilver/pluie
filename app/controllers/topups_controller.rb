@@ -1,10 +1,11 @@
 class TopupsController < ApplicationController
   before_action :set_topup, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource except: [:create]
 
   # GET /topups
   # GET /topups.json
   def index
-    @topups = Topup.all
+    @topups = Topup.latest_from_user(current_user).paginate(page: params[:page], per_page: 5)
   end
 
   # GET /topups/1
@@ -24,17 +25,22 @@ class TopupsController < ApplicationController
   # POST /topups
   # POST /topups.json
   def create
-    @topup = Topup.new(topup_params)
-
-    respond_to do |format|
-      if @topup.save
-        format.html { redirect_to @topup, notice: 'Topup was successfully created.' }
+    create_topup_service.on(:success) do |topup|
+      @topup = topup
+      respond_to do |format|
+        format.html { redirect_to @topup, notice: t('notice.item_created_fm', item: Topup.model_name.human.html_safe)}
         format.json { render :show, status: :created, location: @topup }
-      else
-        format.html { render :new }
-        format.json { render json: @topup.errors, status: :unprocessable_entity }
       end
     end
+    create_topup_service.on(:failure) do |topup|
+      @topup = topup
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: topup.errors, status: :unprocessable_entity }
+      end
+    end
+    create_topup_service.subscribe(recharge_listener, async: true, on: :success, with: :recharge )
+    create_topup_service.execute(current_user, topup_params)
   end
 
   # PATCH/PUT /topups/1
@@ -42,7 +48,7 @@ class TopupsController < ApplicationController
   def update
     respond_to do |format|
       if @topup.update(topup_params)
-        format.html { redirect_to @topup, notice: 'Topup was successfully updated.' }
+        format.html { redirect_to @topup, notice: t('notice.item_updated_fm', item: Topup.model_name.human.html_safe) }
         format.json { render :show, status: :ok, location: @topup }
       else
         format.html { render :edit }
@@ -62,6 +68,18 @@ class TopupsController < ApplicationController
   end
 
   private
+    def recharge_listener
+      unless @recharge_listener
+        @recharge_listener = TopupApiService.new
+        @recharge_listener.subscribe(TopupCashier.new,  on: :topup_api_recharge_success, with: :charge)
+      end
+      @recharge_listener
+    end
+
+    def create_topup_service
+      @create_topup_service ||= CreateTopupCommand.new
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_topup
       @topup = Topup.find(params[:id])

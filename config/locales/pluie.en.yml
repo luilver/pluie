@@ -13,8 +13,11 @@ en:
   route: 'route'
   gateway: 'Gateway'
   gateways: 'Gateways'
+  observers: 'Observers'
   user: 'User'
   delivery_reports: 'Delivery reports'
+  all: 'All'
+  all_m: 'All'
 
   new_item_f: "New %{item}"
   new_item: "New %{item}"
@@ -57,6 +60,8 @@ en:
   sms_size: "Sms size"
   sms_parts: "Sms parts"
 
+  select_lists: "Click to select 1 or more lists"
+
   notice:
     sucess_msg_sent: '%{msg} was successfully sent.'
     sucess_msg_resent: '%{msg} was successfully re-sent.'
@@ -76,9 +81,11 @@ en:
       group: 'Group'
       debit: 'Debit'
       observer: Observer
+      topup: 'Topup'
 
   errors:
     messages:
+      insufficient_funds: "Not enough balance to cover a %{cost} expense"
       debit_limit_violation: "Message cost (%{cost}) violates your credit limit (%{limit})"
       valid_gsm_number_format: "Only gsm numbers from cubacel allowed, ie 5352134312"
       invalid_cubacel_number: "%{num} is not a valid Cubacel number"

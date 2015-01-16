@@ -7,6 +7,7 @@ es:
   single_mode: 'Env&iacute;o puntual'
   massive_mode: 'Env&iacute;o masivo'
   lists: 'Listas'
+  topup: 'Recarga'
   topups: 'Recargas'
   jobs: 'Tareas'
   summary: 'Sumario'
@@ -125,6 +126,8 @@ es:
   sms_size: "Tama&ntilde;o"
   sms_parts: "Cantidad de sms"
 
+  select_lists: "Seleccione 1 o m&aacute;s listas"
+
   notice:
     sucess_msg_sent: 'El %{msg} fue iniciado satisfactoriamente'
     sucess_msg_resent: 'El %{msg} fue reiniciado satisfactoriamente'
@@ -148,6 +151,7 @@ es:
       group: 'Grupo'
       debit: 'D&eacute;bito'
       observer: 'Observador'
+      topup: 'Recarga'
     attributes:
       single_message:
         number: 'Destinatario'
@@ -180,9 +184,19 @@ es:
       observer:
         number: "N&uacute;mero"
         active: "Activo"
+      topup:
+        number: "N&uacute;mero"
+        amount: 'Cantidad'
+      user:
+        locale: "Lenguaje"
+        credit: 'Cr&eacute;dito'
+        debit: 'D&eacute;bito'
+        max_debt: 'Deuda M&aacute;x'
+        admin: 'Es Admin'
 
   errors:
     messages:
+      insufficient_funds: "No tiene fondos suficientes para cubrir un gasto de %{cost}"
       debit_limit_violation: "El costo(%{cost}) del mensaje excede el l&iacute;mite(%{limit}) de d&eacute;bito permitido"
       valid_gsm_number_format: "Solo se aceptan n&uacute;meros de Cuba, por ejemplo 5352134312"
       invalid_cubacel_number: "%{num} no es un n&uacute;mero de Cubacel"

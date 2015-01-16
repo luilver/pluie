@@ -27,12 +27,12 @@
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
   <div class="field">
-    <%= f.label :max_debt, User.human_attribute_name("max_debt").html_safe %><br>
-    <%= f.text_field :max_debt %>
-  </div>
-  <div class="field">
     <%= f.check_box :admin %>
     <%= f.label :admin %>?
+  </div>
+  <div class="field">
+    <%= f.label :locale %><br>
+    <%= f.collection_select :locale, I18n.available_locales, :to_s, :capitalize %>
   </div>
   <div class="actions">
     <%= f.submit %>

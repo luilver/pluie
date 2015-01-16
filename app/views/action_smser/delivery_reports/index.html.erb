@@ -1,4 +1,16 @@
 <h1><%= t('delivery_reports') %></h1>
+
+<% if current_user.admin %>
+  <div class="dlr_options">
+    <%= label_tag t(:user)%>
+    <%= select_tag :user_for_dlr, options_from_collection_for_select(User.all, "id", "email", selected_user.id.to_s), :class => "user_for_dlr_select"
+    %>
+  </div>
+  <% User.all.each do |user| %>
+    <%= link_to "user_#{user.id}", delivery_reports_path(user: user.id), id: "dlrs_user_#{user.id}", hidden: true %>
+  <% end %>
+<% end %>
+
 <h2 id="delivery_reports_list"><%= t('last').html_safe %> <%= t('delivery_reports') %> <%= t('ordered_by_creation_date').html_safe %></h2>
 
 <%

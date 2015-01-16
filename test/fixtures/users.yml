@@ -6,23 +6,32 @@
 #
 
 #User's credit should match the sum of credit's balance loaded in the credits fixtures
+barebones: &minimal
+  confirmed_at: <%= Time.current %>
+  encrypted_password: <%= Devise.bcrypt(User, 'pass5678') %>
+
 one:
+  <<: *minimal
   email: testuser1@openbgs.com
   credit: 9.99
 
 #test message sending with this user
 two:
+  <<: *minimal
   email: testuser2@openbgs.com
   credit: 100
 
 admin:
+  <<: *minimal
   email: test_admin@openbgs.com
   admin: true
 
 without_credits:
+  <<: *minimal
   email: testuser3@openbgs.com
 
 pluie:
+  <<: *minimal
   email: pluie@openbgs.com
   credit: 10
 

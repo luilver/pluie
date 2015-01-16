@@ -1,12 +1,12 @@
 <p>
-  <strong>Number:</strong>
+  <strong><%= Topup.human_attribute_name("number").html_safe %>:</strong>
   <%= @topup.number %>
 </p>
 
 <p>
-  <strong>Amount:</strong>
+  <strong><%= Topup.human_attribute_name("amount") %>:</strong>
   <%= @topup.amount %>
 </p>
 
-<%= link_to 'Edit', edit_topup_path(@topup) %> |
-<%= link_to 'Back', topups_path %>
+<%= link_to t(:new_item_f , item: Topup.model_name.human.titlecase ), new_topup_path %> |
+<%= link_to t(:all).capitalize, topups_path %>

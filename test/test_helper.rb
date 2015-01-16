@@ -5,6 +5,8 @@ require "minitest/rails"
 require "paperclip/matchers"
 require "webmock/minitest"
 require 'mocha/mini_test'
+require "minitest/rails/capybara"
+require 'shoulda/context'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -23,18 +25,26 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  def self.random
+    @random ||= Random.new
+  end
+
+  def random
+    ActiveSupport::TestCase.random
+  end
+
   def generate_collection(size, &block)
     items = []
     size.times {|i| items << (yield block)}
     items
   end
 
-  # Add more helper methods to be used by all tests here...
+  def self.cubacel_random_number
+    random.rand(5350000000..5359999999).to_s
+  end
+
   def cubacel_random_number
-    result = "535"
-    rand = Random.new
-    7.times{ result << rand.rand(9).to_s}
-    result
+    self.class.cubacel_random_number
   end
 
   def cubacel_numbers(amount)
@@ -70,22 +80,14 @@ class ActiveSupport::TestCase
     stub_request(:any, gateway_url_for_tests).to_return { |request| {:body =>  simple_response(request) } }
   end
 
-  def add_credit(user, amount)
-    credit = Credit.create(description: "test credit", balance: amount, user: user)
-  end
-
-  def fix_users_credit
-    #If fixtures are used to load the data, the callbacks are not runned
-    #therefor the credit field in user must be exec manually
-    Credit.all.each {|c| c.user.credit += c.balance; c.save_owner}
-  end
-
-  def run_observers_save_callback
-    Observer.all.each {|obs| obs.save}
-  end
-
   def user_accounting_info(user)
     "balance: #{user.balance} credit: #{user.credit} debit: #{user.debit}"
+  end
+
+  def stub_soap_response(operation, data = {code: 1, message: "message"})
+    resp_key = "#{operation}_response".to_sym
+    result_key = "#{operation}_result".to_sym
+    stub(body: {resp_key => {result_key => data}})
   end
 
   def assert_differences(expression_array, message = nil, &block)

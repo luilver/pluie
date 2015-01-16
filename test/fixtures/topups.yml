@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  number: MyString
-  amount: 1
+  number: 5350000000
+  amount: 20
+  user: two
 
 two:
-  number: MyString
-  amount: 1
+  number: 5350000000
+  amount: 25
+  user: two

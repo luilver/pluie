@@ -5,13 +5,8 @@ class DebitsController < ApplicationController
   # GET /debits
   # GET /debits.json
   def index
-    @debits = Debit.paginate :page => params[:page],
-      :conditions => ['user_id = ?', "#{current_user.id}"],
-      :order => 'created_at DESC',
-      :per_page => 5
-    @debits = Debit.paginate :page => params[:page],
-      :order => 'created_at DESC',
-      :per_page => 5 if current_user.admin
+    @debits = (current_user.admin ? Debit.order(created_at: :desc)
+                                  : Debit.latest_from_user(current_user)).paginate(page: params[:page], per_page: 5)
   end
 
   # GET /debits/1

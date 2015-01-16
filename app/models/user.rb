@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :gateways,  :through => :routes
   has_many :debits
   has_many :bills
+  has_many :topups
   has_many :delivery_reports, class_name: "ActionSmser::DeliveryReport"
 
   def api_key

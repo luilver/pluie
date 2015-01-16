@@ -1,13 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  number: 5351111111
+  number: 5359999991
   active: true
+  gsm_number: obs_one
 
 two:
-  number: 5352222222
+  number: 5359999992
   active: false
+  gsm_number: obs_two
 
 three:
-  number: 5353333333
+  number: 5359999993
   active: true
+  gsm_number: obs_three

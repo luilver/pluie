@@ -29,3 +29,8 @@ system_route:
   user: pluie
   system_route: true
 
+without_credits:
+  <<: *minimal
+  user: without_credits
+  gateway: one
+

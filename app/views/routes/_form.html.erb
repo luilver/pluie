@@ -1,4 +1,4 @@
-<%= form_for(@route) do |f| %>
+<%= form_for(@route, html: {:class => "route_form" })  do |f| %>
   <% if @route.errors.any? %>
     <div id="error_explanation">
       <h2>
@@ -29,13 +29,17 @@
   <fieldset>
     <legend><%= t('user') %></legend>
     <%= f.select :user_id,
-      options_from_collection_for_select(User.all, "id", "email")
+      options_from_collection_for_select(User.all, "id", "email"),
+      {},
+      :class => "route_user_select"
     %>
   </fieldset>
   <fieldset>
     <legend><%= t('gateway') %></legend>
     <%= f.select :gateway_id,
-      options_from_collection_for_select(Gateway.all, "id", "name")
+      options_from_collection_for_select(Gateway.all, "id", "name"),
+      {},
+      :class => "route_gateway_select"
     %>
   </fieldset>
   <div class="actions">

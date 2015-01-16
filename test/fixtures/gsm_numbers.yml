@@ -1,1 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+one:
+  number: "5350000001"
+two:
+  number: "5350000002"
+three:
+  number: "5350000003"
+
+obs_one:
+  number: "5359999991"
+obs_two:
+  number: "5359999992"
+obs_three:
+  number: "5359999993"
