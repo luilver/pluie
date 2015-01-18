@@ -8,9 +8,13 @@
 </p>
 <p>
   <div id="hidder">
-    <%= link_to_function t('show_number').capitalize.pluralize(@list.receivers.count).html_safe, "unHide()" %>
+    <%= button_tag t('show_number').capitalize.pluralize(@list.receivers.count).html_safe,:class => "hidder_link",:id => "toggle_numbers",
+        :data => {
+            show: t('show_number').capitalize.pluralize(@list.receivers.count).html_safe, 
+            hide: t('hide_number').capitalize.pluralize(@list.receivers.count).html_safe
+            }%>
   </div>
-  <div class="hidden" id="numbers">
+  <div id="numbers" class="hidden">
     <strong><%= t("number").capitalize.pluralize(@list.receivers.count).html_safe %>:</strong>
     <% @list.receivers.each do |num| %>
       <%= num %>
