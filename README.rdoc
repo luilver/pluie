@@ -7,15 +7,30 @@ Things you may want to cover:
 
 * Ruby version
 
+    Ruby 2.1.2
+
 * System dependencies
 
 * Configuration
 
 * Database creation
+    Postgres DB
+    To setup a development environment create a pluie user with CREATE DB perms
+    ex,
+        create role pluie with createdb;
+    or if the user exists
+        alter role pluie with createdb;
+    This is necessary to run the tests, as the testing db needs to be created before the test suite runs
+
 
 * Database initialization
+    rake db:setup
 
 * How to run the test suite
+    Needs qt to run capybara-webkit.
+    On Debian/Ubuntu 14.04/Mint 17
+    sudo apt-get install qt5-default libqt5webkit5-dev
+    On previous versions, for example Ubuntu 13.10,  using qt4 instead of qt5 can save the day
 
 * Services (job queues, cache servers, search engines, etc.)
 
