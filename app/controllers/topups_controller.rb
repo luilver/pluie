@@ -71,13 +71,17 @@ class TopupsController < ApplicationController
     def recharge_listener
       unless @recharge_listener
         @recharge_listener = TopupApiService.new
-        @recharge_listener.subscribe(TopupCashier.new,  on: :topup_api_recharge_success, with: :charge)
+        @recharge_listener.subscribe(topup_cashier,  on: :topup_api_recharge_success, with: :charge)
       end
       @recharge_listener
     end
 
     def create_topup_service
-      @create_topup_service ||= CreateTopupCommand.new
+      @create_topup_service ||= CreateTopupCommand.new(topup_cashier.price_strategy)
+    end
+
+    def topup_cashier
+      @cashier ||= TopupCashier.new
     end
 
     # Use callbacks to share common setup or constraints between actions.
