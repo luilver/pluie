@@ -1,3 +1,11 @@
 // Place all the styles related to the topups controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.inline-field.number_field{
+    margin-right: 10px;
+}
+
+.topup_amount_select{
+    min-width: 60px;
+}
