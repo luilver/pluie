@@ -14,7 +14,7 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.base_url
-      "http://localhost"
+      "http://test_async_delivery.com"
     end
 
     def self.path_url
