@@ -15,6 +15,8 @@ class SimpleSms < ActionSmser::Base
   def custom(text, receivers, route, bill_id, type, message_id)
     if gateway_defined?(route.gateway_to_sym)
       delivery_options[:delivery_method] = route.dlv_to_sym
+      #If the gateway is not defined, then it uses the default method
+      #In the testing enviroment this allows to use the delivery method for all sms
     end
     user = route.user
     sms(:to => receivers, :from => user.username, :body => text,
