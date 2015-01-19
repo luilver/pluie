@@ -8,7 +8,7 @@ class MakeTopupTest < Capybara::Rails::TestCase
     @user = users(:two)
     login_as(@user, scope: :user)
     Capybara.current_driver = :webkit
-    WebMock.allow_net_connect!
+    #WebMock.allow_net_connect!
 
     ticket = stub_soap_response(:get_session_ticket)
     recharge_response = stub_soap_response(:recharge_phone)

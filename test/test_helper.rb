@@ -24,6 +24,7 @@ class ActiveSupport::TestCase
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
   fixtures :all
+  WebMock.disable_net_connect!(:allow_localhost => true)
 
   def self.random
     @random ||= Random.new
@@ -53,7 +54,7 @@ class ActiveSupport::TestCase
 
   def attach_file_from_fixture(list, filename=nil)
     filename ||= "#{list.name}.txt"
-    list.update(file: File.new(File.join(Rails.root, "test/fixtures", filename)))
+    list.update(file: File.new(file_path_from_fixtures(filename)))
     list
   end
 
@@ -61,6 +62,10 @@ class ActiveSupport::TestCase
     list = attach_file_from_fixture(lists(fixture_key))
     list.attach_numbers if attach_nums
     list
+  end
+
+  def file_path_from_fixtures(filename)
+    File.join(Rails.root, 'test', 'fixtures',filename)
   end
 
   def clean_paperclip_file_directory
