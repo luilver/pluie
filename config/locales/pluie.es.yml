@@ -1,7 +1,8 @@
 es:
   size: 'cantidad'
-  number: "N&uacute;mero"
+  number: "n&uacute;mero"
   show_number: "Mostrar n&uacute;mero"
+  hide_number: "Ocultar n&uacute;mero"
   recipient: 'Destinatario'
   home: 'Inicio'
   single_mode: 'Env&iacute;o puntual'

@@ -19,3 +19,8 @@ list_admins:
 without_credits:
   name: 'for user without credits'
   user: without_credits
+
+#To test sending a bulk when the list has not calculated its gsm numbers
+no_gsm_numbers:
+  name: 'does not have gsm numbers yet'
+  user: two

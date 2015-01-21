@@ -1,5 +1,8 @@
 en:
   size: 'size'
+  number: "number"
+  show_number: "Show number"
+  hide_number: "Hide number"
   recipient: 'recipient'
   home: 'Home'
   single_mode: 'Single mode'
