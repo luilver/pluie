@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
   resources :delivery_reports,  only: [:index, :show], controller: "action_smser/delivery_reports" do
     match :summary,  via: :get, on: :collection
+    match :failed_numbers, via: :get, on: :collection
   end
 
   resources :routes

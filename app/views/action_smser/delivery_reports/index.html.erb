@@ -47,5 +47,9 @@
 </table>
 
 <p>
+  <%= link_to t('failed_numbers_link').html_safe, main_app.failed_numbers_delivery_reports_path %>
+</p>
+
+<p>
 <%=will_paginate @delivery_reports%>
 </p>
