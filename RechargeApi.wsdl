@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
+  <script/>
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Servicio web para la recarga de móviles en Cuba.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetSessionTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSessionTicketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSessionTicketResult" type="tns:MessageData"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MessageData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Code" type="s:int"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetSessionTicketByEntity">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="entityname" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSessionTicketByEntityResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSessionTicketByEntityResult" type="tns:MessageData"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RechargePhone">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ticket" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="s:string"/>
+            <s:element minOccurs="1" maxOccurs="1" name="quantity" type="s:int"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RechargePhoneResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RechargePhoneResult" type="tns:MessageData"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAvaliableMoney">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ticket" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAvaliableMoneyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAvaliableMoneyResult" type="tns:MessageData"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetChildrenAvaliableMoney">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ticket" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetChildrenAvaliableMoneyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetChildrenAvaliableMoneyResult" type="tns:ResultData"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Code" type="s:int"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="EntitiesList" type="tns:ArrayOfEntityAvaliable"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfEntityAvaliable">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EntityAvaliable" nillable="true" type="tns:EntityAvaliable"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EntityAvaliable">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+          <s:element minOccurs="1" maxOccurs="1" name="Disponible" nillable="true" type="s:decimal"/>
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetSessionTicketSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSessionTicket"/>
+  </wsdl:message>
+  <wsdl:message name="GetSessionTicketSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSessionTicketResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSessionTicketByEntitySoapIn">
+    <wsdl:part name="parameters" element="tns:GetSessionTicketByEntity"/>
+  </wsdl:message>
+  <wsdl:message name="GetSessionTicketByEntitySoapOut">
+    <wsdl:part name="parameters" element="tns:GetSessionTicketByEntityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RechargePhoneSoapIn">
+    <wsdl:part name="parameters" element="tns:RechargePhone"/>
+  </wsdl:message>
+  <wsdl:message name="RechargePhoneSoapOut">
+    <wsdl:part name="parameters" element="tns:RechargePhoneResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAvaliableMoneySoapIn">
+    <wsdl:part name="parameters" element="tns:GetAvaliableMoney"/>
+  </wsdl:message>
+  <wsdl:message name="GetAvaliableMoneySoapOut">
+    <wsdl:part name="parameters" element="tns:GetAvaliableMoneyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetChildrenAvaliableMoneySoapIn">
+    <wsdl:part name="parameters" element="tns:GetChildrenAvaliableMoney"/>
+  </wsdl:message>
+  <wsdl:message name="GetChildrenAvaliableMoneySoapOut">
+    <wsdl:part name="parameters" element="tns:GetChildrenAvaliableMoneyResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="RechargeAPISoap">
+    <wsdl:operation name="GetSessionTicket">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        Función para obtener el ticket de sesión a utilizar en las demás functiones, especificando el nombre de usuario, la contraseña y el correo electrónico.</br>Retorna un MessageData { Code = int code, Message = string message}. Posibles valores:</br> - MessageData { Code = 0, Message = 'mensaje de error'}</br> - MessageData { Code = 1, Message = 'ticket se sesión'}
+      </wsdl:documentation>
+      <wsdl:input message="tns:GetSessionTicketSoapIn"/>
+      <wsdl:output message="tns:GetSessionTicketSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSessionTicketByEntity">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        Función para obtener el ticket de sesión a utilizar en las demás functiones, especificando el nombre de usuario, la contraseña, el correo electrónico y el nombre de la entidad.</br>Retorna un MessageData { Code = int code, Message = string message}. Posibles valores:</br> - MessageData { Code = 0, Message = 'mensaje de error'}</br> - MessageData { Code = 1, Message = 'ticket se sesión'}
+      </wsdl:documentation>
+      <wsdl:input message="tns:GetSessionTicketByEntitySoapIn"/>
+      <wsdl:output message="tns:GetSessionTicketByEntitySoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="RechargePhone">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        Función para realizar la recarga especificando el ticket de sesión, el número de teléfono móvil y la cantidad, esta última puede tomar valores entre 10 y 50, siendo siempre múltiplos de 5.</br>Retorna un MessageData { Code = int code, Message = string message}. Posibles valores:</br> - MessageData { Code = 0, Message = 'mensaje de error en la recarga'}</br> - MessageData { Code = 1, Message = 'Recarga exitosa.'}</br> - MessageData { Code = 2, Message = 'No hay sessión activa, genere nuevo ticket.'}</br> - MessageData { Code = 3, Message = 'No coincide el ticket con la sesión activa.'}</br> - MessageData { Code = 4, Message = 'No tiene permisos para realizar la recarga en la entidad seleccionada.'}</br>
+      </wsdl:documentation>
+      <wsdl:input message="tns:RechargePhoneSoapIn"/>
+      <wsdl:output message="tns:RechargePhoneSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvaliableMoney">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        Función que devuelve el crédito disponible especificando el ticket de sesión.</br>Retorna un MessageData { Code = int code, Message = string message}. Posibles valores:</br> - MessageData { Code = 0, Message = 'mensaje de error'}</br> - MessageData { Code = 1, Message = 'valor del crédito disponible'}</br>
+      </wsdl:documentation>
+      <wsdl:input message="tns:GetAvaliableMoneySoapIn"/>
+      <wsdl:output message="tns:GetAvaliableMoneySoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildrenAvaliableMoney">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        Función que devuelve el crédito disponible de la entidad y sus hijas especificando el ticket de sesión.</br>Retorna un ResultData { Code = int code, Message = string message, EntitiesList = List<{Name = string entity, Disponible = decimal money}>}. Posibles valores:</br> - ResultData { Code = 0, Message = 'mensaje de error', EntitiesList = null}</br> - ResultData { Code = 1, Message = string.Empty , EntitiesList = List<{Name = string entity, Avaliable = decimal money}>}</br>
+      </wsdl:documentation>
+      <wsdl:input message="tns:GetChildrenAvaliableMoneySoapIn"/>
+      <wsdl:output message="tns:GetChildrenAvaliableMoneySoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RechargeAPISoap" type="tns:RechargeAPISoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetSessionTicket">
+      <soap:operation soapAction="http://tempuri.org/GetSessionTicket" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSessionTicketByEntity">
+      <soap:operation soapAction="http://tempuri.org/GetSessionTicketByEntity" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RechargePhone">
+      <soap:operation soapAction="http://tempuri.org/RechargePhone" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvaliableMoney">
+      <soap:operation soapAction="http://tempuri.org/GetAvaliableMoney" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildrenAvaliableMoney">
+      <soap:operation soapAction="http://tempuri.org/GetChildrenAvaliableMoney" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RechargeAPISoap12" type="tns:RechargeAPISoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetSessionTicket">
+      <soap12:operation soapAction="http://tempuri.org/GetSessionTicket" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSessionTicketByEntity">
+      <soap12:operation soapAction="http://tempuri.org/GetSessionTicketByEntity" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RechargePhone">
+      <soap12:operation soapAction="http://tempuri.org/RechargePhone" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvaliableMoney">
+      <soap12:operation soapAction="http://tempuri.org/GetAvaliableMoney" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildrenAvaliableMoney">
+      <soap12:operation soapAction="http://tempuri.org/GetChildrenAvaliableMoney" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RechargeAPI">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Servicio web para la recarga de móviles en Cuba.</wsdl:documentation>
+    <wsdl:port name="RechargeAPISoap" binding="tns:RechargeAPISoap">
+      <soap:address location="http://www.promodoble.com/WebServices/RechargeApi.asmx"/>
+    </wsdl:port>
+    <wsdl:port name="RechargeAPISoap12" binding="tns:RechargeAPISoap12">
+      <soap12:address location="http://www.promodoble.com/WebServices/RechargeApi.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
