@@ -77,6 +77,12 @@ module ActionSmser
       #paginate(:page => params[:page], :per_page => items_within_page)
     end
 
+    def failed_numbers
+      numbers = selected_user.delivery_reports.where.not(status: ActionSmserUtils::DELIVERED_STATUS).distinct.pluck(:to)
+      data = numbers.join("\n")
+      send_data data, filename: "failed_numbers_#{ I18n.localize(Date.current, :format => :short)}.txt"
+    end
+
     private
       def selected_user
         @user ||= (current_user.admin && params[:user] && User.find(params[:user]) || current_user)

@@ -64,6 +64,7 @@ en:
   sms_parts: "Sms parts"
 
   select_lists: "Click to select 1 or more lists"
+  failed_numbers_link: "Undelivered numbers"
 
   notice:
     sucess_msg_sent: '%{msg} was successfully sent.'

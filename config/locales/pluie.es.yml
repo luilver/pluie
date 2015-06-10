@@ -128,6 +128,7 @@ es:
   sms_parts: "Cantidad de sms"
 
   select_lists: "Seleccione 1 o m&aacute;s listas"
+  failed_numbers_link: "N&uacute;meros no entregados"
 
   notice:
     sucess_msg_sent: 'El %{msg} fue iniciado satisfactoriamente'
