@@ -39,7 +39,7 @@ if Rails.env.development? || Rails.env.staging? || Rails.env.production?
   ActionSmser.delivery_options[:min_numbers_in_sms] = 100
 
   ActionSmser.delivery_options[:gateway_commit]['infobip'] = ActionSmser::DeliveryMethods::AsyncInfobip
-  ActionSmser.delivery_options[:infobip] = { username: INFOBIP_KEY, password: INFOBIP_PASS, numbers_in_request: 50, parallel_requests: 5 }
+  ActionSmser.delivery_options[:infobip] = { username: INFOBIP_KEY, password: INFOBIP_PASS, numbers_in_request: 5, parallel_requests: 5 }
 
   ActionSmser.delivery_options[:gateway_commit]['routesms'] = ActionSmser::DeliveryMethods::AsyncRoutesms
   ActionSmser.delivery_options[:routesms] = { username: ROUTESMS_KEY, password: ROUTESMS_PASS, numbers_in_request: 5, parallel_requests: 10 }
