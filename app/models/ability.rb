@@ -24,6 +24,8 @@ class Ability
 
       can :balance, User, :user_id => user.id
 
+      cannot :manage, User
+
       cannot :manage, Route
 
       cannot :manage, Gateway
