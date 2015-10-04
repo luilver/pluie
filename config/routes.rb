@@ -10,6 +10,11 @@ Rails.application.routes.draw do
       resources :lists
       resources :single_messages
       resources :users
+
+      devise_scope :user do
+        match '/sessions' => 'sessions#create', :via => :post
+        match '/sessions' => 'sessions#destroy', :via => :delete
+      end
     end
   end
 

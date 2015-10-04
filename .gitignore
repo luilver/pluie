@@ -6,6 +6,10 @@
 
 # Ignore bundler config.
 /.bundle
+*.rej
+*.swp
+*~
+*.swo
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -36,3 +40,4 @@ TODO
 *.orig
 /vendor/cache
 .idea
+*.rej
