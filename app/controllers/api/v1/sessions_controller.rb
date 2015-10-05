@@ -23,6 +23,7 @@ module Api
   protect_from_forgery with: :null_session, :if => Proc.new { |c| c.request.format == 'application/api.knales.v' }
   skip_before_filter :authenticate_user!, :only => [:create, :new]
   skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
+  #after_filter :set_csrf_header, only: [:new, :create]
   respond_to :json
 
   def new
@@ -44,7 +45,14 @@ module Api
         return invalid_login_attempt unless resource
 
         if resource.valid_password?(params[:password])
-          render :json => { user: { email: resource.email, :auth_token => resource.api_setting.api_key } }, success: true, status: :created
+
+           api_setting_x=resource.api_setting
+           if api_setting_x.blank?
+            api_setting_x=ApiSetting.new({user_id: resource.id})
+            api_setting_x.save
+           end
+
+           render :json => { user: { email: resource.email, :api_key => api_setting_x.api_key   } }, success: true, status: :created
         else
           invalid_login_attempt
         end
@@ -83,6 +91,10 @@ module Api
       end
     end
   end
+
+  # def set_csrf_header
+  #   response.headers['X-CSRF-Token'] = form_authenticity_token
+  # end
     end
   end
 end

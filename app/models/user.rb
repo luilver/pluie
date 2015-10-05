@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :confirmable,
+  devise :database_authenticatable, :registerable, #:confirmable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :bulk_messages
   has_many :group_messages
@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :groups
   has_many :lists
   has_many :credits
-  has_one :api_setting
+  has_one  :api_setting
   has_many :routes
   has_many :gateways,  :through => :routes
   has_many :debits
@@ -21,9 +21,15 @@ class User < ActiveRecord::Base
   def api_key
     self.api_setting.api_key
   end
-  def api_secret=(api_secret)
-    self.api_setting.api_secret = api_secret
-  end
+
+  # def api_secret=(api_secret) # no lo tengo concebido con un api_secret
+  #   self.api_setting.api_secret = api_secret
+  # end
+
+
+
+
+
 
   def self.current
     Thread.current[:user]
