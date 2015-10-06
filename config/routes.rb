@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         match '/sessions' => 'sessions#create', :via => :post
         match '/sessions' => 'sessions#destroy', :via => :delete
         match  '/registrations' => 'registrations#create',   :via => :post
+
       end
     end
   end

@@ -61,20 +61,19 @@ module Api
   end
 
   def destroy
-    respond_to do |format|
-      format.html {
-        super
-      }
-      format.json {
-        user = User.find_by_authentication_token(request.headers['X-API-TOKEN'])
-        if user
-          user.reset_authentication_token!
-          render :json => { :message => 'Session deleted.' }, :success => true, :status => 204
+
+        token_api_key=request.headers["HTTP_API_KEY"]
+
+        if not ApiSetting.find_by_api_key(token_api_key).blank?
+           api_setting= ApiSetting.find_by_api_key(token_api_key)
+
+           api_setting.api_key=api_setting.reset_authentication_token!
+           #api_setting.save
+           #ApiSetting.destroy(api_setting.id)
+           render json: { :message => "Session deleted"} , :status => 200, :success => true
         else
-          render :json => { :message => 'Invalid token.' }, :status => 404
+           render :json => { :message => 'Invalid token.' }, :status => 404
         end
-      }
-    end
   end
 
   protected
