@@ -10,18 +10,41 @@ class ApiController < ActionController::Base
   end
 
   def authenticate_api!
-    api = ApiSetting.find_by_api_key(params[:api_key])
+    user_email=request.headers["HTTP_EMAIL"].presence
+    user_token_api_key=request.headers["HTTP_API_KEY"].presence
 
-    return invalid_api_key unless api
-    return invalid_api_secret unless api.valid_secret?(params[:api_secret])
-    User.current = api.user
+    user = User.find_by_email(user_email)
+    #api = ApiSetting.find_by_api_key(user.ap)
+
+    if user
+      if Devise.secure_compare(user.api_key, user_token_api_key)
+        User.current=user
+      else
+       return invalid_api_key
+      end
+    else
+      return not_user
+    end
   end
 
   protected
+
+    def not_user
+    render json: {success: false, message: "Not user with this gmail"}, status: 400
+    end
+
     def ensure_params_exist
-       return unless params[:api_key].blank?
-       render :json => { :success => false,
+
+       if request.headers["HTTP_API_KEY"].blank?
+       return render :json => { :success => false,
                          :message => "missing api key" }, :status => 400
+       end
+       if request.headers["HTTP_EMAIL"].blank?
+         return render :json => { :success => false,
+                           :message => "missing email" }, :status => 400
+       end
+
+       return
     end
 
     def invalid_api_key
