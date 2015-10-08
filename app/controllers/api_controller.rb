@@ -1,6 +1,6 @@
 class ApiController < ActionController::Base
   before_filter :authenticate_api!
-  load_and_authorize_resource
+  #load_and_authorize_resource
   prepend_before_filter :ensure_params_exist
   protect_from_forgery with: :null_session
 
@@ -19,6 +19,7 @@ class ApiController < ActionController::Base
     if user
       if Devise.secure_compare(user.api_key, user_token_api_key)
         User.current=user
+        return
       else
        return invalid_api_key
       end
