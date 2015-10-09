@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
       get 'user/balance' => 'users#balance'
       get 'lists/searchs' => 'search_lists#index'
+      match 'lists/searchs' => 'search_lists#searchlists', via: :post
       resources :bulk_messages
       resources :credits
       resources :lists
