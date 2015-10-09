@@ -6,6 +6,7 @@ module Api
       respond_to :json
 
       def index  #servicio que devuelve los nombres de todas las listas del usuario y la cantidad lists: {name:[name,...]}
+        User.current=User.find(1)
         @name=[]
         User.current.lists.each do |l|
           @name <<  {:date=> l.created_at.to_date,:name=>l.name}
@@ -17,8 +18,8 @@ module Api
         name=[]
         notFoundName=[]
         params[:lists][:name].each do |n|
-          if List.find_by_name(n)
-            name << {:name => n, :numbers => List.find_by_name(n).receivers}
+          if User.current.lists.find_by_name(n)
+            name << {:name => n, :numbers => User.current.lists.find_by_name(n).receivers}
           else
             notFoundName << {:name=> n, :error => 'No existe lista con ese nombre'}
           end
