@@ -9,7 +9,14 @@ module Api
       end
 
       def show
-        respond_with List.find(params[:id])
+        User.current=User.find(1)
+        count=User.current.lists.count
+        if count > params[:id].to_f
+          list=User.current.lists[params[:id].to_f]
+          render json: {list: {:name => list.name, :numbers=> list.receivers, :created_at=>list.created_at}}, status: 200
+        else
+          render json: {:error => "The number must be less than #{count}"}, status: 404
+        end
       end
 
       def create
