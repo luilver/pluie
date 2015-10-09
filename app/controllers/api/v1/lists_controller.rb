@@ -9,7 +9,6 @@ module Api
       end
 
       def show
-        User.current=User.find(1)
         count=User.current.lists.count
         if count > params[:id].to_f
           list=User.current.lists[params[:id].to_f]
