@@ -5,7 +5,7 @@ module Api
 
       respond_to :json
 
-      def index  #servicio que devuelve los nombres de todas las listas del usuario y la cantidad
+      def index  #servicio que devuelve los nombres de todas las listas del usuario y la cantidad lists: {name:[name,...]}
         User.current =User.find(1)
         @name=[]
         User.current.lists.each do |l|
@@ -14,7 +14,7 @@ module Api
         render json: {:lists => {:count => User.current.lists.count,:name=> @name}}, status: 200
       end
 
-      def searchlists
+      def searchlists #servicio que devuelve los numeros de las listas que el usuario pidio
         name=[]
         params[:lists][:name].each do |n|
           if List.find_by_name(n)
