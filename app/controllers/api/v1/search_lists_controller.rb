@@ -16,12 +16,15 @@ module Api
 
       def searchlists #servicio que devuelve los numeros de las listas que el usuario pidio
         name=[]
+        notFoundName=[]
         params[:lists][:name].each do |n|
           if List.find_by_name(n)
-            name << {:name => n, :numeros => List.find_by_name(n).receivers}
+            name << {:name => n, :numbers => List.find_by_name(n).receivers}
+          else
+            notFoundName << {:name=> n, :error => 'No existe lista con ese nombre'}
           end
         end
-        render json: {:lists=> name }, status: 200
+        render json: {:lists=> name, :notFound =>notFoundName }, status: 200
       end
 
       protected
