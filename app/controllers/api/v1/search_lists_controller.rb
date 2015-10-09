@@ -1,12 +1,11 @@
 module Api
   module V1
     class SearchListsController < ApiController
-      protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
+
 
       respond_to :json
 
       def index  #servicio que devuelve los nombres de todas las listas del usuario y la cantidad lists: {name:[name,...]}
-        User.current=User.find(1)
         @name=[]
         User.current.lists.each do |l|
           @name <<  {:date=> l.created_at.to_date,:name=>l.name}
