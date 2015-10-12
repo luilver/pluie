@@ -19,7 +19,23 @@ module Api
       end
 
       def create
-        respond_with List.create(params[:list])
+        numbers_api=params[:list][:numbers]
+        name =params[:list][:name]
+
+        @list=List.new
+        @list.user = User.current
+        @list.name=name
+
+        if not User.current.lists.find_by_name(name)
+          if @list.save(:validate=>false)
+            @list.AddNumbersViaApi(numbers_api)
+            render json: {:message => 'The list was successfully created'}, status: 201
+          else
+            render json: {:error=>'Not can save'},status: 400
+          end
+        else
+          render json: {:error => 'The name exists'}, status: 400
+        end
       end
 
       def update

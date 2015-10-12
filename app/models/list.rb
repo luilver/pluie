@@ -29,6 +29,13 @@ class List < ActiveRecord::Base
     self.opened ? numbers_from_file : self.gsm_numbers.pluck(:number)
   end
 
+  ###############Api-rest
+  def AddNumbersViaApi (numbers)
+    self.gsm_numbers << numbers.select {|n| /^535[0-9]{7}/ =~ n}.map {|i| GsmNumber.find_or_create_by(number: i)}
+    self.update_attribute(:opened, false)
+    return true
+  end
+
   private
     def numbers_from_file
       lines_with_cubacel_numbers.map { |line| line[0,10] }
