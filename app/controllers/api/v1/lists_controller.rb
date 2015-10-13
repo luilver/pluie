@@ -19,7 +19,6 @@ module Api
       end
 
       def create
-        User.current= User.find(11)
         numbers_api=params[:list][:numbers]
         name =params[:list][:name]
 
@@ -40,7 +39,6 @@ module Api
       end
 
       def update
-        User.current= User.find(11)
         if @list = User.current.lists.find_by_name(params[:list][:name])
           if params[:list][:remove]
             @list.deleteNumbers(params[:list][:numbers])
@@ -55,7 +53,6 @@ module Api
       end
 
       def destroy
-        User.current= User.find(11)
           if @list= User.current.lists.find_by_name(params[:list][:name])
             @list.destroy
             render json: {:message=>"Destroy list: #{params[:list][:name]}"}, status: 410
