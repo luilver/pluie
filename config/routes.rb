@@ -7,9 +7,16 @@ Rails.application.routes.draw do
       get 'user/balance' => 'users#balance'
       get 'lists/searchs' => 'search_lists#index'
       match 'lists/searchs' => 'search_lists#searchlists', via: :post
+
+      ######resources lists
+      match 'lists' => 'lists#index', via: :get
+      match  'lists/:id' => 'lists#show', via: :get
+      match  'lists'   => 'lists#create', via: :post
+      match  'lists'   => 'lists#update', via: :put
+      
+
       resources :bulk_messages
       resources :credits
-      resources :lists
       resources :single_messages
       resources :users
     end

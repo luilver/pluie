@@ -28,7 +28,7 @@ module Api
 
         if not User.current.lists.find_by_name(name)
           if @list.save(:validate=>false)
-            @list.AddNumbersViaApi(numbers_api)
+            @list.addNumbersViaApi(numbers_api)
             render json: {:message => 'The list was successfully created'}, status: 201
           else
             render json: {:error=>'Not can save'},status: 400
@@ -39,7 +39,18 @@ module Api
       end
 
       def update
-        respond_with List.update(params[:id], params[:list])
+        User.current= User.find(11)
+        if @list = User.current.lists.find_by_name(params[:list][:name])
+          if params[:list][:remove]
+            @list.deleteNumbers(params[:list][:numbers])
+            render json: {:message=>'The list was successfully update', :option=>'remove'}, status: 200
+          else
+            @list.addNumbersViaApi(params[:list][:numbers])
+            render json: {:message=>'The list was successfully update', :option=>'add'}, status: 200
+          end
+        else
+          render json: {:error => 'The name does not exist'}, status: 404
+        end
       end
 
       def destroy

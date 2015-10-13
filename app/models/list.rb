@@ -30,10 +30,17 @@ class List < ActiveRecord::Base
   end
 
   ###############Api-rest
-  def AddNumbersViaApi (numbers)
+  def addNumbersViaApi (numbers)
     self.gsm_numbers << numbers.select {|n| /^535[0-9]{7}/ =~ n}.map {|i| GsmNumber.find_or_create_by(number: i)}
     self.update_attribute(:opened, false)
     return true
+  end
+
+  def deleteNumbers(numbers)
+     from_json = [] << numbers.select {|n| /^535[0-9]{7}/ =~ n}.map {|i| GsmNumber.find_by_number(i)}
+     self.gsm_numbers.delete(from_json)
+     self.update_attribute(:opened, false)
+     return true
   end
 
   private
