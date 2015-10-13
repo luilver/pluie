@@ -19,6 +19,7 @@ module Api
       end
 
       def create
+        User.current= User.find(11)
         numbers_api=params[:list][:numbers]
         name =params[:list][:name]
 
@@ -54,7 +55,13 @@ module Api
       end
 
       def destroy
-        respond_with List.destroy(params[:id])
+        User.current= User.find(11)
+          if @list= User.current.lists.find_by_name(params[:list][:name])
+            @list.destroy
+            render json: {:message=>"Destroy list: #{params[:list][:name]}"}, status: 410
+          else
+            render json: {:error => 'The name does not exist'}, status: 404
+          end
       end
     end
   end

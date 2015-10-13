@@ -13,8 +13,9 @@ Rails.application.routes.draw do
       match  'lists/:id' => 'lists#show', via: :get
       match  'lists'   => 'lists#create', via: :post
       match  'lists'   => 'lists#update', via: :put
-      
+      match  'lists'   => 'lists#destroy', via: :delete
 
+      
       resources :bulk_messages
       resources :credits
       resources :single_messages
