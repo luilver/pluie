@@ -12,6 +12,14 @@ class SingleMessage < Message
     self.number.split(/[[:blank:]]/).select { |num| /535[0-9]{7}/ =~ num }
   end
 
+  def valid_gsm_numberAPI(numbers_message)
+    self.number=numbers_message.join(" ")
+    numbers_message.select{|k| /535[0-9]{7}/=~k}.map{|num| n = GsmNumber.find_or_create_by(:number=> num);
+                                                      self.gsm_numbers << n if not self.gsm_numbers.include?(n)
+    }
+
+  end
+
   def message_cost(&block)
     MessagePriceCalculator.new(SingleMsgReceiversCounter).calculate_price(self, &block)
   end
