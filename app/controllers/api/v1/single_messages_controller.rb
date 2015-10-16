@@ -1,3 +1,5 @@
+require 'action_smser_utils'
+
 module Api
   module V1
     class SingleMessagesController < ApiController
@@ -5,11 +7,16 @@ module Api
       respond_to :json
 
       def index
-        respond_with User.current.single_messages
+        render json: {:messages => User.current.single_messages.map{|mess| {:message=>mess.message, :destinatarios=>mess.gsm_numbers.count, :identifier=>mess.id}}
+               },status: 200
       end
 
       def show
-        respond_with SingleMessage.find(params[:id])
+        if not User.current.single_messages.where(:id=>params[:id]).blank?
+        render json: {:message=>  User.current.single_messages.find(params[:id]).message, :number=> User.current.single_messages.find(params[:id]).receivers}, status: 200
+        else
+          render json: {:message=>"Not exist message with that identifier"}, status: 404
+        end
       end
 
       def new
