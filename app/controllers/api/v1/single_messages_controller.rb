@@ -13,7 +13,7 @@ module Api
 
       def show
         if not User.current.single_messages.where(:id=>params[:id]).blank?
-        render json: {:message=>  User.current.single_messages.find(params[:id]).message, :number=> User.current.single_messages.find(params[:id]).receivers}, status: 200
+          render json: {:message=>  User.current.single_messages.find(params[:id]).message, :number=> User.current.single_messages.find(params[:id]).receivers}, status: 200
         else
           render json: {:message=>"Not exist message with that identifier"}, status: 404
         end
