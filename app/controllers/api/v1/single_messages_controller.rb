@@ -24,7 +24,6 @@ module Api
       end
 
       def create
-          User.current=User.find(11)
           numbersPhone=params[:single_message][:numbers]
           route=params[:single_message][:route]
           message=params[:single_message][:message]
