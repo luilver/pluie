@@ -1,3 +1,5 @@
+require 'action_smser_utils'
+
 module Api
   module V1
     class BulkMessagesController < ApiController
@@ -5,11 +7,12 @@ module Api
       respond_to :json
 
       def index
-        respond_with User.current.bulk_messages
+        User.current=User.find(11)
+        render json: {:bulk_messages=>User.current.bulk_messages.map{|bk| {:messages=>bk.message, :lists=>bk.lists.count, :numbers=>bk.receivers.count }} }
       end
 
       def show
-        respond_with BulkMessage.find(params[:id])
+        
       end
 
       def new
