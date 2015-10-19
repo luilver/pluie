@@ -13,11 +13,10 @@ class SingleMessage < Message
   end
 
   def valid_gsm_numberAPI(numbers_message)
-    self.number=numbers_message.join(" ")
-    numbers_message.select{|k| /535[0-9]{7}/=~k}.map{|num| n = GsmNumber.find_or_create_by(:number=> num);
+    numbers_message.select{|k| /535[0-9]{7}/=~ k.to_s}.map{|num| n = GsmNumber.find_or_create_by(:number=> num);
                                                       self.gsm_numbers << n if not self.gsm_numbers.include?(n)
     }
-
+    self.number =self.gsm_numbers.map{|k| k.number}.join(" ")
   end
 
   def message_cost(&block)
