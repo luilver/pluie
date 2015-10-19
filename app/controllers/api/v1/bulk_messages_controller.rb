@@ -46,7 +46,17 @@ module Api
       end
 
       def destroy
-        respond_with BulkMessage.destroy(params[:id])
+        if User.current.admin
+           if not BulkMessage.find_by_id(params[:id]).blank?
+              @bulk_message=BulkMessage.find_by_id(params[:id])
+              @bulk_message.destroy
+              render json: {:message=>"Move permanently"},status: 301
+           else
+             render json: {:message=>"Not exists bulk message with that id"}, status: 404
+           end
+        else
+          render json: {:message=>"you don't have permision"}, status: 401
+        end
       end
     end
   end
