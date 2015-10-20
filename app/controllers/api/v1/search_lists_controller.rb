@@ -28,16 +28,6 @@ module Api
         end
         render json: {:lists=> name, :notFound =>notFoundName }, status: 200
       end
-
-      protected
-
-      def GetNameLists
-        name=[]
-        User.current.lists.each do |l|
-          name <<  l.name
-        end
-        return name
-      end
     end
   end
 end
