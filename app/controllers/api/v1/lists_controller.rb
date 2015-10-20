@@ -52,7 +52,6 @@ module Api
       end
 
       def destroy
-          User.current =User.find(11)
           if not User.current.lists.find_by_name(params[:list][:name]).blank?
             @list= User.current.lists.find_by_name(params[:list][:name])
             @list.destroy
