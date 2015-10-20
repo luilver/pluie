@@ -8,9 +8,9 @@ module Api
       def index  #servicio que devuelve los nombres de todas las listas del usuario y la cantidad lists: {name:[name,...]}
         @name=[]
         User.current.lists.each do |l|
-          @name <<  {:date=> l.created_at.to_date,:name=>l.name}
+          @name <<  {:date=> l.created_at.to_date,:name=>l.name, :identifier=>l.id}
         end
-        render json: {:lists => {:count => User.current.lists.count,:name=> @name}}, status: 200
+        render json: {:lists => {:count => User.current.lists.count,:data=> @name}}, status: 200
       end
 
       def searchlists #servicio que devuelve los numeros de las listas que el usuario pidio
