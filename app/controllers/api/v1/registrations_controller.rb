@@ -7,6 +7,7 @@ module Api
 
     def create
        build_resource(sign_up_params)
+       resource.confirmed_at=DateTime.now
        if resource.save
         render json: {:register => 'ok register succefully'}, status: 201, success: true
        else
