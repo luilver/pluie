@@ -9,12 +9,11 @@ module Api
       end
 
       def show
-        count=User.current.lists.count
-        if count > params[:id].to_f
-          list=User.current.lists[params[:id].to_f]
+        if not User.current.lists.find_by_id(params[:id]).blank?
+          list=User.current.lists.find_by_id(params[:id])
           render json: {list: {:name => list.name, :numbers=> list.receivers, :created_at=>list.created_at}}, status: 200
         else
-          render json: {:error => "The number must be less than #{count}"}, status: 404
+          render json: {:error => "Not exists list with that id"}, status: 404
         end
       end
 
