@@ -52,9 +52,11 @@ module Api
       end
 
       def destroy
-          if @list= User.current.lists.find_by_name(params[:list][:name])
+          User.current =User.find(11)
+          if not User.current.lists.find_by_name(params[:list][:name]).blank?
+            @list= User.current.lists.find_by_name(params[:list][:name])
             @list.destroy
-            render json: {:message=>"Destroy list: #{params[:list][:name]}"}, status: 410
+            render json: {:message=>"List #{params[:list][:name]} has been removed succefully "}, status: 410
           else
             render json: {:error => 'The name does not exist'}, status: 404
           end
