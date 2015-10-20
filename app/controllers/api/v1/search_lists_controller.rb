@@ -23,6 +23,9 @@ module Api
             notFoundName << {:name=> n, :error => 'No existe lista con ese nombre'}
           end
         end
+        if notFoundName.blank?
+          notFoundName << {:success => 'Todas las listas solicitadas fueron devueltas'}
+        end
         render json: {:lists=> name, :notFound =>notFoundName }, status: 200
       end
 
