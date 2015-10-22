@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       resources :credits
       resources :lists
       resources :single_messages
+      match 'users' => 'users#update', via: :put
+      match 'users' => 'users#destroy', via: :delete
       resources :users
     end
   end

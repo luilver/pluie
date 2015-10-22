@@ -10,7 +10,7 @@ module Api
 
       def index
         if User.current.admin
-          render json: {:users=>User.all.map{|u| {:email=>u.email,:balance=>u.balance,:Gasto_Total=>u.spent}}},status: 200
+          render json: {:users=>User.all.map{|u| {:email=>u.email,:balance=>u.balance,:Gasto_Total=>u.spent,:identifier=>u.id}}},status: 200
         else
           render json: {:message=>"you don't have permission for this resource"},status: 401
         end
@@ -19,7 +19,7 @@ module Api
       def show
         if User.current.admin
           if not User.find_by_id(params[:id]).blank?
-            render json: {:user=>{:email=>User.find_by_id(params[:id]).email,:balance=>User.find_by_id(params[:id]).balance}},status: 200
+            render json: {:user=>{:email=>User.find_by_id(params[:id]).email,:balance=>User.find_by_id(params[:id]).balance, :identifier=>params[:id]}},status: 200
           else
             render json: {:message=>'Not exists user with that id'},status: 404
           end
@@ -44,11 +44,31 @@ module Api
       end
 
       def update
-        respond_with User.update(params[:id], params[:user])
+        if User.current.admin
+          if not User.find_by_email(user_params[:email]).blank?
+            @user=User.find_by_email(user_params[:email])
+            @user.update(user_params)
+            render json: {:message=>"the user has been update succesfully",:email=>user_params[:email]}, status: 202
+          else
+            render json: {:message=>"Not exists user with that email"},status: 404
+          end
+        else
+          render json: {:message=>"you don't have permission for this resource"},status: 401
+        end
       end
 
       def destroy
-        respond_with User.destroy(params[:id])
+        if User.current.admin
+          if not User.find_by_email(params[:user][:email]).blank?
+            @user=User.find_by_email(params[:user][:email])
+            @user.destroy
+            render json: {:message=>"The user has been deleted succefully"}, status: 200
+          else
+            render json: {:message=>"Not exists user with that email"},status: 404
+          end
+        else
+          render json: {:message=>"you don't have permission for this resource"},status: 401
+        end
       end
 
       protected
