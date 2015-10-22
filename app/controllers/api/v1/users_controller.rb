@@ -30,6 +30,9 @@ module Api
 
       def create
         if User.current.admin
+          if not (user_params[:credit]).blank?
+            params[:user].delete(:credit)
+          end
           @user=User.new(user_params)
           @user.confirmed_at=DateTime.now
 
