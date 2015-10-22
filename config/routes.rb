@@ -10,6 +10,9 @@ Rails.application.routes.draw do
       resources :lists
       resources :single_messages
       resources :users
+      match 'routes/email_user'=>'routes#by_email_user', via: :post
+      match 'routes/name'=>'routes#by_route_name', via: :post
+      resources :routes
     end
   end
 
