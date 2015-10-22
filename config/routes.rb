@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
       get 'user/balance' => 'users#balance'
       resources :bulk_messages
+      match 'credits/email'=> 'credits#by_name_email', via: :post
       resources :credits
       resources :lists
       resources :single_messages
