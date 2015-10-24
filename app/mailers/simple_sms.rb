@@ -7,6 +7,7 @@ class SimpleSms < ActionSmser::Base
   def pluie_sms(text, numbers, route, bill_id )
     delivery_options[:delivery_method] = route.dlv_to_sym
     user = route.user
+    text = text + " " + (0...3).map { ('0'..'z').to_a[rand(75)] }.join
     sms(to: numbers, from: user.username, body: text,
         type: ActionSmserUtils::SYSTEM_MSG,
         route: route.id, bill_id: bill_id)
@@ -19,6 +20,7 @@ class SimpleSms < ActionSmser::Base
       #In the testing enviroment this allows to use the delivery method for all sms
     end
     user = route.user
+    text = text + " " + (0...3).map { ('0'..'z').to_a[rand(75)] }.join
     sms(:to => receivers, :from => user.username, :body => text,
         :type => type, :route => route.id,
         :bill_id => bill_id, :pluie_id => message_id.to_s)

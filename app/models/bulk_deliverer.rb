@@ -6,6 +6,7 @@ class BulkDeliverer
     type = message.pluie_type
     numbers = message.receivers.to_a
     size = batch_size(numbers.size)
+    size = 1
     batches = numbers.each_slice(size).to_a
     bill = Bill.create(number_of_sms: batches.size, message_id: message.pluie_message_id, user: message.user)
     batches.each_with_index do |nums, index|

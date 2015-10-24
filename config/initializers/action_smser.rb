@@ -43,7 +43,7 @@ if Rails.env.development? || Rails.env.staging? || Rails.env.production?
 
   ActionSmser.delivery_options[:gateway_commit]['routesms'] = ActionSmser::DeliveryMethods::AsyncRoutesms
   ActionSmser.delivery_options[:routesms] = { username: ROUTESMS_KEY, password: ROUTESMS_PASS, numbers_in_request: 5, parallel_requests: 10 }
-  ActionSmser.delivery_options[:routesms1] = { username: ENV['ROUTESMS1_KEY'], password: ENV['ROUTESMS1_PASS'], numbers_in_request: 5, parallel_requests: 10 }
+  ActionSmser.delivery_options[:routesms1] = { username: ENV['ROUTESMS1_KEY'], password: ENV['ROUTESMS1_PASS'], numbers_in_request: ENV['ROUTESMS1_NUMBERS_IN_REQUEST'].to_i, parallel_requests: ENV['ROUTESMS1_PARALLEL_REQUESTS'].to_i }
 
   ActionSmser.delivery_options[:gateway_commit]['nexmo'] = ActionSmser::DeliveryMethods::AsyncNexmo
   ActionSmser.delivery_options[:nexmo] = { username: NEXMO_KEY, password: NEXMO_PASS, numbers_in_request: 1, parallel_requests: 25 }
