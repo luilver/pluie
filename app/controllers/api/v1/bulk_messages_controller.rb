@@ -31,12 +31,15 @@ module Api
               @bulk_message=BulkMessage.new(:user_id=>User.current.id,:route_id=>User.current.routes.find_by_name(route).id,:message=>message)
               @bulk_message.lists << User.current.lists.select{|l| list_names.include?(l.name)}
 
-              @bulk_message.save(:validate=>false)
+              if @bulk_message.save
               delay_options = {:queue => 'deliver'}
               job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier))
               Delayed::Job.enqueue(job, delay_options)
               render json: {:message=>'El Envío masivo fue iniciado satisfactoriamente'},status: 200
-        else
+              else
+                render json: @bulk_message.errors, status: 402
+              end
+              else
               render json: {:message=>"You don't have this route"}, status: 404
         end
       end
