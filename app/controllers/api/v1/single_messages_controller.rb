@@ -30,12 +30,16 @@ module Api
 
           if not User.current.routes.find_by_name(route).blank?
             @single_message=SingleMessage.new(:user_id=>User.current.id, :route_id=>User.current.routes.find_by_name(route).id,:message=>message)
-            @single_message.valid_gsm_numberAPI(numbersPhone)
+            #@single_message.valid_gsm_numberAPI(numbersPhone)
+            @single_message.number=numbersPhone.join(" ")
 
-            @single_message.save(:validate=>false,:before_save=>false,:before_validation=>false)
+            if @single_message.save
             command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
             command.deliver(@single_message)
             render json: {:messsage=>"message send succesfully"}, status: 200
+            else
+            render json: @single_message.errors, status: 402
+            end
           else
             render json: {:message=>"The route is wrong"}, status: 404
           end
