@@ -63,6 +63,7 @@ module Api
   def destroy
 
         token_api_key=request.headers["HTTP_API_KEY"]
+        return (render json: {:message=>'Invalid email'}, status: 404) unless not User.find_by_email(request.headers["HTTP_EMAIL"]).blank?
 
         if not ApiSetting.find_by_api_key(token_api_key).blank?
            api_setting= ApiSetting.find_by_api_key(token_api_key)
@@ -72,14 +73,16 @@ module Api
            #ApiSetting.destroy(api_setting.id)
            render json: { :message => "Session deleted"} , :status => 200, :success => true
         else
-           render :json => { :message => 'Invalid token.' }, :status => 404
+           render :json => {:message => 'Invalid api key' }, :status => 404
         end
   end
 
   protected
   def invalid_login_attempt
     warden.custom_failure!
-    render json: { success: false, message: 'Error with your login or password' }, status: 401
+    data = { email: params[:email] }
+    return (render json: {success: false, :message=>"Invalid email"}, status: 404) unless not User.find_by_email(params[:email]).blank?
+    render json: { success: false, message: 'Invalid password' }, status: 404
   end
 
   def resource_from_credentials
