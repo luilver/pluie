@@ -36,7 +36,7 @@ module Api
             if @single_message.save
             command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
             command.deliver(@single_message)
-            render json: {:messsage=>"message send succesfully"}, status: 200
+            render json: {:messsage=>"Single Message successfully sent"}, status: 200
             else
             render json: @single_message.errors, status: 402
             end
