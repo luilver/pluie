@@ -5,9 +5,19 @@ Rails.application.routes.draw do
   namespace :api, :defaults => {:format => 'json'} do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
       get 'user/balance' => 'users#balance'
+      get 'lists/searchs' => 'search_lists#index'
+      match 'lists/searchs' => 'search_lists#searchlists', via: :post
+
+      ######resources lists
+      match 'lists' => 'lists#index', via: :get
+      match  'lists/:id' => 'lists#show', via: :get
+      match  'lists'   => 'lists#create', via: :post
+      match  'lists'   => 'lists#update', via: :put
+      match  'lists'   => 'lists#destroy', via: :delete
+
+      
       resources :bulk_messages
       resources :credits
-      resources :lists
       resources :single_messages
       resources :users
 
