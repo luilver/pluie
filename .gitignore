@@ -40,5 +40,8 @@ TODO
 *.orig
 /vendor/cache
 .idea
+*.swp
 *.rej
 pluie_test
+*.swo
+*~

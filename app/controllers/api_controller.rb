@@ -2,7 +2,7 @@ class ApiController < ActionController::Base
   before_filter :authenticate_api!
   #load_and_authorize_resource
   prepend_before_filter :ensure_params_exist
-  protect_from_forgery with: :null_session
+  protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   rescue_from CanCan::AccessDenied do |exception|
     render :json => { :sucess => false,
