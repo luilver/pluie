@@ -41,7 +41,7 @@ module Api
             render json: @single_message.errors, status: 402
             end
           else
-            render json: {:message=>"The route is wrong"}, status: 404
+            render json: {:message=>"Invalid route"}, status: 404
           end
       end
 
