@@ -43,7 +43,11 @@ module Api
             @credit=Credit.new(:balance=>params[:credit][:balance],:description=>params[:credit][:description])
             if not User.find_by_email(params[:credit][:email]).blank?
               @credit.user=User.find_by_email(params[:credit][:email])
-              render json: {:message=>"the credit has been created"},status: 201
+              if @credit.save
+                render json: {:message=>"the credit has been created"},status: 201
+              else
+                render json: @credit.errors
+              end
             else
               render json: {:message=>"Not exists user with that email"}, status: 404
             end
