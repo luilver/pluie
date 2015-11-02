@@ -28,6 +28,7 @@ module Api
           route=params[:single_message][:route]
           message=params[:single_message][:message]
 
+          return (render json: {:message=>"route is blank"},status: 404) if route.blank?
           if not User.current.routes.find_by_name(route).blank?
             @single_message=SingleMessage.new(:user_id=>User.current.id, :route_id=>User.current.routes.find_by_name(route).id,:message=>message)
             #@single_message.valid_gsm_numberAPI(numbersPhone)
@@ -38,10 +39,14 @@ module Api
             command.deliver(@single_message)
             render json: {:messsage=>"Single Message successfully sent"}, status: 200
             else
-            render json: @single_message.errors, status: 402
+              mens_errors=""
+              @single_message.errors.full_messages.each do |f|
+                 mens_errors=mens_errors+", "+f
+              end
+              render json: {:message=>mens_errors}, status: 422
             end
           else
-            render json: {:message=>"Invalid route"}, status: 404
+            render json: {:message=>"Invalid route"}, status: 422
           end
       end
 
