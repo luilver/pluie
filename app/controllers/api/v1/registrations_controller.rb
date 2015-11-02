@@ -32,13 +32,13 @@ module Api
              if user.admin
                return
              else
-               render json: {:message=>"the user is not admin"},status: 401
+               render json: {:message=>"Unauthorized"},status: 401
              end
            else
-             render json: {:message=>"Invalid Api key"}, status: 404
+             render json: {:message=>"Invalid Api key"}, status: 422
            end
          else
-          render json: {:message=>"Invalid email"}, status: 404
+          render json: {:message=>"Invalid email"}, status: 422
          end
     end
   end

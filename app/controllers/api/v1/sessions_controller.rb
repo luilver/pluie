@@ -61,10 +61,11 @@ module Api
   end
 
   def destroy
-
         token_api_key=request.headers["HTTP_API_KEY"]
-        return (render json: {:message=>'Invalid email'}, status: 404) unless not User.find_by_email(request.headers["HTTP_EMAIL"]).blank?
+        return (render json: {:message=>'email is missing'}, status: 404) if request.headers["HTTP_EMAIL"].blank?
+        return (render json: {:message=>'Invalid email'}, status: 422) unless not User.find_by_email(request.headers["HTTP_EMAIL"]).blank?
 
+        return (render json: {:message=>"api key is missing"},status: 404) if request.headers["HTTP_API_KEY"].blank?
         if not ApiSetting.find_by_api_key(token_api_key).blank?
            api_setting= ApiSetting.find_by_api_key(token_api_key)
 
@@ -73,7 +74,7 @@ module Api
            #ApiSetting.destroy(api_setting.id)
            render json: { :message => "Session deleted"} , :status => 200, :success => true
         else
-           render :json => {:message => 'Invalid api key' }, :status => 404
+           render :json => {:message => 'Invalid api key' }, :status => 422
         end
   end
 
@@ -81,8 +82,10 @@ module Api
   def invalid_login_attempt
     warden.custom_failure!
     data = { email: params[:email] }
-    return (render json: {success: false, :message=>"Invalid email"}, status: 404) unless not User.find_by_email(params[:email]).blank?
-    render json: { success: false, message: 'Invalid password' }, status: 404
+    return (render json: {success: false, :message => "email is blank"}, status: 404) if params[:email].blank?
+    return (render json: {success: false, :message=>"Invalid email"}, status: 422) if User.find_by_email(params[:email]).blank?
+    return ( render json: { success: false, message: 'password missing'}, status: 404) if params[:password].blank?
+    render json: { success: false, message: 'Invalid password' }, status: 422
   end
 
   def resource_from_credentials
