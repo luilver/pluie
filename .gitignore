@@ -6,11 +6,15 @@
 
 # Ignore bundler config.
 /.bundle
+*.rej
+*.swp
+*~
+*.swo
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
-
+pluie_development
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
@@ -31,3 +35,10 @@ TODO
 
 # Generated assets
 /public/assets
+
+#.orig file
+*.orig
+/vendor/cache
+.idea
+*.rej
+pluie_test
