@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
   post 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
 
+  get 'api/doc' => 'docs#api'
   resources :users, path: '/admin'
 
   authenticated :user, -> user { user.admin } do
