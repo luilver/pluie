@@ -9,19 +9,56 @@ module Api
       end
 
       def show
-        respond_with List.find(params[:id])
+        if not User.current.lists.find_by_id(params[:id]).blank?
+          list=User.current.lists.find_by_id(params[:id])
+          render json: {list: {:name => list.name, :numbers=> list.receivers, :created_at=>list.created_at}}, status: 200
+        else
+          render json: {:error => "Not exists list with that id"}, status: 404
+        end
       end
 
       def create
-        respond_with List.create(params[:list])
+        numbers_api=params[:list][:numbers]
+        name =params[:list][:name]
+
+        @list=List.new
+        @list.user = User.current
+        @list.name=name
+
+        if not User.current.lists.find_by_name(name)
+          if @list.save(:validate=>false)
+            @list.addNumbersViaApi(numbers_api)
+            render json: {:message => 'The list was successfully created'}, status: 201
+          else
+            render json: {:error=>'Not can save'},status: 400
+          end
+        else
+          render json: {:error => 'The name exists'}, status: 400
+        end
       end
 
       def update
-        respond_with List.update(params[:id], params[:list])
+        if @list = User.current.lists.find_by_name(params[:list][:name])
+          if params[:list][:remove]
+            @list.deleteNumbers(params[:list][:numbers])
+            render json: {:message=>'The list was successfully update', :option=>'remove'}, status: 200
+          else
+            @list.addNumbersViaApi(params[:list][:numbers])
+            render json: {:message=>'The list was successfully update', :option=>'add'}, status: 200
+          end
+        else
+          render json: {:error => 'The name does not exist'}, status: 404
+        end
       end
 
       def destroy
-        respond_with List.destroy(params[:id])
+          if not User.current.lists.find_by_name(params[:list][:name]).blank?
+            @list= User.current.lists.find_by_name(params[:list][:name])
+            @list.destroy
+            render json: {:message=>"List #{params[:list][:name]} has been removed succefully "}, status: 410
+          else
+            render json: {:error => 'The name does not exist'}, status: 404
+          end
       end
     end
   end

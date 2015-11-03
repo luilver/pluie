@@ -1,3 +1,5 @@
+require 'action_smser_utils'
+
 module Api
   module V1
     class SingleMessagesController < ApiController
@@ -5,38 +7,60 @@ module Api
       respond_to :json
 
       def index
-        respond_with User.current.single_messages
+        render json: {:messages => User.current.single_messages.map{|mess| {:message=>mess.message, :destinatarios=>mess.gsm_numbers.count, :identifier=>mess.id}}
+               },status: 200
       end
 
       def show
-        respond_with SingleMessage.find(params[:id])
+        if not User.current.single_messages.where(:id=>params[:id]).blank?
+          render json: {:message=>  User.current.single_messages.find(params[:id]).message, :number=> User.current.single_messages.find(params[:id]).receivers,:identifier=>params[:id]}, status: 200
+        else
+          render json: {:message=>"Not exist message with that identifier"}, status: 404
+        end
       end
 
       def new
-        #TODO: allow multiple recipients in single message
-        numbers = GsmNumber.find_by_number_or_create(params[:number])
-
-        message = SingleMessage.create(
-           :message => params[:message],
-           :number => params[:number],
-           :user => User.current
-        )
-        message.gsm_numbers << numbers
-        message.save
-
-        respond_with message
+          render json: {:message=> "this resource is not available"},status: 301
       end
 
       def create
-        respond_with SingleMessage.create(params[:single_message])
+          numbersPhone=params[:single_message][:numbers]
+          route=params[:single_message][:route]
+          message=params[:single_message][:message]
+
+          if not User.current.routes.find_by_name(route).blank?
+            @single_message=SingleMessage.new(:user_id=>User.current.id, :route_id=>User.current.routes.find_by_name(route).id,:message=>message)
+            #@single_message.valid_gsm_numberAPI(numbersPhone)
+            @single_message.number=numbersPhone.join(" ")
+
+            if @single_message.save
+            command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
+            command.deliver(@single_message)
+            render json: {:messsage=>"message send succesfully"}, status: 200
+            else
+            render json: @single_message.errors, status: 402
+            end
+          else
+            render json: {:message=>"The route is wrong"}, status: 404
+          end
       end
 
       def update
-        respond_with SingleMessage.update(params[:id], params[:single_message])
+           render json: {:message=> "this resource is not available"},status: 301
       end
 
       def destroy
-        respond_with SingleMessage.destroy(params[:id])
+        if User.current.admin
+          if not SingleMessage.where(:id=>params[:id]).blank?
+            @single_message=SingleMessage.where(:id=>params[:id]).first
+            @single_message.destroy
+            render json: {:message=>'delete single message'}, status: 200
+          else
+            render json: {:message=>"Not exist message with that identifier"}, status: 404
+          end
+        else
+          render json: {:message=>"you don't have permision"}, status: 401
+        end
       end
     end
   end
