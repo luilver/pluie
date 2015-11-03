@@ -15,7 +15,7 @@ module Api
           @bulk=User.current.bulk_messages.find_by_id(params[:id])
           render json: {:bulk_message=> {:message=>@bulk.message,:route=>@bulk.route.name,:lists=>@bulk.lists.count, :numbers=>@bulk.receivers.count, :list_names=>@bulk.lists.map{|n| n.name}}},status: 200
         else
-         render json: {:message=>"Not exists bulk message with that id"}, status: 404
+         render json: {:message=>"Not exists bulk message with that id"}, status: 422
         end
       end
 
@@ -25,6 +25,7 @@ module Api
 
       def create
         route=params[:bulk_message][:route]
+        return (render json: {:message=>"route is blank"}, status: 404) if route.blank?
         if not User.current.routes.find_by_name(route).blank?
               message=params[:bulk_message][:message]
               list_names=params[:bulk_message][:list_names]
@@ -37,10 +38,10 @@ module Api
               Delayed::Job.enqueue(job, delay_options)
               render json: {:message=>'El Envío masivo fue iniciado satisfactoriamente'},status: 200
               else
-                render json: @bulk_message.errors, status: 402
+                render json: @bulk_message.errors, status: 422
               end
               else
-              render json: {:message=>"You don't have this route"}, status: 404
+              render json: {:message=>"Invalid route"}, status: 422
         end
       end
 
@@ -55,7 +56,7 @@ module Api
               @bulk_message.destroy
               render json: {:message=>"Move permanently"},status: 301
            else
-             render json: {:message=>"Not exists bulk message with that id"}, status: 404
+             render json: {:message=>"Not exists bulk message with that id"}, status: 422
            end
         else
           render json: {:message=>"you don't have permision"}, status: 401
