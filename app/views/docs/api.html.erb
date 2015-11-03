@@ -22,7 +22,8 @@
 
 <ul>
 <li><strong>Code:</strong> 201 CREATED <br />
-<strong>Content:</strong> <code>{"user":{"email":"me@gmail.com", "api_key":"51407ba8e75c7b1819a12137d4df4ecb"}}</code></li>
+<strong>Content:</strong> <code>{"user":{"email":"me@gmail.com",
+"api_key":"51407ba8e75c7b1819a12137d4df4ecb"}}</code></li>
 </ul></li>
 <li><p><strong>Error Response:</strong></p>
 
@@ -39,7 +40,8 @@
 </ul></li>
 <li><p><strong>Sample Call:</strong></p>
 
-<p>curl http://sms.knal.es/api/sessions -H 'content-type: application/json' -X POST -v -d '{"email":"me@gmail.com", "password":"secret"}'</p></li>
+<p>curl http://sms.knal.es/api/sessions -H 'content-type: application/json' -X
+POST -v -d '{"email":"me@gmail.com", "password":"secret"}'</p></li>
 </ul>
 
 <h2><strong>End Session</strong></h2>
@@ -83,7 +85,8 @@
 </ul></li>
 <li><p><strong>Sample Call:</strong></p>
 
-<p>curl http://sms.knal.es/api/sessions -H 'content-type: application/json' -X DELETE -v -d '{"email":"me@gmail.com", "password":"secret"}'</p></li>
+<p>curl http://sms.knal.es/api/sessions -H 'content-type: application/json' -X
+DELETE -v -d '{"email":"me@gmail.com", "password":"secret"}'</p></li>
 </ul>
 
 <h2><strong>Show User Balance</strong></h2>
@@ -115,7 +118,8 @@
 <p><strong>Content:</strong> <code>{"success":false, "message":"Invalid email"}</code></p></li>
 <li><p><strong>Sample Call:</strong></p>
 
-<p>curl http://sms.knal.es/api/user/balance -H 'content-type: application/json' -H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb'</p></li>
+<p>curl http://sms.knal.es/api/user/balance -H 'content-type: application/json'
+-H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb'</p></li>
 </ul>
 
 <h2><strong>Sending Single Messages</strong></h2>
@@ -174,7 +178,11 @@
 </ul></li>
 <li><p><strong>Sample Call:</strong></p>
 
-<p>curl http://sms.knal.es/api/single_messages -H 'content-type:application/json' -H 'email:me@gmail.com' -H 'api<em>key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d '{"single</em>message":{"numbers":["5352644047"], "route":"Prueba", "message":"Testing single meesage via api"}}'</p></li>
+<p>curl http://sms.knal.es/api/single_messages -H
+'content-type:application/json' -H 'email:me@gmail.com' -H
+'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d
+'{"single_message":{"numbers":["5352644047"], "route":"Prueba",
+"message":"Testing single meesage via api"}}'</p></li>
 <li><p><strong>Notes:</strong></p>
 
 <p>Numbers <strong>must</strong> be an array</p></li>
@@ -199,7 +207,9 @@
 <p>None</p></li>
 <li><p><strong>Success Response:</strong></p>
 
-<p><strong>Content:</strong> <code>{"lists":{"count":2, "data":[{"date":"2015-08-16", "name":"foo", "identifier":100}, {"date":"2015-10-18", "name":"bar", "identifier":192}]}}</code></p></li>
+<p><strong>Content:</strong> <code>{"lists":{"count":2, "data":[{"date":"2015-08-16",
+"name":"foo", "identifier":100}, {"date":"2015-10-18", "name":"bar",
+"identifier":192}]}}</code></p></li>
 <li><p><strong>Error Response:</strong></p>
 
 <p><strong>Content:</strong> <code>{"success":false, "message":"Invalid email"}</code></p>
@@ -209,7 +219,8 @@
 <p><strong>Content:</strong> <code>{"success":false, "message":"Invalid password"}</code></p></li>
 <li><p><strong>Sample Call:</strong></p>
 
-<p>curl http://sms.knal.es/api/lists/searchs -H 'content-type:application/json' -H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb'</p></li>
+<p>curl http://sms.knal.es/api/lists/searchs -H 'content-type:application/json'
+-H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb'</p></li>
 </ul>
 
 <h2><strong>Retrieving Lists</strong></h2>
@@ -240,7 +251,8 @@
 </ul></li>
 <li><p><strong>Success Response:</strong></p>
 
-<p><strong>Content:</strong> <code>{"lists":[{"name":"foo", "numbers":["5352644047", "5352642266"]}]}</code></p></li>
+<p><strong>Content:</strong> <code>{"lists":[{"name":"foo", "numbers":["5352644047",
+"5352642266"]}]}</code></p></li>
 <li><p><strong>Error Response:</strong></p>
 
 <p><strong>Content:</strong> <code>{"success":false, "message":"Invalid email"}</code></p>
@@ -250,7 +262,9 @@
 <p><strong>Content:</strong> <code>{"success":false, "message":"Invalid password"}</code></p></li>
 <li><p><strong>Sample Call:</strong></p>
 
-<p>curl http://sms.knal.es/api/lists/searchs -H 'content-type:application/json' -H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d '{"lists": {"name": ["foo"]}}'</p></li>
+<p>curl http://sms.knal.es/api/lists/searchs -H 'content-type:application/json'
+-H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X
+POST -v -d '{"lists": {"name": ["foo"]}}'</p></li>
 <li><p><strong>Notes:</strong></p>
 
 <p>Name <strong>must</strong> be an array</p></li>
@@ -295,7 +309,9 @@
 <p><strong>Content:</strong> <code>{"success":false, "message":"Invalid password"}</code></p></li>
 <li><p><strong>Sample Call:</strong></p>
 
-<p>curl http://sms.knal.es/api/lists -H 'content-type:application/json' -H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d '{"list": {"numbers":["5352644047"], "name": "bar"}}'</p></li>
+<p>curl http://sms.knal.es/api/lists -H 'content-type:application/json' -H
+'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST
+-v -d '{"list": {"numbers":["5352644047"], "name": "bar"}}'</p></li>
 <li><p><strong>Notes:</strong></p>
 
 <p>Numbers <strong>must</strong> be an array</p></li>
@@ -365,7 +381,10 @@
 <li><p><strong>Sample Call:</strong></p>
 
 <p>curl http://sms.knal.es/api/bulk_messages -H
-'content-type:application/json' -H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -d '{"bulk_message": {"route":"Prueba", "message": "Testing bulk messages via api", "list_names": ["bar"]}}'</p></li>
+'content-type:application/json' -H 'email:me@gmail.com' -H
+'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -d '{"bulk_message":
+{"route":"Prueba", "message": "Testing bulk messages via api", "list_names":
+["bar"]}}'</p></li>
 <li><p><strong>Notes:</strong></p>
 
 <p>ListNames <strong>must</strong> be an array</p></li>
