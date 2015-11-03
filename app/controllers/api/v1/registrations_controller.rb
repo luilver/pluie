@@ -23,23 +23,23 @@ module Api
     end
 
     def authenticate_admin!
-      if not (request.headers["HTTP_EMAIL"].blank? || request.headers["HTTP_API_KEY"].blank?)
+      return (render json: {:message=>"The email is blank"}, status: 404) unless not request.headers["HTTP_EMAIL"].blank?
+      return (render json: {:message=>"The api key is blank"}, status: 404) unless not request.headers["HTTP_API_KEY"].blank?
+
+
          if user=User.find_by_email(request.headers["HTTP_EMAIL"])
            if Devise.secure_compare(user.api_key,  request.headers["HTTP_API_KEY"])
              if user.admin
                return
              else
-               render json: {:message=>"the user is not admin"},status: 401
+               render json: {:message=>"Unauthorized"},status: 401
              end
            else
-             render json: {:message=>"api_key invalid"}, status: 401
+             render json: {:message=>"Invalid Api key"}, status: 422
            end
          else
-          render json: {:message=>"email invalid"}, status: 400
+          render json: {:message=>"Invalid email"}, status: 422
          end
-      else
-        render json: {:message=>"missing email or api_key"},status: 404
-      end
     end
   end
 end

@@ -31,7 +31,7 @@ class ApiController < ActionController::Base
   protected
 
     def not_user
-    render json: {success: false, message: "Not user with this gmail"}, status: 400
+    render json: {success: false, message: "Invalid email"}, status: 400
     end
 
     def ensure_params_exist
