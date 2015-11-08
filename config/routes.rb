@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       match  'lists'   => 'lists#update', via: :put
       match  'lists'   => 'lists#destroy', via: :delete
 
-      
+
       resources :bulk_messages
       resources :credits
       resources :single_messages
@@ -29,6 +29,9 @@ Rails.application.routes.draw do
         match  '/registrations' => 'registrations#create',   :via => :post
 
       end
+      match 'routes/email_user'=>'routes#by_email_user', via: :post
+      match 'routes/name'=>'routes#by_route_name', via: :post
+      resources :routes
     end
   end
 

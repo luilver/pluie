@@ -1,0 +1,115 @@
+module Api
+  module V1
+    class RoutesController < ApiController
+
+      respond_to :json
+
+      def index
+        if User.current.admin
+          render json: {:routes=>Route.all.map{|r| {:name=>r.name,:price=>r.price,:email=>r.user.email,:gateway=>r.gateway.name,:identifier=>r.id}}}, status: 200
+        else
+         render json: {:message=>"you have not permision for this resource"}, status: 401
+        end
+      end
+
+      def show
+        if User.current.admin
+            if Route.find_by_id(params[:id])
+              route=Route.find_by_id(params[:id])
+              render json: {:route=>{:name_route=>route.name,:email=>route.user.email,:gateway=>route.gateway.name,:price=>route.price,:route_intern=>route.system_route}}, status: 200
+            else
+              render json: {:message=>"Not exists route with that id: #{params[:id]}"}, status: 404
+            end
+          else
+          render json: {:message=>"you have not permision for this resource"}, status: 401
+        end
+      end
+
+      def by_route_name
+        if User.current.admin
+            if Route.where(:name=>params[:route][:name_route]).any?
+              render json: {:name_route=>params[:route][:name_route],:routes=>Route.where(:name=>params[:route][:name_route]).map{|r| {:email=>r.user.email,:gateway=>r.gateway.name,:price=>r.price,:identifier=>r.id}}}, status: 200
+            else
+              render json: {:message=>"Not exists route with that name: #{params[:route][:name_route]}"}, status: 404
+            end
+        else
+          render json: {:message=>"you have not permision for this resource"}, status: 401
+        end
+      end
+
+      def by_email_user
+        if User.current.admin
+          if (not User.find_by_email(params[:route][:email_user]).blank?) && (not User.find_by_email(params[:route][:email_user]).routes.blank?)
+              user=User.find_by_email(params[:route][:email_user])
+              render json: {:email=>user.email,:routes=>user.routes.map{|r| {:name_route=>r.name, :gateway=>r.gateway.name,:price=>r.price,:identifier=>r.id}}},status: 200
+          else
+              render json: {:message=>"Email is wrong or the user have not routes"}, status: 404
+          end
+        else
+          render json: {:message=>"you have not permision for this resource"}, status: 401
+        end
+      end
+
+      def create
+        if User.current.admin
+            if (not User.find_by_email(params[:route][:email_user]).blank?) && (not Gateway.find_by_name(params[:route][:gateway_name]).blank?)
+              @route=Route.new(:name=>route_params[:name],:price=>route_params[:price],:system_route=>route_params[:system_route])
+              @route.user=User.find_by_email(route_params[:email_user])
+              @route.gateway=Gateway.find_by_name(route_params[:gateway_name])
+                if @route.save
+                  render json: {:message=>"the route was created succefully"}, status: 201
+                else
+                  render json: @route.errors
+                end
+            else
+              render json: {:message=> "email_user or gateway_name wrong"}, status: 404
+            end
+        else
+          render json: {:message=>"you have not permision for this resource"}, status: 401
+        end
+      end
+
+      def update
+        if User.current.admin
+            @route=Route.find(params[:id]) unless Route.find_by_id(params[:id]).blank?
+            if @route
+              @route.user=User.find_by_email(route_params[:email_user]) unless  User.find_by_email(route_params[:email_user]).blank?
+              @route.gateway=Gateway.find_by_name(route_params[:gateway_name]) unless Gateway.find_by_name(route_params[:gateway_name]).blank?
+              if  (not Gateway.find_by_name(route_params[:gateway_name]).blank?) && (not User.find_by_email(route_params[:email_user]).blank?)
+                params[:route].delete(:email_user)
+                params[:route].delete(:gateway_name)
+                @route.update(route_params)
+                render json: {:message=>"the route was update succefully"}, status: 200
+              else
+                render json: {:message=> "the email o gateway wrong"}, status: 404
+              end
+            else
+              render json: {:message=> "The identifier: #{params[:id]} not exists"}, status: 404
+            end
+        else
+          render json: {:message=>"you have not permision for this resource"}, status: 401
+        end
+      end
+
+      def destroy
+        if User.current.admin
+          if not Route.find_by_id(params[:id]).blank?
+            @route=Route.find(params[:id])
+            @route.destroy
+            render json: {:message=>"The route was removed"}, status: 200
+          else
+            render json: {:message=> "The identifier: #{params[:id]} not exists"}, status: 404
+          end
+        else
+          render json: {:message=>"you have not permision for this resource"}, status: 401
+        end
+      end
+
+      private
+
+      def route_params
+        params.require(:route).permit(:name, :price, :email_user, :gateway_name, :system_route)
+      end
+    end
+  end
+end
