@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       resources :bulk_messages
       resources :credits
       resources :single_messages
+      match 'users' => 'users#update', via: :put
+      match 'users' => 'users#destroy', via: :delete
       resources :users
 
       devise_scope :user do
