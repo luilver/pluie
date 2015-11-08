@@ -1,0 +1,391 @@
+<h2><strong>Begin Session</strong></h2>
+
+<p>Gets a new api key for the current session</p>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/sessions</p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>POST</code></p></li>
+<li><p><strong>HEADER Params</strong></p>
+
+<p>None</p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>email</code> <br />
+<code>password</code></p></li>
+<li><p><strong>Success Response:</strong></p>
+
+<ul>
+<li><strong>Code:</strong> 201 CREATED <br />
+<strong>Content:</strong> <code>{"user":{"email":"me@gmail.com",
+"api_key":"51407ba8e75c7b1819a12137d4df4ecb"}}</code></li>
+</ul></li>
+<li><p><strong>Error Response:</strong></p>
+
+<ul>
+<li><strong>Code:</strong> 401 UNAUTHORIZED <br />
+<strong>Content:</strong> <code>{"success":false, "message":"Invalid email"}</code></li>
+</ul>
+
+<p>OR</p>
+
+<ul>
+<li><strong>Code:</strong> 401 UNAUTHORIZED <br />
+<strong>Content:</strong> <code>{"success":false, "message":"Invalid password"}</code></li>
+</ul></li>
+<li><p><strong>Sample Call:</strong></p>
+
+<p>curl http://sms.knal.es/api/sessions -H 'content-type: application/json' -X
+POST -v -d '{"email":"me@gmail.com", "password":"secret"}'</p></li>
+</ul>
+
+<h2><strong>End Session</strong></h2>
+
+<p>Deletes an api key and destroys current session</p>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/sessions</p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>DELETE</code></p></li>
+<li><p><strong>HEADER Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>email</code> <br />
+<code>api_key</code></p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p>None</p></li>
+<li><p><strong>Success Response:</strong></p>
+
+<ul>
+<li><strong>Code:</strong> 200 <br />
+<strong>Content:</strong> <code>{"message":"Session deleted"}</code></li>
+</ul></li>
+<li><p><strong>Error Response:</strong></p>
+
+<ul>
+<li><strong>Code:</strong> 404 NOT FOUND <br />
+<strong>Content:</strong> <code>{"message":"Invalid email."}</code></li>
+</ul>
+
+<p>OR</p>
+
+<ul>
+<li><strong>Code:</strong> 404 NOT FOUND <br />
+<strong>Content:</strong> <code>{"message":"Invalid api key."}</code></li>
+</ul></li>
+<li><p><strong>Sample Call:</strong></p>
+
+<p>curl http://sms.knal.es/api/sessions -H 'content-type: application/json' -X
+DELETE -v -d '{"email":"me@gmail.com", "password":"secret"}'</p></li>
+</ul>
+
+<h2><strong>Show User Balance</strong></h2>
+
+<p>Returns current user balance</p>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/user/balance</p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>GET</code></p></li>
+<li><p><strong>HEADER Params</strong></p>
+
+<p>None</p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p>None</p></li>
+<li><p><strong>Success Response:</strong></p>
+
+<p><strong>Content:</strong> <code>"2.123"</code></p></li>
+<li><p><strong>Error Response:</strong></p>
+
+<p><strong>Content:</strong> <code>{"success":false, "message":"Invalid api key"}</code></p>
+
+<p>OR</p>
+
+<p><strong>Content:</strong> <code>{"success":false, "message":"Invalid email"}</code></p></li>
+<li><p><strong>Sample Call:</strong></p>
+
+<p>curl http://sms.knal.es/api/user/balance -H 'content-type: application/json'
+-H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb'</p></li>
+</ul>
+
+<h2><strong>Sending Single Messages</strong></h2>
+
+<p>Sends a single message to given numbers</p>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/single_messages</p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>POST</code></p></li>
+<li><p><strong>HEADER Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>email</code> <br />
+<code>api_key</code></p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>single_message:</code></p>
+
+<ul>
+<li><code>numbers</code></li>
+<li><code>route</code></li>
+<li><code>message</code></li>
+</ul></li>
+<li><p><strong>Success Response:</strong></p>
+
+<ul>
+<li><strong>Code:</strong> 200 <br />
+<strong>Content:</strong> <code>{"messsage":"Single message succesfully sent"}</code></li>
+</ul></li>
+<li><p><strong>Error Response:</strong></p>
+
+<ul>
+<li><strong>Code:</strong> 422 UNPROCESSABLE ENTRY <br />
+<strong>Content:</strong> <code>{"success":false, "message":"Invalid email"}</code></li>
+</ul>
+
+<p>OR</p>
+
+<ul>
+<li><strong>Code:</strong> 422 UNPROCESSABLE ENTRY <br />
+<strong>Content:</strong> <code>{"success":false, "message":"Invalid password"}</code></li>
+</ul>
+
+<p>OR</p>
+
+<ul>
+<li><strong>Code:</strong> 404 <br />
+<strong>Content:</strong> <code>{"message":"Invalid route"}</code></li>
+</ul></li>
+<li><p><strong>Sample Call:</strong></p>
+
+<p>curl http://sms.knal.es/api/single_messages -H
+'content-type:application/json' -H 'email:me@gmail.com' -H
+'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d
+'{"single_message":{"numbers":["5352644047"], "route":"Prueba",
+"message":"Testing single meesage via api"}}'</p></li>
+<li><p><strong>Notes:</strong></p>
+
+<p>Numbers <strong>must</strong> be an array</p></li>
+</ul>
+
+<h2><strong>Index User Lists</strong></h2>
+
+<p>Shows lists of current user</p>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/lists/searchs</p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>GET</code></p></li>
+<li><p><strong>HEADER Params</strong></p>
+
+<p>None</p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p>None</p></li>
+<li><p><strong>Success Response:</strong></p>
+
+<p><strong>Content:</strong> <code>{"lists":{"count":2, "data":[{"date":"2015-08-16",
+"name":"foo", "identifier":100}, {"date":"2015-10-18", "name":"bar",
+"identifier":192}]}}</code></p></li>
+<li><p><strong>Error Response:</strong></p>
+
+<p><strong>Content:</strong> <code>{"success":false, "message":"Invalid email"}</code></p>
+
+<p>OR</p>
+
+<p><strong>Content:</strong> <code>{"success":false, "message":"Invalid password"}</code></p></li>
+<li><p><strong>Sample Call:</strong></p>
+
+<p>curl http://sms.knal.es/api/lists/searchs -H 'content-type:application/json'
+-H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb'</p></li>
+</ul>
+
+<h2><strong>Retrieving Lists</strong></h2>
+
+<p>Searchs a given list</p>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/list/searchs</p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>POST</code></p></li>
+<li><p><strong>HEADER Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>email</code> <br />
+<code>api_key</code></p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>lists:</code></p>
+
+<ul>
+<li><code>name</code></li>
+</ul></li>
+<li><p><strong>Success Response:</strong></p>
+
+<p><strong>Content:</strong> <code>{"lists":[{"name":"foo", "numbers":["5352644047",
+"5352642266"]}]}</code></p></li>
+<li><p><strong>Error Response:</strong></p>
+
+<p><strong>Content:</strong> <code>{"success":false, "message":"Invalid email"}</code></p>
+
+<p>OR</p>
+
+<p><strong>Content:</strong> <code>{"success":false, "message":"Invalid password"}</code></p></li>
+<li><p><strong>Sample Call:</strong></p>
+
+<p>curl http://sms.knal.es/api/lists/searchs -H 'content-type:application/json'
+-H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X
+POST -v -d '{"lists": {"name": ["foo"]}}'</p></li>
+<li><p><strong>Notes:</strong></p>
+
+<p>Name <strong>must</strong> be an array</p></li>
+</ul>
+
+<h2><strong>Creating Lists</strong></h2>
+
+<p>Creates a given list</p>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/lists</p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>POST</code></p></li>
+<li><p><strong>HEADER Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>email</code> <br />
+<code>api_key</code></p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>lists:</code></p>
+
+<ul>
+<li><code>numbers</code></li>
+<li><code>name</code></li>
+</ul></li>
+<li><p><strong>Success Response:</strong></p>
+
+<p><strong>Content:</strong> <code>{"message":"The list was successfully created"}</code></p></li>
+<li><p><strong>Error Response:</strong></p>
+
+<p><strong>Content:</strong> <code>{"success":false, "message":"Invalid email"}</code></p>
+
+<p>OR</p>
+
+<p><strong>Content:</strong> <code>{"success":false, "message":"Invalid password"}</code></p></li>
+<li><p><strong>Sample Call:</strong></p>
+
+<p>curl http://sms.knal.es/api/lists -H 'content-type:application/json' -H
+'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST
+-v -d '{"list": {"numbers":["5352644047"], "name": "bar"}}'</p></li>
+<li><p><strong>Notes:</strong></p>
+
+<p>Numbers <strong>must</strong> be an array</p></li>
+</ul>
+
+<h2><strong>Sending Bulk Messages</strong></h2>
+
+<p>Sends bulk messages to given lists</p>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/bulk_messages</p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>POST</code></p></li>
+<li><p><strong>HEADER Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>email</code> <br />
+<code>api_key</code></p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>bulk_message:</code></p>
+
+<ul>
+<li><code>route</code></li>
+<li><code>message</code></li>
+<li><code>list_names</code></li>
+</ul></li>
+<li><p><strong>Success Response:</strong></p>
+
+<ul>
+<li><strong>Code:</strong> 200 <br />
+<strong>Content:</strong> <code>{"messsage":"Bulk message succesfully sent"}</code></li>
+</ul></li>
+<li><p><strong>Error Response:</strong></p>
+
+<ul>
+<li><strong>Code:</strong> 422 UNPROCESSABLE ENTRY <br />
+<strong>Content:</strong> <code>{"success":false, "message":"Invalid email"}</code></li>
+</ul>
+
+<p>OR</p>
+
+<ul>
+<li><strong>Code:</strong> 422 UNPROCESSABLE ENTRY <br />
+<strong>Content:</strong> <code>{"success":false, "message":"Invalid password"}</code></li>
+</ul>
+
+<p>OR</p>
+
+<ul>
+<li><strong>Code:</strong> 404 <br />
+<strong>Content:</strong> <code>{"message":"Invalid route"}</code></li>
+</ul>
+
+<p>OR</p>
+
+<ul>
+<li><strong>Code:</strong> 404 <br />
+<strong>Content:</strong> <code>{"message":"Invalid list"}</code></li>
+</ul></li>
+<li><p><strong>Sample Call:</strong></p>
+
+<p>curl http://sms.knal.es/api/bulk_messages -H
+'content-type:application/json' -H 'email:me@gmail.com' -H
+'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -d '{"bulk_message":
+{"route":"Prueba", "message": "Testing bulk messages via api", "list_names":
+["bar"]}}'</p></li>
+<li><p><strong>Notes:</strong></p>
+
+<p>ListNames <strong>must</strong> be an array</p></li>
+</ul>

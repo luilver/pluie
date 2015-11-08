@@ -5,12 +5,34 @@ Rails.application.routes.draw do
   namespace :api, :defaults => {:format => 'json'} do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
       get 'user/balance' => 'users#balance'
+      get 'lists/searchs' => 'search_lists#index'
+      match 'lists/searchs' => 'search_lists#searchlists', via: :post
+
+      ######resources lists
+      match 'lists' => 'lists#index', via: :get
+      match  'lists/:id' => 'lists#show', via: :get
+      match  'lists'   => 'lists#create', via: :post
+      match  'lists'   => 'lists#update', via: :put
+      match  'lists'   => 'lists#destroy', via: :delete
+
+
       resources :bulk_messages
       match 'credits/email'=> 'credits#by_name_email', via: :post
       resources :credits
-      resources :lists
       resources :single_messages
+      match 'users' => 'users#update', via: :put
+      match 'users' => 'users#destroy', via: :delete
       resources :users
+
+      devise_scope :user do
+        match '/sessions' => 'sessions#create', :via => :post
+        match '/sessions' => 'sessions#destroy', :via => :delete
+        match  '/registrations' => 'registrations#create',   :via => :post
+
+      end
+      match 'routes/email_user'=>'routes#by_email_user', via: :post
+      match 'routes/name'=>'routes#by_route_name', via: :post
+      resources :routes
     end
   end
 
@@ -21,6 +43,7 @@ Rails.application.routes.draw do
   get 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
   post 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
 
+  get 'api/doc' => 'docs#api'
   resources :users, path: '/admin'
 
   authenticated :user, -> user { user.admin } do
