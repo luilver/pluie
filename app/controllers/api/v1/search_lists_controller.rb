@@ -16,7 +16,7 @@ module Api
       def searchlists #servicio que devuelve los numeros de las listas que el usuario pidio
         name=[]
         notFoundName=[]
-        return (render json: {:message=>"lists names blank"},status: 404) if params[:lists][:name].blank?
+        return (render json: {:message=>"invalid blank list name"},status: 404) if params[:lists][:name].blank?
         params[:lists][:name].each do |n|
           if User.current.lists.find_by_name(n)
             name << {:name => n, :numbers => User.current.lists.find_by_name(n).receivers}
@@ -28,7 +28,7 @@ module Api
           notFoundName << {:success => 'succefully send list'}
         end
         if name.blank?
-          render json: {:message=>'lists names invalid' , :notFound =>notFoundName }, status: 422
+          render json: {:message=>'invalid list name' , :notFound =>notFoundName }, status: 422
         else
         render json: {:lists=> name, :notFound =>notFoundName }, status: 200
         end
