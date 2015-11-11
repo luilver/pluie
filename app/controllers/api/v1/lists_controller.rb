@@ -59,7 +59,7 @@ module Api
             @list.destroy
             render json: {:message=>"List: #{params[:list][:name]} removed succefully "}, status: 200
           else
-            render json: {:error => 'nvalid name'}, status: 404
+            render json: {:error => 'invalid name'}, status: 422
           end
       end
     end
