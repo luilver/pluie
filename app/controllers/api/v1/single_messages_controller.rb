@@ -15,12 +15,12 @@ module Api
         if not User.current.single_messages.where(:id=>params[:id]).blank?
           render json: {:message=>  User.current.single_messages.find(params[:id]).message, :number=> User.current.single_messages.find(params[:id]).receivers,:identifier=>params[:id]}, status: 200
         else
-          render json: {:message=>"Not exist message with that identifier"}, status: 404
+          render json: {:message=>"invalid indentifier: #{params[:id]}"}, status: 422
         end
       end
 
       def new
-          render json: {:message=> "this resource is not available"},status: 301
+          render json: {:message=> "resource disabled"},status: 301
       end
 
       def create
