@@ -82,7 +82,7 @@ module Api
             @credit.destroy
             render json: {:message=>"credit removed succefully"},status: 200
           else
-            render json: {:message=>"identifier: #{params[:id]} invalid"}, status: 404
+            render json: {:message=>"identifier: #{params[:id]} invalid"}, status: 422
           end
         else
           render json: {:message=>"you are not admin"}, status: 401
