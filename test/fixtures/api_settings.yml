@@ -1,1 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+about:
+   api_key: 561b7ec89b0ca61b250815b24e398ae
+   user_id: 5
