@@ -12,3 +12,13 @@ obs_two:
   number: "5359999992"
 obs_three:
   number: "5359999993"
+
+apin:
+  number: "5358428432"
+  id: 10
+
+<% 5358880001.upto(5358881001) do |i| %>
+number_<%= i %>:
+  id: <%= i %>
+  number: <%= i%>
+<% end %>

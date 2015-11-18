@@ -37,4 +37,5 @@ list_api4:
     name: 'six'
     user_id: 5
     id: 100
+    opened: false
 
