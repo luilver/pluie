@@ -15,12 +15,12 @@ module Api
         if not User.current.single_messages.where(:id=>params[:id]).blank?
           render json: {:message=>  User.current.single_messages.find(params[:id]).message, :number=> User.current.single_messages.find(params[:id]).receivers,:identifier=>params[:id]}, status: 200
         else
-          render json: {:message=>"Not exist message with that identifier"}, status: 404
+          render json: {:message=>"invalid indentifier: #{params[:id]}"}, status: 422
         end
       end
 
       def new
-          render json: {:message=> "this resource is not available"},status: 301
+          render json: {:message=> "resource disabled"},status: 301
       end
 
       def create
@@ -29,6 +29,7 @@ module Api
           message=params[:single_message][:message]
 
           return (render json: {:message=>"route is blank"},status: 404) if route.blank?
+          return (render json: {:message=>"message is blank"},status: 404) if message.blank?
           if not User.current.routes.find_by_name(route).blank?
             @single_message=SingleMessage.new(:user_id=>User.current.id, :route_id=>User.current.routes.find_by_name(route).id,:message=>message)
             #@single_message.valid_gsm_numberAPI(numbersPhone)
@@ -51,7 +52,7 @@ module Api
       end
 
       def update
-           render json: {:message=> "this resource is not available"},status: 301
+           render json: {:message=> "resources disabled"},status: 301
       end
 
       def destroy
@@ -59,12 +60,12 @@ module Api
           if not SingleMessage.where(:id=>params[:id]).blank?
             @single_message=SingleMessage.where(:id=>params[:id]).first
             @single_message.destroy
-            render json: {:message=>'delete single message'}, status: 200
+            render json: {:message=>'removed single message succefully'}, status: 301
           else
-            render json: {:message=>"Not exist message with that identifier"}, status: 404
+            render json: {:message=>"invalid identifier: #{params[:id]}"}, status: 422
           end
         else
-          render json: {:message=>"you don't have permision"}, status: 401
+          render json: {:message=>"permission denied"}, status: 401
         end
       end
     end
