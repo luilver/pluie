@@ -39,6 +39,7 @@ apiu:
     <<: *minimal
     email: ale5@gmail.com
     id: 5
+    credit: 25
 
 adminApi:
     <<: *minimal

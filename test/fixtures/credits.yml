@@ -11,3 +11,13 @@ two:
 pluie:
   user: pluie
   balance: 10
+
+cre1:
+  user_id: 5
+  balance: 20
+  id: 20
+
+cred2:
+  user_id: 5
+  balance: 5
+  id: 21

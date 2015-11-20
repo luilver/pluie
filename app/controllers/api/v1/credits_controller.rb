@@ -31,7 +31,7 @@ module Api
         if User.current.admin
           if not User.find_by_email(params[:user][:email]).blank?
             user =User.find_by_email(params[:user][:email])
-            render  json: {:user_credits=>{:email=>user.email,:credits=> user.credits.map{|c| {:balance=>c.balance,:description=>c.description, :date=>c.created_at}}}},status: 200
+            render  json: {:user_credits=>{:email=>user.email,:count=>user.credits.count,:credits=> user.credits.map{|c| {:balance=>c.balance,:description=>c.description, :date=>c.created_at}}}},status: 200
           else
             render json: {:message=> "invalid email"}, status: 422
           end
@@ -49,7 +49,7 @@ module Api
               if @credit.save
                 render json: {:message=>"credit created succefully"},status: 201
               else
-                render json: @credit.errors
+                render json: @credit.errors, status: 422
               end
             else
               render json: {:message=>"invalid email"}, status: 422
@@ -63,10 +63,13 @@ module Api
         if User.current.admin
           if not Credit.find_by_id(params[:id]).blank?
             @credit=Credit.find_by_id(params[:id])
-            @credit.description=params[:credit][:description] unless (params[:credit][:description]).blank?
-            @credit.balance=params[:credit][:balance] unless (params[:credit][:balance]).blank?
-            @credit.save
-            render json: {:message=>"credit updated succefully"},status: 200
+            @credit.description=params[:credit][:description]
+            @credit.balance=params[:credit][:balance]
+            if @credit.save
+              render json: {:message=>"credit updated succefully"},status: 200
+            else
+              render  json: @credit.errors,status: 422
+            end
           else
             render json: {:message=>"invalid identifier: #{params[:id]}"}, status: 422
           end
@@ -80,12 +83,12 @@ module Api
           if not Credit.find_by_id(params[:id]).blank?
             @credit=Credit.find_by_id(params[:id])
             @credit.destroy
-            render json: {:message=>"credit removed succefully"},status: 200
+            render json: {:message=>"credit removed succefully"},status: 301
           else
             render json: {:message=>"invalid identifier: #{params[:id]}"}, status: 422
           end
         else
-          render json: {:message=>"permission denied"}, status: 401
+          render json: {:message=>"Unauthorized"}, status: 401
         end
       end
     end
