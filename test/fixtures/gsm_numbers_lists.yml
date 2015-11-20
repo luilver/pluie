@@ -14,3 +14,7 @@ number_<%= i %>:
   gsm_number_id: <%= i %>
   list_id: 9
 <% end %>
+
+gsmfour:
+    list_id: 8
+    gsm_number_id: 10

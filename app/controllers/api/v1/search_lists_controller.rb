@@ -19,7 +19,7 @@ module Api
         return (render json: {:message=>"list name is blank"},status: 404) if params[:lists][:name].blank?
         params[:lists][:name].each do |n|
           if User.current.lists.find_by_name(n)
-            name << {:name => n, :numbers => User.current.lists.find_by_name(n).receivers}
+            name << {:name => n,:count=>User.current.lists.find_by_name(n).receivers.count, :numbers => User.current.lists.find_by_name(n).receivers}
           else
             notFoundName << {:name=> n, :error => 'name invalid '}
           end

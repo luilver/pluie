@@ -28,6 +28,8 @@ no_gsm_numbers:
 list_api:
     name: 'four'
     user_id: 5
+    id: 8
+    opened: false
 
 list_api2:
     name: 'five'
