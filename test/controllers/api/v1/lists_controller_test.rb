@@ -119,7 +119,7 @@ module Api
         data_params={:list=>{:name=>'four',:numbers=>[5351483687],:remove=>false}}
         resp=put :update , data_params
         assert_response 200, resp.body
-        assert_equal 1, users(:apiu).lists.find_by_name(:four).receivers.count
+        assert_equal 2, users(:apiu).lists.find_by_name(:four).receivers.count
       end
 
       test "invalid name update" do
