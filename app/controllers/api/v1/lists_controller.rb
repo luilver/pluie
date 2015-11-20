@@ -25,12 +25,13 @@ module Api
         @list.user = User.current
         @list.name=name
         return (render json: {:message=>"name is blank"},status: 404) if params[:list][:name].blank?
+        return (render json: {:message=>"numbers is empty"},status: 422) if params[:list][:numbers].blank?
         if not User.current.lists.find_by_name(name)
           if @list.save(:validate=>false)
             @list.addNumbersViaApi(numbers_api)
             render json: {:message => 'List was successfully created'}, status: 201
           else
-            render json: @list.errors
+            render json: @list.errors, status: 422
           end
         else
           render json: {:error => 'name list invalid'}, status: 422
@@ -57,7 +58,7 @@ module Api
           if not User.current.lists.find_by_name(params[:list][:name]).blank?
             @list= User.current.lists.find_by_name(params[:list][:name])
             @list.destroy
-            render json: {:message=>"List: #{params[:list][:name]} removed succefully "}, status: 200
+            render json: {:message=>"List: #{params[:list][:name]} removed succefully "}, status: 301
           else
             render json: {:error => 'invalid name'}, status: 422
           end
