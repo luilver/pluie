@@ -39,7 +39,7 @@ module Api
               delay_options = {:queue => 'deliver'}
               job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier))
               Delayed::Job.enqueue(job, delay_options)
-              render json: {:message=>'Send succefully'},status: 200
+              render json: {:message=>'Send succefully'},status: 201
               else
                 render json: @bulk_message.errors, status: 422
               end

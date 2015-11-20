@@ -46,3 +46,9 @@ adminApi:
     email: admin40@gmail.com
     id: 40
     admin: true
+
+apiWithOutcredit:
+    <<: *minimal
+    email: notcredit@gmail.com
+    id: 41
+    credit: 1

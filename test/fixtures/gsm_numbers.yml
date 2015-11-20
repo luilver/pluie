@@ -22,3 +22,9 @@ number_<%= i %>:
   id: <%= i %>
   number: <%= i%>
 <% end %>
+
+<% 5358890001.upto(5358890226) do |i| %>
+number_<%= i %>:
+  id: <%= i %>
+  number: <%= i%>
+<% end %>

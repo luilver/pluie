@@ -34,3 +34,21 @@ without_credits:
   user: without_credits
   gateway: one
 
+routeApi:
+  <<: *minimal
+  user_id: 5
+  gateway_id: 50
+  id: 20
+
+routeApib:
+  <<: *minimal
+  user_id: 5
+  gateway_id: 50
+  id: 21
+
+routeBulkNotCredit:
+  <<: *minimal
+  user_id: 41
+  gateway_id: 50
+  id: 26
+  price: 0.5

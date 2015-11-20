@@ -1,13 +1,24 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  message: Bulk1
-  route: one
-  user: one
-  lists: one
+#one:
+#  message: Bulk1
+#  route: one
+#  user: one
+#  lists: one
+#
+#bulk:
+#  message: Bulk2
+#  route: bulk
+#  user: two
+#  lists: two
 
-bulk:
-  message: Bulk2
-  route: bulk
-  user: two
-  lists: two
+bulkApi:
+  message: messgApi index
+  route_id: 20
+  user_id: 5
+  id: 12
+
+bulkApitwo:
+  id: 14
+  route_id: 21
+  user_id: 5

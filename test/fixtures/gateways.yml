@@ -11,3 +11,8 @@ two:
 test:
   name: Test
   price: 0.0025
+
+gateApi:
+  name: ApiG
+  price: 0.035
+  id: 50
