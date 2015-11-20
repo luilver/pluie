@@ -45,6 +45,7 @@ routeApib:
   user_id: 5
   gateway_id: 50
   id: 21
+  name: goldA
 
 routeBulkNotCredit:
   <<: *minimal
