@@ -6,7 +6,7 @@ module Api
 
       def index
         if User.current.admin
-          render json: {:routes=>Route.all.map{|r| {:name=>r.name,:price=>r.price,:email=>r.user.email,:gateway=>r.gateway.name,:identifier=>r.id}}}, status: 200
+         render json: {:routes=>Route.all.map{|r| {:name=>r.name,:price=>r.price,:email=>r.user.email,:gateway=>r.gateway.name,:identifier=>r.id}}}, status: 200
         else
          render json: {:message=>"permission denied"}, status: 401
         end
@@ -69,7 +69,7 @@ module Api
                 if @route.save
                   render json: {:message=>"route created succefully"}, status: 201
                 else
-                  render json: @route.errors
+                  render json: @route.errors, status: 422
                 end
             else
               if  Gateway.find_by_name(params[:route][:gateway_name]).blank?
