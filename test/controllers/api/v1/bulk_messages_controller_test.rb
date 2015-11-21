@@ -104,33 +104,6 @@ module Api
         resp = delete :destroy, data_params
         assert_response 301, resp.body
       end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     end
   end
 end
