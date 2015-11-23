@@ -10,7 +10,7 @@ module Api
 
       def index
         if User.current.admin
-          render json: {:users=>User.all.map{|u| {:email=>u.email,:balance=>u.balance,:Gasto_Total=>u.spent,:identifier=>u.id}}},status: 200
+          render json: {:count=>User.all.count,:users=>User.all.map{|u| {:email=>u.email,:balance=>u.balance,:Gasto_Total=>u.spent,:identifier=>u.id}}},status: 200
         else
           render json: {:message=>"permission denied"},status: 401
         end
