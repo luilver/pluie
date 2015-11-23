@@ -36,10 +36,10 @@ pluie:
   credit: 10
 
 apiu:
-    <<: *minimal
-    email: ale5@gmail.com
-    id: 5
-    credit: 25
+  <<: *minimal
+  email: ale5@gmail.com
+  id: 5
+  credit: 25
 
 adminApi:
     <<: *minimal
