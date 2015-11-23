@@ -59,13 +59,13 @@ module Api
         assert_equal routes(:routeBulkNotCredit).name, JSON.parse(resp.body)['route']['name_route']
       end
 
-      test "test the action show unauthorized" do
-        @request.headers["HTTP_EMAIL"]= 'ale5@gmail.com'
-        @request.headers["HTTP_API_KEY"] = '561b7ec89b0ca61b250815b24e398ae'
-        data_params={:id=>19}
-        resp= get :show,data_params
-        assert_response 401
-      end
+      # test "test the action show unauthorized" do
+      #   @request.headers["HTTP_EMAIL"]= 'ale5@gmail.com'
+      #   @request.headers["HTTP_API_KEY"] = '561b7ec89b0ca61b250815b24e398ae'
+      #   data_params={:id=>19}
+      #   resp= get :show,data_params
+      #   assert_response 401
+      # end
 
       test "test the action by name ok" do
         @request.headers["HTTP_EMAIL"]= 'admin40@gmail.com'
