@@ -35,3 +35,20 @@ pluie:
   email: pluie@openbgs.com
   credit: 10
 
+apiu:
+  <<: *minimal
+  email: ale5@gmail.com
+  id: 5
+  credit: 25
+
+adminApi:
+    <<: *minimal
+    email: admin40@gmail.com
+    id: 40
+    admin: true
+
+apiWithOutcredit:
+    <<: *minimal
+    email: notcredit@gmail.com
+    id: 41
+    credit: 1

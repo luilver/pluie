@@ -1,15 +1,22 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  message: message-one
-  number: "5350000001"
-  gsm_numbers: one
-  user: one
-  route: one
+#one:
+#  message: message-one
+#  number: "5350000001"
+#  gsm_numbers: one
+#  user: one
+#  route: one
+#
+#with_three_numbers:
+#  message: message-two
+#  number: "5350000001 5350000002 5350000003"
+#  gsm_numbers: one, two, three
+#  user: one
+#  route: one
 
-with_three_numbers:
-  message: message-two
-  number: "5350000001 5350000002 5350000003"
-  gsm_numbers: one, two, three
-  user: one
-  route: one
+singleMessageApi:
+  message: api message rest
+  number: "5358428432"
+  id: 14
+  route_id: 21
+  user_id: 5

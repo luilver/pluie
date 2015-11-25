@@ -1,0 +1,17 @@
+bulkList:
+  id: 5
+  bulk_message_id: 12
+  list_id: 8
+
+bulkApi:
+  id: 8
+  bulk_message_id: 12
+  list_id: 9
+
+bulkApi4:
+  id: 9
+  bulk_message_id: 14
+  list_id: 9
+
+
+

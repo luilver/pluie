@@ -3,6 +3,8 @@
 barebones: &minimal
   name: Gold
   price: 0.01
+  gateway_id: 50
+  user_id: 5
 
 one: &user_one
   <<: *minimal
@@ -34,3 +36,23 @@ without_credits:
   user: without_credits
   gateway: one
 
+routeApi:
+  <<: *minimal
+  user_id: 5
+  gateway_id: 50
+  id: 20
+
+routeApib:
+  <<: *minimal
+  user_id: 5
+  gateway_id: 50
+  id: 21
+  name: goldA
+
+routeBulkNotCredit:
+  <<: *minimal
+  user_id: 41
+  gateway_id: 50
+  id: 26
+  price: 0.5
+  name: GoldApiai

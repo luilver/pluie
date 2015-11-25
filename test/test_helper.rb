@@ -121,10 +121,11 @@ end
 #to set locale in url build during tests
 class ActionController::TestCase
   include Devise::TestHelpers
+  include Warden::Test::Helpers
 
-  def process_with_default_locale(action, http_method = 'GET', parameters = nil, session = nil, flash = nil)
-    parameters = {:locale=> I18n.locale }.merge(parameters||{})
-    process_without_default_locale(action, http_method,  parameters, session, flash)
-  end
-  alias_method_chain :process, :default_locale
+  # def process_with_default_locale(action, http_method = 'GET', parameters = nil, session = nil, flash = nil)
+  #   parameters = {:locale=> I18n.locale }.merge(parameters||{})
+  #   process_without_default_locale(action, http_method,  parameters, session, flash)
+  # end
+  # alias_method_chain :process, :default_locale
 end

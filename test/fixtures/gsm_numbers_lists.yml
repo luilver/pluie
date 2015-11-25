@@ -1,0 +1,26 @@
+gsm1:
+    list_id: 100
+    gsm_number_id: 10
+
+
+<% 5358880001.upto(5358880022) do |i| %>
+number_<%= i %>:
+  gsm_number_id: <%= i %>
+  list_id: 100
+<% end %>
+
+<% 5358880001.upto(5358880022) do |i| %>
+number_<%= i %>:
+  gsm_number_id: <%= i %>
+  list_id: 9
+<% end %>
+
+gsmfour:
+    list_id: 8
+    gsm_number_id: 10
+
+<% 5358890001.upto(5358890226) do |i| %>
+number_<%= i %>:
+  gsm_number_id: <%= i %>
+  list_id: 102
+<% end %>

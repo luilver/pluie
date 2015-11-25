@@ -24,3 +24,27 @@ without_credits:
 no_gsm_numbers:
   name: 'does not have gsm numbers yet'
   user: two
+
+list_api:
+    name: 'four'
+    user_id: 5
+    id: 8
+    opened: false
+
+list_api2:
+    name: 'five'
+    user_id: 5
+    id: 9
+    opened: false
+
+list_api4:
+    name: 'six'
+    user_id: 5
+    id: 100
+    opened: false
+
+listBulk:
+    name: bulk
+    user_id: 41
+    id: 102
+    opened: false
