@@ -133,7 +133,7 @@
 * **Success Response:**
 
     * **Code:** 200 OK <br/>
-      **Content:** `"2.123"`
+      **Content:** `{"user"=>{"email"=>"me@gmail.com", "balance"=>"0.56"}}`
 
 * **Error Response:**
 
