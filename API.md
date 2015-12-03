@@ -342,9 +342,6 @@
 
     curl http://localhost:3000/api/single_messages/1 -H 'Content-Type:application/json' -H 'email:admin@openbgs.com' -H 'api_key: 2eefbf7dfab505e6d2339a21d42983bb' -X DELETE
 
-* **Notes:**
-
-    Only admin can delete
 **Index User Lists**
 ----
   Shows lists of current user
