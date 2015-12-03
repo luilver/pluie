@@ -224,10 +224,9 @@
 
     Numbers **must** be an array
 
-**Single Message List of user**
+**Index Single Messages**
 ----
- Show all single message of current user
-
+ Shows single messages of current user
 
 * **URL**
 
@@ -259,13 +258,13 @@
 
     curl http://sms.knal.es/api/single_messages -H 'Content-Type:application/json' -H 'email:me@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d'
 
-**Show Single Message of user**
+**Show Single Message**
 ----
- Shows single messages of current user defined for :id
+ Shows current user :id single message
 
 * **URL**
 
-    /api/single_messages/1
+    /api/single_messages/:id
 
 * **Method:**
 
@@ -298,13 +297,13 @@
 
     curl http://sms.knal.es/api/single_messages/1 -H 'Content-Type:application/json' -H 'email:me@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d'
 
-**Destroy Single Message of user**
+**Destroy Single Message**
 ----
- Destroy single messages of current user
+ Destroys current user :id single message
 
 * **URL**
 
-    /api/single_messages/1
+    /api/single_messages/:id
 
 * **Method:**
 
