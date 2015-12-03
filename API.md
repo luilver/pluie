@@ -339,7 +339,7 @@
 
   * **Sample Call:**
 
-    curl http://localhost:3000/api/single_messages/1 -H 'Content-Type:application/json' -H 'email:admin@openbgs.com' -H 'api_key: 2eefbf7dfab505e6d2339a21d42983bb' -X DELETE
+    curl http://localhost:3000/api/single_messages/1 -H 'Content-Type:application/json' -H 'email:admin1@gmail.com' -H 'api_key: 2eefbf7dfab595e6d2339a21d42983bb' -X DELETE
 
 **Index User Lists**
 ----
@@ -384,8 +384,8 @@
 
 * **Sample Call:**
 
-  curl http://sms.knal.es/api/lists/searchs -H 'content-type:application/json'
-  -H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb'
+    curl http://sms.knal.es/api/lists/searchs -H 'content-type:application/json'
+   -H 'email:me@gmail.com' -H 'api_key:51407ba8e75c7b1819a12137d4df4ecb'
 
 **Retrieving Lists**
 ----
@@ -771,7 +771,7 @@
 * **Success Response:**
 
     * **Code:** 200 OK <br />
-      **Content:** `{"bulk_message":{"message":"asfasdfas","route":"Bronce","lists":1,"numbers":1,"list_names":["listOne"]}}`
+      **Content:** `{"bulk_message":{"message":"asfasdfas","route":"Bron1","lists":1,"numbers":1,"list_names":["listOne"]}}`
 
 * **Error Response:**
 
@@ -826,4 +826,4 @@
 
 * **Sample Call:**
 
-    curl http://sms.knal.es/api/bulk_messages/527 -H 'Content-Type:application/json' -H 'email:ab5@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d' -d '{"bulk_message": {"list_names":["aaaa"],"route":"bronce125","message": "mesage"}}' -X DELETE
+    curl http://sms.knal.es/api/bulk_messages/527 -H 'Content-Type:application/json' -H  email:ab5@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d' -d '{"bulk_message":  {"list_names":["aaaa"],"route":"bronce125","message": "mesage"}}' -X DELETE
