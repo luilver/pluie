@@ -4,7 +4,6 @@
 
 * **URL**
 
-
        /api/sessions
 
 * **Method:**
@@ -47,7 +46,6 @@
 
       * **Code:** 422 UNPROCESSABLE ENTITY <br />
         **Content:** `{"success":false, "message":"Invalid password"}`
-
 
 * **Sample Call:**
 
@@ -300,7 +298,6 @@
 
     curl http://sms.knal.es/api/single_messages/1 -H 'Content-Type:application/json' -H 'email:me@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d'
 
-
 **Destroy Single Message of user**
 ----
  Destroy single messages of current user
@@ -348,10 +345,6 @@
 * **Notes:**
 
     Only admin can delete
-
-
-
-
 **Index User Lists**
 ----
   Shows lists of current user
@@ -457,8 +450,6 @@
 
     Name **must** be an array
 
-
-
 **Creating Lists**
 ----
   Creates a given list
@@ -507,7 +498,6 @@
     * **Code:** 422 UNPROCESSABLE ENTITY <br />
       **Content:** `{"message":" name list invalid"}'
 
-
 * **Sample Call:**
 
     curl http://sms.knal.es/api/lists -H 'content-type:application/json' -H
@@ -517,7 +507,6 @@
 * **Notes:**
 
     Numbers **must** be an array
-
 
 **Show List**
 ----
@@ -557,7 +546,6 @@
 * **Sample Call:**
 
     curl http://sms.knal.es/api/lists/45 -H 'Content-Type:application/json' -H 'email:me@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d'
-
 
 **Update List**
 ----
@@ -611,8 +599,6 @@
 
     remove **must** be a boolean
 
-
-
 **Destroy List**
 ----
   Destroy a list of current user
@@ -658,8 +644,6 @@
 * **Sample Call:**
 
     curl http://localhost:3000/api/lists -H 'Content-Type:application/json' -H 'email:me@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d' -d '{"list": {"name":"sms1"}}' -X DELETE
-
-
 
 **Sending Bulk Messages**
 ----
@@ -733,8 +717,6 @@
 
     ListNames **must** be an array
 
-
-
 **Index Bulk Messages**
 ----
   Index bulk messages of current user
@@ -766,8 +748,6 @@
 * **Sample Call:**
 
     curl http://sms.knal.es/api/bulk_messages -H 'Content-Type:application/json' -H 'email:ab5@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d' -d '{"bulk_message": {"list_names":["aaaa"],"route":"bronce125","message": "mesage"}}' -X GET
-
-
 
 **Show Bulk Messages**
 ----
@@ -806,8 +786,6 @@
 * **Sample Call:**
 
     curl http://sms.knal.es/api/bulk_messages/27 -H 'Content-Type:application/json' -H 'email:ab5@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d' -d '{"bulk_message": {"list_names":["aaaa"],"route":"bronce125","message": "mesage"}}' -X GET
-
-
 
 **Destroy Bulk Messages**
 ----
