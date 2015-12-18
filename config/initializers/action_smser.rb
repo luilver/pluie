@@ -12,6 +12,9 @@ NEXMO_PASS = ENV['NEXMO_API_SECRET']
 ROUTESMS_KEY = ENV['ROUTESMS_KEY']
 ROUTESMS_PASS = ENV['ROUTESMS_PASS']
 
+CARDBOARDFISH_KEY = ENV['CARDBOARDFISH_KEY']
+CARDBOARDFISH_PASS = ENV['CARDBOARDFISH_PASS']
+
 PLUIE_HOST = Pluie::Application.config.default_url_options[:host]
 
 def gateway_defined?(key)
@@ -47,4 +50,7 @@ if Rails.env.development? || Rails.env.staging? || Rails.env.production?
 
   ActionSmser.delivery_options[:gateway_commit]['nexmo'] = ActionSmser::DeliveryMethods::AsyncNexmo
   ActionSmser.delivery_options[:nexmo] = { username: NEXMO_KEY, password: NEXMO_PASS, numbers_in_request: 1, parallel_requests: 25 }
+
+  ActionSmser.delivery_options[:gateway_commit]['cardboardfish'] = ActionSmser::DeliveryMethods::AsyncCardboardfish
+  ActionSmser.delivery_options[:cardboardfish] = { username: CARDBOARDFISH_KEY, password: CARDBOARDFISH_PASS, numbers_in_request: 5, parallel_requests: 5 }
 end
