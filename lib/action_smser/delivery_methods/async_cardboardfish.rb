@@ -21,7 +21,6 @@ module ActionSmser::DeliveryMethods
        msg = info.dup
        if numbers.count > 10
          msg["DA"]=numbers.first(10).join(",")
-
        else
         msg["DA"]=numbers.join(",")
        end
@@ -40,15 +39,15 @@ module ActionSmser::DeliveryMethods
     def self.save_delivery_reports(sms, results, user, route_name)
       count = 0
       results.each do |res|
-        error_code = res[:status]
-        number = res[:dest]
-        msg_id = res[:msg_id]
-        dr = ActionSmser::DeliveryReport.build_with_user(sms, number, msg_id, user, route_name)
-        if error_code == GatewayErrorInfo::RoutesmsErrors::SUCCESS_CODE
+        error_code=res[:msg_id]
+        if error_code.to_i > 0  # es que no hubo error
           count += 1
+          dr = ActionSmser::DeliveryReport.build_with_user(sms,  sms.find_receiver_by_id(error_code), msg_id, user, route_name)
         else
-          dr.status= "SENT_ERROR_#{self.routesms_error(error_code)}"
-          dr.log += "batch aborted" if msg_id == nil
+          msg_id=nil
+          dr = ActionSmser::DeliveryReport.build_with_user(sms, nil, msg_id, user, route_name) # aqui tiene que venir un numero
+          dr.status= "SENT_ERROR_#{self.cardboardfish_error(error_code)}"
+          dr.log += "error in request" if msg_id == nil
         end
         dr.save
         sms.delivery_reports.push(dr)
@@ -58,18 +57,24 @@ module ActionSmser::DeliveryMethods
 
     def self.process_delivery_report(params)
       info = []
-      status = case params[:sStatus]
-                 when "DELIVRD"
-                   ActionSmserUtils::DELIVERED_STATUS
-                 when "UNDELIV"
-                   ActionSmserUtils::UNDELIVERED_STATUS
-                 else
-                   params[:sStatus]
-               end
-      msg_id = params[:sMessageId]
-      sender = params[:sSender]
-      info << {"msg_id" => msg_id, "status" => status, "sender" => sender}
-    end
+      inputparameter=params[:INCOMING]
+      inputparameterArray=inputparameter.split("#")
+      if inputparameterArray[0].to_i > 0
+        inputparameterArray.last(inputparameterArray.count-1).each do |dr|
+          row=dr.split(":")
+          status = case row[3]
+                     when "1"
+                       ActionSmserUtils::DELIVERED_STATUS
+                     when "3"
+                       ActionSmserUtils::UNDELIVERED_STATUS
+                     else
+                       row[3]
+                   end
+          info << {"msg_id" => dr[0], "status" => status, "sender" => dr[1]}
+        end
+      end
+      return info
+      end
 
     def self.path_url
       "HTTPSMS?"
