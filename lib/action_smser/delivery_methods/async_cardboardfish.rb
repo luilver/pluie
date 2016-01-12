@@ -18,14 +18,23 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.request_params(info, numbers, sms)
-       msg = info.dup
+       #msg = info.dup
        # if numbers.count > 10
        #   msg["DA"]=numbers.first(10).join(",")
        # else
        #  msg["DA"]=numbers.join(",")
        # end
-       msg["DA"]=numbers.first
-       return msg
+
+      #########################################################cambiando a request_body
+       # msg["DA"]=numbers.first
+       # return msg
+    end
+
+
+    def self.request_body(info, numbers, sms)
+      msg = info.dup
+      msg["DA"]=numbers.first
+      return msg
     end
 
     def self.parse_response(response)
