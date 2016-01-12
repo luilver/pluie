@@ -16,14 +16,20 @@ module ActionSmser::DeliveryMethods
       msg
     end
 
-    def self.request_params(info, numbers, sms)
-      # msg=info.dup
-      # msg[:to]=numbers.first #esto si solo se puede enviar un numero por request
+    # def self.request_params(info, numbers, sms)
+    #   # msg=info.dup
+    #   # msg[:to]=numbers.first #esto si solo se puede enviar un numero por request
+    #
+    #   #******************************# se pueden enviar mas de un numero por request
+    #   msg=info.dup
+    #   msg[:to]=numbers.join(",")
+    #   return msg
+    # end
 
-      #******************************# se pueden enviar mas de un numero por request
+    def self.request_body(info, numbers, sms)
       msg=info.dup
       msg[:to]=numbers.join(",")
-      return msg
+      msg
     end
 
     def self.parse_response(response)
