@@ -150,6 +150,12 @@
    *  `route`
    *  `message`
 
+   **Optional:**
+
+   `single_message:`
+   *  `backupSms`: Defaults to false
+   *  `randomText`: Defaults to true
+
 * **Success Response:**
 
   * **Code:** 200 <br />
@@ -176,7 +182,16 @@
   'content-type:application/json' -H 'email:me@gmail.com' -H
   'api\_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d
   '{"single\_message":{"numbers":["5352644047"], "route":"Prueba",
-  "message":"Testing single meesage via api"}}'
+  "message":"Testing single message via api"}}'
+
+* **Sample Call Without Random Text:**
+
+  curl http://sms.knal.es/api/single\_messages -H
+  'content-type:application/json' -H 'email:me@gmail.com' -H
+  'api\_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d
+  '{"single\_message":{"numbers":["5352644047"], "route":"Prueba",
+  "message":"Testing message without random text via api", "randomText":
+  false}}'
 
 * **Notes:**
 
