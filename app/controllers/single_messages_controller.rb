@@ -34,7 +34,7 @@ class SingleMessagesController < ApplicationController
       if @single_message.save
 
         command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-        command.deliver(@single_message)
+        command.deliver(@single_message,params[:backupSms])
 
         format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
         format.json { render :show, status: :sent, location: @single_message }
