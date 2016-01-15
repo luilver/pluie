@@ -1,6 +1,6 @@
 require 'action_smser_utils'
 
-SendSmsBackupJob = Struct.new(:list_messages, :routes) do
+SendSmsBackupJob = Struct.new(:list_messages, :routes, :randomText) do
   def perform
     begin
       deliver=false
@@ -24,7 +24,7 @@ SendSmsBackupJob = Struct.new(:list_messages, :routes) do
           list_messages << sm
 
           if routes.count>1
-            job= SendSmsBackupJob.new(list_messages, routes.last(routes.count-1)) #nuevo message y una ruta menos
+            job= SendSmsBackupJob.new(list_messages, routes.last(routes.count-1), randomText) #nuevo message y una ruta menos
             Delayed::Job.enqueue(job,:run_at => 5.minutes.from_now) #manda a ejecutarlo dentro de 5minutos
           end
         end
