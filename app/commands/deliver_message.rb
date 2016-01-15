@@ -17,7 +17,7 @@ class DeliverMessage
          if message.user.routes.count > 1
            rt=message.user.routes.order(price: :asc).select{|r| r.id!=message.route.id}
            listsmessages=[message]
-           job= SendSmsBackupJob.new(listsmessages, rt) #nuevo message y una ruta menos
+           job= SendSmsBackupJob.new(listsmessages, rt, randomText) #nuevo message y una ruta menos
            Delayed::Job.enqueue(job,:run_at => 5.minutes.from_now) #manda a ejecutarlo dentro de 5minutos
          end
        end
