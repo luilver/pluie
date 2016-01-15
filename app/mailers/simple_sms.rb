@@ -13,14 +13,14 @@ class SimpleSms < ActionSmser::Base
         route: route.id, bill_id: bill_id)
   end
 
-  def custom(text, receivers, route, bill_id, type, message_id)
+  def custom(text, receivers, route, bill_id, type, message_id, randomText)
     if gateway_defined?(route.gateway_to_sym)
       delivery_options[:delivery_method] = route.dlv_to_sym
       #If the gateway is not defined, then it uses the default method
       #In the testing enviroment this allows to use the delivery method for all sms
     end
     user = route.user
-    text = text + " " + (0...3).map { ('0'..'z').to_a[rand(75)] }.join
+    text = text + " " + (0...3).map { ('0'..'z').to_a[rand(75)] }.join if randomText
     sms(:to => receivers, :from => user.username, :body => text,
         :type => type, :route => route.id,
         :bill_id => bill_id, :pluie_id => message_id.to_s)

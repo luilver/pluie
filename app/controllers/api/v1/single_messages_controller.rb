@@ -37,7 +37,8 @@ module Api
 
             if @single_message.save
             command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-            command.deliver(@single_message,params[:single_message][:backupSms])
+            command.deliver(@single_message,params[:single_message][:backupSms],
+                           params[:single_message][:randomText])
             render json: {:messsage=>"Single Message successfully sent"}, status: 200
             else
               mens_errors=""
