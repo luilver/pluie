@@ -149,6 +149,15 @@ DELETE -v -d '{"email":"me@gmail.com", "password":"secret"}'</p></li>
 <li><code>numbers</code></li>
 <li><code>route</code></li>
 <li><code>message</code></li>
+</ul>
+
+<p><strong>Optional:</strong></p>
+
+<p><code>single_message:</code></p>
+
+<ul>
+<li><code>backupSms</code>: Defaults to false</li>
+<li><code>randomText</code>: Defaults to true</li>
 </ul></li>
 <li><p><strong>Success Response:</strong></p>
 
@@ -183,6 +192,14 @@ DELETE -v -d '{"email":"me@gmail.com", "password":"secret"}'</p></li>
 'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d
 '{"single_message":{"numbers":["5352644047"], "route":"Prueba",
 "message":"Testing single message via api"}}'</p></li>
+<li><p><strong>Sample Call Without Random Text:</strong></p>
+
+<p>curl http://sms.knal.es/api/single_messages -H
+'content-type:application/json' -H 'email:me@gmail.com' -H
+'api_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d
+'{"single_message":{"numbers":["5352644047"], "route":"Prueba",
+"message":"Testing message without random text via api", "randomText":
+false}}'</p></li>
 <li><p><strong>Notes:</strong></p>
 
 <p>Numbers <strong>must</strong> be an array</p></li>
