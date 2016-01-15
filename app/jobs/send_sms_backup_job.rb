@@ -11,6 +11,7 @@ SendSmsBackupJob = Struct.new(:list_messages, :routes) do
         end
       end
 
+      message = list_messages.last()
       if !deliver
         if routes.count > 0
           sm=SingleMessage.new
