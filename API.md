@@ -176,7 +176,7 @@
   'content-type:application/json' -H 'email:me@gmail.com' -H
   'api\_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d
   '{"single\_message":{"numbers":["5352644047"], "route":"Prueba",
-  "message":"Testing single meesage via api"}}'
+  "message":"Testing single message via api"}}'
 
 * **Notes:**
 
