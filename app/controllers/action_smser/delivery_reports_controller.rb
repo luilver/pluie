@@ -32,10 +32,11 @@ module ActionSmser
                 end
                 dr.sms_type=t('activerecord.models.script_gateway')
                 if dr_update.include?("sender")
-                  dr.to=dr_update["sender"]
+                  dr.from=dr_update["sender"]
                 end
                 dr.user_id=User.where(:admin=>true, :email=>"admin@openbgs.com").first.id
-
+                dr.created_at=Time.now
+                dr.updated_at=Time.now
                 if dr.save
                   updated_count += 1
                   dr_array << dr
