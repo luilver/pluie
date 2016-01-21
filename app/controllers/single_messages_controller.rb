@@ -32,13 +32,19 @@ class SingleMessagesController < ApplicationController
 
     respond_to do |format|
       if @single_message.save
-
         command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-        command.deliver(@single_message,params[:backupSms],params[:randomText])
-
-        format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
-        format.json { render :show, status: :sent, location: @single_message }
-      else
+        if params['schedule']['schedule'].to_i==1
+          job=ScheduleSmsJob.new(command,@single_message,params[:backupSms],params[:randomText])
+          time=convertTodate(params['date']) #objeto de tipo Time
+          ApplicationHelper::ScheduleUtils.schedule(job,time)
+          format.html { redirect_to @single_message, notice: t('notice.success_schedule_sent',time:time.to_s, msg: t('activerecord.models.single_message')).html_safe }
+          format.json { render :show, status: :sent, location: @single_message }
+        else
+          command.deliver(@single_message,params[:backupSms],params[:randomText])
+          format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
+          format.json { render :show, status: :sent, location: @single_message }
+        end
+        else
         format.html { render :new }
         format.json { render json: @single_message.errors, status: :unprocessable_entity }
       end
@@ -79,5 +85,9 @@ class SingleMessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def single_message_params
       params.require(:single_message).permit(:message, :number, :route_id)
+    end
+
+    def convertTodate(date)
+      Time.new(date["year"].to_i,date["month"].to_i,date["day"].to_i,date["hour"].to_i,date["minute"].to_i,)
     end
 end
