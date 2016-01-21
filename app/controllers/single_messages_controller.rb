@@ -30,18 +30,41 @@ class SingleMessagesController < ApplicationController
     @single_message = SingleMessage.new(single_message_params)
     @single_message.user = current_user
 
+    if params['schedule']['schedule'].to_i==1
+      job=ScheduleSmsJob.new(command,@single_message,params[:backupSms],params[:randomText])
+      time=convertTodate(params['datepik']['datepik'],params['date']) #objeto de tipo Time
+      if time.class==Time
+        if @single_message.save
+          respond_to do |format|
+            job=ScheduleSmsJob.new(command,@single_message,params[:backupSms],params[:randomText])
+            ApplicationHelper::ScheduleUtils.schedule(job,time)
+            format.html { redirect_to @single_message, notice:time }
+            format.json { render :show, status: :sent, location: @single_message }
+          end
+        end
+      else
+        format.html { render :new }
+      end
+    else
+
+    end
+
     respond_to do |format|
       if @single_message.save
         command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
         if params['schedule']['schedule'].to_i==1
           job=ScheduleSmsJob.new(command,@single_message,params[:backupSms],params[:randomText])
-          time=convertTodate(params['date']) #objeto de tipo Time
-          ApplicationHelper::ScheduleUtils.schedule(job,time)
-          format.html { redirect_to @single_message, notice: t('notice.success_schedule_sent',time:time.to_s, msg: t('activerecord.models.single_message')).html_safe }
-          format.json { render :show, status: :sent, location: @single_message }
+          time=convertTodate(params['datepik']['datepik'],params['date']) #objeto de tipo Time
+          if time.class==Time
+            ApplicationHelper::ScheduleUtils.schedule(job,time)
+            format.html { redirect_to @single_message, notice:time }
+            format.json { render :show, status: :sent, location: @single_message }
+          else
+            format.html { redirect_to @single_message, notice:time }
+          end
         else
           command.deliver(@single_message,params[:backupSms],params[:randomText])
-          format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
+          format.html { redirect_to @single_message, notice: "#{params}" }
           format.json { render :show, status: :sent, location: @single_message }
         end
         else
@@ -87,7 +110,13 @@ class SingleMessagesController < ApplicationController
       params.require(:single_message).permit(:message, :number, :route_id)
     end
 
-    def convertTodate(date)
-      Time.new(date["year"].to_i,date["month"].to_i,date["day"].to_i,date["hour"].to_i,date["minute"].to_i,)
-    end
+    def convertTodate(date,time)
+      day,month,year=date.split("/")
+      #Time.new(date["year"].to_i,date["month"].to_i,date["day"].to_i,date["hour"].to_i,date["minute"].to_i,)
+      begin
+      Time.new(year.to_i,month.to_i,day.to_i,time['hour'].to_i, time['minute'].to_i)
+      rescue
+        return nil
+      end
+      end
 end
