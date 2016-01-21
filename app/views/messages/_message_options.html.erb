@@ -8,5 +8,14 @@
       :class => "message_route_select"
     %>
   </div>
+  <br/>
+  <div class="field">
+    <div class="checkbox">
+    <%= f.label :check_schedule, t("activerecord.models.check_schedule") %>:
+    <%= check_box('schedule', 'schedule')%>
+    </div>
+    <%= f.label :schedule_sms, t("activerecord.models.schedule_sms") %>:
+    <%= select_datetime(Time.now) %>
+  </div>
 </fieldset>
 
