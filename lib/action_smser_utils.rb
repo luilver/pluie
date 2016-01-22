@@ -11,6 +11,7 @@ module ActionSmserUtils
   UNDELIVERED_STATUS = "undelivered"
   MAX_SIZE = 160
   SYSTEM_MSG = "Pluie"
+  NO_SYSTEM_MSG = "No Pluie"
 
   def self.gateway_callback_url(gateway)
     "http://#{PLUIE_HOST}/delivery_reports/gateway_commit/#{gateway.to_s}"

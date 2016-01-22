@@ -30,7 +30,7 @@ module ActionSmser
                 dr_update.each_pair do |key, value|
                   dr.send("#{key}=", value) if dr.attribute_names.include?(key.to_s)
                 end
-                dr.sms_type=t('activerecord.models.script_gateway')
+                dr.sms_type=ActionSmserUtils::NO_SYSTEM_MSG
                 if dr_update.include?("sender")
                   dr.from=dr_update["sender"]
                 end
