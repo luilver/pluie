@@ -3,6 +3,8 @@
         $( "#datepicker" ).datepicker();
     });
 </script>
+
+<%= notice%>
 <fieldset>
   <legend><%= t(:sending_options).capitalize.html_safe%></legend>
   <div class="field">
@@ -20,11 +22,9 @@
     <%= check_box('schedule', 'schedule')%>
     </div>
     <%= f.label :schedule_sms, t("activerecord.models.schedule_sms") %>:
+    <%=text_field('datepik','datepik',:id=>"datepicker",:value=>Time.now.day.to_s+'/'+Time.now.month.to_s+'/'+Time.now.year.to_s) %>
     <%= select_time(Time.now) %>
-    <%=text_field('datepik','datepik',:id=>"datepicker",:value=>Time.now)%>
+
   </div>
-
-
-
 </fieldset>
 

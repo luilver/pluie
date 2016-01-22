@@ -31,45 +31,35 @@ class SingleMessagesController < ApplicationController
     @single_message.user = current_user
 
     if params['schedule']['schedule'].to_i==1
-      job=ScheduleSmsJob.new(command,@single_message,params[:backupSms],params[:randomText])
       time=convertTodate(params['datepik']['datepik'],params['date']) #objeto de tipo Time
-      if time.class==Time
-        if @single_message.save
-          respond_to do |format|
-            job=ScheduleSmsJob.new(command,@single_message,params[:backupSms],params[:randomText])
-            ApplicationHelper::ScheduleUtils.schedule(job,time)
-            format.html { redirect_to @single_message, notice:time }
-            format.json { render :show, status: :sent, location: @single_message }
+      respond_to do |format|
+        if time.class==Time
+          if @single_message.save
+              command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
+              job=ScheduleSmsJob.new(command,@single_message,params[:backupSms],params[:randomText])
+              ApplicationHelper::ScheduleUtils.schedule(job,time)
+              format.html { redirect_to @single_message, notice: t('notice.success_schedule_sent',time:time, msg: t('activerecord.models.single_message')).html_safe  }
+              format.json { render :show, status: :sent, location: @single_message }
+          else
+            format.html { render :new }
+            format.json { render json: @single_message.errors, status: :unprocessable_entity }
           end
+        else
+          format.html { redirect_to new_single_message_path,:notice=>'Fecha incorrecta'}
         end
-      else
-        format.html { render :new }
       end
     else
+      respond_to do |format|
+        if @single_message.save
+            command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
+            command.deliver(@single_message,params[:backupSms],params[:randomText])
 
-    end
-
-    respond_to do |format|
-      if @single_message.save
-        command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-        if params['schedule']['schedule'].to_i==1
-          job=ScheduleSmsJob.new(command,@single_message,params[:backupSms],params[:randomText])
-          time=convertTodate(params['datepik']['datepik'],params['date']) #objeto de tipo Time
-          if time.class==Time
-            ApplicationHelper::ScheduleUtils.schedule(job,time)
-            format.html { redirect_to @single_message, notice:time }
+            format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
             format.json { render :show, status: :sent, location: @single_message }
-          else
-            format.html { redirect_to @single_message, notice:time }
-          end
         else
-          command.deliver(@single_message,params[:backupSms],params[:randomText])
-          format.html { redirect_to @single_message, notice: "#{params}" }
-          format.json { render :show, status: :sent, location: @single_message }
+          format.html { render :new }
+          format.json { render json: @single_message.errors, status: :unprocessable_entity }
         end
-        else
-        format.html { render :new }
-        format.json { render json: @single_message.errors, status: :unprocessable_entity }
       end
     end
   end
