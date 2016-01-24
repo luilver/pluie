@@ -35,8 +35,7 @@ class SingleMessagesController < ApplicationController
       respond_to do |format|
         if time.class==Time
           if @single_message.save
-              command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-              job=ScheduleSmsJob.new(command,@single_message,params[:backupSms],params[:randomText])
+              job=ScheduleSmsJob.new(@single_message,params[:backupSms],params[:randomText])
               ApplicationHelper::ScheduleUtils.schedule(job,time)
               format.html { redirect_to @single_message, notice: t('notice.success_schedule_sent',time:time, msg: t('activerecord.models.single_message')).html_safe  }
               format.json { render :show, status: :sent, location: @single_message }

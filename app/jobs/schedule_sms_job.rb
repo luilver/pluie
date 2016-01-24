@@ -1,14 +1,16 @@
 require 'action_smser_utils'
 
 class ScheduleSmsJob
-  def initialize(command,message,backup,random)
-    @command=command
+  include Wisper::Publisher
+
+  def initialize(message,backup,random)
     @message=message
     @backup=backup
     @randomtext=random
   end
 
   def perform
-    @command.deliver(@message,@backup,@randomtext)
+    command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
+    command.deliver(@message,@backup,@randomtext)
   end
 end
