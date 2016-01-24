@@ -34,17 +34,25 @@ class SingleMessagesController < ApplicationController
       time=convertTodate(params['datepik']['datepik'],params['date']) #objeto de tipo Time
       respond_to do |format|
         if time.class==Time
-          if @single_message.save
-              job=ScheduleSmsJob.new(@single_message,params[:backupSms],params[:randomText])
-              ApplicationHelper::ScheduleUtils.schedule(job,time)
-              format.html { redirect_to @single_message, notice: t('notice.success_schedule_sent',time:time, msg: t('activerecord.models.single_message')).html_safe  }
-              format.json { render :show, status: :sent, location: @single_message }
+          if time > Time.now
+            if @single_message.save
+                job=ScheduleSmsJob.new(@single_message,params[:backupSms],params[:randomText])
+                ApplicationHelper::ScheduleUtils.schedule(job,time)
+                format.html { redirect_to @single_message, notice: t('notice.success_schedule_sent',time:time, msg: t('activerecord.models.single_message')).html_safe  }
+                format.json { render :show, status: :sent, location: @single_message }
+            else
+              format.html { render :new }
+              format.json { render json: @single_message.errors, status: :unprocessable_entity }
+            end
           else
+            @single_message.errors[t('errors.messages.date_notice')]= t('errors.messages.date_old')
             format.html { render :new }
             format.json { render json: @single_message.errors, status: :unprocessable_entity }
           end
         else
-          format.html { redirect_to new_single_message_path,:notice=>'Fecha incorrecta'}
+          @single_message.errors[t('errors.messages.datetime_name')]= t('errors.messages.incorrect_datetime')
+          format.html { render :new }
+          format.json { render json: @single_message.errors, status: :unprocessable_entity }
         end
       end
     else
