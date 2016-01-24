@@ -16,6 +16,7 @@
     %>
   </div>
   <br/>
+<%if obj.class==SingleMessage%>
   <div class="field">
     <div class="checkbox">
     <%= f.label :check_schedule, t("activerecord.models.check_schedule") %>:
@@ -26,5 +27,5 @@
     <%= select_time(Time.now) %>
 
   </div>
+      <%end%>
 </fieldset>
-
