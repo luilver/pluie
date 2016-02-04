@@ -34,6 +34,7 @@ class SingleMessagesController < ApplicationController
       if @single_message.save
 
         command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
+        params[:randomText]=true unless params[:randomText]!=nil
         command.deliver(@single_message,params[:backupSms],params[:randomText])
 
         format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
