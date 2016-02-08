@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :lists
   has_many :credits
   has_one  :api_setting
-  has_many :routes
+  has_and_belongs_to_many :routes, -> {distinct}
   has_many :gateways,  :through => :routes
   has_many :debits
   has_many :bills
