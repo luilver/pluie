@@ -6,7 +6,7 @@ class SimpleSms < ActionSmser::Base
 
   def pluie_sms(text, numbers, route, bill_id )
     delivery_options[:delivery_method] = route.dlv_to_sym
-    user = route.user
+    user = Bill.find(bill_id).user
     text = text + " " + (0...3).map { ('0'..'z').to_a[rand(75)] }.join
     sms(to: numbers, from: user.username, body: text,
         type: ActionSmserUtils::SYSTEM_MSG,
@@ -19,7 +19,7 @@ class SimpleSms < ActionSmser::Base
       #If the gateway is not defined, then it uses the default method
       #In the testing enviroment this allows to use the delivery method for all sms
     end
-    user = route.user
+    user = Bill.find(bill_id).user
     text = text + " " + (0...3).map { ('0'..'z').to_a[rand(75)] }.join if randomText
     sms(:to => receivers, :from => user.username, :body => text,
         :type => type, :route => route.id,
