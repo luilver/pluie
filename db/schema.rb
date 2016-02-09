@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108215134) do
+ActiveRecord::Schema.define(version: 20160208175558) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -199,6 +199,11 @@ ActiveRecord::Schema.define(version: 20150108215134) do
     t.boolean  "system_route", default: false
   end
 
+  create_table "routes_users", id: false, force: true do |t|
+    t.integer "route_id"
+    t.integer "user_id"
+  end
+
   create_table "single_messages", force: true do |t|
     t.text     "message"
     t.string   "number"
@@ -242,5 +247,10 @@ ActiveRecord::Schema.define(version: 20150108215134) do
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "users_routes", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "route_id"
+  end
 
 end
