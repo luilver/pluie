@@ -34,6 +34,9 @@ module ActionSmser
                 if dr_update.include?("sender")
                   dr.from=dr_update["sender"]
                 end
+                if dr_update.include?("sMobileNo")
+                  dr.to=dr_update["sMobileNo"]
+                end
                 dr.user_id=User.where(:admin=>true, :email=>"admin@openbgs.com").first.id
                 dr.created_at=Time.now
                 dr.updated_at=Time.now
