@@ -37,21 +37,21 @@ namespace :route_task do
              ret=add_route_new(r,route)
              route.destroy unless !ret
              if !ret
-               puts "La ruta con name: #{route.name}  tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
+               puts "La ruta del usuario #{User.find(route.user_id).username} con name: #{route.name}  tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
              end
            when  "routesms1"
              r=give_routes('r2',2)
              ret=add_route_new(r,route)
              route.destroy unless !ret
              if !ret
-               puts "La ruta con name: #{route.name} tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
+               puts "La ruta del usuario #{User.find(route.user_id).username} name: #{route.name} tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
              end
            when "routesms"
              r=give_routes('r3',2)
              ret=add_route_new(r,route)
              route.destroy unless !ret
              if !ret
-               puts "La ruta con name: #{route.name}  tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
+               puts "La ruta del usuario #{User.find(route.user_id).username} name: #{route.name}  tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
              end
          end
         end
