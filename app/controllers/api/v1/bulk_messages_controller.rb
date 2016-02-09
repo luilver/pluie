@@ -41,7 +41,11 @@ module Api
               Delayed::Job.enqueue(job, delay_options)
               render json: {:message=>'Send succefully'},status: 201
               else
-                render json: @bulk_message.errors, status: 422
+                mens_errors=""
+                @bulk_message.errors.full_messages.each do |f|
+                  mens_errors=mens_errors+", "+f
+                end
+                render json: {:message=>mens_errors}, status: 422
               end
               else
               render json: {:message=>"Invalid route"}, status: 422
