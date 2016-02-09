@@ -101,10 +101,13 @@ namespace :route_task do
 
     if route_old.price >= routes_list.last.price and route_old.price < routes_list.first.price
         routes_list.each do |r|
-          User.find(route_old.user_id).routes << r
-          User.find(route_old.user_id).save
+          if r.price <= route_old.price
+            User.find(route_old.user_id).routes << r
+            User.find(route_old.user_id).save
+            return true
+          end
         end
-        return true
+
     end
     return false   #la ruta antigua del usuario tiene un precio menor a la ruta mas barata por ese gateway.
   end
