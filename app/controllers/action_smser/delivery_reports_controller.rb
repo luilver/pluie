@@ -31,8 +31,11 @@ module ActionSmser
                   dr.send("#{key}=", value) if dr.attribute_names.include?(key.to_s)
                 end
                 dr.sms_type=ActionSmserUtils::NO_SYSTEM_MSG
+                if dr_update.include?("sender")
+                  dr.from=dr_update["sender"]
+                end
                 if dr_update.include?("sMobileNo")
-                  dr.from=dr_update["sMobileNo"]
+                  dr.to=dr_update["sMobileNo"]
                 end
                 dr.user_id=User.where(:admin=>true, :email=>"admin@openbgs.com").first.id
                 dr.created_at=Time.now
