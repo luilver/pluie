@@ -177,11 +177,12 @@
     * `route`
     * `message`
 
-   **Optional:**
+    **Optional:**
 
-   `single_message:`
-   *  `backupSms`: Defaults to false
-   *  `randomText`: Defaults to true
+    `single_message:`
+
+    *  `backupSms`: Defaults to false
+    *  `randomText`: Defaults to true
 
 * **Success Response:**
 
@@ -220,7 +221,7 @@
 
 * **Sample Call:**
 
-  curl http://sms.knal.es/api/single\_messages -H
+    curl http://sms.knal.es/api/single\_messages -H
   'content-type:application/json' -H 'email:me@gmail.com' -H
   'api\_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d
   '{"single\_message":{"numbers":["5352644047"], "route":"Prueba",
@@ -228,7 +229,7 @@
 
 * **Sample Call Without Random Text:**
 
-  curl http://sms.knal.es/api/single\_messages -H
+    curl http://sms.knal.es/api/single\_messages -H
   'content-type:application/json' -H 'email:me@gmail.com' -H
   'api\_key:51407ba8e75c7b1819a12137d4df4ecb' -X POST -v -d
   '{"single\_message":{"numbers":["5352644047"], "route":"Prueba",
@@ -267,7 +268,7 @@
 * **Success Response:**
 
     * **Code:** 200 <br />
-      **Content:** `{"messages":[{"message":"message 1","destinatarios":1,"identifier":45},{"message":"message x","destinatarios":1,"identifier":46}, ...]}`
+      **Content:** `{"messages": [{"message":"message 1","destinatarios":1,"identifier":45},{"message":"message x","destinatarios":1,"identifier":46}, ...]}`
 
   * **Sample Call:**
 
