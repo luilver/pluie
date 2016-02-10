@@ -73,6 +73,7 @@ es:
   bulk_message: 'mensaje masivo'
   logged_in_as: 'Identificado como'
   user: 'Usuario'
+  user_add: 'Agregar usuario'
   new_credit: 'A&ntilde;adir cr&eacute;dito'
   editing_credit: 'Editar cr&eacute;dito'
   edit: 'Editar'

@@ -26,22 +26,58 @@
     <%= f.label :system_route %><br>
     <%= f.check_box :system_route %>
   </div>
+  <%if new == true%>
+  <div class="field">
+    <label>Crear sin usuario</label>
+    <br/>
+    <%= check_box_tag :nil_user%>
+  </div>
+  <%end%>
+
+    <fieldset>
+      <legend><%= t('gateway') %></legend>
+      <%= f.select :gateway_id,
+                   options_from_collection_for_select(Gateway.all, "id", "name"),
+                   {},
+                   :class => "route_gateway_select"
+      %>
+    </fieldset>
+
+    <%if @route.users.count > 0%>
+     <%= t('user').pluralize(@route.users.count)%>
+    <div class="field">
+      <ul>
+      <%@route.users.each do |r|%>
+          <li><%= r.username%></li>
+        <%end%>
+      </ul>
+    </div>
+    <%end%>
+
   <fieldset>
-    <legend><%= t('user') %></legend>
+
+    <legend> <%= check_box_tag :add_user%><%= t('user_add') %></legend>
     <%= f.select :user_id,
       options_from_collection_for_select(User.all, "id", "email"),
       {},
       :class => "route_user_select"
     %>
   </fieldset>
-  <fieldset>
-    <legend><%= t('gateway') %></legend>
-    <%= f.select :gateway_id,
-      options_from_collection_for_select(Gateway.all, "id", "name"),
-      {},
-      :class => "route_gateway_select"
-    %>
+
+    <%if new == false%>
+        <div class="field">
+          <label>Elimnar usuario</label>
+          <br/>
+          <%= check_box_tag :remove_user%>
+        </div>
+    <%end%>
+    <fieldset>
+        <%= select_tag(:remove_id,
+                     options_from_collection_for_select(@route.users, "id", "email"),
+                     {}
+                    )%>
   </fieldset>
+
   <div class="actions">
     <%= f.submit %>
   </div>

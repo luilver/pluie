@@ -25,7 +25,11 @@ class RoutesController < ApplicationController
   # POST /routes
   # POST /routes.json
   def create
+    if params[:nil_user]=="1"
+     params[:route].delete(:user_id)
+    end
     @route = Route.new(route_params)
+    @route.users << User.find(route_params[:user_id]) unless params[:nil_user]=="1"
 
     respond_to do |format|
       if @route.save
