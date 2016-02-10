@@ -46,6 +46,16 @@ class RoutesController < ApplicationController
   # PATCH/PUT /routes/1.json
   def update
     respond_to do |format|
+
+       if params[:add_user]=="1"
+         @route.users << User.find(route_params[:user_id]) unless !@route.users.select{|y| y.id == route_params[:user_id]}.blank?
+       end
+
+      if params[:remove_user]=="1"
+        @route.users.destroy(params[:remove_id])
+      end
+
+      route_params.delete(:user_id)
       if @route.update(route_params)
         format.html { redirect_to @route, notice: t('notice.item_updated_fm', item: t('activerecord.models.route')).html_safe  }
         format.json { render :show, status: :ok, location: @route }
