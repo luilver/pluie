@@ -18,14 +18,11 @@
   <br/>
 <%if obj.class==SingleMessage%>
   <div class="field">
-    <div class="checkbox">
-    <%= f.label :check_schedule, t("activerecord.models.check_schedule") %>:
     <%= check_box('schedule', 'schedule')%>
-    </div>
-    <%= f.label :schedule_sms, t("activerecord.models.schedule_sms") %>:
+    <%= f.label :check_schedule, t("activerecord.models.check_schedule") %>
+
     <%=text_field('datepik','datepik',:id=>"datepicker",:value=>Time.now.day.to_s+'/'+Time.now.month.to_s+'/'+Time.now.year.to_s) %>
     <%= select_time(Time.now) %>
-
   </div>
-      <%end%>
+<%end%>
 </fieldset>
