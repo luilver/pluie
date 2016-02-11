@@ -56,7 +56,7 @@
 
   <fieldset>
 
-    <legend> <%= check_box_tag :add_user%><%= t('user_add') %></legend>
+    <legend><%if !new%> <%= check_box_tag :add_user%><%end%> <%= t('user_add') %></legend>
     <%= f.select :user_id,
       options_from_collection_for_select(User.all, "id", "email"),
       {},
