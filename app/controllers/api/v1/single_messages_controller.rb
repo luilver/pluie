@@ -40,6 +40,11 @@ module Api
             params[:single_message][:randomText] = true unless params[:single_message][:randomText]!=nil
             command.deliver(@single_message,params[:single_message][:backupSms],
                            params[:single_message][:randomText])
+            if params[:notified]
+              job =NotifiedDeliveryReportSmsJob.new(@single_message.id,params[:phone_notified],SingleMessage.to_s)
+              Delayed::Job.enqueue(job,:run_at => 30.minutes.from_now)
+            end
+
             render json: {:messsage=>"Single Message successfully sent"}, status: 200
             else
               mens_errors=""
