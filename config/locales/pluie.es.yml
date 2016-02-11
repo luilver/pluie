@@ -157,6 +157,7 @@ es:
       topup: 'Recarga'
       check_schedule: 'Planificar envio'
       schedule_sms: 'Elija fecha y hora de su envio'
+      script_gateway: 'mensaje generado por un script'
     attributes:
       single_message:
         number: 'Destinatario'
