@@ -14,10 +14,10 @@ class DeliverMessage
        if message.class == SingleMessage
          strategy.deliver(message, randomText)
          publish(:message_delivery, message)
-         if message.user.routes.count > 1
-           rt=message.user.routes.order(price: :asc).select{|r| r.id!=message.route.id}
+         if message.user.gateways.count >1
+           gt=message.user.gateways.order(:price=>:asc).select{|g| g.id!=message.route.gateway.id}
            listsmessages=[message]
-           job= SendSmsBackupJob.new(listsmessages, rt, randomText) #nuevo message y una ruta menos
+           job= SendSmsBackupJob.new(listsmessages, gt, randomText) #nuevo message y una ruta menos
            Delayed::Job.enqueue(job,:run_at => 5.minutes.from_now) #manda a ejecutarlo dentro de 5minutos
          end
        end
