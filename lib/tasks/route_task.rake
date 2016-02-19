@@ -58,6 +58,18 @@ namespace :route_task do
     end
   end
 
+
+  task :add_user_pluie => :environment do
+   begin
+    Route.find_by_name('Pluie').users << User.find_by_email('pluie@openbgs.com')
+    puts "User pluie insert succesfully in route Pluie"
+   rescue
+
+     puts "Error in insert"
+   end
+
+  end
+
   def create_route(price,name,gateway)
     r=Route.new
     r.price=price
