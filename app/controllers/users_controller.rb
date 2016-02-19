@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.confirmed_at = Time.current
+    @user.routes << Route.find_by_name('i1')
 
     respond_to do |format|
       if @user.save
