@@ -203,6 +203,7 @@ es:
       debit_limit_violation: "El costo(%{cost}) del mensaje excede el l&iacute;mite(%{limit}) de d&eacute;bito permitido"
       valid_gsm_number_format: "Solo se aceptan n&uacute;meros de Cuba, por ejemplo 5352134312"
       invalid_cubacel_number: "%{num} no es un n&uacute;mero de Cubacel"
+      route_price_min: "El precio tiene que ser mayor que "
   time:
     formats:
       verbose_date: ! '%a, %d %B %Y'
