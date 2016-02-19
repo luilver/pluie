@@ -11,7 +11,7 @@ module ActionSmser::DeliveryMethods
       batches = sms.to_numbers_array.each_slice(batch_size).to_a
       last_request = batches.size
       route = Route.find(sms.route_id)
-      user = route.user
+      user = Bill.find(sms.bill_id).user
       em_was_running =  EM.reactor_running?
       request_counter = 0
       info = self.sms_info(sms)

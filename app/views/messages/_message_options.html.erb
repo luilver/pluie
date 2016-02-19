@@ -1,3 +1,10 @@
+<script>
+    $(function() {
+        $( "#datepicker" ).datepicker();
+    });
+</script>
+
+<%= notice%>
 <fieldset>
   <legend><%= t(:sending_options).capitalize.html_safe%></legend>
   <div class="field">
@@ -8,5 +15,14 @@
       :class => "message_route_select"
     %>
   </div>
-</fieldset>
+  <br/>
+<%if obj.class==SingleMessage%>
+  <div class="field">
+    <%= check_box('schedule', 'schedule')%>
+    <%= f.label :check_schedule, t("activerecord.models.check_schedule") %>
 
+    <%=text_field('datepik','datepik',:id=>"datepicker",:value=>Time.now.day.to_s+'/'+Time.now.month.to_s+'/'+Time.now.year.to_s) %>
+    <%= select_time(Time.now) %>
+  </div>
+<%end%>
+</fieldset>

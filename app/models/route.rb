@@ -1,12 +1,13 @@
 class Route < ActiveRecord::Base
-  belongs_to :user
+  has_and_belongs_to_many :users, -> { distinct }
   belongs_to :gateway
   has_many :single_messages
   has_many :bulk_messages
 
+  before_save :min_value_route
   validates :name, presence: true
   validates :price, presence: true, numericality: {greater_than: 0}
-  validates :user, presence: true
+  # validates :user, presence: true
   validates :gateway, presence: true
 
   scope :publisher_routes , -> { where( system_route: true) }
@@ -25,5 +26,15 @@ class Route < ActiveRecord::Base
 
   def dlv_to_sym
     "async_#{self.gateway.name.downcase}".to_sym
+  end
+
+  def min_value_route
+    gateway_most_expensive=Gateway.order(:price=>:desc).first
+    if self.price  > gateway_most_expensive.price
+      return true
+    else
+      errors.add(:base, "price tiene que ser  mayor que: #{gateway_most_expensive.price}")
+     return false
+    end
   end
 end

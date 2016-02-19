@@ -14,9 +14,14 @@
 </p>
 
 <p>
-  <strong><%= User.model_name.human %>:</strong>
-  <%= @route.user %>
-</p>
+  <strong><%= t('user').pluralize(@route.users.count) %>:</strong>
+  <ul>
+  <%@route.users.each do |u|%>
+
+  <li><%= u.username%></li>
+  <%end%>
+  </ul>
+  </p>
 
 <p>
   <strong><%= Gateway.model_name.human %>:</strong>

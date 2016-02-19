@@ -61,11 +61,33 @@ module Api
   end
 
   def destroy
-        token_api_key=request.headers["HTTP_API_KEY"]
-        return (render json: {:message=>'email is missing'}, status: 404) if request.headers["HTTP_EMAIL"].blank?
-        return (render json: {:message=>'Invalid email'}, status: 422) unless not User.find_by_email(request.headers["HTTP_EMAIL"]).blank?
+    user_email=""
+    token_api_key =""
 
-        return (render json: {:message=>"api key is missing"},status: 404) if request.headers["HTTP_API_KEY"].blank?
+    if request.headers["HTTP_EMAIL"].present? or request.headers["HTTP_API_KEY"].present? #si una de las dos es true doy por hecho que esta intentando acceder usando autenticacion por headers
+      user_email=request.headers["HTTP_EMAIL"].presence
+      token_api_key=request.headers["HTTP_API_KEY"].presence
+    else
+      if params[:authenticate_api].present?
+        if params[:authenticate_api][:email].present?
+          user_email=params[:authenticate_api][:email].presence
+        else
+          return (render json: {:message=>'email is missing'}, status: 404)
+        end
+        if params[:authenticate_api][:api_key].present?
+          token_api_key=params[:authenticate_api][:api_key].presence
+        else
+          return (render json: {:message=>"api key is missing"},status: 404)
+        end
+      else
+        return (render json: {:message=>'email is missing'}, status: 404)
+      end
+    end
+
+    return (render json: {:message=>'email is missing'}, status: 404) if !user_email
+    return (render json: {:message=>'Invalid email'}, status: 422) unless not User.find_by_email(user_email).blank?
+
+        return (render json: {:message=>"api key is missing"},status: 404) if !token_api_key
         if not ApiSetting.find_by_api_key(token_api_key).blank?
            api_setting= ApiSetting.find_by_api_key(token_api_key)
 

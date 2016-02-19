@@ -19,7 +19,7 @@
 
   <%= render '/messages/message_text', :f => f %>
 
-  <%= render '/messages/message_options', :f => f %>
+  <%= render '/messages/message_options', :f => f, :obj=>@single_message %>
 
   <%= render '/messages/send_button', :f => f %>
 

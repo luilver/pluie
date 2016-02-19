@@ -73,6 +73,7 @@ es:
   bulk_message: 'mensaje masivo'
   logged_in_as: 'Identificado como'
   user: 'Usuario'
+  user_add: 'Agregar usuario'
   new_credit: 'A&ntilde;adir cr&eacute;dito'
   editing_credit: 'Editar cr&eacute;dito'
   edit: 'Editar'
@@ -139,6 +140,7 @@ es:
     item_updated_fm: "%{item} actualizada satisfactoriamente."
     item_removed: "%{item} eliminado satisfactoriamente."
     item_removed_fm: "%{item} eliminada satisfactoriamente."
+    success_schedule_sent: 'El %{msg} fue planificado satisfactoriamente %{time}.'
 
   activerecord:
     models:
@@ -154,6 +156,8 @@ es:
       debit: 'D&eacute;bito'
       observer: 'Observador'
       topup: 'Recarga'
+      check_schedule: 'Planificar envio'
+      schedule_sms: 'Elija fecha y hora de su envio'
       script_gateway: 'mensaje generado por un script'
     attributes:
       single_message:
@@ -203,6 +207,11 @@ es:
       debit_limit_violation: "El costo(%{cost}) del mensaje excede el l&iacute;mite(%{limit}) de d&eacute;bito permitido"
       valid_gsm_number_format: "Solo se aceptan n&uacute;meros de Cuba, por ejemplo 5352134312"
       invalid_cubacel_number: "%{num} no es un n&uacute;mero de Cubacel"
+      date_old: " y hora deben ser actual o futura"
+      date_notice: "Fecha"
+      incorrect_datetime: " incorrecta"
+      datetime_name: "Fecha"
+
   time:
     formats:
       verbose_date: ! '%a, %d %B %Y'
