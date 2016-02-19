@@ -18,6 +18,7 @@ en:
   gateways: 'Gateways'
   observers: 'Observers'
   user: 'User'
+  user_add: 'Add user'
   delivery_reports: 'Delivery reports'
   all: 'All'
   all_m: 'All'

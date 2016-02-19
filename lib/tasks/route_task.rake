@@ -37,21 +37,21 @@ namespace :route_task do
              ret=add_route_new(r,route)
              route.destroy unless !ret
              if !ret
-               puts "La ruta con name: #{route.name}  tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
+               puts "La ruta del usuario #{User.find(route.user_id).username} con name: #{route.name}  tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
              end
            when  "routesms1"
              r=give_routes('r2',2)
              ret=add_route_new(r,route)
              route.destroy unless !ret
              if !ret
-               puts "La ruta con name: #{route.name} tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
+               puts "La ruta del usuario #{User.find(route.user_id).username} name: #{route.name} tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
              end
            when "routesms"
              r=give_routes('r3',2)
              ret=add_route_new(r,route)
              route.destroy unless !ret
              if !ret
-               puts "La ruta con name: #{route.name}  tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
+               puts "La ruta del usuario #{User.find(route.user_id).username} name: #{route.name}  tiene precio menor que la ruta mas barata: #{r.last.name} con el proveedor #{route.gateway.name}"
              end
          end
         end
@@ -101,10 +101,13 @@ namespace :route_task do
 
     if route_old.price >= routes_list.last.price and route_old.price < routes_list.first.price
         routes_list.each do |r|
-          User.find(route_old.user_id).routes << r
-          User.find(route_old.user_id).save
+          if r.price <= route_old.price
+            User.find(route_old.user_id).routes << r
+            User.find(route_old.user_id).save
+            return true
+          end
         end
-        return true
+
     end
     return false   #la ruta antigua del usuario tiene un precio menor a la ruta mas barata por ese gateway.
   end
