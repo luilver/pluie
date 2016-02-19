@@ -4,6 +4,7 @@ class Route < ActiveRecord::Base
   has_many :single_messages
   has_many :bulk_messages
 
+  before_save :min_value_route
   validates :name, presence: true
   validates :price, presence: true, numericality: {greater_than: 0}
   # validates :user, presence: true
@@ -25,5 +26,15 @@ class Route < ActiveRecord::Base
 
   def dlv_to_sym
     "async_#{self.gateway.name.downcase}".to_sym
+  end
+
+  def min_value_route
+    gateway_most_expensive=Gateway.order(:price=>:desc).first
+    if self.price  > gateway_most_expensive.price
+      return true
+    else
+      errors.add(:base, "price tiene que ser  mayor que: #{gateway_most_expensive.price}")
+     return false
+    end
   end
 end
