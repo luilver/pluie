@@ -71,6 +71,7 @@ en:
     sucess_msg_resent: '%{msg} was successfully re-sent.'
     item_created: '%{item} was successfully created.'
     item_updated: '%{item} was successfully updated.'
+    success_schedule_sent: '%{msg} was successfully scheduling  %{time}.'
 
   activerecord:
     models:
@@ -86,13 +87,19 @@ en:
       debit: 'Debit'
       observer: Observer
       topup: 'Topup'
-      script_gateway: 'message from script'
+      check_schedule: 'schedule your send'
+      schedule_sms: 'Select date and time for send your sms'
   errors:
     messages:
       insufficient_funds: "Not enough balance to cover a %{cost} expense"
       debit_limit_violation: "Message cost (%{cost}) violates your credit limit (%{limit})"
       valid_gsm_number_format: "Only gsm numbers from cubacel allowed, ie 5352134312"
       invalid_cubacel_number: "%{num} is not a valid Cubacel number"
+      date_old: " must be present or future"
+      date_notice: "Datetime"
+      incorrect_datetime: " incorrect"
+      datetime_name: "Datetime"
+
   time:
     formats:
       verbose_date: ! '%a %B %d, %Y'

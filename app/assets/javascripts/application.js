@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
+//= require jquery-ui/datepicker-es
+//= require jquery.datetimepicker
 //= require turbolinks
 //= require sms_tools
 //= require select2
