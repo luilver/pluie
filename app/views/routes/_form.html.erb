@@ -70,13 +70,15 @@
           <br/>
           <%= check_box_tag :remove_user%>
         </div>
-    <%end%>
+
     <fieldset>
         <%= select_tag(:remove_id,
                      options_from_collection_for_select(@route.users, "id", "email"),
                      {}
                     )%>
+
   </fieldset>
+    <%end%>
 
   <div class="actions">
     <%= f.submit %>
