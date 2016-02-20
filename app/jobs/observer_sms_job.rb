@@ -7,7 +7,7 @@ ObserverSmsJob = Struct.new(:text, :numbers_in_msg) do
     end
     if numbers.any?
       route = Route.notifications_route
-      bill = Bill.create(number_of_sms: 1, user: route.user)
+      bill = Bill.create(number_of_sms: 1, user: route.users.first)
       sms = SimpleSms.pluie_sms(text, numbers, route, bill.id)
       sms.deliver
     end
