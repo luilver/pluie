@@ -211,7 +211,7 @@ es:
       date_notice: "Fecha"
       incorrect_datetime: " incorrecta"
       datetime_name: "Fecha"
-
+      route_price_min: "El precio tiene que ser mayor que "
   time:
     formats:
       verbose_date: ! '%a, %d %B %Y'

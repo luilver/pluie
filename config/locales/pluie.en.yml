@@ -100,7 +100,7 @@ en:
       date_notice: "Datetime"
       incorrect_datetime: " incorrect"
       datetime_name: "Datetime"
-
+      route_price_min: "The price has to be greater than "
   time:
     formats:
       verbose_date: ! '%a %B %d, %Y'
