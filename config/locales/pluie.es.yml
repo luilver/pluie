@@ -4,6 +4,7 @@ es:
   show_number: "Mostrar n&uacute;mero"
   hide_number: "Ocultar n&uacute;mero"
   recipient: 'Destinatario'
+  from_number: 'Remitente (%{num} números)'
   home: 'Inicio'
   single_mode: 'Env&iacute;o puntual'
   massive_mode: 'Env&iacute;o masivo'

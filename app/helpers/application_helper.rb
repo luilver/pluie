@@ -57,7 +57,10 @@ module ApplicationHelper
 
     def convert_to_num(n)
         begin
-          n.to_i
+          num= Integer n
+          return num.to_s[0..4].to_i if (Math.log10(num).to_i+1) > 5
+          return rand(99999) if (Math.log10(num).to_i+1) < 5
+          return num
         rescue
           rand(99999)
         end
