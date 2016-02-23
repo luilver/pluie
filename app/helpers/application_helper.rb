@@ -35,13 +35,13 @@ module ApplicationHelper
       return false
     end
 
-    def send_message_simple(sm, backup, rt)
+    def send_message_simple(sm, backup, rt,number_from)
       command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-      command.deliver(sm,backup,rt)
+      command.deliver(sm,backup,rt,number_from)
     end
 
-    def self.schedule_job(sm,backup,rt,time)
-      job=ScheduleSmsJob.new(sm,backup,rt)
+    def self.schedule_job(sm,backup,rt,time,number_from)
+      job=ScheduleSmsJob.new(sm,backup,rt,number_from)
       ScheduleUtils.schedule(job,time)
     end
 
@@ -53,6 +53,14 @@ module ApplicationHelper
       rescue
         return nil
       end
+    end
+
+    def convert_to_num(n)
+        begin
+          n.to_i
+        rescue
+          rand(99999)
+        end
     end
 
     def validate_datetime(datetime)

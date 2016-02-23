@@ -37,7 +37,7 @@ module Api
 
               if @bulk_message.save
               delay_options = {:queue => 'deliver'}
-              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier))
+              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),rand(99999))
               Delayed::Job.enqueue(job, delay_options)
               render json: {:message=>'Send succefully'},status: 201
               else
