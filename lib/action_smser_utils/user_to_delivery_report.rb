@@ -21,6 +21,15 @@ module ActionSmserUtils
         dr.save
         dr
       end
+
+      def to_csv(options={},reports)
+        CSV.generate(options) do |csv|
+          csv << [:to,:status]
+          reports.each do |dr|
+            csv << [dr.to,dr.status]
+          end
+        end
+      end
     end
   end
 end

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns:ss="urn:schemas-microsoft-com:office:spreadscheet"
+xmlns:html="http://www.w3.org/TR/REC-html">
+        <Worksheet ss:Name="Sheet1">
+                <Table>
+                        <Row>
+                          <Cell><Data ss:Type="String">To</Data></Cell>
+                          <Cell><Data ss:Type="String">Status</Data></Cell>
+                        </Row>
+                         <%@delivery_report_xls.each do |dr|%>
+                           <Row>
+                              <Cell><Data ss:Type="String"><%= dr.to%> </Data></Cell>
+                                <Cell><Data ss:Type="String"><%= dr.status%></Data></Cell>
+                           </Row>
+                         <%end%>
+                </Table>
+            </Worksheet>
+</Workbook>
