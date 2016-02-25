@@ -1,6 +1,7 @@
 require 'action_smser_utils/scopes_to_delivery_report'
 require 'action_smser_utils/user_to_delivery_report'
 require 'action_smser_utils/inspect_request'
+require 'action_smser_utils/format_to_delivery_report'
 require 'smstools'
 #user_to_delivery_report file must be loaded in order to add build_with_user method
 #and belongs_to association to ActionSmser::DeliveryReport

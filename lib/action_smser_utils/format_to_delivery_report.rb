@@ -1,28 +1,15 @@
-# module ActionSmserUtils
-#       module FormatToDeliveryReport
-#         def to_csv(options={},reports)
-#           CSV.generate(options) do |csv|
-#             csv << [:to,:status]
-#             reports.each do |dr|
-#               csv << [dr.to,dr.status]
-#             end
-#           end
-#         end
-#       end
-# end
-#
-# ActionSmser::DeliveryReport.extend  ActionSmserUtils::FormatToDeliveryReport
+module ActionSmserUtils
+      module FormatToDeliveryReport
+        def to_csv(options={},reports)
+          CSV.generate(options) do |csv|
+            csv << [I18n.translate('id'), I18n.translate('created_at'),I18n.translate('msg_id'),I18n.translate('route'),I18n.translate('status'),I18n.translate('status_updated_at'),I18n.translate('to'),I18n.translate('sms_type')]
+            reports.each do |dr|
+              csv << [dr.id,dr.created_at,dr.msg_id,dr.gateway,dr.status,dr.status_updated_at,dr.to,dr.sms_type]
+            end
+          end
+        end
+      end
+end
 
-# t.string :msg_id
-# t.string :status
-# t.datetime :status_updated_at
-# t.string :sms_type
-# t.text   :log
-#
-# t.string :to
-# t.string :from
-# t.string :body
-#
-# t.string :gateway
-# t.integer :re_delivery_of_delivery_report_id
-# t.boolean :re_delivered
+ActionSmser::DeliveryReport.extend  ActionSmserUtils::FormatToDeliveryReport
+
