@@ -18,8 +18,14 @@ xmlns:html="http://www.w3.org/TR/REC-html">
                         </Row>
                          <%@delivery_report_xls.each do |dr|%>
                            <Row>
-                              <Cell><Data ss:Type="String"><%= dr.to%> </Data></Cell>
-                                <Cell><Data ss:Type="String"><%= dr.status%></Data></Cell>
+                             <Cell><Data ss:Type="String"><%= dr.id%> </Data></Cell>
+                             <Cell><Data ss:Type="String"><%= dr.created_at%> </Data></Cell>
+                             <Cell><Data ss:Type="String"><%= dr.msg_id%> </Data></Cell>
+                             <Cell><Data ss:Type="String"><%= dr.gateway%></Data></Cell>
+                             <Cell><Data ss:Type="String"><%= dr.status%> </Data></Cell>
+                             <Cell><Data ss:Type="String"><%= dr.status_updated_at%> </Data></Cell>
+                             <Cell><Data ss:Type="String"><%= dr.to%> </Data></Cell>
+                             <Cell><Data ss:Type="String"><%= dr.sms_type%> </Data></Cell>
                            </Row>
                          <%end%>
                 </Table>
