@@ -40,6 +40,11 @@ module ApplicationHelper
       command.deliver(sm,backup,rt)
     end
 
+    def notified_sms(id,phone,name_message)
+      job =NotifiedDeliveryReportSmsJob.new(id,phone,name_message)
+      Delayed::Job.enqueue(job,:run_at => 30.minutes.from_now)
+    end
+
     def self.schedule_job(sm,backup,rt,time)
       job=ScheduleSmsJob.new(sm,backup,rt)
       ScheduleUtils.schedule(job,time)

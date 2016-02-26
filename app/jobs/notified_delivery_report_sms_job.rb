@@ -10,13 +10,14 @@ class NotifiedDeliveryReportSmsJob
 
   def perform
 
-    user= User.where(:admin=>true, :email=>"admin@openbgs.com")
+    user= User.where(:admin=>true, :email=>"admin@openbgs.com").first
     sms_of_user=ActionSmser::DeliveryReport.where(:pluie_id=>@message_id.to_s)
     delivered = porcent(sms_of_user,"delivered")
     sent = porcent(sms_of_user,"sent")
     undelivered = porcent(sms_of_user,"undelivered")
 
     s=SingleMessage.new
+    s.user=user
     s.message="!Su envìo se ha realizado satisfactoriamente!"
     s.message= s.message+'\n'+  I18n.translate(:delivered_status).to_s + "  " + delivered[:status].to_s + "(" + delivered[:porcent_sms].to_s+ ")"
     s.message= s.message+'\n'+  I18n.translate(:sent_status).to_s + "  " + sent[:status].to_s + "(" + sent[:porcent_sms].to_s+ ")"
