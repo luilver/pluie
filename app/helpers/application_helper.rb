@@ -40,6 +40,13 @@ module ApplicationHelper
       command.deliver(sm,backup,rt)
     end
 
+    def callback_request(url,message)
+      if !url.blank?
+        job = CallbackRequestJob.new(message,url,message.class.to_s,0)
+        Delayed::Job.enqueue(job,:run_at=> 5.minutes.from_now)
+      end
+    end
+
     def self.schedule_job(sm,backup,rt,time)
       job=ScheduleSmsJob.new(sm,backup,rt)
       ScheduleUtils.schedule(job,time)
