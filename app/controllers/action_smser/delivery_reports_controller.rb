@@ -19,6 +19,7 @@ module ActionSmser
 
         dr_var_array = ActionSmser.delivery_options[:gateway_commit][params['gateway']].send(:process_delivery_report, params)
         dr_array = []
+        dr_array_with_pluie=[]
 
         if !dr_var_array.blank?
           dr_var_array.each do |dr_update|
@@ -58,6 +59,9 @@ module ActionSmser
                   if dr.save
                     updated_count += 1
                     dr_array << dr
+                    if !dr.pluie_id.blank?
+                      dr_array_with_pluie << dr
+                    end
                     ActionSmser::Logger.info("Gateway_commit updated item with id: #{msg_id}, params: #{dr_update.inspect}")
                   else
                     ActionSmser::Logger.info("Gateway_commit problem updating item with id: #{msg_id}, params: #{dr_update.inspect}")
@@ -69,6 +73,10 @@ module ActionSmser
           end
         end
 
+        if !dr_array_with_pluie.blank?
+          ApplicationHelper::CallbackManage.call_callback_request(dr_array_with_pluie)
+        end
+
         begin
           ActionSmser.delivery_options[:gateway_commit_observers].each do |observer|
             observer.after_gateway_commit(dr_array)
@@ -76,8 +84,6 @@ module ActionSmser
         rescue Exception => e
           ActionSmser::Logger.error("Problem with gateway_commit_observers: #{e}")
         end
-
-
       end
 
       if updated_count > 0

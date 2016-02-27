@@ -70,4 +70,31 @@ module ApplicationHelper
         end
     end
   end
+
+  class CallbackManage
+      def self.call_callback_request(delivery_reports)
+            delivery_reports.group_by {|r| r.pluie_id}.each do |g| #g es un grupo formado por dos elementos [0] el elemento porque filtro y en [1] el grupo como tal Array
+                list_dr=[]
+                g[1].each do |dr|
+                  info ={status:dr.status,msg_id:dr.msg_id,to:dr.to,route:dr.gateway,message:dr.body,user:User.find(dr.user_id.to_i).username}
+                  list_dr << info
+                end
+                begin
+                  url=''
+                  dr= ActionSmser::DeliveryReport.where(:pluie_id=>g[0]).first
+                  if dr.sms_type==SingleMessage.to_s
+                    url=SingleMessage.find(g[0].to_i).url_callback
+                  else
+                    url =BulkMessage.find(g[0].to_i).url_callback
+                  end
+                  if !url.blank?
+                    resource = RestClient::Resource.new(url,:content_type => :json)
+                    resource.post({pluie_callback:list_dr})
+                  end
+                rescue => e
+                    e.response.code
+                end
+            end
+      end
+  end
 end
