@@ -73,6 +73,7 @@ en:
     item_created: '%{item} was successfully created.'
     item_updated: '%{item} was successfully updated.'
     success_schedule_sent: '%{msg} was successfully scheduling  %{time}.'
+    low_balance: 'Credit warning: Your account %{username} on knales, has $%{balance} left to use. Contact your manager for topup.'
 
   activerecord:
     models:

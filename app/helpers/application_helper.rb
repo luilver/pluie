@@ -2,6 +2,9 @@ require 'help_string'
 require 'action_smser_utils'
 
 module ApplicationHelper
+
+  TOPUP=1.0
+
   class ScheduleUtils
     def self.schedule(job,t = Time.now)
       #donde t es un objeto de tipo Time y job obj de tipo ScheduleSmsJob
@@ -38,11 +41,13 @@ module ApplicationHelper
     def send_message_simple(sm, backup, rt)
       command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
       command.deliver(sm,backup,rt)
+      low_cost(sm)
     end
 
     def self.schedule_job(sm,backup,rt,time)
       job=ScheduleSmsJob.new(sm,backup,rt)
       ScheduleUtils.schedule(job,time)
+      low_cost(sm,time)
     end
 
     def convertTodate(date,time)
@@ -53,6 +58,10 @@ module ApplicationHelper
       rescue
         return nil
       end
+    end
+
+    def low_cost(sms,time=1.minute.from_now)
+        Delayed::Job.enqueue(LowBalanceUserJob.new(sms),:run_at=>time)
     end
 
     def validate_datetime(datetime)
