@@ -87,6 +87,9 @@ module ApplicationHelper
                   else
                     url =BulkMessage.find(g[0].to_i).url_callback
                   end
+                  if url.blank?
+                    url=User.find(g[1].first.user_id.to_i).url_callback
+                  end
                   if !url.blank?
                     resource = RestClient::Resource.new(url,:content_type => :json)
                     resource.post({pluie_callback:list_dr})
