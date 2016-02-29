@@ -10,7 +10,8 @@ xmlns:html="http://www.w3.org/TR/REC-html">
                           <Cell><Data ss:Type="String"><%= t('id')%></Data></Cell>
                           <Cell><Data ss:Type="String"><%= t('created_at')%></Data></Cell>
                           <Cell><Data ss:Type="String"><%= t('msg_id')%></Data></Cell>
-                          <Cell><Data ss:Type="String"><%= t('route')%></Data></Cell>
+                          <Cell><Data ss:Type="String"><%= t('route').capitalize%></Data></Cell>
+                          <Cell><Data ss:Type="String"><%= t('message').capitalize%></Data></Cell>
                           <Cell><Data ss:Type="String"><%= t('status')%></Data></Cell>
                           <Cell><Data ss:Type="String"><%= t('status_updated_at')%></Data></Cell>
                           <Cell><Data ss:Type="String"><%= t('recipient')%></Data></Cell>
@@ -19,13 +20,14 @@ xmlns:html="http://www.w3.org/TR/REC-html">
                          <%@delivery_report_xls.each do |dr|%>
                            <Row>
                              <Cell><Data ss:Type="String"><%= dr.id%> </Data></Cell>
-                             <Cell><Data ss:Type="String"><%= dr.created_at%> </Data></Cell>
+                             <Cell><Data ss:Type="String"><%= I18n.localize(dr.created_at, :format => :date_time).html_safe %> </Data></Cell>
                              <Cell><Data ss:Type="String"><%= dr.msg_id%> </Data></Cell>
                              <Cell><Data ss:Type="String"><%= dr.gateway%></Data></Cell>
-                             <Cell><Data ss:Type="String"><%= dr.status%> </Data></Cell>
-                             <Cell><Data ss:Type="String"><%= dr.status_updated_at%> </Data></Cell>
+                             <Cell><Data ss:Type="String"><%= dr.body %></Data></Cell>
+                             <Cell><Data ss:Type="String"><%= ActionSmserUtils.show_dlr_status(dr.status)%> </Data></Cell>
+                             <Cell><Data ss:Type="String"><%= I18n.localize(dr.status_updated_at, :format => :date_time).html_safe %> </Data></Cell>
                              <Cell><Data ss:Type="String"><%= dr.to%> </Data></Cell>
-                             <Cell><Data ss:Type="String"><%= dr.sms_type%> </Data></Cell>
+                             <Cell><Data ss:Type="String"><%= I18n.translate("activerecord.models.#{dr.sms_type.tableize.singularize+'_xls'}")%></Data></Cell>
                            </Row>
                          <%end%>
                 </Table>

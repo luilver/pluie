@@ -77,6 +77,8 @@ en:
   activerecord:
     models:
       single_message: 'Single message'
+      single_message_xls: 'Single message'
+      bulk_message_xls: 'Bulk message'
       bulk_message: 'Bulk message'
       list: 'List'
       contact: 'Contact'

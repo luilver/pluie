@@ -145,6 +145,8 @@ es:
   activerecord:
     models:
       single_message: 'Env&iacute;o puntual'
+      single_message_xls: 'Envío puntual'
+      bulk_message_xls: 'Envío masivo'
       bulk_message: 'Env&iacute;o masivo'
       list: 'Lista'
       contact: 'Contacto'
