@@ -57,6 +57,9 @@ module Api
                end
             else
               if @single_message.save
+                if params[:notified].to_s.to_bool
+                  sm.notified_sms(@single_message.id,params[:phone_notified],SingleMessage.to_s)
+                end
                 sm.send_message_simple(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]))
                 render json: {:messsage=>"Single Message successfully sent"}, status: 200
               else

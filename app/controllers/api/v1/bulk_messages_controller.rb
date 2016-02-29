@@ -39,6 +39,12 @@ module Api
               delay_options = {:queue => 'deliver'}
               job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier))
               Delayed::Job.enqueue(job, delay_options)
+
+              if params[:notified]
+                job1 =NotifiedDeliveryReportSmsJob.new(@bulk_message.id,params[:phone_notified],BulkMessage.to_s)
+                Delayed::Job.enqueue(job1,:run_at => 30.minutes.from_now)
+              end
+
               render json: {:message=>'Send succefully'},status: 201
               else
                 mens_errors=""
