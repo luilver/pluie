@@ -91,6 +91,7 @@ en:
       topup: 'Topup'
       check_schedule: 'schedule your send'
       schedule_sms: 'Select date and time for send your sms'
+      backup_sms: 'Sms backup'
   errors:
     messages:
       insufficient_funds: "Not enough balance to cover a %{cost} expense"

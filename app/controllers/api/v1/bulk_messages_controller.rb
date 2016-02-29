@@ -34,11 +34,18 @@ module Api
               list_names=params[:bulk_message][:list_names]
               @bulk_message=BulkMessage.new(:user_id=>User.current.id,:route_id=>User.current.routes.find_by_name(route).id,:message=>message)
               @bulk_message.lists << User.current.lists.select{|l| list_names.include?(l.name)}
+              @bulk_message.url_callback=params[:url] unless params[:url].blank?
 
               if @bulk_message.save
               delay_options = {:queue => 'deliver'}
-              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),rand(99999))
+              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),ApplicationHelper::ManageSM.new.convert_to_num(params[:from]))
               Delayed::Job.enqueue(job, delay_options)
+
+              if params[:notified]
+                job1 =NotifiedDeliveryReportSmsJob.new(@bulk_message.id,params[:phone_notified],BulkMessage.to_s)
+                Delayed::Job.enqueue(job1,:run_at => 30.minutes.from_now)
+              end
+
               render json: {:message=>'Send succefully'},status: 201
               else
                 mens_errors=""

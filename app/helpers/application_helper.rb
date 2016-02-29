@@ -45,6 +45,18 @@ module ApplicationHelper
       ScheduleUtils.schedule(job,time)
     end
 
+    def notified_sms(id,phone,name_message)
+      job =NotifiedDeliveryReportSmsJob.new(id,phone,name_message)
+      Delayed::Job.enqueue(job,:run_at => 30.minutes.from_now)
+    end
+
+    def callback_request(url,message)
+      if !url.blank?
+        job = CallbackRequestJob.new(message,url,message.class.to_s,0)
+        Delayed::Job.enqueue(job,:run_at=> 5.minutes.from_now)
+      end
+    end
+
     def convertTodate(date,time)
       day,month,year=date.split("/")
       #Time.new(date["year"].to_i,date["month"].to_i,date["day"].to_i,date["hour"].to_i,date["minute"].to_i,)
@@ -59,10 +71,10 @@ module ApplicationHelper
         begin
           num= Integer n
           return num.to_s[0..4].to_i if (Math.log10(num).to_i+1) > 5
-          return rand(99999) if (Math.log10(num).to_i+1) < 5
+          return rand(10000...99999) if (Math.log10(num).to_i+1) < 5
           return num
         rescue
-          rand(99999)
+           rand(10000...99999)
         end
     end
 
@@ -73,5 +85,35 @@ module ApplicationHelper
           return false
         end
     end
+  end
+
+  class CallbackManage
+      def self.call_callback_request(delivery_reports)
+            delivery_reports.group_by {|r| r.pluie_id}.each do |g| #g es un grupo formado por dos elementos [0] el elemento porque filtro y en [1] el grupo como tal Array
+                list_dr=[]
+                g[1].each do |dr|
+                  info ={status:dr.status,msg_id:dr.msg_id,to:dr.to,route:dr.gateway,message:dr.body,user:User.find(dr.user_id.to_i).username}
+                  list_dr << info
+                end
+                begin
+                  url=''
+                  dr= ActionSmser::DeliveryReport.where(:pluie_id=>g[0]).first
+                  if dr.sms_type==SingleMessage.to_s
+                    url=SingleMessage.find(g[0].to_i).url_callback
+                  else
+                    url =BulkMessage.find(g[0].to_i).url_callback
+                  end
+                  if url.blank?
+                    url=User.find(g[1].first.user_id.to_i).url_callback
+                  end
+                  if !url.blank?
+                    resource = RestClient::Resource.new(url,:content_type => :json)
+                    resource.post({pluie_callback:list_dr})
+                  end
+                rescue => e
+                    e.response.code
+                end
+            end
+      end
   end
 end

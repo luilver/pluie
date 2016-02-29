@@ -20,7 +20,7 @@ SendSmsBackupJob = Struct.new(:list_messages, :gateways, :randomText,:number_fro
           sm.user_id=message.user_id
           sm.route=message.user.routes.order(:price=>:asc).select{|r| r.gateway_id==gateways.first.id}.first
           sm.save
-          SingleDeliverer.deliver(sm, randomText,number_from)
+          SingleDeliverer.deliver(sm,randomText,number_from)
           list_messages << sm
 
           if gateways.count>1

@@ -37,13 +37,14 @@ module Api
             @single_message=SingleMessage.new(:user_id=>User.current.id, :route_id=>User.current.routes.find_by_name(route).id,:message=>message)
             #@single_message.valid_gsm_numberAPI(numbersPhone)
             @single_message.number=numbersPhone.join(" ")
+            @single_message.url_callback=params[:url] unless params[:url].blank?
 
             if  !params[:single_message][:scheduleSms].blank? and params[:single_message][:scheduleSms].to_bool
                if !params[:single_message][:date].blank?
                  time=sm.validate_datetime(params[:single_message][:date])
                  if sm.check_time(time)
                    if @single_message.save
-                     ApplicationHelper::ManageSM.schedule_job(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),time,rand(99999))
+                     ApplicationHelper::ManageSM.schedule_job(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),time,sm.convert_to_num(params[:from]))
                      render json: {:messsage=>t('notice.success_schedule_sent',time:time,msg: t('activerecord.models.single_message'))}, status: 200
                    else
                      render json: {:message=>@single_message.errors.full_messages.join(", ")}, status: 422
@@ -57,7 +58,10 @@ module Api
                end
             else
               if @single_message.save
-                sm.send_message_simple(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),rand(99999))
+                sm.send_message_simple(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),sm.convert_to_num(params[:from]))
+                if params[:notified].to_s.to_bool
+                  sm.notified_sms(@single_message.id,params[:phone_notified],SingleMessage.to_s)
+                end
                 render json: {:messsage=>"Single Message successfully sent"}, status: 200
               else
                 render json: {:message=>@single_message.errors.full_messages.join(", ")}, status: 422
