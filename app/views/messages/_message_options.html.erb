@@ -24,5 +24,10 @@
     <%=text_field('datepik','datepik',:id=>"datepicker",:value=>Time.now.day.to_s+'/'+Time.now.month.to_s+'/'+Time.now.year.to_s) %>
     <%= select_time(Time.now) %>
   </div>
+
+  <div class="field">
+    <%= check_box(:backupSms, :backupSms)%>
+    <%= f.label :backupSms, t('activerecord.models.backup_sms')%><br>
+  </div>
 <%end%>
 </fieldset>
