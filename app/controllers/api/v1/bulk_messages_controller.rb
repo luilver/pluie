@@ -34,6 +34,7 @@ module Api
               list_names=params[:bulk_message][:list_names]
               @bulk_message=BulkMessage.new(:user_id=>User.current.id,:route_id=>User.current.routes.find_by_name(route).id,:message=>message)
               @bulk_message.lists << User.current.lists.select{|l| list_names.include?(l.name)}
+              @bulk_message.url_callback=params[:url] unless params[:url].blank?
 
               if @bulk_message.save
               delay_options = {:queue => 'deliver'}

@@ -42,6 +42,7 @@ es:
         send_me_reset_password_instructions: Cambiar contraseña
     registrations:
       edit:
+        user_edit_one: 'Editar Usuario'
         are_you_sure: "¿Está usted seguro?"
         cancel_my_account: Cerrar la cuenta
         currently_waiting_confirmation_for_email:

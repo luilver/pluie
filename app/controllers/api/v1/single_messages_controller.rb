@@ -37,6 +37,7 @@ module Api
             @single_message=SingleMessage.new(:user_id=>User.current.id, :route_id=>User.current.routes.find_by_name(route).id,:message=>message)
             #@single_message.valid_gsm_numberAPI(numbersPhone)
             @single_message.number=numbersPhone.join(" ")
+            @single_message.url_callback=params[:url] unless params[:url].blank?
 
             if  !params[:single_message][:scheduleSms].blank? and params[:single_message][:scheduleSms].to_bool
                if !params[:single_message][:date].blank?
