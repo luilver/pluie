@@ -30,43 +30,35 @@ class SingleMessagesController < ApplicationController
     @single_message = SingleMessage.new(single_message_params)
     @single_message.user = current_user
 
-    if params['schedule']['schedule'].to_i==1
-      time=convertTodate(params['datepik']['datepik'],params['date']) #objeto de tipo Time
-      respond_to do |format|
-        if time.class==Time
-          if time > Time.now
-            if @single_message.save
-                job=ScheduleSmsJob.new(@single_message,params[:backupSms],params[:randomText])
-                ApplicationHelper::ScheduleUtils.schedule(job,time)
+    sm =ApplicationHelper::ManageSM.new
+
+    respond_to do |format|
+      if params['schedule']['schedule'].to_i==1
+        time=sm.convertTodate(params['datepik']['datepik'],params['date']) #objeto de tipo Time
+           if sm.check_time(time)
+              if  @single_message.save
+                ApplicationHelper::ManageSM.schedule_job(@single_message,sm.validate_backup(params[:backupSms]),sm.validate_rt(params[:randomText]),time)
                 format.html { redirect_to @single_message, notice: t('notice.success_schedule_sent',time:time, msg: t('activerecord.models.single_message')).html_safe  }
                 format.json { render :show, status: :sent, location: @single_message }
-            else
-              format.html { render :new }
-              format.json { render json: @single_message.errors, status: :unprocessable_entity }
-            end
+              else
+                format.html { render :new }
+                format.json { render json: @single_message.errors, status: :unprocessable_entity }
+              end
+           else
+             @single_message.errors[t('errors.messages.datetime_name')]= t('errors.messages.incorrect_datetime') if time.class!=Time
+             @single_message.errors[t('errors.messages.date_notice')]= t('errors.messages.date_old') if time.class==Time and time < Time.now
+             format.html { render :new }
+             format.json { render json: @single_message.errors, status: :unprocessable_entity }
+           end
+      else
+          if @single_message.save
+              sm.send_message_simple(@single_message,sm.validate_backup(params[:backupSms]),sm.validate_rt(params[:randomText]))
+              format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
+              format.json { render :show, status: :sent, location: @single_message }
           else
-            @single_message.errors[t('errors.messages.date_notice')]= t('errors.messages.date_old')
             format.html { render :new }
             format.json { render json: @single_message.errors, status: :unprocessable_entity }
           end
-        else
-          @single_message.errors[t('errors.messages.datetime_name')]= t('errors.messages.incorrect_datetime')
-          format.html { render :new }
-          format.json { render json: @single_message.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-      respond_to do |format|
-        if @single_message.save
-            command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-            command.deliver(@single_message,params[:backupSms],params[:randomText])
-
-            format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
-            format.json { render :show, status: :sent, location: @single_message }
-        else
-          format.html { render :new }
-          format.json { render json: @single_message.errors, status: :unprocessable_entity }
-        end
       end
     end
   end

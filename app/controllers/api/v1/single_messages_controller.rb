@@ -29,6 +29,7 @@ module Api
           route=params[:single_message][:route]
           message=params[:single_message][:message]
 
+          sm = ApplicationHelper::ManageSM.new
 
           return (render json: {:message=>"route is blank"},status: 404) if route.blank?
           return (render json: {:message=>"message is blank"},status: 404) if message.blank?
@@ -37,44 +38,29 @@ module Api
             #@single_message.valid_gsm_numberAPI(numbersPhone)
             @single_message.number=numbersPhone.join(" ")
 
-            if  !params[:single_message][:scheduleSms].blank? and params[:single_message][:scheduleSms]
+            if  !params[:single_message][:scheduleSms].blank? and params[:single_message][:scheduleSms].to_bool
                if !params[:single_message][:date].blank?
-                 time=validate_datetime(params[:single_message][:date])
-                 if time.class == Time
-                   if time >=Time.now
-                     if @single_message.save
-                       job=ScheduleSmsJob.new(@single_message,params[:single_message][:backupSms],
-                                              params[:single_message][:randomText])
-                       ApplicationHelper::ScheduleUtils.schedule(job,time)
-                       render json: {:messsage=>t('notice.success_schedule_sent',time:time,msg: t('activerecord.models.single_message'))}, status: 200
-                     else
-                       mens_errors=""
-                       @single_message.errors.full_messages.each do |f|
-                          mens_errors=mens_errors+", "+f
-                       end
-                       render json: {:message=>mens_errors}, status: 422
-                     end
+                 time=sm.validate_datetime(params[:single_message][:date])
+                 if sm.check_time(time)
+                   if @single_message.save
+                     ApplicationHelper::ManageSM.schedule_job(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),time)
+                     render json: {:messsage=>t('notice.success_schedule_sent',time:time,msg: t('activerecord.models.single_message'))}, status: 200
                    else
-                     render json: {:message=> t('errors.messages.date_notice') +  t('errors.messages.date_old')}
+                     render json: {:message=>@single_message.errors.full_messages.join(", ")}, status: 422
                    end
                  else
-                   render json: {:ok=>t('errors.messages.datetime_name') + t('errors.messages.incorrect_datetime')}
+                   render json: {:message=> t('errors.messages.date_notice') +  t('errors.messages.date_old')}, :status=>422 if time.class==Time and time < Time.now
+                   render json: {:message=>t('errors.messages.datetime_name') + t('errors.messages.incorrect_datetime')}, :status => 422 if time.class!=Time
                  end
                else
-                 render json: {:message=>'date is blank'}
+                 render json: {:message=>'date is blank'}, :status => 422
                end
             else
               if @single_message.save
-              command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-              command.deliver(@single_message,params[:single_message][:backupSms],
-                             params[:single_message][:randomText])
-              render json: {:messsage=>"Single Message successfully sent"}, status: 200
+                sm.send_message_simple(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]))
+                render json: {:messsage=>"Single Message successfully sent"}, status: 200
               else
-                mens_errors=""
-                @single_message.errors.full_messages.each do |f|
-                   mens_errors=mens_errors+", "+f
-                end
-                render json: {:message=>mens_errors}, status: 422
+                render json: {:message=>@single_message.errors.full_messages.join(", ")}, status: 422
               end
             end
           else
@@ -97,16 +83,6 @@ module Api
           end
         else
           render json: {:message=>"permission denied"}, status: 401
-        end
-      end
-
-      private
-
-      def validate_datetime(datetime)
-        begin
-          Time.new(datetime[:year],datetime[:month],datetime[:day],datetime[:hour],datetime[:minute])
-        rescue
-          return false
         end
       end
     end
