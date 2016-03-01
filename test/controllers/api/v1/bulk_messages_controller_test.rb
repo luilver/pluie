@@ -104,6 +104,26 @@ module Api
         resp = delete :destroy, data_params
         assert_response 301, resp.body
       end
+
+      test "send bulk message with authenticate in body" do
+        data_params={:authenticate_api=>{:email=>'ale5@gmail.com',:api_key=>'561b7ec89b0ca61b250815b24e398ae'},:bulk_message=>{:message=>"send test message",:route=>'Gold',:list_names=>["five"]}}
+        assert_difference('BulkMessage.count') do
+          resp = post :create, data_params
+        end
+        assert_response 201
+      end
+
+      test "send bulk message with authenticate in body wrong" do
+        data_params={:authenticate_api=>{:email=>'ale5@gmail.com',:api_key=>'561b7ec89b0ca61b250815b24e398aeXXX'},:bulk_message=>{:message=>"send test message",:route=>'Gold',:list_names=>["five"]}}
+          resp = post :create, data_params
+        assert_response 401
+      end
+
+      test "send bulk not credit with authenticate" do
+        data_params={:authenticate_api=>{:email=>'notcredit@gmail.com',:api_key=>'56yb7ec89b0ca61b250815b24e408n1'},:bulk_message=>{:message=>"message test",:route=>'Gold',:list_names=>["bulk"]}}
+        resp = post :create, data_params
+        assert_response 422, resp.body
+      end
     end
   end
 end
