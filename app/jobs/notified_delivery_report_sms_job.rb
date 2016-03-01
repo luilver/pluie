@@ -9,8 +9,9 @@ class NotifiedDeliveryReportSmsJob
   end
 
   def perform
+    user = @type==BulkMessage.to_s ? BulkMessage.find(@message_id.to_i).user : SingleMessage.find(@message_id.to_i).user
+    @phone_to_notified= user.movil_number unless @phone_to_notified != nil
 
-    user= User.where(:admin=>true, :email=>"admin@openbgs.com").first
     sms_of_user=ActionSmser::DeliveryReport.where(:pluie_id=>@message_id.to_s)
     delivered = porcent(sms_of_user,"delivered")
     sent = porcent(sms_of_user,"sent")

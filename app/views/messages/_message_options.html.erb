@@ -30,4 +30,13 @@
     <%= f.label :backupSms, t('activerecord.models.backup_sms')%><br>
   </div>
 <%end%>
+
+  <div class="field">
+    <%if !current_user.movil_number.blank? %>
+        <%= check_box(:notified,:notified)%>
+        <%= f.label :backupSms, t('activerecord.models.notified_sms')%><br>
+    <%else%>
+        <p>Si desea recibir notificaciones incluya su numero de teléfono móvil en su informacion personal <%= link_to t('account'), main_app.edit_user_registration_path %></p>
+    <%end%>
+  </div>
 </fieldset>

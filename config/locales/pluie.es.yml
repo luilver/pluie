@@ -131,6 +131,7 @@ es:
 
   select_lists: "Seleccione 1 o m&aacute;s listas"
   failed_numbers_link: "N&uacute;meros no entregados"
+  movil_number: ' (móvil actual: '
 
   notice:
     sucess_msg_sent: 'El %{msg} fue iniciado satisfactoriamente'
@@ -160,6 +161,7 @@ es:
       check_schedule: 'Planificar envio'
       schedule_sms: 'Elija fecha y hora de su envio'
       backup_sms: 'Respaldar mensaje'
+      notified_sms: '¿Desea recibir notificaciones por sms?'
       script_gateway: 'mensaje generado por un script'
     attributes:
       single_message:

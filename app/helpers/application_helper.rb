@@ -78,6 +78,15 @@ module ApplicationHelper
         end
     end
 
+    def message_of_confirmation(user,movil_number)
+      sm=SingleMessage.new
+      sm.user=user
+      sm.route=user.routes.order(:price=>:asc).first
+      sm.message='Valide su numero de telefono movil introduciendo esta clave: ' + SecureRandom.hex(5) +' en el campo confirme clave. \n Gracias por usar Knales'
+      sm.number=movil_number.to_s
+      send_message_simple(sm,false,true,rand(10000...99999))
+    end
+
     def validate_datetime(datetime)
         begin
           Time.new(datetime[:year],datetime[:month],datetime[:day],datetime[:hour],datetime[:minute])

@@ -67,6 +67,7 @@ en:
 
   select_lists: "Click to select 1 or more lists"
   failed_numbers_link: "Undelivered numbers"
+  movil_number: ' (current phone: '
 
   notice:
     sucess_msg_sent: '%{msg} was successfully sent.'
@@ -92,6 +93,7 @@ en:
       check_schedule: 'schedule your send'
       schedule_sms: 'Select date and time for send your sms'
       backup_sms: 'Sms backup'
+      notified_sms: 'Do you like notification by sms?'
   errors:
     messages:
       insufficient_funds: "Not enough balance to cover a %{cost} expense"
