@@ -10,26 +10,28 @@ class NotifiedDeliveryReportSmsJob
 
   def perform
     user = @type==BulkMessage.to_s ? BulkMessage.find(@message_id.to_i).user : SingleMessage.find(@message_id.to_i).user
-    @phone_to_notified= user.movil_number unless @phone_to_notified != nil
+    @phone_to_notified= user.movil_number if @phone_to_notified == nil and !user.confirm_token_number.blank?
 
-    sms_of_user=ActionSmser::DeliveryReport.where(:pluie_id=>@message_id.to_s)
-    delivered = porcent(sms_of_user,"delivered")
-    sent = porcent(sms_of_user,"sent")
-    undelivered = porcent(sms_of_user,"undelivered")
+    if !@phone_to_notified.blank?
+      sms_of_user=ActionSmser::DeliveryReport.where(:pluie_id=>@message_id.to_s)
+      delivered = porcent(sms_of_user,"delivered")
+      sent = porcent(sms_of_user,"sent")
+      undelivered = porcent(sms_of_user,"undelivered")
 
-    s=SingleMessage.new
-    s.user=user
-    s.message="!Su envìo se ha realizado satisfactoriamente!"
-    s.message= s.message+'\n'+  I18n.translate(:delivered_status).to_s + "  " + delivered[:status].to_s + "(" + delivered[:porcent_sms].to_s+ ")"
-    s.message= s.message+'\n'+  I18n.translate(:sent_status).to_s + "  " + sent[:status].to_s + "(" + sent[:porcent_sms].to_s+ ")"
-    s.message= s.message+'\n'+  I18n.translate(:undelivered_status).to_s + "  " + undelivered[:status].to_s + "(" + undelivered[:porcent_sms].to_s+ ")"
-    s.message=s.message+ '\n'+ 'Knal.es'
-    s.route=user.routes.order(:price=>:asc).first
-    s.number=@phone_to_notified.to_s
+      s=SingleMessage.new
+      s.user=user
+      s.message="!Su envìo se ha realizado satisfactoriamente!"
+      s.message= s.message+'\n'+  I18n.translate(:delivered_status).to_s + "  " + delivered[:status].to_s + "(" + delivered[:porcent_sms].to_s+ ")"
+      s.message= s.message+'\n'+  I18n.translate(:sent_status).to_s + "  " + sent[:status].to_s + "(" + sent[:porcent_sms].to_s+ ")"
+      s.message= s.message+'\n'+  I18n.translate(:undelivered_status).to_s + "  " + undelivered[:status].to_s + "(" + undelivered[:porcent_sms].to_s+ ")"
+      s.message=s.message+ '\n'+ 'Knal.es'
+      s.route=user.routes.order(:price=>:asc).first
+      s.number=@phone_to_notified.to_s
 
-    if s.save
-      command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-      command.deliver(s,true,true,rand(10000...99999)) #con respaldo y randomText
+      if s.save
+        command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
+        command.deliver(s,true,true,rand(10000...99999)) #con respaldo y randomText
+      end
     end
   end
 

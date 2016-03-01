@@ -43,7 +43,7 @@ class BulkMessagesController < ApplicationController
         job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),ApplicationHelper::ManageSM.new.convert_to_num(params[:from][:from]))
         Delayed::Job.enqueue(job, delay_options)
 
-        if params[:notified][:notified].to_s.to_bool
+        if params[:notified][:notified].to_s.to_bool and !@bulk_message.user.confirm_token_number.blank?
           job1 =NotifiedDeliveryReportSmsJob.new(@bulk_message.id,@bulk_message.user.movil_number,BulkMessage.to_s)
           Delayed::Job.enqueue(job1,:run_at => 30.minutes.from_now)
         end

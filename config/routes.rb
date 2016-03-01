@@ -87,6 +87,10 @@ Rails.application.routes.draw do
 
   devise_for :users, :controllers => {:registrations => "registrations"}
   root to: "home#index"
+
+  get "confirmation_number/confirmation" => "confirmation_number#new"
+  post "confirmation_number/confirmation" => "confirmation_number#confirmation"
+
   #
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

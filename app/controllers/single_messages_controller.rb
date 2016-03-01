@@ -53,9 +53,6 @@ class SingleMessagesController < ApplicationController
       else
           if @single_message.save
               sm.send_message_simple(@single_message,sm.validate_backup(params[:backupSms]),sm.validate_rt(params[:randomText]),sm.convert_to_num(params[:from][:from]))
-              if params[:notified][:notified].to_s.to_bool
-                sm.notified_sms(@single_message.id, @single_message.user.movil_number,SingleMessage.to_s) if @single_message.user.movil_number!=nil
-              end
               format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
               format.json { render :show, status: :sent, location: @single_message }
           else

@@ -68,6 +68,8 @@ en:
   select_lists: "Click to select 1 or more lists"
   failed_numbers_link: "Undelivered numbers"
   movil_number: ' (current phone: '
+  not_confirm_number: 'Not confirmed'
+  confirm_number: 'Confirmed your phone'
 
   notice:
     sucess_msg_sent: '%{msg} was successfully sent.'
