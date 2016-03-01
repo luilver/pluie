@@ -1,8 +1,11 @@
 class ConfirmationNumberController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => :confirmation
+  skip_before_filter :verify_authenticity_token, :only => [:confirmation, :get_api]
 
   def new
     @errors=nil
+  end
+
+  def new_api
   end
 
   def confirmation
@@ -18,5 +21,10 @@ class ConfirmationNumberController < ApplicationController
       end
     end
 
+  end
+
+  def get_api
+    current_user.api_setting.reset_authentication_token!
+    redirect_to  main_app.edit_user_registration_path
   end
 end
