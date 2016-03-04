@@ -1,0 +1,12 @@
+<p style="color:red"><%= @errors%></p>
+
+<%if !current_user.movil_number.blank?%>
+<form action="confirmation" method="post">
+  <div><%= label_tag t('confirm_number').html_safe %><i></i><br />
+    <%= text_field :confirmation, :confirmation %></div>
+    <br/>
+    <%= submit_tag 'Confirmar'%>
+</form>
+    <%else%>
+    <p>Usted no tiene numero de telefono movil registrado.</p>
+<%end%>
