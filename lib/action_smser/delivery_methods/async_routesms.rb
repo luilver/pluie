@@ -5,12 +5,13 @@ module ActionSmser::DeliveryMethods
     include GatewayErrorInfo::RoutesmsErrors
 
     def self.sms_info(sms)
+      sms.number_from=random(10000...99999) unless sms.number_from!=nil
       msg = {
         :username => sms.delivery_options[gateway_key][:username],
         :password => sms.delivery_options[gateway_key][:password],
         :type => 0,
         :dlr => 1,
-        :source => '+39'+rand(1000000000).to_s,
+        :source => '+39'+sms.number_from.to_s+rand(10000...99999).to_s,
         :message => sms.body
       }
       msg

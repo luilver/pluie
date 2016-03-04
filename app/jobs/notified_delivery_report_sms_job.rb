@@ -28,7 +28,7 @@ class NotifiedDeliveryReportSmsJob
 
     if s.save
       command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-      command.deliver(s,true,true) #con respaldo y randomText
+      command.deliver(s,true,true,rand(10000...99999)) #con respaldo y randomText
     end
   end
 

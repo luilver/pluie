@@ -35,9 +35,14 @@ module ApplicationHelper
       return false
     end
 
-    def send_message_simple(sm, backup, rt)
+    def send_message_simple(sm, backup, rt,number_from)
       command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-      command.deliver(sm,backup,rt)
+      command.deliver(sm,backup,rt,number_from)
+    end
+
+    def self.schedule_job(sm,backup,rt,time,number_from)
+      job=ScheduleSmsJob.new(sm,backup,rt,number_from)
+      ScheduleUtils.schedule(job,time)
     end
 
     def notified_sms(id,phone,name_message)
@@ -52,11 +57,6 @@ module ApplicationHelper
       end
     end
 
-    def self.schedule_job(sm,backup,rt,time)
-      job=ScheduleSmsJob.new(sm,backup,rt)
-      ScheduleUtils.schedule(job,time)
-    end
-
     def convertTodate(date,time)
       day,month,year=date.split("/")
       #Time.new(date["year"].to_i,date["month"].to_i,date["day"].to_i,date["hour"].to_i,date["minute"].to_i,)
@@ -65,6 +65,17 @@ module ApplicationHelper
       rescue
         return nil
       end
+    end
+
+    def convert_to_num(n)
+        begin
+          num= Integer n
+          return num.to_s[0..4].to_i if (Math.log10(num).to_i+1) > 5
+          return rand(10000...99999) if (Math.log10(num).to_i+1) < 5
+          return num
+        rescue
+           rand(10000...99999)
+        end
     end
 
     def validate_datetime(datetime)

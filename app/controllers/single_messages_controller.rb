@@ -37,7 +37,7 @@ class SingleMessagesController < ApplicationController
         time=sm.convertTodate(params['datepik']['datepik'],params['date']) #objeto de tipo Time
            if sm.check_time(time)
               if  @single_message.save
-                ApplicationHelper::ManageSM.schedule_job(@single_message,sm.validate_backup(params[:backupSms][:backupSms]),sm.validate_rt(params[:randomText]),time)
+                ApplicationHelper::ManageSM.schedule_job(@single_message,sm.validate_backup(params[:backupSms]),sm.validate_rt(params[:randomText]),time,sm.convert_to_num(params[:from][:from]))
                 format.html { redirect_to @single_message, notice: t('notice.success_schedule_sent',time:time, msg: t('activerecord.models.single_message')).html_safe  }
                 format.json { render :show, status: :sent, location: @single_message }
               else
@@ -52,7 +52,7 @@ class SingleMessagesController < ApplicationController
            end
       else
           if @single_message.save
-              sm.send_message_simple(@single_message,sm.validate_backup(params[:backupSms][:backupSms]),sm.validate_rt(params[:randomText]))
+              sm.send_message_simple(@single_message,sm.validate_backup(params[:backupSms]),sm.validate_rt(params[:randomText]),sm.convert_to_num(params[:from][:from]))
               format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
               format.json { render :show, status: :sent, location: @single_message }
           else
@@ -107,5 +107,5 @@ class SingleMessagesController < ApplicationController
       rescue
         return nil
       end
-      end
+    end
 end

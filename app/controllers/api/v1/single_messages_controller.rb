@@ -44,7 +44,7 @@ module Api
                  time=sm.validate_datetime(params[:single_message][:date])
                  if sm.check_time(time)
                    if @single_message.save
-                     ApplicationHelper::ManageSM.schedule_job(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),time)
+                     ApplicationHelper::ManageSM.schedule_job(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),time,sm.convert_to_num(params[:from]))
                      render json: {:messsage=>t('notice.success_schedule_sent',time:time,msg: t('activerecord.models.single_message'))}, status: 200
                    else
                      render json: {:message=>@single_message.errors.full_messages.join(", ")}, status: 422
@@ -58,10 +58,10 @@ module Api
                end
             else
               if @single_message.save
+                sm.send_message_simple(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),sm.convert_to_num(params[:from]))
                 if params[:notified].to_s.to_bool
                   sm.notified_sms(@single_message.id,params[:phone_notified],SingleMessage.to_s)
                 end
-                sm.send_message_simple(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]))
                 render json: {:messsage=>"Single Message successfully sent"}, status: 200
               else
                 render json: {:message=>@single_message.errors.full_messages.join(", ")}, status: 422

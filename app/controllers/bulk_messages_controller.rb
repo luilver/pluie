@@ -34,11 +34,12 @@ class BulkMessagesController < ApplicationController
     @bulk_message.user = current_user
     @bulk_message.lists << List.find(params[:list_ids]) if params[:list_ids]
 
+
     respond_to do |format|
       if @bulk_message.save
 
         delay_options = {:queue => 'deliver'}
-        job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier))
+        job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),ApplicationHelper::ManageSM.new.convert_to_num(params[:from][:from]))
         Delayed::Job.enqueue(job, delay_options)
 
         format.html { redirect_to @bulk_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.bulk_message')).html_safe}

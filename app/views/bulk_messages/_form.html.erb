@@ -12,6 +12,8 @@
     </div>
   <% end %>
 
+  <%= render 'messages/message_from', :f=>f%>
+
   <fieldset>
     <legend><%= t(:lists)%></legend>
     <%= select_tag :list_ids,

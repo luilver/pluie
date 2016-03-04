@@ -4,6 +4,7 @@ en:
   show_number: "Show number"
   hide_number: "Hide number"
   recipient: 'recipient'
+  from_number: 'Origin (%{num} numbers)'
   home: 'Home'
   single_mode: 'Single mode'
   massive_mode: 'Masive Mode'
