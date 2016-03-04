@@ -139,6 +139,25 @@ module Api
         delete :destroy,data_params
         assert_response 401
       end
+
+      test "usr balance with authenticate in body" do
+        data_params={ :authenticate_api=>{:email=>'ale5@gmail.com',:api_key=>'561b7ec89b0ca61b250815b24e398ae'}}
+        resp =get :balance, data_params
+        assert_response 200
+        assert_equal users(:apiu).balance, JSON.parse(resp.body)['user']['balance'].to_i
+      end
+
+      test "authenticate in body wrong" do
+        data_params={ :authenticate_api=>{:email=>'ale5@gmail.com',:api_key=>'XX561b7ec89b0ca61b250815b24e398ae'}}
+        resp =get :balance, data_params
+        assert_response 401
+        data_params={ :authenticate_api=>{:email=>'',:api_key=>'561b7ec89b0ca61b250815b24e398ae'}}
+        resp =get :balance, data_params
+        assert_response 400
+        data_params={ :authenticate_api=>{:email=>'eafa@gmail.com',:api_key=>'561b7ec89b0ca61b250815b24e398ae'}}
+        resp =get :balance, data_params
+        assert_response 400
+      end
     end
   end
 end

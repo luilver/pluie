@@ -843,3 +843,36 @@
 * **Sample Call:**
 
     curl http://sms.knal.es/api/bulk_messages/527 -H 'Content-Type:application/json' -H  email:ab5@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d' -d '{"bulk_message":  {"list_names":["aaaa"],"route":"bronce125","message": "mesage"}}' -X DELETE
+
+* **Sample Call:**
+
+    curl http://sms.knal.es/api/bulk_messages/527 -H 'Content-Type:application/json' -H  email:ab5@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d' -d '{"bulk_message":  {"list_names":["aaaa"],"route":"bronce125","message": "mesage"}}' -X DELETE
+
+**Authentication in entity body of the Api**
+----
+  Authentication in the body of the http request
+
+* **URL**
+
+       /api/single_messages
+
+* **Method:**
+
+      `POST`
+
+*  **HEADER Params**
+
+       None
+
+* **Data Params**
+
+     **Required:**
+
+      `authenticate_api:`
+
+    *  `email`
+    *  `api_key`
+
+* **Sample Call:**
+
+      curl http://sms.knal.es/api/single_messages  -H  'content-type: application/json'  -d  '{"authenticate_api":{"email":"me@mail.com","api_key":"2eefbf7dyg4zax05e6d2339a21d42983bb"},"single_message":{"route":"Gold","numbers":["5356789044"],"message":"test authenticate in body of sms.knal.es"}}'  -X POST -v

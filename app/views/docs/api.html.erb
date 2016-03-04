@@ -888,5 +888,34 @@
     <p>curl http://sms.knal.es/api/bulk_messages/527 -H 'Content-Type:application/json' -H  email:ab5@gmail.com' -H 'api_key: ceb372b3e5c8c913eb036efb0575504d' -d '{"bulk_message":  {"list_names":["aaaa"],"route":"bronce125","message": "mesage"}}' -X DELETE</p>
   </li>
 </ul>
+<h2><strong>Authentication in entity body of the Api</strong></h2>
+<p>Authentication in the body of the http request</p>
+<ul>
+  <li>
+    <p><strong>URL</strong></p>
+    <p>/api/single_messages</p>
+  </li>
+  <li>
+    <p><strong>Method:</strong></p>
+    <p><code>POST</code></p>
+  </li>
+  <li>
+    <p><strong>HEADER Params</strong></p>
+    <p>None</p>
+  </li>
+  <li>
+    <p><strong>Data Params</strong></p>
+    <p><strong>Required:</strong></p>
+    <p><code>authenticate_api:</code></p>
+    <ul>
+      <li><code>email</code></li>
+      <li><code>api_key</code></li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Sample Call:</strong></p>
+    <p>curl http://sms.knal.es/api/single_messages  -H  'content-type: application/json'  -d  '{"authenticate_api":{"email":"me@mail.com","api_key":"2eefbf7dyg4zax05e6d2339a21d42983bb"},"single_message":{"route":"Gold","numbers":["5356789044"],"message":"test authenticate in body of sms.knal.es"}}'  -X POST -v</p>
+  </li>
+</ul>
 </body>
 </html>

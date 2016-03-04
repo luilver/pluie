@@ -56,3 +56,11 @@ routeBulkNotCredit:
   id: 26
   price: 0.5
   name: GoldApiai
+
+routeAuthe:
+  <<: *minimal
+  user_id: 40
+  gateway_id: 50
+  id: 30
+  price: 0.5
+  name: Auth
