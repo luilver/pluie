@@ -11,7 +11,7 @@ module ActionSmser::DeliveryMethods
         :password => sms.delivery_options[gateway_key][:password],
         :type => 0,
         :dlr => 1,
-        :source => '+39'+sms.number_from.to_s+rand(10000...99999).to_s,
+        :source => '+'+sms.number_from.to_s+rand(1000000...9999999).to_s,
         :message => sms.body
       }
       msg
