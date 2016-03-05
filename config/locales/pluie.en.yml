@@ -57,6 +57,7 @@ en:
   sent_status: 'Pending'
   delivered_status: 'Delivered'
   undelivered_status: 'Undelivered'
+  undelivered_status_notified: 'Failed'
 
   at_route: 'at %{route} route'
 
