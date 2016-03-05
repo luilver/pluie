@@ -58,6 +58,7 @@ en:
   delivered_status: 'Delivered'
   undelivered_status: 'Undelivered'
   undelivered_status_notified: 'Failed'
+  not_phone: 'you do not have phone number'
 
   at_route: 'at %{route} route'
 

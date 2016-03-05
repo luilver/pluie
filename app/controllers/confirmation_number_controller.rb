@@ -3,6 +3,9 @@ class ConfirmationNumberController < ApplicationController
 
   def new
     @errors=nil
+    if current_user.movil_number.blank?
+      redirect_to main_app.edit_user_registration_path, :notice => I18n.translate('not_phone')
+    end
   end
 
   def new_api

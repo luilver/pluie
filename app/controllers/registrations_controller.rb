@@ -1,6 +1,10 @@
 
 class RegistrationsController <  Devise::RegistrationsController
 
+    def new
+      @notice_notified=params[:notice]
+      super
+    end
 
     def update
       current_user.url_callback=params[:url][:url] unless params[:url][:url].blank?
