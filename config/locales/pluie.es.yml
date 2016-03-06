@@ -122,6 +122,8 @@ es:
   sent_status: 'Pendiente'
   delivered_status: 'Entregado'
   undelivered_status: 'No entregado'
+  undelivered_status_notified: 'Fracasado'
+  not_phone: 'No tiene número de telefono móvil'
 
   at_route: 'en la ruta: %{route}'
   date_field: Fecha
