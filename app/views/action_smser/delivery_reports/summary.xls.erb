@@ -27,7 +27,7 @@ xmlns:html="http://www.w3.org/TR/REC-html">
                              <Cell><Data ss:Type="String"><%= ActionSmserUtils.show_dlr_status(dr.status)%> </Data></Cell>
                              <Cell><Data ss:Type="String"><%= I18n.localize(dr.status_updated_at, :format => :date_time).html_safe %> </Data></Cell>
                              <Cell><Data ss:Type="String"><%= dr.to%> </Data></Cell>
-                             <Cell><Data ss:Type="String"><%= I18n.translate("activerecord.models.#{dr.sms_type.tableize.singularize+'_xls'}")%></Data></Cell>
+                             <Cell><Data ss:Type="String"><%= I18n.translate("activerecord.models.#{dr.sms_type.tableize.singularize+'_xls'}") if dr.sms_type!="No Pluie"%><%= "No Pluie" if dr.sms_type=="No Pluie"%> </Data></Cell>
                            </Row>
                          <%end%>
                 </Table>
