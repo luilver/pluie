@@ -1,6 +1,7 @@
 require 'action_smser_utils/scopes_to_delivery_report'
 require 'action_smser_utils/user_to_delivery_report'
 require 'action_smser_utils/inspect_request'
+require 'action_smser_utils/format_to_delivery_report'
 require 'smstools'
 #user_to_delivery_report file must be loaded in order to add build_with_user method
 #and belongs_to association to ActionSmser::DeliveryReport
@@ -11,6 +12,7 @@ module ActionSmserUtils
   UNDELIVERED_STATUS = "undelivered"
   MAX_SIZE = 160
   SYSTEM_MSG = "Pluie"
+  NO_SYSTEM_MSG = "No Pluie"
 
   def self.gateway_callback_url(gateway)
     "http://#{PLUIE_HOST}/delivery_reports/gateway_commit/#{gateway.to_s}"

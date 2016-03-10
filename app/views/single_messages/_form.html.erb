@@ -12,6 +12,7 @@
     </div>
   <% end %>
 
+  <%= render '/messages/message_from', :f => f %>
   <div class="field">
     <%= f.label :number, SingleMessage.human_attribute_name("number")%><br>
     <%= f.text_field :number %>
@@ -19,7 +20,7 @@
 
   <%= render '/messages/message_text', :f => f %>
 
-  <%= render '/messages/message_options', :f => f %>
+  <%= render '/messages/message_options', :f => f, :obj=>@single_message %>
 
   <%= render '/messages/send_button', :f => f %>
 

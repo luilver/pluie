@@ -12,6 +12,8 @@
     </div>
   <% end %>
 
+  <%= render 'messages/message_from', :f=>f%>
+
   <fieldset>
     <legend><%= t(:lists)%></legend>
     <%= select_tag :list_ids,
@@ -22,7 +24,7 @@
 
   <%= render '/messages/message_text', :f => f %>
 
-  <%= render '/messages/message_options', :f => f %>
+  <%= render '/messages/message_options', :f => f,:obj => @bulk_message %>
 
   <%= render '/messages/send_button', :f => f %>
 

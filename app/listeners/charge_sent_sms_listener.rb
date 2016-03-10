@@ -9,7 +9,7 @@ class ChargeSentSmsListener
     bill = Bill.find(sms.bill_id)
     bill.close_pending_sms(numbers_count)
     if bill.closed?
-      cashier.charge(sms.route_id, bill.accepted_numbers, sms.body_parts)
+      cashier.charge(sms.route_id, bill.accepted_numbers, sms.body_parts,bill.user)
     end
   end
 end

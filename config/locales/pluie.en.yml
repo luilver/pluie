@@ -4,6 +4,7 @@ en:
   show_number: "Show number"
   hide_number: "Hide number"
   recipient: 'recipient'
+  from_number: 'Origin (%{num} numbers)'
   home: 'Home'
   single_mode: 'Single mode'
   massive_mode: 'Masive Mode'
@@ -18,6 +19,7 @@ en:
   gateways: 'Gateways'
   observers: 'Observers'
   user: 'User'
+  user_add: 'Add user'
   delivery_reports: 'Delivery reports'
   all: 'All'
   all_m: 'All'
@@ -55,6 +57,8 @@ en:
   sent_status: 'Pending'
   delivered_status: 'Delivered'
   undelivered_status: 'Undelivered'
+  undelivered_status_notified: 'Failed'
+  not_phone: 'you do not have phone number'
 
   at_route: 'at %{route} route'
 
@@ -65,16 +69,22 @@ en:
 
   select_lists: "Click to select 1 or more lists"
   failed_numbers_link: "Undelivered numbers"
+  movil_number: ' (current phone: '
+  not_confirm_number: 'Not confirmed'
+  confirm_number: 'Confirmed your phone'
 
   notice:
     sucess_msg_sent: '%{msg} was successfully sent.'
     sucess_msg_resent: '%{msg} was successfully re-sent.'
     item_created: '%{item} was successfully created.'
     item_updated: '%{item} was successfully updated.'
+    success_schedule_sent: '%{msg} was successfully scheduling  %{time}.'
 
   activerecord:
     models:
       single_message: 'Single message'
+      single_message_xls: 'Single message'
+      bulk_message_xls: 'Bulk message'
       bulk_message: 'Bulk message'
       list: 'List'
       contact: 'Contact'
@@ -86,13 +96,21 @@ en:
       debit: 'Debit'
       observer: Observer
       topup: 'Topup'
-
+      check_schedule: 'schedule your send'
+      schedule_sms: 'Select date and time for send your sms'
+      backup_sms: 'Sms backup'
+      notified_sms: 'Do you like notification by sms?'
   errors:
     messages:
       insufficient_funds: "Not enough balance to cover a %{cost} expense"
       debit_limit_violation: "Message cost (%{cost}) violates your credit limit (%{limit})"
       valid_gsm_number_format: "Only gsm numbers from cubacel allowed, ie 5352134312"
       invalid_cubacel_number: "%{num} is not a valid Cubacel number"
+      date_old: " must be present or future"
+      date_notice: "Datetime"
+      incorrect_datetime: " incorrect"
+      datetime_name: "Datetime"
+      route_price_min: "The price has to be greater than "
   time:
     formats:
       verbose_date: ! '%a %B %d, %Y'

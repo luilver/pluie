@@ -1,6 +1,6 @@
 <h1><%= t('editing_route') %></h1>
 
-<%= render 'form' %>
+<%= render 'form' ,:new=>false%>
 
 <%= link_to t('show'), @route %> |
 <%= link_to t('back').html_safe, routes_path %>

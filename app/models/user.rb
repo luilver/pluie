@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :lists
   has_many :credits
   has_one  :api_setting
-  has_many :routes
+  has_and_belongs_to_many :routes, -> {distinct}
   has_many :gateways,  :through => :routes
   has_many :debits
   has_many :bills
@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   has_many :delivery_reports, class_name: "ActionSmser::DeliveryReport"
 
   def api_key
-    self.api_setting.api_key
+    self.api_setting.api_key if self.api_setting
   end
 
   # def api_secret=(api_secret) # no lo tengo concebido con un api_secret

@@ -25,8 +25,9 @@ pluie_development
 #ruby version file for rvm
 .ruby-version
 
-#TODO file
+#TODO files
 TODO
+.todo
 
 #patch files
 *.patch

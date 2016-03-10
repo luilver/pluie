@@ -44,6 +44,9 @@ Rails.application.routes.draw do
   post 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
 
   get 'api/doc' => 'docs#api'
+  get '/tos' => 'pubs#tos'
+  get '/about' => 'pubs#about'
+  get '/contact' => 'pubs#contact'
   resources :users, path: '/admin'
 
   authenticated :user, -> user { user.admin } do
@@ -82,8 +85,14 @@ Rails.application.routes.draw do
   #get '', to: redirect("/#{I18n.default_locale}/home#index")
 
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "registrations"}
   root to: "home#index"
+
+  get "confirmation_number/confirmation" => "confirmation_number#new"
+  get "confirmation_number/new_api" => "confirmation_number#new_api"
+  post "confirmation_number/confirmation" => "confirmation_number#confirmation"
+  post "confirmation_number/get_api" => "confirmation_number#get_api"
+
   #
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
