@@ -9,32 +9,18 @@ module ActionSmser::DeliveryMethods
           :UN => sms.delivery_options[gateway_key][:username],  # es case sensitive
           :P => sms.delivery_options[gateway_key][:password],   # es case sensitive
           :DA=>sms.to,
-          :SA=>'5358428432225559', # aqui va un numero de longitud 16 o 11 caracteres alphanumerricos
+          :SA=>'55580', # aqui va un numero de longitud 16 o 11 caracteres alphanumerricos
           :M=>sms.body,
           :S=>'H', #en la doc ponen H por default
-          :DR=>1
+          :DR=>1,
+          :ST=>1
       }
       msg
     end
 
-    def self.request_params(info, numbers, sms)
-       #msg = info.dup
-       # if numbers.count > 10
-       #   msg["DA"]=numbers.first(10).join(",")
-       # else
-       #  msg["DA"]=numbers.join(",")
-       # end
-
-      #########################################################cambiando a request_body
-       # msg["DA"]=numbers.first
-       # return msg
-    end
-
-
     def self.request_body(info, numbers, sms)
-      msg = info.dup
-      msg["DA"]=numbers.first
-      return msg
+       msg=info.dup
+       return msg
     end
 
     def self.parse_response(response)
