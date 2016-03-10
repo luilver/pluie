@@ -27,7 +27,11 @@ class ConfirmationNumberController < ApplicationController
   end
 
   def get_api
-    current_user.api_setting.reset_authentication_token!
+    current_user.api_setting.reset_authentication_token! if !current_user.api_setting.nil?
+    if current_user.api_setting.nil?
+      api_setting_x=ApiSetting.new({user_id: current_user.id})
+      api_setting_x.save
+    end
     redirect_to  main_app.edit_user_registration_path
   end
 end

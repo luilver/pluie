@@ -2,5 +2,5 @@ Información de acceso vía API:
 <br/>
 <p style="margin-left: 8px;">API Key: <%= current_user.api_key if !current_user.api_key.blank?%> <%= 'Empty' if current_user.api_key.blank?%> </p>
 
-<%= link_to('Generate', controller: "confirmation_number", action: "new_api",method: :get) %>
+<%= link_to('Generate', controller: "confirmation_number", action: "get_api",method: :get) %>
 

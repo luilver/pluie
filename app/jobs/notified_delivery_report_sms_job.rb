@@ -22,10 +22,11 @@ class NotifiedDeliveryReportSmsJob
       s.user=user
       s.message="Plantilla: \n"
       s.message= s.message + "!Su envìo se ha realizado satisfactoriamente!"
-      s.message= s.message+'\n'+  I18n.translate(:delivered_status).to_s + "  " + delivered[:status].to_s + " sms " + "(" + delivered[:porcent_sms].to_s+ ")"
-      s.message= s.message+'\n'+  I18n.translate(:sent_status).to_s + "  " + sent[:status].to_s + " sms " + "(" + sent[:porcent_sms].to_s+ ")"
-      s.message= s.message+'\n'+  I18n.translate(:undelivered_status_notified).to_s + "  " + undelivered[:status].to_s + " sms " + "(" + undelivered[:porcent_sms].to_s+ ")"
+      s.message= s.message+'\n'+  I18n.translate(:delivered_status).to_s + "  " + delivered[:status].to_s + " sms " + "(" + delivered[:porcent_sms].to_s+ "%)"
+      s.message= s.message+'\n'+  I18n.translate(:sent_status).to_s   + "  " + sent[:status].to_s + " sms " + "(" + sent[:porcent_sms].to_s+ "%)"
+      s.message= s.message+'\n'+  I18n.translate(:undelivered_status_notified).to_s + "  " + undelivered[:status].to_s + " sms " + "(" + undelivered[:porcent_sms].to_s+ "%)"
       s.message=s.message+ '\n'+ 'Knal.es'
+      s.message=s.message.gsub!('\n',"\n")
       s.route=user.routes.order(:price=>:asc).first
       s.number=@phone_to_notified.to_s
 
