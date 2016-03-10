@@ -9,27 +9,16 @@ module ActionSmser::DeliveryMethods
           :username => sms.delivery_options[gateway_key][:username],
           :password => sms.delivery_options[gateway_key][:password],
           :to=> sms.to,
-          :from => sms.from,
+          :from => '43380',
           :message => sms.body,
-          :route=>'G2'
+          :route=>'G1'
       }
       msg
     end
 
-    # def self.request_params(info, numbers, sms)
-    #   # msg=info.dup
-    #   # msg[:to]=numbers.first #esto si solo se puede enviar un numero por request
-    #
-    #   #******************************# se pueden enviar mas de un numero por request
-    #   msg=info.dup
-    #   msg[:to]=numbers.join(",")
-    #   return msg
-    # end
-
     def self.request_body(info, numbers, sms)
       msg=info.dup
-      msg[:to]=numbers.join(",")
-      msg
+      return msg
     end
 
     def self.parse_response(response)
@@ -84,7 +73,7 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.base_url
-      "http://server2.msgtoolbox.com"
+      "http://server2.msgtoolbox.com/"
     end
 
     def self.gateway_key
