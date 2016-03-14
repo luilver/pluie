@@ -1,6 +1,6 @@
 module GatewayErrorInfo
   module FortytwoErrors
-    SUCCESS_CODE = 0
+    SUCCESS_CODE = 22
 
     HTTP_ERROR_CODES = {
         SUCCESS_CODE  => "SUCCESS",
@@ -11,7 +11,6 @@ module GatewayErrorInfo
         10  => "DELIVERED_TO_GATEWAY",
         11  => "DELIVERY_DELAYED",
         21  => "DELIVERED_TO_NETWORK",
-        22  => "DELIVERED_TO_PHONE",
         30  => "NO_CREDIT_COVERAGE",
         41  => "MALFORMED_MESSAGE",
         42  => "INTERNAL_ERROR",

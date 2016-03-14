@@ -37,7 +37,7 @@ module ActionSmser::DeliveryMethods
         number = res[:dest]
         msg_id = res[:msg_id]
         dr = ActionSmser::DeliveryReport.build_with_user(sms, number, msg_id, user, route_name)
-        if gatewaystatus == 1
+        if gatewaystatus == 22
           count += 1
         else
           dr.status= "SENT_ERROR_#{self.fortytwo_error(msg_id)}"
