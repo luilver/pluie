@@ -1,6 +1,6 @@
 module GatewayErrorInfo
   module FortytwoErrors
-    SUCCESS_CODE = 22
+    SUCCESS_CODE = 0
 
     HTTP_ERROR_CODES = {
         SUCCESS_CODE  => "SUCCESS",
