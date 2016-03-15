@@ -8,7 +8,7 @@ module ActionSmser::DeliveryMethods
       msg = {
           :username => sms.delivery_options[gateway_key][:username],
           :password => sms.delivery_options[gateway_key][:password],
-          :to=> sms.to,
+          :to=> sms.to.first,
           :from => '43380',
           :message => sms.body,
           :route=>'G1'
