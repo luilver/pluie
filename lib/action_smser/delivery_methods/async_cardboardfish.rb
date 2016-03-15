@@ -8,7 +8,7 @@ module ActionSmser::DeliveryMethods
       msg = {
           :UN => sms.delivery_options[gateway_key][:username],  # es case sensitive
           :P => sms.delivery_options[gateway_key][:password],   # es case sensitive
-          :DA=>sms.to,
+          :DA=>sms.to.first,
           :SA=>'55580', # aqui va un numero de longitud 16 o 11 caracteres alphanumerricos
           :M=>sms.body,
           :S=>'H', #en la doc ponen H por default
@@ -20,6 +20,7 @@ module ActionSmser::DeliveryMethods
 
     def self.request_body(info, numbers, sms)
        msg=info.dup
+       msg[:DA]=numbers.join(",")
        return msg
     end
 
@@ -38,12 +39,11 @@ module ActionSmser::DeliveryMethods
         error_code=res[:msg_id]
         if error_code.to_i > 0  # es que no hubo error
           count += 1
-          dr = ActionSmser::DeliveryReport.build_with_user(sms,  sms.find_receiver_by_id(error_code), msg_id, user, route_name)
+          dr = ActionSmser::DeliveryReport.build_with_user(sms,  sms.find_receiver_by_id(error_code), res[:msg_id], user, route_name)
         else
-          msg_id=nil
-          dr = ActionSmser::DeliveryReport.build_with_user(sms, nil, msg_id, user, route_name) # aqui tiene que venir un numero
+          dr = ActionSmser::DeliveryReport.build_with_user(sms, nil, res[:msg_id], user, route_name) # aqui tiene que venir un numero
           dr.status= "SENT_ERROR_#{self.cardboardfish_error(error_code)}"
-          dr.log += "error in request" if msg_id == nil
+          dr.log += "error in request" if res[:msg_id] == nil
         end
         dr.save
         sms.delivery_reports.push(dr)
@@ -73,7 +73,7 @@ module ActionSmser::DeliveryMethods
       end
 
     def self.path_url
-      "HTTPSMS?"
+     return "HTTPSMS?"
     end
 
     def self.base_url
