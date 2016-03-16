@@ -13,7 +13,7 @@ class NotifiedDeliveryReportSmsJob
     @phone_to_notified= user.movil_number if @phone_to_notified == nil and !user.confirm_token_number.blank?
 
     if !@phone_to_notified.blank?
-      sms_of_user=ActionSmser::DeliveryReport.where(:pluie_id=>@message_id.to_s)
+      sms_of_user=ActionSmser::DeliveryReport.where(:pluie_id=>@message_id.to_s,:sms_type=>@type)
       delivered = porcent(sms_of_user,"delivered")
       sent = porcent(sms_of_user,"sent")
       undelivered = porcent(sms_of_user,"undelivered")
