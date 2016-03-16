@@ -11,7 +11,7 @@ class DeliverMessage
   end
 
   def deliver(message, backupSms=false, randomText=true,number_from)
-     backupSms=backupSms['backupSms'].to_bool if backupSms.class!=FalseClass
+     backupSms=backupSms['backupSms'].to_bool if backupSms.class!=FalseClass and backupSms.class!=TrueClass
 
      if backupSms
        if message.class == SingleMessage
