@@ -1,6 +1,7 @@
 require 'em-http'
 require 'action_smser_utils'
 require 'gateway_error_info'
+require 'em-http/middleware/oauth'
 
 module ActionSmser::DeliveryMethods
   class AsyncHttp
@@ -25,17 +26,25 @@ module ActionSmser::DeliveryMethods
           request_counter +=1
           query_params = request_params(info, numbers, sms)
           body = request_body(info, numbers, sms)
-          options = request_options(query_params, body, request_counter < last_request)
-          http = connection.post(options)
+          options = request_options(query_params, body, request_counter < last_request)        
+          http=connection.post(options)
+          
 
+           
           http.callback do
             if succesful_response(http)
-              results = parse_response(http.response)
-              success += save_delivery_reports(sms, results, user, route.name)
+          #    results = parse_response(http.response)
+           #   success += save_delivery_reports(sms, results, user, route.name)
+            success=1
             else
               log_response(http)
             end
             iter.next
+           
+          ActionSmser::Logger.error "#{options}"
+          ActionSmser::Logger.error "#{http.response_header}"
+          ActionSmser::Logger.error"#{http.response_header.status}"
+          ActionSmser::Logger.error "response #{http.response}"   
           end
 
           http.errback do
@@ -72,7 +81,7 @@ module ActionSmser::DeliveryMethods
 
     def self.request_options( query_params, body, keepalive)
       options = {
-        :path => path_url, :keepalive => keepalive
+        :path => path_url, :keepalive => keepalive,:head => {'authorization' => ['ACfdd852891d1af661d851ad3f0e90fca3', '41c666e9210711b0e17121f466a62e64']}
       }
       options[:query] = query_params if query_params
       options[:body] = body if body
@@ -99,6 +108,7 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.r_head
+     #{ 'head'=> {'authorization'=>['ACfdd852891d1af661d851ad3f0e90fca3','41c666e9210711b0e17121f466a62e64']}}
     end
 
     def self.gateway_key
