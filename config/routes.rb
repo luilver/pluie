@@ -91,7 +91,7 @@ Rails.application.routes.draw do
   get "confirmation_number/confirmation" => "confirmation_number#new"
   get "confirmation_number/new_api" => "confirmation_number#new_api"
   post "confirmation_number/confirmation" => "confirmation_number#confirmation"
-  post "confirmation_number/get_api" => "confirmation_number#get_api"
+  get "confirmation_number/get_api" => "confirmation_number#get_api"
 
   #
   # The priority is based upon order of creation: first created -> highest priority.
