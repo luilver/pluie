@@ -43,9 +43,8 @@ module ActionSmser::DeliveryMethods
       # "uri": "/2010-04-01/Accounts/ACfdd852891d1af661d851ad3f0e90fca3/Messages/SM8756837dd3064155aae67511b6f14202.json",
       #     "subresource_uris": {
       #     "media": "/2010-04-01/Accounts/ACfdd852891d1af661d851ad3f0e90fca3/Messages/SM8756837dd3064155aae67511b6f14202/Media.json"
-      response = JSON.parse(response) 
-      ActionSmser::Logger.info "#{response}"      
-return [{status: response['status'], dest: response['to'], msg_id:response['sid'],error_code:response['error_code']}]
+      response = JSON.parse(response)
+      return [{status: response['status'], dest: response['to'], msg_id:response['sid'],error_code:response['error_code']}]
     end
 
     def self.save_delivery_reports(sms, results, user, route_name)
@@ -55,7 +54,6 @@ return [{status: response['status'], dest: response['to'], msg_id:response['sid'
         number = res[:dest]
         number=number.to_s[1,number.size]
         msg_id = res[:msg_id]
-        ActionSmser::Logger.info "logger: #{res[:error_code]}"
         dr = ActionSmser::DeliveryReport.build_with_user(sms, number, msg_id, user, route_name)
         if error_code.nil? # aqui va los errors code
           count += 1
