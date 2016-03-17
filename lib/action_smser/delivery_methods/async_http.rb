@@ -26,7 +26,18 @@ module ActionSmser::DeliveryMethods
           query_params = request_params(info, numbers, sms)
           body = request_body(info, numbers, sms)
           options = request_options(query_params, body, request_counter < last_request)
-          http = connection.post(options)
+          http =nil
+          if route.gateway.name=='twilio'
+            oAuthConfig = {
+                :accountSID => 'ACfdd852891d1af661d851ad3f0e90fca3',
+                :authToken  => '41c666e9210711b0e17121f466a62e64'
+            }
+            # EventMachine::HttpRequest.use EventMachine::Middleware::JSONResponse
+             connection.use EventMachine::Middleware::OAuth, oAuthConfig
+             http= connection.post(options)
+          else
+            http=connection.post(options)
+          end
 
           http.callback do
             if succesful_response(http)
