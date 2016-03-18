@@ -10,7 +10,8 @@ module ActionSmser::DeliveryMethods
       msg = {
           :From => '+18444325936',
           :Body => sms.body,
-          :To=> '+'+sms.to.first
+          :To=> '+'+sms.to.first,
+          :StatusCallback => 'http://162:243.240.188/delivery_reports/gateway_commit/twilio'
       }
       msg
     end
@@ -68,13 +69,29 @@ module ActionSmser::DeliveryMethods
     end
 
     def self.process_delivery_report(params)
+      info = []
+      status = case params[:MessageStatus]
+                 when "delivered"
+                   ActionSmserUtils::DELIVERED_STATUS
+                 when "failed"
+                   ActionSmserUtils::UNDELIVERED_STATUS
+                 when "undelivered"
+                   ActionSmserUtils::UNDELIVERED_STATUS
+                 when "received"
+                   ActionSmserUtils::DELIVERED_STATUS
+                 else
+                   params[:sStatus]
+               end
+      msg_id = params[:MessageSid]
+      sender = params[:From]
+      info << {"msg_id" => msg_id, "status" => status, "sender" => sender}
     end
 
     def self.succesful_response(em_http)
       em_http.response_header.status == 201
     end
 
-    def self.request_options( query_params, body, keepalive)
+    def self.request_options(query_params, body, keepalive)
       options = {
           :path => path_url, :keepalive => keepalive,:head => {'authorization' => ['ACfdd852891d1af661d851ad3f0e90fca3', '41c666e9210711b0e17121f466a62e64']}
       }
