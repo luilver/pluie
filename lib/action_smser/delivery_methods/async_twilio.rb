@@ -11,8 +11,8 @@ module ActionSmser::DeliveryMethods
           :From => '+18444325936',
           :Body => sms.body,
           :To=> '+'+sms.to.first,
-          :StatusCallback => 'http://162:243.240.188/delivery_reports/gateway_commit/twilio'
-      }
+          :MessageStatusCallback =>{:StatusCallback => 'http://162.243.240.188/delivery_reports/gateway_commit/twilio'
+      }}
       msg
     end
 
@@ -79,6 +79,8 @@ module ActionSmser::DeliveryMethods
                    ActionSmserUtils::UNDELIVERED_STATUS
                  when "received"
                    ActionSmserUtils::DELIVERED_STATUS
+                 when "sent"
+                   ActionSmserUtils::SENT_STATUS
                  else
                    params[:sStatus]
                end
