@@ -17,17 +17,23 @@ gateways = Gateway.create([{name: 'routesms', price: 0.0035},
                            {name: 'nexmo', price: 0.034}])
 
 route_data = [
-             #{name: 'Diamond', price: 0.07, gateway: gateways.find { |g| g.name == 'nexmo'}},
-              {name: 'Bronce', price: 0.008, gateway: gateways.find { |g| g.name == 'routesms1'}},
-              {name: 'Silver', price: 0.009, gateway: gateways.find { |g| g.name == 'routesms'}},
-              {name: 'Gold', price: 0.01, gateway: gateways.find { |g| g.name == 'infobip'}}
-             ]
+    #{name: 'Diamond', price: 0.07, gateway: gateways.find { |g| g.name == 'nexmo'}},
+    {name: 'Bronce', price: 0.008, gateway: gateways.find { |g| g.name == 'routesms1'}},
+    {name: 'Silver', price: 0.009, gateway: gateways.find { |g| g.name == 'routesms'}},
+    {name: 'Gold', price: 0.01, gateway: gateways.find { |g| g.name == 'infobip'}}
+]
 
-users.each do |u|
-  data = route_data.dup.map { |rd| rd.merge({ user: u }) }
-  Route.create(data)
+route_data.each do |r|
+  Route.skip_callback(:save,:before,:min_value_route)
+  rt=Route.new(r)
+  rt.save
+  rt.users=User.all
 end
+Route.set_callback(:save,:before,:min_value_route)
 
 pluie = User.create({email: 'pluie@openbgs.com', password: 'pluieobserver1', confirmed_at: Time.current })
 cheap = gateways.min_by {|g| g.price }
-Route.create({name: 'Pluie', price: cheap.price, gateway: cheap, user: pluie, system_route: true})
+Route.skip_callback(:save,:before,:min_value_route)
+r=Route.create({name: 'Pluie', price: cheap.price, gateway: cheap, system_route: true})
+r.users << pluie
+Route.set_callback(:save,:before,:min_value_route)

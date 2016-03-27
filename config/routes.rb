@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :api, :defaults => {:format => 'json'} do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
       get 'user/balance' => 'users#balance'
+      match 'user/balance' => 'users#balance', via: :post
       get 'lists/searchs' => 'search_lists#index'
       match 'lists/searchs' => 'search_lists#searchlists', via: :post
 
