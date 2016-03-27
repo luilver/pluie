@@ -155,6 +155,7 @@ es:
       debit: 'D&eacute;bito'
       observer: 'Observador'
       topup: 'Recarga'
+      script_gateway: 'mensaje generado por un script'
     attributes:
       single_message:
         number: 'Destinatario'

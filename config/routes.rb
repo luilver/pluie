@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :api, :defaults => {:format => 'json'} do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
       get 'user/balance' => 'users#balance'
+      match 'user/balance' => 'users#balance', via: :post
       get 'lists/searchs' => 'search_lists#index'
       match 'lists/searchs' => 'search_lists#searchlists', via: :post
 
@@ -44,6 +45,9 @@ Rails.application.routes.draw do
   post 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
 
   get 'api/doc' => 'docs#api'
+  get '/tos' => 'pubs#tos'
+  get '/about' => 'pubs#about'
+  get '/contact' => 'pubs#contact'
   resources :users, path: '/admin'
 
   authenticated :user, -> user { user.admin } do

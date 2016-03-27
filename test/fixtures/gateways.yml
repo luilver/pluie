@@ -13,6 +13,6 @@ test:
   price: 0.0025
 
 gateApi:
-  name: ApiG
+  name: "routesms"
   price: 0.035
   id: 50

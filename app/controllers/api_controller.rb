@@ -10,8 +10,16 @@ class ApiController < ActionController::Base
   end
 
   def authenticate_api!
-    user_email=request.headers["HTTP_EMAIL"].presence
-    user_token_api_key=request.headers["HTTP_API_KEY"].presence
+    user_email=""
+    user_token_api_key =""
+
+    if request.headers["HTTP_EMAIL"].present? or request.headers["HTTP_API_KEY"].present? #si una de las dos es true doy por hecho que esta intentando acceder usando autenticacion por headers
+      user_email=request.headers["HTTP_EMAIL"].presence
+      user_token_api_key=request.headers["HTTP_API_KEY"].presence
+    else
+      user_email=params[:authenticate_api][:email].presence
+      user_token_api_key=params[:authenticate_api][:api_key].presence
+    end
 
     user = User.find_by_email(user_email)
     #api = ApiSetting.find_by_api_key(user.ap)
@@ -35,14 +43,27 @@ class ApiController < ActionController::Base
     end
 
     def ensure_params_exist
-
        if request.headers["HTTP_API_KEY"].blank?
-       return render :json => { :success => false,
-                         :message => "missing api key" }, :status => 400
+          if params[:authenticate_api].present?
+            if !params[:authenticate_api][:api_key].present?
+              return render :json => { :success => false,
+                                       :message => "missing api key" }, :status => 400
+            end
+          else
+            return render :json => { :success => false,
+                                     :message => "missing api key" }, :status => 400
+          end
        end
+
        if request.headers["HTTP_EMAIL"].blank?
-         return render :json => { :success => false,
-                           :message => "missing email" }, :status => 400
+         if params[:authenticate_api].present?
+           if !params[:authenticate_api][:email].present?
+             return render :json => { :success => false, :message => "missing email" }, :status => 400
+           end
+         else
+           return render :json => { :success => false,
+                                    :message => "missing email" }, :status => 400
+         end
        end
 
        return

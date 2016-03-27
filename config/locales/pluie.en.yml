@@ -87,7 +87,7 @@ en:
       debit: 'Debit'
       observer: Observer
       topup: 'Topup'
-
+      script_gateway: 'message from script'
   errors:
     messages:
       insufficient_funds: "Not enough balance to cover a %{cost} expense"

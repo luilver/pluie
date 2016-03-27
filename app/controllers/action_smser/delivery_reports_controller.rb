@@ -23,22 +23,48 @@ module ActionSmser
         if !dr_var_array.blank?
           dr_var_array.each do |dr_update|
             msg_id = dr_update["msg_id"]
-            dr = ActionSmser::DeliveryReport.where(:msg_id => msg_id).first
 
-            if dr
-              dr_update.each_pair do |key, value|
-                dr.send("#{key}=", value) if dr.attribute_names.include?(key.to_s)
-              end
-
-              if dr.save
-                updated_count += 1
-                dr_array << dr
-                ActionSmser::Logger.info("Gateway_commit updated item with id: #{msg_id}, params: #{dr_update.inspect}")
-              else
-                ActionSmser::Logger.info("Gateway_commit problem updating item with id: #{msg_id}, params: #{dr_update.inspect}")
-              end
+            if ActionSmser::DeliveryReport.where(:msg_id=>msg_id).blank?
+                dr=ActionSmser::DeliveryReport.new
+                dr.gateway=params['gateway']
+                dr_update.each_pair do |key, value|
+                  dr.send("#{key}=", value) if dr.attribute_names.include?(key.to_s)
+                end
+                dr.sms_type=ActionSmserUtils::NO_SYSTEM_MSG
+                if dr_update.include?("sender")
+                  dr.from=dr_update["sender"]
+                end
+                if dr_update.include?("sMobileNo")
+                  dr.to=dr_update["sMobileNo"]
+                end
+                dr.user_id=User.where(:admin=>true, :email=>"admin@openbgs.com").first.id
+                dr.created_at=Time.now
+                dr.updated_at=Time.now
+                if dr.save
+                  updated_count += 1
+                  dr_array << dr
+                  ActionSmser::Logger.info("Gateway_commit updated item with id: #{msg_id}, params: #{dr_update.inspect}")
+                else
+                  ActionSmser::Logger.info("Gateway_commit problem updating item with id: #{msg_id}, params: #{dr_update.inspect}")
+                end
             else
-              ActionSmser::Logger.info("Gateway_commit not found item with id: #{msg_id}, params: #{dr_update.inspect}")
+                dr = ActionSmser::DeliveryReport.where(:msg_id => msg_id).first
+
+                if dr
+                  dr_update.each_pair do |key, value|
+                    dr.send("#{key}=", value) if dr.attribute_names.include?(key.to_s)
+                  end
+
+                  if dr.save
+                    updated_count += 1
+                    dr_array << dr
+                    ActionSmser::Logger.info("Gateway_commit updated item with id: #{msg_id}, params: #{dr_update.inspect}")
+                  else
+                    ActionSmser::Logger.info("Gateway_commit problem updating item with id: #{msg_id}, params: #{dr_update.inspect}")
+                  end
+                else
+                  ActionSmser::Logger.info("Gateway_commit not found item with id: #{msg_id}, params: #{dr_update.inspect}")
+                end
             end
           end
         end
