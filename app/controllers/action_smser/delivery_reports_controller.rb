@@ -1,4 +1,7 @@
+require 'application_helper'
+
 module ActionSmser
+  include ApplicationHelper
   class DeliveryReportsController < Pluie::ApplicationController
     before_filter :admin_access_only, :except => :gateway_commit
     before_action :set_delivery_report, only: [:show]
@@ -74,7 +77,7 @@ module ActionSmser
         end
 
         if !dr_array_with_pluie.blank?
-          ApplicationHelper::CallbackManage.call_callback_request(dr_array_with_pluie)
+          ActionSmser::CallbackManage.call_callback_request(dr_array_with_pluie)
         end
 
         begin

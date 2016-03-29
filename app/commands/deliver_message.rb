@@ -1,3 +1,4 @@
+require 'help_string'
 class DeliverMessage
   include Wisper::Publisher
   attr_reader :strategy
@@ -10,7 +11,9 @@ class DeliverMessage
   end
 
   def deliver(message, backupSms=false, randomText=true,number_from)
-      if backupSms
+     backupSms=backupSms['backupSms'].to_bool if backupSms.class!=FalseClass and backupSms.class!=TrueClass
+
+     if backupSms
        if message.class == SingleMessage
          strategy.deliver(message, randomText,number_from)
          publish(:message_delivery, message)
