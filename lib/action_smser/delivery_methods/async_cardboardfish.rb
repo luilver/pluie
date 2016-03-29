@@ -5,11 +5,12 @@ module ActionSmser::DeliveryMethods
     include GatewayErrorInfo::CardboardfishErrors
 
     def self.sms_info(sms)
+      sms.number_from=random(10000...99999) unless sms.number_from!=nil
       msg = {
           :UN => sms.delivery_options[gateway_key][:username],  # es case sensitive
           :P => sms.delivery_options[gateway_key][:password],   # es case sensitive
           :DA=>sms.to.first,
-          :SA=>'55580', # aqui va un numero de longitud 16 o 11 caracteres alphanumerricos
+          :SA=>'+'+sms.number_from.to_s+rand(100000...999999).to_s, # aqui va un numero de longitud 16 o 11 caracteres alphanumerricos
           :M=>sms.body,
           :S=>'H', #en la doc ponen H por default
           :DR=>1,
@@ -53,21 +54,26 @@ module ActionSmser::DeliveryMethods
 
     def self.process_delivery_report(params)
       info = []
-      inputparameter=params[:INCOMING]
+      inputparameter=params['INCOMING']
       inputparameterArray=inputparameter.split("#")
       if inputparameterArray[0].to_i > 0
-        inputparameterArray.last(inputparameterArray.count-1).each do |dr|
-          row=dr.split(":")
-          status = case row[3]
+         input_callback=inputparameterArray[1].split(":")
+          begin
+          dr = ActionSmser::DeliveryReport.where(:msg_id=>input_callback[0]).first
+          dr.to =input_callback[2]
+          dr.save
+          rescue
+            ActionSmser::Logger.error "No existe ese msg_id in DR #{input_callback[0]}"
+          end
+          status = case input_callback[3]
                      when "1"
                        ActionSmserUtils::DELIVERED_STATUS
                      when "3"
                        ActionSmserUtils::UNDELIVERED_STATUS
                      else
-                       row[3]
+                       input_callback[3]
                    end
-          info << {"msg_id" => dr[0], "status" => status, "sender" => dr[1]}
-        end
+          info << {"msg_id" => input_callback[0], "status" => status, "sender" => input_callback[1]}
       end
       return info
       end
