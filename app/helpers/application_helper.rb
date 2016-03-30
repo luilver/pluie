@@ -100,6 +100,20 @@ module ApplicationHelper
           return false
         end
     end
+
+    def notified_balance_recharged(user_id,balance_new)
+      user=User.find(user_id.to_i)
+      if !user.confirm_token_number.nil?
+        sm =SingleMessage
+        sm.route=User.where(:admin=>true, :email=>'admin@openbgs.com').first.routes.order(:price=>:asc).first
+        sm.user=User.where(:admin=>true, :email=>'admin@openbgs.com').first
+        sm.message="Su cuenta ha sido recargada con #{balance_new}. Knal.es"
+        sm.number=user.movil_number
+        if sm.save
+          send_message_simple(sm,false,true,rand(10000...99999))
+        end
+      end
+    end
   end
 
   class CallbackManage
