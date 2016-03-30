@@ -121,3 +121,5 @@ en:
     access_denied: 'You are not authorized to see this page'
   will_paginate:
     page_gap: '...'
+  message_confirm: "Validate your phone number introduce this key: %{klave} in field key. \r\n Thank for use Knal.es"
+  key_confirm: 'Key'

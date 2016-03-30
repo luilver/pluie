@@ -95,7 +95,7 @@ module ApplicationHelper
       sm=SingleMessage.new
       sm.user=user
       sm.route=user.routes.order(:price=>:asc).first
-      sm.message='Valide su numero de telefono movil introduciendo esta clave: '+klave.to_s+ ' en el campo confirme clave.'+ "\r\n"+ ' Gracias por usar Knal.es'
+      sm.message=I18n.translate('message_confirm',:klave=>klave)
       sm.number=movil_number.to_s
       if sm.save
         sm.user.token_number=klave.to_s
