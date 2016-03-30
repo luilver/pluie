@@ -21,7 +21,7 @@
     <div><%= label_tag 'Número movil:' %><i> <%= current_user.movil_number if !current_user.movil_number.blank? %> <%= t('not_confirm_number') if current_user.confirm_token_number.blank? and  !current_user.movil_number.blank?%></i>
 
       <br />
-      <%= text_field :movil_number, :movil_number %> <%='clave' if !current_user.token_number.blank? and current_user.confirm_token_number.blank? %> <%= text_field :confirm_number, :confirm_number,:style=>'width:41px;' if !current_user.token_number.blank? and current_user.confirm_token_number.blank?%> </div>
+      <%= text_field :movil_number, :movil_number %> <%=t('key_confirm') if !current_user.token_number.blank? and current_user.confirm_token_number.blank? %> <%= text_field :confirm_number, :confirm_number,:style=>'width:41px;' if !current_user.token_number.blank? and current_user.confirm_token_number.blank?%> </div>
 
     <div><%= label_tag 'URL Callback' %><i><%= '(url actual: ' + current_user.url_callback + ')' if !current_user.url_callback.blank?%></i><br />
       <%= text_field :url, :url %></div>
