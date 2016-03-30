@@ -4,6 +4,7 @@ en:
   show_number: "Show number"
   hide_number: "Hide number"
   recipient: 'recipient'
+  from_number: 'Origin (%{num} numbers)'
   home: 'Home'
   single_mode: 'Single mode'
   massive_mode: 'Masive Mode'
@@ -56,6 +57,8 @@ en:
   sent_status: 'Pending'
   delivered_status: 'Delivered'
   undelivered_status: 'Undelivered'
+  undelivered_status_notified: 'Failed'
+  not_phone: 'you do not have phone number'
 
   at_route: 'at %{route} route'
 
@@ -66,6 +69,9 @@ en:
 
   select_lists: "Click to select 1 or more lists"
   failed_numbers_link: "Undelivered numbers"
+  movil_number: ' (current phone: '
+  not_confirm_number: 'Not confirmed'
+  confirm_number: 'Confirmed your phone'
 
   notice:
     sucess_msg_sent: '%{msg} was successfully sent.'
@@ -78,6 +84,8 @@ en:
   activerecord:
     models:
       single_message: 'Single message'
+      single_message_xls: 'Single message'
+      bulk_message_xls: 'Bulk message'
       bulk_message: 'Bulk message'
       list: 'List'
       contact: 'Contact'
@@ -91,6 +99,8 @@ en:
       topup: 'Topup'
       check_schedule: 'schedule your send'
       schedule_sms: 'Select date and time for send your sms'
+      backup_sms: 'Sms backup'
+      notified_sms: 'Do you like notification by sms?'
   errors:
     messages:
       insufficient_funds: "Not enough balance to cover a %{cost} expense"

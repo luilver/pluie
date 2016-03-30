@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   has_many :delivery_reports, class_name: "ActionSmser::DeliveryReport"
 
   def api_key
-    self.api_setting.api_key
+    self.api_setting.api_key if self.api_setting
   end
 
   # def api_secret=(api_secret) # no lo tengo concebido con un api_secret

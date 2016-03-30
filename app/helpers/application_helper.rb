@@ -38,16 +38,28 @@ module ApplicationHelper
       return false
     end
 
-    def send_message_simple(sm, backup, rt)
+    def send_message_simple(sm, backup, rt,number_from)
       command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-      command.deliver(sm,backup,rt)
       low_cost(sm)
+      command.deliver(sm,backup,rt,number_from)
     end
 
-    def self.schedule_job(sm,backup,rt,time)
-      job=ScheduleSmsJob.new(sm,backup,rt)
+    def self.schedule_job(sm,backup,rt,time,number_from)
+      job=ScheduleSmsJob.new(sm,backup,rt,number_from)
       ScheduleUtils.schedule(job,time)
       low_cost(sm,time)
+    end
+
+    def notified_sms(id,phone,name_message)
+      job =NotifiedDeliveryReportSmsJob.new(id,phone,name_message)
+      Delayed::Job.enqueue(job,:run_at => 30.minutes.from_now)
+    end
+
+    def callback_request(url,message)
+      if !url.blank?
+        job = CallbackRequestJob.new(message,url,message.class.to_s,0)
+        Delayed::Job.enqueue(job,:run_at=> 5.minutes.from_now)
+      end
     end
 
     def convertTodate(date,time)
@@ -61,8 +73,35 @@ module ApplicationHelper
     end
 
     def low_cost(sms,time=1.minute.from_now)
-        Delayed::Job.enqueue(LowBalanceUserJob.new(sms),:run_at=>time)
+        if !sms.user.low_account.nil? and sms.user.low_account.to_f > (sms.user.balance.to_f - sms.route.price.to_f)
+          Delayed::Job.enqueue(LowBalanceUserJob.new(sms),:run_at=>time+1.minutes)
+        end
     end
+
+    def convert_to_num(n)
+        begin
+          num= Integer n
+          return num.to_s[0..4].to_i if (Math.log10(num).to_i+1) > 5
+          return rand(10000...99999) if (Math.log10(num).to_i+1) < 5
+          return num
+        rescue
+           rand(10000...99999)
+        end
+    end
+
+    def message_of_confirmation(user,movil_number)
+      user.confirm_token_number=nil if !user.confirm_token_number.nil?
+      klave= SecureRandom.hex(2)
+      sm=SingleMessage.new
+      sm.user=user
+      sm.route=user.routes.order(:price=>:asc).first
+      sm.message='Valide su numero de telefono movil introduciendo esta clave: '+klave.to_s+ ' en el campo confirme clave.'+ "\r\n"+ ' Gracias por usar Knal.es'
+      sm.number=movil_number.to_s
+      if sm.save
+        sm.user.token_number=klave.to_s
+        sm.user.save
+        send_message_simple(sm,false,true,rand(10000...99999))
+      end
 
     def validate_datetime(datetime)
         begin
@@ -72,4 +111,36 @@ module ApplicationHelper
         end
     end
   end
+
+  class CallbackManage
+      def self.call_callback_request(delivery_reports)
+            delivery_reports.group_by {|r| [r.pluie_id, r.sms_type]}.each do |g| #g es un grupo formado por dos elementos [0] el elemento porque filtro y en [1] el grupo como tal Array
+                list_dr=[]
+                g[1].each do |dr|
+                  info ={status:dr.status,msg_id:dr.msg_id,to:dr.to,route:dr.gateway,message:dr.body,user:User.find(dr.user_id.to_i).username}
+                  list_dr << info
+                end
+                begin
+                  url=''
+                  dr= ActionSmser::DeliveryReport.where(:pluie_id=>g[0][0], :sms_type=>g[0][1]).first
+                  if dr.sms_type==SingleMessage.to_s
+                    url=SingleMessage.find(g[0][0].to_i).url_callback
+                  else
+                    url =BulkMessage.find(g[0][0].to_i).url_callback
+                  end
+                  if url.blank?
+                    url=User.find(g[1].first.user_id.to_i).url_callback
+                  end
+                  if !url.blank?
+                    resource = RestClient::Resource.new(url,:content_type => :json)
+                    resource.post({pluie_callback:list_dr})
+                  end
+                rescue => e
+                    e.response.code
+                end
+            end
+      end
+  end
+
+    end
 end

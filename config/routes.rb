@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :api, :defaults => {:format => 'json'} do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
       get 'user/balance' => 'users#balance'
+      match 'user/balance' => 'users#balance', via: :post
       get 'lists/searchs' => 'search_lists#index'
       match 'lists/searchs' => 'search_lists#searchlists', via: :post
 
@@ -85,8 +86,14 @@ Rails.application.routes.draw do
   #get '', to: redirect("/#{I18n.default_locale}/home#index")
 
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "registrations"}
   root to: "home#index"
+
+  get "confirmation_number/confirmation" => "confirmation_number#new"
+  get "confirmation_number/new_api" => "confirmation_number#new_api"
+  post "confirmation_number/confirmation" => "confirmation_number#confirmation"
+  get "confirmation_number/get_api" => "confirmation_number#get_api"
+
   #
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

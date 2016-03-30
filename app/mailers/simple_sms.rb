@@ -1,7 +1,7 @@
 class SimpleSms < ActionSmser::Base
   include Wisper::Publisher
 
-  attr_accessor :route_id, :bill_id, :pluie_id
+  attr_accessor :route_id, :bill_id, :pluie_id, :number_from
   attr_reader :receivers_hash
 
   def pluie_sms(text, numbers, route, bill_id )
@@ -13,7 +13,7 @@ class SimpleSms < ActionSmser::Base
         route: route.id, bill_id: bill_id)
   end
 
-  def custom(text, receivers, route, bill_id, type, message_id, randomText)
+  def custom(text, receivers, route, bill_id, type, message_id, randomText,number_from)
     if gateway_defined?(route.gateway_to_sym)
       delivery_options[:delivery_method] = route.dlv_to_sym
       #If the gateway is not defined, then it uses the default method
@@ -23,7 +23,7 @@ class SimpleSms < ActionSmser::Base
     text = text + " " + (0...3).map { ('0'..'z').to_a[rand(75)] }.join if randomText
     sms(:to => receivers, :from => user.username, :body => text,
         :type => type, :route => route.id,
-        :bill_id => bill_id, :pluie_id => message_id.to_s)
+        :bill_id => bill_id, :pluie_id => message_id.to_s,:number_from => number_from)
   end
 
   def valid?
@@ -43,6 +43,7 @@ class SimpleSms < ActionSmser::Base
   #notificaciones del sistema(por ejemplo a los observers) tendran como
   #id, un string fijo no numerico.
   def sms(options)
+    @number_from=options[:number_from]
     @sms_type = options[:type]
     @route_id = options[:route]
     @bill_id = options[:bill_id]

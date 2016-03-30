@@ -4,6 +4,7 @@ es:
   show_number: "Mostrar n&uacute;mero"
   hide_number: "Ocultar n&uacute;mero"
   recipient: 'Destinatario'
+  from_number: 'Remitente (%{num} números)'
   home: 'Inicio'
   single_mode: 'Env&iacute;o puntual'
   massive_mode: 'Env&iacute;o masivo'
@@ -121,6 +122,8 @@ es:
   sent_status: 'Pendiente'
   delivered_status: 'Entregado'
   undelivered_status: 'No entregado'
+  undelivered_status_notified: 'Fracasado'
+  not_phone: 'No tiene número de telefono móvil'
 
   at_route: 'en la ruta: %{route}'
   date_field: Fecha
@@ -130,6 +133,9 @@ es:
 
   select_lists: "Seleccione 1 o m&aacute;s listas"
   failed_numbers_link: "N&uacute;meros no entregados"
+  movil_number: ' (móvil actual: '
+  not_confirm_number: 'Sin confirmar'
+  confirm_number: 'Confirme clave de su número de télefono móvil'
 
   notice:
     sucess_msg_sent: 'El %{msg} fue iniciado satisfactoriamente'
@@ -146,6 +152,8 @@ es:
   activerecord:
     models:
       single_message: 'Env&iacute;o puntual'
+      single_message_xls: 'Envío puntual'
+      bulk_message_xls: 'Envío masivo'
       bulk_message: 'Env&iacute;o masivo'
       list: 'Lista'
       contact: 'Contacto'
@@ -159,6 +167,8 @@ es:
       topup: 'Recarga'
       check_schedule: 'Planificar envio'
       schedule_sms: 'Elija fecha y hora de su envio'
+      backup_sms: 'Respaldar mensaje'
+      notified_sms: '¿Desea recibir notificaciones por sms?'
       script_gateway: 'mensaje generado por un script'
     attributes:
       single_message:

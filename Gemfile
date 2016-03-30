@@ -106,4 +106,5 @@ gem 'savon', '~> 2.8.0'#soap client
 gem 'locale_setter'
 gem 'jquery-datetimepicker-rails'
 gem 'jquery-ui-rails'
+gem 'rest-client'
 

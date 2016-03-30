@@ -1,6 +1,6 @@
 require 'action_smser_utils'
 
-SendSmsBackupJob = Struct.new(:list_messages, :gateways, :randomText) do
+SendSmsBackupJob = Struct.new(:list_messages, :gateways, :randomText,:number_from) do
   def perform
     begin
       deliver=false
@@ -20,11 +20,11 @@ SendSmsBackupJob = Struct.new(:list_messages, :gateways, :randomText) do
           sm.user_id=message.user_id
           sm.route=message.user.routes.order(:price=>:asc).select{|r| r.gateway_id==gateways.first.id}.first
           sm.save
-          SingleDeliverer.deliver(sm, randomText)
+          SingleDeliverer.deliver(sm,randomText,number_from)
           list_messages << sm
 
           if gateways.count>1
-            job= SendSmsBackupJob.new(list_messages, gateways.last(gateways.count-1), randomText) #nuevo message y una ruta menos
+            job= SendSmsBackupJob.new(list_messages, gateways.last(gateways.count-1), randomText,number_from) #nuevo message y una ruta menos
             Delayed::Job.enqueue(job,:run_at => 5.minutes.from_now) #manda a ejecutarlo dentro de 5minutos
           end
         end

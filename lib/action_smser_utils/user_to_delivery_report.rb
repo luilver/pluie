@@ -24,5 +24,4 @@ module ActionSmserUtils
     end
   end
 end
-
 ActionSmser::DeliveryReport.send :include, ActionSmserUtils::UserToDeliveryReport

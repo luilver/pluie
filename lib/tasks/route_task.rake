@@ -71,11 +71,13 @@ namespace :route_task do
   end
 
   def create_route(price,name,gateway)
+    Route.skip_callback(:save,:before,:min_value_route)
     r=Route.new
     r.price=price
     r.name=name
     r.gateway=gateway
     r.save
+    Route.set_callback(:save,:before,:min_value_route)
   end
 
 

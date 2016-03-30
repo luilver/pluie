@@ -24,5 +24,21 @@
     <%=text_field('datepik','datepik',:id=>"datepicker",:value=>Time.now.day.to_s+'/'+Time.now.month.to_s+'/'+Time.now.year.to_s) %>
     <%= select_time(Time.now) %>
   </div>
+
+  <div class="field">
+    <%= check_box(:backupSms, :backupSms)%>
+    <%= f.label :backupSms, t('activerecord.models.backup_sms')%><br>
+  </div>
 <%end%>
+
+  <%if obj.class==BulkMessage and !current_user.confirm_token_number.blank?%>
+  <div class="field">
+    <%if !current_user.movil_number.blank? %>
+        <%= check_box(:notified,:notified)%>
+        <%= f.label :backupSms, t('activerecord.models.notified_sms')%><br>
+    <%else%>
+        <p>Si desea recibir notificaciones incluya su numero de teléfono móvil en su informacion personal <%= link_to t('account'), main_app.edit_user_registration_path %></p>
+        </div>
+    <%end%>
+  <%end%>
 </fieldset>
