@@ -1,8 +1,9 @@
 class LowBalanceUserJob
   include Wisper::Publisher
 
-  def initialize(message)
+  def initialize(message,number_from)
     @message=message
+    @number_from=number_from
   end
 
   def perform
@@ -14,7 +15,7 @@ class LowBalanceUserJob
       sm.number=@message.user.movil_number
       if sm.save
         command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-        command.deliver(sm,false,true)
+        command.deliver(sm,false,true,@number_from)
       end
     end
   end

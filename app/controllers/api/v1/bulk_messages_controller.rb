@@ -28,6 +28,7 @@ module Api
         return (render json: {:message=>"route is blank"}, status: 404) if route.blank?
         return (render json: {:message=>"message is blank"},status: 404) if params[:bulk_message][:message].blank?
         return (render json: {:message=>"list_names is blank"},status: 404) if params[:bulk_message][:list_names].blank?
+        sm=ApplicationHelper::ManageSM.new
 
         if not User.current.routes.find_by_name(route).blank?
               message=params[:bulk_message][:message]
@@ -38,9 +39,9 @@ module Api
 
               if @bulk_message.save
               delay_options = {:queue => 'deliver'}
-              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),ApplicationHelper::ManageSM.new.convert_to_num(params[:from]))
+              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),sm.convert_to_num(params[:from]))
               Delayed::Job.enqueue(job, delay_options)
-              ApplicationHelper::ManageSM.new.low_cost(@bulk_message,5.minute.from_now)
+              sm.low_cost(@bulk_message,sm.convert_to_num(params[:from]),5.minute.from_now)
 
               if params[:notified]
                 job1 =NotifiedDeliveryReportSmsJob.new(@bulk_message.id,params[:phone_notified],BulkMessage.to_s)

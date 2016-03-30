@@ -40,7 +40,7 @@ module ApplicationHelper
 
     def send_message_simple(sm, backup, rt,number_from)
       command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
-      low_cost(sm)
+      low_cost(sm,number_from)
       command.deliver(sm,backup,rt,number_from)
     end
 
@@ -72,9 +72,9 @@ module ApplicationHelper
       end
     end
 
-    def low_cost(sms,time=1.minute.from_now)
+    def low_cost(sms,number_from, time=1.minute.from_now)
         if !sms.user.low_account.nil? and sms.user.low_account.to_f > (sms.user.balance.to_f - sms.route.price.to_f)
-          Delayed::Job.enqueue(LowBalanceUserJob.new(sms),:run_at=>time+1.minutes)
+          Delayed::Job.enqueue(LowBalanceUserJob.new(sms,number_from),:run_at=>time+1.minutes)
         end
     end
 

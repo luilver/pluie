@@ -34,15 +34,16 @@ class BulkMessagesController < ApplicationController
     @bulk_message = BulkMessage.new(bulk_message_params)
     @bulk_message.user = current_user
     @bulk_message.lists << List.find(params[:list_ids]) if params[:list_ids]
+    sm=ApplicationHelper::ManageSM.new
 
 
     respond_to do |format|
       if @bulk_message.save
 
         delay_options = {:queue => 'deliver'}
-        job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),ApplicationHelper::ManageSM.new.convert_to_num(params[:from][:from]))
+        job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),sm.convert_to_num(params[:from][:from]))
         Delayed::Job.enqueue(job, delay_options)
-        ApplicationHelper::ManageSM.new.low_cost(@bulk_message,5.minute.from_now)
+        sm.low_cost(@bulk_message,sm.convert_to_num(params[:from][:from]),5.minute.from_now)
 
         if params[:notified][:notified].to_s.to_bool and !@bulk_message.user.confirm_token_number.blank?
           job1 =NotifiedDeliveryReportSmsJob.new(@bulk_message.id,@bulk_message.user.movil_number,BulkMessage.to_s)
