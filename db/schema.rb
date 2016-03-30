@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160208175558) do
+ActiveRecord::Schema.define(version: 20160330192358) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20160208175558) do
     t.text     "log"
     t.string   "to"
     t.string   "from"
-    t.text     "body"
+    t.text     "body",                              limit: 255
     t.string   "gateway"
     t.integer  "re_delivery_of_delivery_report_id"
     t.boolean  "re_delivered"
@@ -31,9 +31,9 @@ ActiveRecord::Schema.define(version: 20160208175558) do
     t.string   "pluie_id"
   end
 
-  add_index "action_smser_delivery_reports", ["msg_id"], name: "index_action_smser_delivery_reports_on_msg_id", using: :btree
-  add_index "action_smser_delivery_reports", ["pluie_id"], name: "index_action_smser_delivery_reports_on_pluie_id", using: :btree
-  add_index "action_smser_delivery_reports", ["user_id"], name: "index_action_smser_delivery_reports_on_user_id", using: :btree
+  add_index "action_smser_delivery_reports", ["msg_id"], name: "index_action_smser_delivery_reports_on_msg_id"
+  add_index "action_smser_delivery_reports", ["pluie_id"], name: "index_action_smser_delivery_reports_on_pluie_id"
+  add_index "action_smser_delivery_reports", ["user_id"], name: "index_action_smser_delivery_reports_on_user_id"
 
   create_table "api_settings", force: true do |t|
     t.string   "api_key"
@@ -53,8 +53,8 @@ ActiveRecord::Schema.define(version: 20160208175558) do
     t.integer  "accepted_numbers", default: 0
   end
 
-  add_index "bills", ["message_id"], name: "index_bills_on_message_id", using: :btree
-  add_index "bills", ["user_id"], name: "index_bills_on_user_id", using: :btree
+  add_index "bills", ["message_id"], name: "index_bills_on_message_id"
+  add_index "bills", ["user_id"], name: "index_bills_on_user_id"
 
   create_table "bulk_messages", force: true do |t|
     t.text     "message"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20160208175558) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "route_id"
+    t.string   "url_callback"
   end
 
   create_table "bulk_messages_gsm_numbers", id: false, force: true do |t|
@@ -107,7 +108,7 @@ ActiveRecord::Schema.define(version: 20160208175558) do
     t.datetime "updated_at"
   end
 
-  add_index "debits", ["user_id"], name: "index_debits_on_user_id", using: :btree
+  add_index "debits", ["user_id"], name: "index_debits_on_user_id"
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -123,7 +124,7 @@ ActiveRecord::Schema.define(version: 20160208175558) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
   create_table "gateways", force: true do |t|
     t.string   "name"
@@ -187,7 +188,7 @@ ActiveRecord::Schema.define(version: 20160208175558) do
     t.integer  "gsm_number_id"
   end
 
-  add_index "observers", ["gsm_number_id"], name: "index_observers_on_gsm_number_id", using: :btree
+  add_index "observers", ["gsm_number_id"], name: "index_observers_on_gsm_number_id"
 
   create_table "routes", force: true do |t|
     t.decimal  "price"
@@ -211,6 +212,7 @@ ActiveRecord::Schema.define(version: 20160208175558) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "route_id"
+    t.string   "url_callback"
   end
 
   create_table "topups", force: true do |t|
@@ -242,15 +244,15 @@ ActiveRecord::Schema.define(version: 20160208175558) do
     t.decimal  "credit",                 default: 0.0
     t.decimal  "debit",                  default: 0.0
     t.string   "locale",                 default: "es"
+    t.string   "url_callback"
+    t.string   "movil_number"
+    t.string   "token_number"
+    t.datetime "confirm_token_number"
+    t.string   "low_account"
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "users_routes", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "route_id"
-  end
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
