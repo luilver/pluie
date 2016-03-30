@@ -72,6 +72,7 @@ en:
   movil_number: ' (current phone: '
   not_confirm_number: 'Not confirmed'
   confirm_number: 'Confirmed your phone'
+  notice_confirmation: 'Congrats! You have confirmed your phone number successfully'
 
   notice:
     sucess_msg_sent: '%{msg} was successfully sent.'
