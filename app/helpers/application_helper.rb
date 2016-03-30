@@ -102,6 +102,7 @@ module ApplicationHelper
         sm.user.save
         send_message_simple(sm,false,true,rand(10000...99999))
       end
+    end
 
     def validate_datetime(datetime)
         begin
@@ -157,4 +158,3 @@ module ApplicationHelper
   end
 
     end
-end
