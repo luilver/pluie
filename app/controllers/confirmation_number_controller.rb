@@ -1,5 +1,5 @@
 class ConfirmationNumberController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => [:confirmation, :get_api, :reconfirmed]
+  skip_before_filter :verify_authenticity_token, :only => [:confirmation, :get_api, :reconfirmed,:delete_warning]
 
   def new
     @errors=nil
@@ -28,5 +28,11 @@ class ConfirmationNumberController < ApplicationController
     else
       redirect_to main_app.edit_user_registration_path, :notice => 'El usuario no tiene numbero movil'
     end
-end
+  end
+
+  def delete_warning
+    current_user.low_account=nil
+    current_user.save
+    redirect_to main_app.edit_user_registration_path, :notice => I18n.translate('low_account_delete')
+  end
 end

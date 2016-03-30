@@ -123,3 +123,6 @@ en:
     page_gap: '...'
   message_confirm: "Validate your phone number introduce this key: %{klave} in field key. \r\n Thank for use Knal.es"
   key_confirm: 'Key'
+  low_account: 'Low account balance warning'
+  low_account_current: 'current'
+  low_account_delete: 'low account deleted'

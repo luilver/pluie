@@ -147,7 +147,7 @@ es:
     item_removed: "%{item} eliminado satisfactoriamente."
     item_removed_fm: "%{item} eliminada satisfactoriamente."
     success_schedule_sent: 'El %{msg} fue planificado satisfactoriamente %{time}.'
-    low_balance: 'Alerta de crédito insuficiente: Su cuenta %{username} en knal.es tiene solo $%{balance} restantes. Contacte su proveedor de servicios para añadir más crédito.'
+    low_balance: 'Alerta de crédito insuficiente: Su cuenta %{username} en knal.es tiene solo $%{balance} restantes. Contacte su proveedor de servicios para añadir  est&aacut crédito.'
 
   activerecord:
     models:
@@ -236,3 +236,6 @@ es:
     next_label: "Siguiente &#8594;"
   message_confirm: "Valide su número de teléfono móvil introduciendo esta clave: %{klave} en el campo confirme clave. \r\n Gracias por usar Knal.es"
   key_confirm: 'Clave'
+  low_account: 'Advertencia crédito en rojo'
+  low_account_current: "( actual %{credit} )"
+  low_account_delete: 'adventencia de número en rojo eliminada'
