@@ -147,7 +147,7 @@ es:
     item_removed: "%{item} eliminado satisfactoriamente."
     item_removed_fm: "%{item} eliminada satisfactoriamente."
     success_schedule_sent: 'El %{msg} fue planificado satisfactoriamente %{time}.'
-    low_balance: 'Alerta de crédito insuficiente: Su cuenta %{username} en knal.es tiene solo $%{balance} restantes. Contacte su proveedor de servicios para añadir  est&aacut crédito.'
+    low_balance: 'Alerta de crédito insuficiente: Su cuenta %{username} en knal.es tiene solo $%{balance} restantes. Contacte su proveedor de servicios para añadir mas crédito.'
 
   activerecord:
     models:
