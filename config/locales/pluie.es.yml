@@ -239,3 +239,4 @@ es:
   low_account: 'Advertencia crédito en rojo'
   low_account_current: "( actual %{credit} )"
   low_account_delete: 'adventencia de número en rojo eliminada'
+  recharge_balance: "Su cuenta ha sido recargada con $%{balance_new}. Knal.es"

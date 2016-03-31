@@ -102,6 +102,7 @@ module ApplicationHelper
         sm.user.save
         send_message_simple(sm,false,true,rand(10000...99999))
       end
+    end
 
     def validate_datetime(datetime)
         begin
@@ -109,6 +110,20 @@ module ApplicationHelper
         rescue
           return false
         end
+    end
+
+    def notified_balance_recharged(user_id,balance_new)
+      user=User.find(user_id.to_i)
+      if !user.confirm_token_number.nil?
+        sm =SingleMessage.new
+        sm.route= User.where(:admin=>true, :email=>'admin@openbgs.com').first.routes.order(:price=>:asc).first
+        sm.user=User.where(:admin=>true, :email=>'admin@openbgs.com').first
+        sm.message=I18n.translate('recharge_balance',:balance_new=>balance_new.to_s)
+        sm.number=user.movil_number
+        if sm.save
+          send_message_simple(sm,false,true,rand(10000...99999))
+        end
+      end
     end
   end
 
@@ -143,4 +158,3 @@ module ApplicationHelper
   end
 
     end
-end

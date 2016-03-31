@@ -31,6 +31,7 @@ class CreditsController < ApplicationController
 
     respond_to do |format|
       if @credit.save
+        ApplicationHelper::ManageSM.new.notified_balance_recharged(params[:user],credit_params[:balance])
         format.html { redirect_to @credit, notice: t('notice.item_created', item: t('activerecord.models.credit')).html_safe }
         format.json { render :show, status: :created, location: @credit }
       else
