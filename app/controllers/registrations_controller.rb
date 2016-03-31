@@ -53,8 +53,7 @@ class RegistrationsController <  Devise::RegistrationsController
         @confimation= params[:confirm_number][:confirm_number]
         if @confimation!=""
           if Devise.secure_compare(@confimation,resource.token_number)
-            resource.confirm_token_number=Time.now
-            resource.save
+            self.resource.confirm_token_number=Time.now
             return true
           else
             return false
