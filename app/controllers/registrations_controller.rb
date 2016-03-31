@@ -26,7 +26,7 @@ class RegistrationsController <  Devise::RegistrationsController
                 :update_needs_confirmation : :updated
             set_flash_message :notice, flash_key
           end
-          ApplicationHelper::ManageSM.new.message_of_confirmation(self.resource,self.resource.movil_number) if params[:movil_number][:movil_number]!=nil
+          ApplicationHelper::ManageSM.new.message_of_confirmation(self.resource,self.resource.movil_number) if params[:movil_number][:movil_number]!=nil and self.resource.confirm_token_number.nil? and self.resource.token_number.blank?
           sign_in resource_name, resource, bypass: true
           respond_with resource, location: after_update_path_for(resource)
         else
