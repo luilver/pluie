@@ -2,6 +2,9 @@ require 'help_string'
 require 'action_smser_utils'
 
 module ApplicationHelper
+
+  TOPUP=1.0
+
   class ScheduleUtils
     def self.schedule(job,t = Time.now)
       #donde t es un objeto de tipo Time y job obj de tipo ScheduleSmsJob
@@ -37,12 +40,14 @@ module ApplicationHelper
 
     def send_message_simple(sm, backup, rt,number_from)
       command = DeliverMessage.new(SingleDeliverer, DeliveryNotifier)
+      low_cost(sm,number_from)
       command.deliver(sm,backup,rt,number_from)
     end
 
     def self.schedule_job(sm,backup,rt,time,number_from)
       job=ScheduleSmsJob.new(sm,backup,rt,number_from)
       ScheduleUtils.schedule(job,time)
+      low_cost(sm,time)
     end
 
     def notified_sms(id,phone,name_message)
@@ -67,6 +72,12 @@ module ApplicationHelper
       end
     end
 
+    def low_cost(sms,number_from, time=1.minute.from_now)
+        if !sms.user.low_account.nil? and sms.user.low_account.to_f > (sms.user.balance.to_f - sms.route.price.to_f)
+          Delayed::Job.enqueue(LowBalanceUserJob.new(sms,number_from),:run_at=>time+1.minutes)
+        end
+    end
+
     def convert_to_num(n)
         begin
           num= Integer n
@@ -84,14 +95,13 @@ module ApplicationHelper
       sm=SingleMessage.new
       sm.user=user
       sm.route=user.routes.order(:price=>:asc).first
-      sm.message='Valide su numero de telefono movil introduciendo esta clave: '+klave.to_s+ ' en el campo confirme clave.'+ "\r\n"+ ' Gracias por usar Knal.es'
+      sm.message=I18n.translate('message_confirm',:klave=>klave)
       sm.number=movil_number.to_s
       if sm.save
         sm.user.token_number=klave.to_s
         sm.user.save
         send_message_simple(sm,false,true,rand(10000...99999))
       end
-    end
 
     def validate_datetime(datetime)
         begin
@@ -131,4 +141,6 @@ module ApplicationHelper
             end
       end
   end
+
+    end
 end
