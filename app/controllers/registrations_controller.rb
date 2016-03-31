@@ -10,7 +10,7 @@ class RegistrationsController <  Devise::RegistrationsController
       current_user.url_callback=params[:url][:url] unless params[:url][:url].blank?
       self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
       self.resource.url_callback=params[:url][:url] unless params[:url][:url].blank?
-      self.resource.movil_number=params[:movil_number][:movil_number] unless params[:movil_number][:movil_number].blank? or !valid_number(params[:movil_number][:movil_number])
+      self.resource.movil_number=params[:movil_number][:movil_number] unless params[:movil_number][:movil_number].blank? or !valid_number(params[:movil_number][:movil_number]) or !other_movil_number
       if params[:low_a_check][:low_a_check].to_i==1
         self.resource.low_account =params[:low_account][:low_account]  unless params[:low_account][:low_account].blank? or !validate_integer(params[:low_account][:low_account])
       end
@@ -34,7 +34,7 @@ class RegistrationsController <  Devise::RegistrationsController
                   :update_needs_confirmation : :updated
               set_flash_message :notice, flash_key
             end
-            ApplicationHelper::ManageSM.new.message_of_confirmation(self.resource,self.resource.movil_number) if params[:movil_number][:movil_number]!=nil and self.resource.confirm_token_number.nil? and self.resource.token_number.blank?
+            ApplicationHelper::ManageSM.new.message_of_confirmation(self.resource,self.resource.movil_number) if !params[:movil_number][:movil_number].blank? and self.resource.confirm_token_number.nil? and self.resource.token_number.blank?
             sign_in resource_name, resource, bypass: true
             respond_with resource, location: after_update_path_for(resource)
           else
@@ -65,8 +65,7 @@ class RegistrationsController <  Devise::RegistrationsController
         @confimation= params[:confirm_number][:confirm_number]
         if @confimation!=""
           if Devise.secure_compare(@confimation,resource.token_number)
-            resource.confirm_token_number=Time.now
-            resource.save
+            self.resource.confirm_token_number=Time.now
             return true
           else
             return false
@@ -74,5 +73,19 @@ class RegistrationsController <  Devise::RegistrationsController
         else
           return true
         end
+    end
+
+    def other_movil_number
+      number_p= params[:movil_number][:movil_number]
+      if !number_p.blank?
+        if self.resource.movil_number!= number_p
+          self.resource.confirm_token_number=nil
+          self.resource.token_number=nil
+          return true
+        else
+          return false
+        end
+      end
+      return false
     end
 end
