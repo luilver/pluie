@@ -1,5 +1,8 @@
 
+
+
+<% if !current_user.movil_number.blank? and !current_user.token_number.blank? and current_user.confirm_token_number.blank?%>
 <br/>
+<%= link_to(t('reconfirmed_confirm'), controller: "confirmation_number", action: "reconfirmed",method: :get) %>
 
-<%= link_to('Enviar mensaje de confirmation otra vez', controller: "confirmation_number", action: "reconfirmed",method: :get) %>
-
+<%end%>
