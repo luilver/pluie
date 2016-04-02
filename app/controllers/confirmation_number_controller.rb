@@ -1,5 +1,5 @@
 class ConfirmationNumberController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => [:confirmation, :get_api]
+  skip_before_filter :verify_authenticity_token, :only => [:confirmation, :get_api, :reconfirmed,:delete_warning]
 
   def new
     @errors=nil
@@ -11,20 +11,6 @@ class ConfirmationNumberController < ApplicationController
   def new_api
   end
 
-  def confirmation
-    respond_to do |format|
-      @confimation=params[:confirmation][:confirmation]
-      if Devise.secure_compare(@confimation,current_user.token_number)
-        current_user.confirm_token_number=Time.now
-        current_user.save
-        format.html
-      else
-        @errors='Clave incorrecta'
-        format.html {render :new}
-      end
-    end
-
-  end
 
   def get_api
     current_user.api_setting.reset_authentication_token! if !current_user.api_setting.nil?
@@ -33,5 +19,20 @@ class ConfirmationNumberController < ApplicationController
       api_setting_x.save
     end
     redirect_to  main_app.edit_user_registration_path
+  end
+
+  def reconfirmed
+    if !current_user.movil_number.blank?
+      ApplicationHelper::ManageSM.new.message_of_confirmation(current_user,current_user.movil_number)
+      redirect_to main_app.edit_user_registration_path
+    else
+      redirect_to main_app.edit_user_registration_path, :notice => 'El usuario no tiene numbero movil'
+    end
+  end
+
+  def delete_warning
+    current_user.low_account=nil
+    current_user.save
+    redirect_to main_app.edit_user_registration_path, :notice => I18n.translate('low_account_delete')
   end
 end
