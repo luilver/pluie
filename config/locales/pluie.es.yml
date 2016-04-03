@@ -136,6 +136,7 @@ es:
   movil_number: ' (móvil actual: '
   not_confirm_number: 'Sin confirmar'
   confirm_number: 'Confirme clave de su número de télefono móvil'
+  notice_confirmation: 'Usted ha confirmado su número de teléfono móvil satisfactoriamente'
 
   notice:
     sucess_msg_sent: 'El %{msg} fue iniciado satisfactoriamente'
