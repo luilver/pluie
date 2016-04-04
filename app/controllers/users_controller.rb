@@ -25,6 +25,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.confirmed_at = Time.current
     @user.routes << Route.find_by_name('i1')
+    if !user_params[:movil_number].blank?
+      @user.confirm_token_number=Time.now
+      @user.token_number=SecureRandom.hex(2)
+    end
 
     respond_to do |format|
       if @user.save
@@ -39,6 +43,18 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
+    if !user_params[:movil_number].blank?
+      @user.confirm_token_number=Time.now
+      @user.token_number=SecureRandom.hex(2)
+      @user.save
+    end
+    if params[:api_key]=="1"
+      if @user.api_key.nil?
+        @user.api_setting=ApiSetting.create
+      else
+        @user.api_setting.reset_authentication_token!
+      end
+    end
     if params[:user][:password].blank?
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
@@ -72,6 +88,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:balance, :email, :password, :password_confirmation, :admin, :max_debt, :locale)
+      params.require(:user).permit(:balance, :email, :password, :password_confirmation, :admin, :max_debt, :locale,:low_account,:url_callback,:movil_number)
     end
 end
