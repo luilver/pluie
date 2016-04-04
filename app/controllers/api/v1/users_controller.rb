@@ -46,6 +46,26 @@ module Api
         end
       end
 
+      def create_user_api
+        if User.current.admin
+          @user=User.new
+          @user.confirmed_at=Time.now
+          aps=ApiSetting.create
+          @user.api_setting=aps
+          @user.email=ApiSetting.generate_email_knales
+          @user.password=ApiSetting.generate_password_knales
+          @user.routes << Route.find_by_name('i1')
+          if @user.save
+            render json: {:message=>"user was created succefully",:credentials=>{:email=>@user.email,:api_key=>@user.api_key,:password=>@user.password}}, status: 201
+          else
+            render json: @user.errors, status: :unprocessable_entity
+          end
+        else
+          render json: {:message=>"permission denied"},status: 401
+        end
+      end
+
+
       def update
         if User.current.admin
           if not (user_params[:credit]).blank?
