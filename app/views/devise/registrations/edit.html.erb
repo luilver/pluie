@@ -26,7 +26,7 @@
     <div><%= label_tag t('url_callback') %><i><%= '('+t('current_url')  + current_user.url_callback + ')' if !current_user.url_callback.blank?%></i><br />
       <%= text_field :url, :url %></div>
 
-    <div><%= check_box :low_a_check,:low_a_check%> <i><%= label_tag t('low_account') %></i> <%=  t('low_account_current',:credit => current_user.low_account.to_f.to_s)  if !current_user.low_account.nil? %></i><br />
+    <div><%= check_box :low_a_check,:low_a_check%> <%= label_tag t('low_account') %> <i><%=  t('low_account_current',:credit => current_user.low_account.to_f.to_s)  if !current_user.low_account.nil? %></i><br />
       <%= text_field :low_account, :low_account , :style=>'width:64px;',:placeholder=> t('number').html_safe%> <%= render 'warning_balance'%></div>
 
     <div><%= f.label :current_password %> <i>(<%= t('devise.registrations.edit.we_need_your_current_password_to_confirm_your_changes')%>)</i><br />
