@@ -47,7 +47,7 @@ module ApplicationHelper
     def self.schedule_job(sm,backup,rt,time,number_from)
       job=ScheduleSmsJob.new(sm,backup,rt,number_from)
       ScheduleUtils.schedule(job,time)
-      low_cost(sm,time)
+      self.new.low_cost(sm,number_from, time)
     end
 
     def notified_sms(id,phone,name_message)
