@@ -30,6 +30,26 @@
     <%= f.check_box :admin %>
     <%= f.label :admin %>?
   </div>
+  <%if current_user.admin%>
+        <div class="field">
+          <%= f.label :movil_number %><br>
+          <%= f.text_field :movil_number %>
+        </div>
+        <div class="field">
+          <%= f.label :url_callback%><br>
+          <%= f.text_field :url_callback %>
+        </div>
+        <div class="field">
+          <%= f.label :low_account%><br>
+          <%= f.text_field :low_account %>
+        </div>
+        <div class="field">
+          <%= label_tag :api_key_generate %>
+          <%= check_box_tag :api_key %>
+        </div>
+        <p>api_key: <%=@user.api_key if !@user.api_setting.nil?%></p>
+
+ <%end%>
   <div class="field">
     <%= f.label :locale %><br>
     <%= f.collection_select :locale, I18n.available_locales, :to_s, :capitalize %>
