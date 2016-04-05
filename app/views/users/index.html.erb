@@ -6,6 +6,7 @@
       <th><%= t('user') %></th>
       <th>Balance</th>
       <th><%= t('spent').html_safe %></th>
+      <th><%= t('phone')%></th>
       <th><%= t('is_admin').html_safe %></th>
       <th><%= User.human_attribute_name("locale")%></th>
       <th></th>
@@ -20,6 +21,7 @@
         <td><%= user %></td>
         <td><%= user.balance %></td>
         <td><%= user.spent %></td>
+        <td><%= user.movil_number %></td>
         <td><%= user.admin or "" %></td>
         <td><%= user.locale %></td>
         <td><%= link_to t(:show), user %></td>
