@@ -73,7 +73,7 @@ module ActionSmser::DeliveryMethods
                      else
                        input_callback[3]
                    end
-          info << {"msg_id" => input_callback[0], "status" => status, "sender" => input_callback[1]}
+          info << {"msg_id" => input_callback[0], "status" => status, "sender" => input_callback[1],"to"=> input_callback[2]}
       end
       return info
       end
