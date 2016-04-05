@@ -33,5 +33,16 @@ class ApiSetting < ActiveRecord::Base
       self.api_key= generate_api_key1
   end
 
+  def self.generate_email_knales()
+      loop do
+         email = (0...6).map {('0'..'9').to_a.concat(('a'..'z').to_a)[rand(35)]}.join
+         email=email+'@knal.es'
+         break email unless User.where(:email=>email).first
+      end
+  end
 
+  def self.generate_password_knales()
+   password= (0...8).map {('0'..'9').to_a.concat(('a'..'z').to_a)[rand(35)]}.join
+   return password
+  end
 end

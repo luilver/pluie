@@ -876,3 +876,31 @@
 * **Sample Call:**
 
       curl http://sms.knal.es/api/single_messages  -H  'content-type: application/json'  -d  '{"authenticate_api":{"email":"me@mail.com","api_key":"2eefbf7dyg4zax05e6d2339a21d42983bb"},"single_message":{"route":"Gold","numbers":["5356789044"],"message":"test authenticate in body of sms.knal.es"}}'  -X POST -v
+
+**Generate Users id@knal.es**
+----
+  Generate users automatic with id@knal.es design
+
+* **URL**
+
+       /api/users/create_user_api 
+
+* **Method:**
+
+      `POST`
+
+*  **HEADER Params**
+
+       None
+
+* **Data Params**
+
+       None
+
+* **Sample Call:**
+
+      curl http://sms.knal.es/api/users/create_user_api  -H 'Content-Type:application/json' -H 'email:admin1@gemail.com' -H 'api_key:5282e99a1fe5e5711b0082eef4a8338a'  -X POST
+
+* **Notes:**
+
+    Only users with privileges admin

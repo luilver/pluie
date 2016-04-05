@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       match 'user/balance' => 'users#balance', via: :post
       get 'lists/searchs' => 'search_lists#index'
       match 'lists/searchs' => 'search_lists#searchlists', via: :post
+      match 'users/create_user_api' => 'users#create_user_api', via: :post
 
       ######resources lists
       match 'lists' => 'lists#index', via: :get
