@@ -18,15 +18,15 @@
     <div><%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
 
-    <div><%= label_tag 'Número movil:' %><i> <%= current_user.movil_number if !current_user.movil_number.blank? %> <%= t('not_confirm_number') if current_user.confirm_token_number.blank? and  !current_user.movil_number.blank?%></i>
+    <div><%= label_tag 'Número movil:' %> <i> <%= current_user.movil_number if !current_user.movil_number.blank? %> <%= t('not_confirm_number') if current_user.confirm_token_number.blank? and  !current_user.movil_number.blank?%></i>
 
       <br />
-      <%= text_field :movil_number, :movil_number %> <%=t('key_confirm') if !current_user.token_number.blank? and current_user.confirm_token_number.blank? %> <%= text_field :confirm_number, :confirm_number,:style=>'width:41px;' if !current_user.token_number.blank? and current_user.confirm_token_number.blank?%> </div>
+      <%= text_field :movil_number, :movil_number %> <i><%=t('key_confirm') if !current_user.token_number.blank? and current_user.confirm_token_number.blank? %></i> <%= text_field :confirm_number, :confirm_number,:style=>'width:41px;' if !current_user.token_number.blank? and current_user.confirm_token_number.blank?%> </div>
 
-    <div><%= label_tag 'URL Callback' %><i><%= '(url actual: ' + current_user.url_callback + ')' if !current_user.url_callback.blank?%></i><br />
+    <div><%= label_tag t('url_callback') %><i><%= '('+t('current_url')  + current_user.url_callback + ')' if !current_user.url_callback.blank?%></i><br />
       <%= text_field :url, :url %></div>
 
-    <div><%= check_box :low_a_check,:low_a_check%> <%= label_tag t('low_account') %> <%=  t('low_account_current',:credit => current_user.low_account.to_f.to_s)  if !current_user.low_account.nil? %></i><br />
+    <div><%= check_box :low_a_check,:low_a_check%> <%= label_tag t('low_account') %> <i><%=  t('low_account_current',:credit => current_user.low_account.to_f.to_s)  if !current_user.low_account.nil? %></i><br />
       <%= text_field :low_account, :low_account , :style=>'width:64px;',:placeholder=> t('number').html_safe%> <%= render 'warning_balance'%></div>
 
     <div><%= f.label :current_password %> <i>(<%= t('devise.registrations.edit.we_need_your_current_password_to_confirm_your_changes')%>)</i><br />
