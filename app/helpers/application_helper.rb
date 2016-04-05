@@ -74,7 +74,7 @@ module ApplicationHelper
 
     def low_cost(sms,number_from, time=1.minute.from_now)
         if !sms.user.low_account.nil? and sms.user.low_account.to_f > (sms.user.balance.to_f - sms.route.price.to_f)
-          Delayed::Job.enqueue(LowBalanceUserJob.new(sms,number_from),:run_at=>time+1.minutes)
+          Delayed::Job.enqueue(LowBalanceUserJob.new(sms,number_from,sms.user.balance),:run_at=>time+1.minutes)
         end
     end
 
