@@ -32,7 +32,6 @@ module ActionSmser::DeliveryMethods
             if succesful_response(http)
                results = parse_response(http.response)
                success += save_delivery_reports(sms, results, user, route.name)
-            success=1
             else
               log_response(http)
             end
