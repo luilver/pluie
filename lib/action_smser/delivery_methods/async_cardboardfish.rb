@@ -36,11 +36,11 @@ module ActionSmser::DeliveryMethods
 
     def self.save_delivery_reports(sms, results, user, route_name)
       count = 0
-      results.each do |res|
+      results.each_with_index do |res,index|
         error_code=res[:msg_id]
         if error_code.to_i > 0  # es que no hubo error
           count += 1
-          dr = ActionSmser::DeliveryReport.build_with_user(sms,  sms.find_receiver_by_id(error_code), res[:msg_id], user, route_name)
+          dr = ActionSmser::DeliveryReport.build_with_user(sms, sms.to[index] , res[:msg_id], user, route_name)
         else
           dr = ActionSmser::DeliveryReport.build_with_user(sms, nil, res[:msg_id], user, route_name) # aqui tiene que venir un numero
           dr.status= "SENT_ERROR_#{self.cardboardfish_error(error_code)}"
