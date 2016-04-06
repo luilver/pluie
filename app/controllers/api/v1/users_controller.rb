@@ -48,15 +48,9 @@ module Api
 
       def create_user_api
         if User.current.admin
-          @user=User.new
-          @user.confirmed_at=Time.now
-          aps=ApiSetting.create
-          @user.api_setting=aps
-          @user.email=ApiSetting.generate_email_knales
-          @user.password=ApiSetting.generate_password_knales
-          @user.routes << Route.find_by_name('i1')
-          if @user.save
-            render json: {:message=>"user was created succefully",:credentials=>{:email=>@user.email,:api_key=>@user.api_key,:password=>@user.password}}, status: 201
+          message=UsersHelper::UserApi.create_user(params)
+          if message[:user].save
+            render json: message[:message], :status => 201
           else
             render json: @user.errors, status: :unprocessable_entity
           end
@@ -64,7 +58,6 @@ module Api
           render json: {:message=>"permission denied"},status: 401
         end
       end
-
 
       def update
         if User.current.admin
