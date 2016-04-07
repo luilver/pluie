@@ -30,6 +30,14 @@
       <strong>Api Key:</strong>
       <%= @user.api_key if !@user.api_setting.nil? %>
     </p>
+    <p>  <strong>Rutas:</strong>
+      <ul>
+        <%@user.routes.each do |r|%>
+            <li><%= r.name%></li>
+        <%end%>
+      </ul>
+    </p>
+
 <%end%>
 
 <%= link_to t('edit'), edit_user_path(@user) %> |

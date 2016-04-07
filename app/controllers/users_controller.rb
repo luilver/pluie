@@ -32,6 +32,13 @@ class UsersController < ApplicationController
       @user.confirm_token_number=Time.now
       @user.token_number=SecureRandom.hex(2)
     end
+    if params[:api_key]=="1"
+      if @user.api_key.nil?
+        @user.api_setting=ApiSetting.create
+      else
+        @user.api_setting.reset_authentication_token!
+      end
+    end
 
     respond_to do |format|
       if @user.save
