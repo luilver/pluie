@@ -12,8 +12,8 @@ module UsersHelper
       if !params[:movil_number].nil?
         if valid_number(params[:movil_number])
           @user.movil_number=params[:movil_number]
-          @user.token_number=SecureRandom.hex(2)
-          @user.confirm_token_number=Time.now
+          # @user.token_number=SecureRandom.hex(2)
+          # @user.confirm_token_number=Time.now
           mv = @user.movil_number
         else
           mv=I18n.translate('errors.messages.valid_gsm_number_format')
