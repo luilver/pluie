@@ -245,3 +245,4 @@ es:
   url_callback: 'URL reportes de entrega'
   current_url: 'url actual: '
   phone: 'telefono'
+  search: 'Buscar'

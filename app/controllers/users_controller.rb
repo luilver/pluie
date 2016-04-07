@@ -4,7 +4,10 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.order(created_at: :desc).paginate(:page => params[:page], :per_page => 10)
+
+    # @users = User.order(created_at: :desc).paginate(:page => params[:page], :per_page => 10)
+    #
+    @users=User.search(params[:search],params[:page])
   end
 
   # GET /users/new
