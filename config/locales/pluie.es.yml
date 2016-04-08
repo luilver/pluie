@@ -240,7 +240,9 @@ es:
   low_account: 'Advertencia de poco crédito'
   low_account_current: "( actual %{credit} )"
   low_account_delete: 'adventencia de número en rojo eliminada'
-  recharge_balance: "Su cuenta ha sido recargada con $%{balance_new}. Knal.es"
+  recharge_balance: "Su crédito ha sido recargado con $%{balance_new} por
+                      %{description}. Su saldo actual es de $%{balance_current}
+                     (%{amount} mensajes de 160 caracteres)."
   reconfirmed_confirm: 'Enviar mensaje de confirmación otra vez'
   url_callback: 'URL reportes de entrega'
   current_url: 'url actual: '

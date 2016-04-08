@@ -127,7 +127,9 @@ en:
   low_account: 'Low account balance warning'
   low_account_current: '( current %{credit} )'
   low_account_delete: 'low account deleted'
-  recharge_balance: "Your account has been recharged with $%{balance_new}. Knal.es"
+  recharge_balance: "Your account has been recharged with $%{balance_new} by
+                                           %{description}. Your current balance is $%{balance_current}
+                                          (%{amount} sms of 160 caracters)."
   reconfirmed_confirm: 'reconfirmed key of movil number'
   url_callback: 'URL Callback delivery reports'
   current_url: 'current url: '

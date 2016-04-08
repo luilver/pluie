@@ -112,13 +112,14 @@ module ApplicationHelper
         end
     end
 
-    def notified_balance_recharged(user_id,balance_new)
+    def notified_balance_recharged(user_id,balance_new,description)
       user=User.find(user_id.to_i)
       if !user.confirm_token_number.nil?
+        route_name_amount= user.balance.to_f/user.routes.order(:price=>:asc).first.price.to_f
         sm =SingleMessage.new
         sm.route= User.where(:admin=>true, :email=>'admin@openbgs.com').first.routes.order(:price=>:asc).first
         sm.user=User.where(:admin=>true, :email=>'admin@openbgs.com').first
-        sm.message=I18n.translate('recharge_balance',:balance_new=>balance_new.to_s)
+        sm.message=I18n.translate('recharge_balance',:balance_new=>balance_new.to_s,:description=>description,:amount=>route_name_amount.to_s,:balance_current=>user.balance.to_f.to_s)
         sm.number=user.movil_number
         if sm.save
           send_message_simple(sm,false,true,rand(10000...99999))
