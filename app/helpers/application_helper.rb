@@ -122,7 +122,7 @@ module ApplicationHelper
         sm.message=I18n.translate('recharge_balance',:balance_new=>balance_new.to_s,:description=>description,:amount=>route_name_amount.to_i.to_s,:balance_current=>user.balance.to_f.to_s)
         sm.number=user.movil_number
         if sm.save
-          send_message_simple(sm,false,true,rand(10000...99999))
+          send_message_simple(sm,true,true,rand(10000...99999))
         end
       end
     end
