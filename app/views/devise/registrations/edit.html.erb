@@ -18,7 +18,7 @@
     <div><%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
 
-    <div><%= label_tag 'Número movil:' %> <i> <%= current_user.movil_number if !current_user.movil_number.blank? %> <%= t('not_confirm_number') if current_user.confirm_token_number.blank? and  !current_user.movil_number.blank?%></i>
+    <div><%= label_tag t('phone')+': ' %> <i> <%= current_user.movil_number if !current_user.movil_number.blank? %> <%= t('not_confirm_number') if current_user.confirm_token_number.blank? and  !current_user.movil_number.blank?%></i>
 
       <br />
       <%= text_field :movil_number, :movil_number %> <i><%=t('key_confirm') if !current_user.token_number.blank? and current_user.confirm_token_number.blank? %></i> <%= text_field :confirm_number, :confirm_number,:style=>'width:41px;' if !current_user.token_number.blank? and current_user.confirm_token_number.blank?%> </div>
