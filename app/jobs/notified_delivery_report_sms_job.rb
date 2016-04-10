@@ -51,7 +51,7 @@ class NotifiedDeliveryReportSmsJob
       end
     end
     porcent_sms= (100.0*ret.count.to_f)/obj.receivers.count.to_f
-    return {:status=> ret.count, :porcent_sms=> porcent_sms}
+    return {:status=> ret.count, :porcent_sms=> porcent_sms.round(2)}
   end
 end
 
