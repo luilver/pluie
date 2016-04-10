@@ -42,6 +42,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        ApplicationHelper::ManageSM.new.notified_account_created(@user)
         format.html { redirect_to @user, notice: t('notice.item_created', item: t('activerecord.models.user')).html_safe }
         format.json { render :show, status: :created, location: @user }
       else

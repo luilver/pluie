@@ -248,3 +248,5 @@ es:
   current_url: 'url actual: '
   phone: 'telefono'
   search: 'Buscar'
+  confirm_account_create: 'Usted ha sido dado de alta en nuestro sistema. A partir hoy podrà
+                           disponer de los servicios contratados. Knal.es'

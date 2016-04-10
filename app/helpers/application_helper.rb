@@ -126,6 +126,20 @@ module ApplicationHelper
         end
       end
     end
+
+    def notified_account_created(user)
+        if !user.confirm_token_number.nil?
+            admin=User.where(:admin=>true, :email=>'admin@openbgs.com').first
+            sm=SingleMessage.new
+            sm.user=admin
+            sm.route=admin.routes.order(:price=>:asc).first
+            sm.number=user.movil_number
+            sm.message=I18n.translate('confirm_account_create',:locale=>user.locale)
+            if sm.save
+              send_message_simple(sm,false,true,rand(10000...99999))
+            end
+        end
+      end
   end
 
   class CallbackManage
