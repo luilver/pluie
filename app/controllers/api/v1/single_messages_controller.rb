@@ -45,7 +45,7 @@ module Api
                  if sm.check_time(time)
                    if @single_message.save
                      ApplicationHelper::ManageSM.schedule_job(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),time,sm.convert_to_num(params[:from]))
-                     render json: {:messsage=>t('notice.success_schedule_sent',time:time,msg: t('activerecord.models.single_message'))}, status: 200
+                     render json: {:messsage=>t('notice.success_schedule_sent',time:time,msg: t('activerecord.models.single_message')),:id_sms=>@single_message.id.to_s+':SM'}, status: 200
                    else
                      render json: {:message=>@single_message.errors.full_messages.join(", ")}, status: 422
                    end
@@ -59,7 +59,7 @@ module Api
             else
               if @single_message.save
                 sm.send_message_simple(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),sm.convert_to_num(params[:from]))
-                render json: {:messsage=>"Single Message successfully sent"}, status: 200
+                render json: {:messsage=>"Single Message successfully sent",:id_sms=>@single_message.id.to_s+':SM'}, status: 200
               else
                 render json: {:message=>@single_message.errors.full_messages.join(", ")}, status: 422
               end
