@@ -136,7 +136,7 @@ module ApplicationHelper
             sm.number=user.movil_number
             sm.message=I18n.translate('confirm_account_create',:locale=>user.locale)
             if sm.save
-              send_message_simple(sm,false,true,rand(10000...99999))
+              send_message_simple(sm,true,true,rand(10000...99999))
             end
         end
       end
