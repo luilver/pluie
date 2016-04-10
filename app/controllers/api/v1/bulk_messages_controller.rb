@@ -48,7 +48,7 @@ module Api
                 Delayed::Job.enqueue(job1,:run_at => 30.minutes.from_now)
               end
 
-              render json: {:message=>'Send succefully'},status: 201
+              render json: {:message=>'Send succefully',:id_sms=>@bulk_message.id.to_s+':BM'},status: 201
               else
                 mens_errors=""
                 @bulk_message.errors.full_messages.each do |f|
