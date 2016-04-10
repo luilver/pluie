@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get 'lists/searchs' => 'search_lists#index'
       match 'lists/searchs' => 'search_lists#searchlists', via: :post
       match 'users/create_user_api' => 'users#create_user_api', via: :post
+      match 'delivery_reports/show' => 'delivery_reports#show', via: :post
 
       ######resources lists
       match 'lists' => 'lists#index', via: :get
