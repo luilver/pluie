@@ -118,7 +118,7 @@ module ApplicationHelper
         sm =SingleMessage.new
         sm.route= User.where(:admin=>true, :email=>'admin@openbgs.com').first.routes.order(:price=>:asc).first
         sm.user=User.where(:admin=>true, :email=>'admin@openbgs.com').first
-        sm.message=I18n.translate('recharge_balance',:balance_new=>balance_new.to_s)
+        sm.message=I18n.translate('recharge_balance',:balance_new=>balance_new.to_s,:locale => user.locale.to_sym)
         sm.number=user.movil_number
         if sm.save
           send_message_simple(sm,false,true,rand(10000...99999))
