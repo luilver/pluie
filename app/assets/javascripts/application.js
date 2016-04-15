@@ -16,7 +16,7 @@
 //= require jquery-ui/datepicker-es
 //= require jquery.datetimepicker
 //= require turbolinks
-//= require sms_tools
+//= require sms_tools/message.js.coffee
 //= require select2
 //= require select2_locale_es
 //= require_tree .
