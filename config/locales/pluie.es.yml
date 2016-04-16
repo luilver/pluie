@@ -248,3 +248,4 @@ es:
   current_url: 'url actual: '
   phone: 'telefono'
   search: 'Buscar'
+  api_information: 'Información de acceso vía API:'
