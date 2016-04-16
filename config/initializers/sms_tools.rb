@@ -4,10 +4,6 @@ module SmsTools
   class EncodingDetection
     remove_const(:MAX_LENGTH_FOR_ENCODING) if (defined?(MAX_LENGTH_FOR_ENCODING))
     MAX_LENGTH_FOR_ENCODING = {
-        ascii: {
-            normal:       156,
-            concatenated: 153,
-        },
         gsm: {
             normal:       156,
             concatenated: 153,
@@ -25,18 +21,7 @@ module SmsTools
     end
 
     def encoding
-      @encoding ||=
-          if text.ascii_only?
-            :ascii
-          elsif SmsTools.use_gsm_encoding? and GsmEncoding.valid?(text)
-            :gsm
-          else
-            :unicode
-          end
-    end
-
-    def ascii?
-      encoding == :ascii
+      @encoding ||= GsmEncoding.valid?(text) ? :gsm : :unicode
     end
 
     def gsm?
@@ -65,7 +50,7 @@ module SmsTools
       concatenated_parts * MAX_LENGTH_FOR_ENCODING[encoding][message_type]
     end
 
-    # Returns the number of symbols which the given text will eat up in an SMS
+    # Returns the number of symbols, which the given text will take up in an SMS
     # message, taking into account any double-space symbols in the GSM 03.38
     # encoding.
     def length
