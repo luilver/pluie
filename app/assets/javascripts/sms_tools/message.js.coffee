@@ -2,11 +2,8 @@ window.SmsTools ?= {}
 
 class SmsTools.Message
   maxLengthForEncoding:
-    ascii:
-      normal: 156
-      concatenated: 153
     gsm:
-      normal: 156
+      normal:  156
       concatenated: 153
     unicode:
       normal: 70
@@ -23,7 +20,6 @@ class SmsTools.Message
     '€':  true
     '\\': true
 
-  asciiPattern: /^[\x00-\x7F]*$/
   gsmEncodingPattern: /^[0-9a-zA-Z@Δ¡¿£_!Φ"¥Γ#èΛ¤éΩ%ùΠ&ìΨòΣçΘΞ:Ø;ÄäøÆ,<Ööæ=ÑñÅß>ÜüåÉ§à€~ \$\.\-\+\(\)\*\\\/\?\|\^\}\{\[\]\'\r\n]*$/
 
   constructor: (@text) ->
@@ -37,19 +33,8 @@ class SmsTools.Message
 
     concatenatedPartsCount * @maxLengthForEncoding[@encoding][messageType]
 
-  use_gsm_encoding: ->
-    if SmsTools['use_gsm_encoding'] == undefined
-      true
-    else
-      SmsTools['use_gsm_encoding']
-
   _encoding: ->
-    if @asciiPattern.test(@text)
-      'ascii'
-    else if @use_gsm_encoding() and @gsmEncodingPattern.test(@text)
-      'gsm'
-    else
-      'unicode'
+    if @gsmEncodingPattern.test(@text) then 'gsm' else 'unicode'
 
   _concatenatedPartsCount: ->
     encoding = @encoding
@@ -60,7 +45,7 @@ class SmsTools.Message
     else
       parseInt Math.ceil(length / @maxLengthForEncoding[encoding].concatenated), 10
 
-  # Returns the number of symbols which the given text will eat up in an SMS
+  # Returns the number of symbols, which the given text will take up in an SMS
   # message, taking into account any double-space symbols in the GSM 03.38
   # encoding.
   _length: ->
