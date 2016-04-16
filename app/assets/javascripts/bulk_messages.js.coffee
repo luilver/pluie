@@ -3,12 +3,13 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).on "page:change", ->
-    $('#bulk_message_message').on('input propertychange', ->
-        message = new SmsTools.Message(this.value)
-        $('#sms_size').text(message.length + 4)
-        $('#sms_parts').text(Math.floor((message.length+4)/161+1))
-    )
-    $('#list_ids').select2({
-        placeholder: $('#list_ids').data('phtext')
-    })
+  $('#bulk_message_message').on('input propertychange', ->
+    message = new SmsTools.Message(this.value)
+
+    $('#sms_size').text(message.length + 4)
+    $('#sms_parts').text(message.concatenatedPartsCount)
+  )
+  $('#list_ids').select2({
+    placeholder: $('#list_ids').data('phtext')
+  })
 
