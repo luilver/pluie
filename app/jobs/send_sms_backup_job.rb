@@ -5,7 +5,7 @@ SendSmsBackupJob = Struct.new(:list_messages, :gateways, :randomText,:number_fro
     begin
       deliver=false
       list_messages.each do |message|
-        dr = ActionSmser::DeliveryReport.where(:pluie_id => message.id.to_s).first
+        dr = ActionSmser::DeliveryReport.where(:pluie_id => message.id.to_s,:sms_type=>SingleMessage.to_s).first
         if  dr.status == ActionSmserUtils::DELIVERED_STATUS
           deliver=true
         end
