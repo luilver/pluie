@@ -4,9 +4,9 @@
 
 $(document).on "page:change", ->
   $('#bulk_message_message').on('input propertychange', ->
-    message = new SmsTools.Message(this.value)
+    message = new SmsTools.Message(this.value+'    ')
 
-    $('#sms_size').text(message.length + 4)
+    $('#sms_size').text(message.length)
     $('#sms_parts').text(message.concatenatedPartsCount)
   )
   $('#list_ids').select2({

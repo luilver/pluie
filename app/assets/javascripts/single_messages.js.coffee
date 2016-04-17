@@ -4,7 +4,8 @@
 
 $(document).on "page:change", ->
   $('#single_message_message').on('input propertychange', ->
-    message = new SmsTools.Message(this.value)
-    $('#sms_size').text(message.length + 4)
+    message = new SmsTools.Message(this.value+'    ')
+
+    $('#sms_size').text(message.length)
     $('#sms_parts').text(message.concatenatedPartsCount)
   )
