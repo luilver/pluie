@@ -47,7 +47,8 @@ class BulkMessagesController < ApplicationController
 
         if params[:notified][:notified].to_s.to_bool and !@bulk_message.user.confirm_token_number.blank?
           job1 =NotifiedDeliveryReportSmsJob.new(@bulk_message.id,@bulk_message.user.movil_number,BulkMessage.to_s)
-          Delayed::Job.enqueue(job1,:run_at => 30.minutes.from_now)
+          time_notified=@bulk_message.receivers.count <= 2500 ? 30.minutes.from_now : 46.minutes.from_now
+          Delayed::Job.enqueue(job1,:run_at => time_notified)
         end unless params[:notified].nil?
 
         format.html { redirect_to @bulk_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.bulk_message')).html_safe}
