@@ -21,6 +21,7 @@ module ActionSmser::DeliveryMethods
 
     def self.request_params(info, numbers, sms)
       msg=info.dup
+      msg[:to] =numbers.join("%7C")
       return msg
     end
 
@@ -41,32 +42,30 @@ module ActionSmser::DeliveryMethods
         msg_id = res[:msg_id]
         if !msg_id =='error'
           dr = ActionSmser::DeliveryReport.build_with_user(sms, sms.to[index], msg_id, user, route_name)
-          if error_code == GatewayErrorInfo::RoutesmsErrors::SUCCESS_CODE
-            count += 1
-          else
-            dr.status= "SENT_ERROR_#{self.routesms_error(error_code)}"
-            dr.log += "batch aborted" if msg_id == nil
-          end
+          count += 1
           dr.save
           sms.delivery_reports.push(dr)
+        else
+          ActionSmser::Logger.error "#{res[:message]}"
         end
       end
       count
     end
-  end
+
     def self.process_delivery_report(params)
       info = []
-      status = case params[:sStatus]
+      status = case params["status"]
                  when "DELIVRD"
                    ActionSmserUtils::DELIVERED_STATUS
-                 when "UNDELIV"
+                 when "FAILED"
+                   ActionSmserUtils::UNDELIVERED_STATUS
+                 when "EXPIRED"
                    ActionSmserUtils::UNDELIVERED_STATUS
                  else
-                   params[:sStatus]
+                   params["status"]
                end
-      msg_id = params[:sMessageId]
-      sender = params[:sSender]
-      info << {"msg_id" => msg_id, "status" => status, "sender" => sender,"sMobileNo" => params[:sMobileNo]}
+      msg_id = params["id"]
+      info << {"msg_id" => msg_id, "status" => status, "to" => params["recipient"]}
     end
 
     def self.path_url
@@ -82,3 +81,4 @@ module ActionSmser::DeliveryMethods
     end
   end
 end
+
