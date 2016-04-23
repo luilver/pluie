@@ -10,6 +10,7 @@ class RegistrationsController <  Devise::RegistrationsController
       current_user.url_callback=params[:url][:url] unless params[:url][:url].blank?
       self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
       self.resource.url_callback=params[:url][:url] unless params[:url][:url].blank?
+      self.resource.unit_view=params[:unit_view][:unit_view]
       self.resource.movil_number=params[:movil_number][:movil_number] unless params[:movil_number][:movil_number].blank? or !valid_number(params[:movil_number][:movil_number]) or !other_movil_number
       if params[:low_a_check][:low_a_check].to_i==1
         self.resource.low_account =params[:low_account][:low_account]  unless params[:low_account][:low_account].blank? or !validate_integer(params[:low_account][:low_account])

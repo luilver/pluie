@@ -1,0 +1,2 @@
+module MessageAllHelper
+end
