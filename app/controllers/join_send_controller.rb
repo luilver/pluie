@@ -1,4 +1,6 @@
 class JoinSendController < ApplicationController
+  before_filter :validate_unit_view
+
   def index
   end
 
@@ -55,5 +57,11 @@ class JoinSendController < ApplicationController
     return true
   end
 
+  protected
+   def validate_unit_view
+     if !current_user.unit_views
+         redirect_to root_path
+     end
+   end
 
 end
