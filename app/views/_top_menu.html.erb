@@ -1,7 +1,7 @@
 <div class="menu">
   <%= link_to t('home'), main_app.root_path %>
-  <% if current_user.unit_view%>
-     <%= link_to t('link_uv'), main_app.message_all_index_path%>
+  <% if current_user.unit_views%>
+      <%= link_to t('link_uv'), main_app.join_send_new_path%>
   <%else%>
       <%= link_to t('single_mode').html_safe, main_app.new_single_message_path %>
       <%= link_to t('massive_mode').html_safe, main_app.new_bulk_message_path %>

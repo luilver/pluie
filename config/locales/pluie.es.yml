@@ -251,5 +251,6 @@ es:
   confirm_account_create: 'Usted ha sido dado de alta en nuestro sistema. A partir hoy podrà
                            disponer de los servicios contratados. Knal.es'
   api_information: 'Información de acceso vía API:'
-  unit_views: 'vistas unificadas de envio'
   link_uv: 'Enviar Mensaje'
+  unit_views: 'vistas unificadas de envio'
+
