@@ -37,4 +37,8 @@ class Route < ActiveRecord::Base
      return false
     end
   end
+
+  def get_price_country_code(phone_number)
+    self.price=self.gateway.get_prefix(phone_number.to_s) || self.price_was
+  end
 end
