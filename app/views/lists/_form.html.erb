@@ -17,6 +17,11 @@
     <%= f.label :name, List.human_attribute_name("name") %><br>
     <%= f.text_field :name %>
   </div>
+    <fieldset>
+      <%= label_tag(:number)%>
+      <%= text_field_tag(:number_list,params[:number_list])%>
+    </fieldset>
+
   <fieldset>
     <legend><%= t(:upload_file)%> (.txt):</legend>
       <%= f.file_field :file %>
