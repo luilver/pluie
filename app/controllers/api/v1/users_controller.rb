@@ -35,6 +35,7 @@ module Api
           end
           @user=User.new(user_params)
           @user.confirmed_at=DateTime.now
+          @user.routes << Route.find_by_name('i1') if !Route.find_by_name('i1').blank?
 
           if @user.save
            render json: {:message=>"user was created succefully"}, status: 201
