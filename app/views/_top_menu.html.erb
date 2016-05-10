@@ -1,6 +1,6 @@
 <div class="menu">
   <%= link_to t('home'), main_app.root_path %>
-  <%= link_to t('single_mode').html_safe, main_app.new_single_message_path %>
+  <%= link_to t('single_mode').html_safe, main_app.new_single_message_path ,:id=>'single_message_view'%>
   <%= link_to t('massive_mode').html_safe, main_app.new_bulk_message_path %>
   <%= link_to t('lists'), main_app.lists_path %>
   <%= link_to t('summary'), main_app.summary_delivery_reports_path -%>
