@@ -8,6 +8,31 @@
   <%= @gateway.price %>
 </p>
 
+
+<br/>
+
+<table style="border-bottom: 3px solid black;">
+
+  <tr>
+    <th>prefix</th>
+    <th>price</th>
+    <th>price_cost</th>
+    <th>price_cost</th>
+  </tr>
+  <% @gateway.gateway_prefixtables.each do |grt|%>
+      <tr>
+        <td><%= grt.prefix_cc%></td>
+        <td><%= grt.price_system%></td>
+        <td><%= grt.price_cost%></td>
+        <td></td>
+      </tr>
+  <%end%>
+</table>
+
+
+<br/>
+
 <%= link_to t(:edit), edit_gateway_path(@gateway) %> |
-<%= link_to t(:back).html_safe, gateways_path %>
+<%= link_to t(:back).html_safe, gateways_path %> |
+<%= link_to "Nuevo prefijo", prefix_new_path%>
 

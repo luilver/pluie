@@ -1,0 +1,11 @@
+<%= form_tag prefix_path, :method => :post do %>
+    <div class="field">
+      <%= label_tag :Prefix%><br/>
+      <%= text_field_tag :prefix, params[:prefix]%>
+    </div>
+    <div class="field">
+      <%= label_tag :Country %><br/>
+      <%= text_field_tag :country, params[:country]%>
+    </div>
+    <%= submit_tag :create%>
+<%end%>
