@@ -103,7 +103,12 @@ Rails.application.routes.draw do
   get "confirmation_number/reconfirmed" => "confirmation_number#reconfirmed"
   get "confirmation_number/delete_warning" => "confirmation_number#delete_warning"
 
-  #
+  # get 'prefix/new' => 'prefix#new'
+  # post "prefix" => "prefix#create"
+  # get 'prefix/:id' => 'prefix#show'
+  # get 'prefixes' => 'prefix#index'
+  resources :prefix
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

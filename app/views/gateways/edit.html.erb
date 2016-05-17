@@ -1,6 +1,6 @@
 <h1><%= t(:editing, item: t(:gateway))%></h1>
 
-<%= render 'form' %>
+<%= render 'form', :edit => 1 %>
 
 <%= link_to t(:show), @gateway %> |
 <%= link_to t(:back).html_safe, gateways_path %>

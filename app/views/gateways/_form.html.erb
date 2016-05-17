@@ -22,6 +22,11 @@
     <%= f.label :price, Gateway.human_attribute_name("price") %><br>
     <%= f.text_field :price %>
   </div>
+
+    <%if edit == 1 %>
+        <%= render 'edit_prefix'%>
+    <%end%>
+
   <div class="actions">
     <%= f.submit %>
   </div>

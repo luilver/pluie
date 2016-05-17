@@ -1,0 +1,31 @@
+<h1>Prefixes</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th><%= PrefixTable.human_attribute_name("country") %></th>
+    <th><%= SingleMessage.human_attribute_name("country_code")%></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @prefix_all.each do |prf| %>
+      <tr>
+        <td><%= prf.country%></td>
+        <td><%= prf.country_code%></td>
+        <td><%= link_to t('show'), prefix_path(prf.id)%></td>
+        <td><%= link_to t('edit'), edit_prefix_path(:id=>prf.id)%></td>
+        <td><%= link_to t('destroy'), prefix_path(prf.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<p><%= will_paginate @prefix_all %></p>
+
+<p><%= link_to 'new', new_prefix_path%></p>
+

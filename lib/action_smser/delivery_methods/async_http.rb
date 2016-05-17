@@ -16,6 +16,7 @@ module ActionSmser::DeliveryMethods
       request_counter = 0
       info = self.sms_info(sms)
       success = 0
+      list_numbers=[]
 
       EM.run do
         setup_middlewares
@@ -31,7 +32,9 @@ module ActionSmser::DeliveryMethods
           http.callback do
             if succesful_response(http)
                results = parse_response(http.response)
-               success += save_delivery_reports(sms, results, user, route.name)
+               success_temp, list_numbers_tem = save_delivery_reports(sms, results, user, route.name)
+               success+= success_temp
+               list_numbers.concat list_numbers_tem
             else
               log_response(http)
             end
@@ -46,7 +49,7 @@ module ActionSmser::DeliveryMethods
 
         final = Proc.new do
           ActionSmser::Logger.info "Finished sending with route #{route}. #{Time.now}"
-          sms.broadcast_delivery_finished(success)
+          sms.broadcast_delivery_finished(success,list_numbers)
           EventMachine.stop unless em_was_running
         end
         EM::Iterator.new(batches, concurrent_requests).each(foreach, final)
