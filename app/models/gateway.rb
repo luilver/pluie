@@ -2,7 +2,7 @@ class Gateway < ActiveRecord::Base
   has_many :users
   has_many :routes
   has_many :users, :through => :routes
-  has_many :gateway_prefixtables, :dependent => :destroy
+  has_many :gateway_prefixtables, -> {distinct}
   has_many :prefix_tables, -> {distinct}, :through => :gateway_prefixtables
   validates :name, presence: true
   validates :name, uniqueness: { case_sensitive: false }

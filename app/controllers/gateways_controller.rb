@@ -42,6 +42,11 @@ class GatewaysController < ApplicationController
   # PATCH/PUT /gateways/1.json
   def update
     respond_to do |format|
+      prefix_id=params[:prefix_list]
+      g=GatewayPrefixtable.find_or_create_by(:gateway_id=>@gateway.id,:prefix_table_id=>prefix_id)
+      g.price_system=params[:price_prefix].to_f!=0.0 ? params[:price_prefix]:Gateway.order(:price=>:desc).first.price
+      g.save
+
       if @gateway.update(gateway_params)
         format.html { redirect_to @gateway, notice: t('notice.item_updated', item: t('activerecord.models.gateway')).html_safe }
         format.json { render :show, status: :ok, location: @gateway }

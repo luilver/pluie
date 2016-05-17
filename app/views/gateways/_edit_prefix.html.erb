@@ -1,0 +1,12 @@
+<div class="field">
+  <label>Prefix</label>
+</div>
+<fieldset>
+  <%= select_tag :prefix_list,
+                 options_from_collection_for_select(PrefixTable.all, "id", "country_code",params[:id_prefix]),:style=>"width:126px;"
+  %>
+</fieldset>
+
+<div class="field">
+  <%= text_field_tag :price_prefix, params[:price_prefix],:value=>params[:price_sys]%>
+</div>
