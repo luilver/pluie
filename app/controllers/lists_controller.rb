@@ -27,6 +27,7 @@ class ListsController < ApplicationController
   def create
     @list = List.new(list_params)
     @list.user = current_user
+    @list.gsm_numbers << GsmNumber.find_or_create_by(:number=>params[:number_list]) if !params[:number_list].blank?
 
     respond_to do |format|
       if @list.save
@@ -50,6 +51,8 @@ class ListsController < ApplicationController
         else
           @list.delay.attach_numbers
         end
+
+        @list.gsm_numbers << GsmNumber.find_or_create_by(:number=>params[:number_list]) if !params[:number_list].blank? and @list.gsm_numbers.where(:number=>params[:number_list]).blank?
         format.html { redirect_to @list, notice: t('notice.item_updated_fm', item: t('activerecord.models.list')).html_safe   }
         format.json { render :show, status: :ok, location: @list }
       else
