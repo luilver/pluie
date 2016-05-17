@@ -1,0 +1,13 @@
+<h1> <%= t(:new_item, item: t('single_message')) %> </h1>
+
+<%= render 'single_messages/form' %>
+
+<%= link_to t(:back).html_safe, single_messages_path %>
+
+<hr>
+
+<h1> <%= t(:new_item, item: t('single_message')) %> </h1>
+
+<%= render 'bulk_messages/form' %>
+
+<%= link_to t(:back).html_safe, single_messages_path %>

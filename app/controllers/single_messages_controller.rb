@@ -47,7 +47,13 @@ class SingleMessagesController < ApplicationController
            else
              @single_message.errors[t('errors.messages.datetime_name')]= t('errors.messages.incorrect_datetime') if time.class!=Time
              @single_message.errors[t('errors.messages.date_notice')]= t('errors.messages.date_old') if time.class==Time and time < Time.now
-             format.html { render :new }
+             if current_user.unit_view
+               @bulk_message=BulkMessage.new
+               format.html { render 'message_all/_index' }
+             else
+               format.html {render :new}
+               format.json { render json: @single_message.errors, status: :unprocessable_entity }
+             end
              format.json { render json: @single_message.errors, status: :unprocessable_entity }
            end
       else
@@ -56,8 +62,13 @@ class SingleMessagesController < ApplicationController
               format.html { redirect_to @single_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.single_message')).html_safe }
               format.json { render :show, status: :sent, location: @single_message }
           else
-            format.html { render :new }
-            format.json { render json: @single_message.errors, status: :unprocessable_entity }
+            if current_user.unit_view
+              @bulk_message=BulkMessage.new
+              format.html { render 'message_all/_index' }
+            else
+              format.html {render :new}
+              format.json { render json: @single_message.errors, status: :unprocessable_entity }
+            end
           end
       end
     end
