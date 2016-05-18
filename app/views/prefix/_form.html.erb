@@ -1,4 +1,4 @@
-<%= form_tag prefix_path, :method => :post do %>
+<%= form_tag :controller=>:prefix, :action => :create, :method => :post do %>
     <% if @prefix_t.errors.any? %>
         <div id="error_explanation">
           <h2>

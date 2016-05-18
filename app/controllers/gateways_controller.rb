@@ -42,14 +42,17 @@ class GatewaysController < ApplicationController
   # PATCH/PUT /gateways/1.json
   def update
     respond_to do |format|
-      prefix_id=params[:prefix_list]
-      g=GatewayPrefixtable.find_or_create_by(:gateway_id=>@gateway.id,:prefix_table_id=>prefix_id)
-      g.price_system=params[:price_prefix].to_f!=0.0 ? params[:price_prefix]:Gateway.order(:price=>:desc).first.price
-      g.save
-
+      value_b=true
       if @gateway.update(gateway_params)
+        value_b,price_low_cost= @gateway.assign_ps(params) if params[:ccode].present?
+
+        if value_b
         format.html { redirect_to @gateway, notice: t('notice.item_updated', item: t('activerecord.models.gateway')).html_safe }
         format.json { render :show, status: :ok, location: @gateway }
+        else
+          @gateway.errors.add(:error, "precio del sistema debe ser mayor que #{price_low_cost}")
+          format.html {render :edit}
+        end
       else
         format.html { render :edit }
         format.json { render json: @gateway.errors, status: :unprocessable_entity }

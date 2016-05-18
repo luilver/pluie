@@ -27,4 +27,20 @@ class Gateway < ActiveRecord::Base
     end
     return nil
   end
+
+   #asignar precio de sistema tiene que ser mayo que el menor precio de costo del gateway a ese pais
+  def assign_ps(params)
+     prefix=PrefixTable.find(params[:prefix_list].to_i)
+     price_cost_low=GatewayPrefixtable.where(:prefix_table_id=>prefix.id).order(:price_cost=>:desc).first.price_cost
+     #
+     if price_cost_low > params[:price_prefix].to_f and params[:price_prefix] !=0.0
+       return false,price_cost_low
+     end
+     prefix_id=params[:prefix_list]
+     g=GatewayPrefixtable.find_or_create_by(:gateway_id=>self.id,:prefix_table_id=>prefix_id)
+     g.price_system=params[:price_prefix].to_f > price_cost_low ? params[:price_prefix] : price_cost_low
+     g.price_cost=params[:price_cost].to_f!=0.0 ? params[:price_cost].to_f : price_cost_low
+     g.save
+     return true
+  end
 end
