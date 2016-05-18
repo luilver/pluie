@@ -1,5 +1,5 @@
 class PrefixTable < ActiveRecord::Base
-  has_many :gateway_prefixtables, -> {distinct}
+  has_many :gateway_prefixtables, -> {distinct},:dependent => :destroy
   has_many :gateways, -> {distinct}, :through => :gateway_prefixtables
   validates :country_code, :uniqueness => true
   validates :country, :uniqueness => true

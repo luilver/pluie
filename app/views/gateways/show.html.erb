@@ -12,23 +12,26 @@
 <br/>
 
 <table style="border-bottom: 3px solid black;">
-
+  <thead>
   <tr>
     <th>prefix</th>
     <th>price_system</th>
     <th>price_cost</th>
     <th></th>
-    <th></th>
+
   </tr>
+  </thead>
+
+  <tbody>
   <% @gateway.gateway_prefixtables.each do |grt|%>
-      <tr>
+      <tr style="border-bottom: 3px solid black;">
         <td><%= grt.prefix_cc%></td>
         <td><%= grt.price_system%></td>
         <td><%= grt.price_cost%></td>
-        <td><%= link_to t(:edit), edit_gateway_path(@gateway,:id_prefix=>grt.prefix_table.id,:price_sys=>grt.price_system) %></td>
-        <td></td>
+        <td><%= link_to t(:edit), edit_gateway_path(@gateway,:id_prefix=>grt.prefix_table.id,:price_sys=>grt.price_system, :price_cost=>grt.price_cost) %></td>
       </tr>
   <%end%>
+  </tbody>
 </table>
 
 

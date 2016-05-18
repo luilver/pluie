@@ -39,6 +39,6 @@ class PrefixController < ApplicationController
   def destroy
     @prefix_t=PrefixTable.find(params[:id])
     @prefix_t.destroy
-    redirect_to prefix_path
+    redirect_to prefix_index_path
   end
 end

@@ -8,5 +8,15 @@
 </fieldset>
 
 <div class="field">
+  <label>Adicionar o modificar country code</label>
+  <%= check_box_tag :ccode, params[:ccode] %>
+</div>
+<div class="field">
+  <label>Price system</label> <br/>
   <%= text_field_tag :price_prefix, params[:price_prefix],:value=>params[:price_sys]%>
+</div>
+
+<div class="field">
+  <label>Price cost</label><br/>
+  <%= text_field_tag :price_cost, params[:price_cost],:value=>params[:price_cost]%>
 </div>
