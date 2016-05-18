@@ -26,6 +26,7 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
+    @user.unit_views=false
     @user.confirmed_at = Time.current
     @user.routes << Route.find_by_name('i1')
     if !user_params[:movil_number].blank?

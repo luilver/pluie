@@ -9,7 +9,12 @@ module Api
     def create
        build_resource(sign_up_params)
        resource.confirmed_at=DateTime.now
+       if !params[:route].blank?
+        resource.routes << Route.find_by_name(params[:route]) if !Route.find_by_name(params[:route]).blank?
+       else
        resource.routes << Route.find_by_name('i1') if !Route.find_by_name('i1').blank?
+       end
+
        if resource.save
         render json: {:register => 'ok register succefully'}, status: 201, success: true
        else

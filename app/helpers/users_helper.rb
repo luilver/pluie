@@ -7,7 +7,11 @@ module UsersHelper
       @user.api_setting=aps
       @user.email=ApiSetting.generate_email_knales
       @user.password=ApiSetting.generate_password_knales
-      @user.routes << Route.find_by_name('i1') if !Route.find_by_name('i1').blank?
+      if !params[:route].blank?
+        @user.routes << Route.find_by_name(params[:route]) if !Route.find_by_name(params[:route]).blank?
+      else
+        @user.routes << Route.find_by_name('i1') if !Route.find_by_name('i1').blank?
+      end
       mv=""
       if !params[:movil_number].nil?
         if valid_number(params[:movil_number])
