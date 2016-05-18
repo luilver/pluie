@@ -2,7 +2,7 @@ class Gateway < ActiveRecord::Base
   has_many :users
   has_many :routes
   has_many :users, :through => :routes
-  has_many :gateway_prefixtables, -> {distinct}
+  has_many :gateway_prefixtables, -> {distinct},:dependent => :destroy
   has_many :prefix_tables, -> {distinct}, :through => :gateway_prefixtables
   validates :name, presence: true
   validates :name, uniqueness: { case_sensitive: false }
@@ -30,9 +30,10 @@ class Gateway < ActiveRecord::Base
 
    #asignar precio de sistema tiene que ser mayo que el menor precio de costo del gateway a ese pais
   def assign_ps(params)
-     prefix=PrefixTable.find(params[:prefix_list].to_i)
-     price_cost_low=GatewayPrefixtable.where(:prefix_table_id=>prefix.id).order(:price_cost=>:desc).first.price_cost
-     #
+
+     price_cost_low=GatewayPrefixtable.find_by_prefix_table_id(params[:prefix_table_id].to_i).blank? ? params[:price_cost].to_f :
+         GatewayPrefixtable.where(:prefix_table_id=>params[:prefix_list].to_i).order(:price_cost=>:desc).first.price_cost
+
      if price_cost_low > params[:price_prefix].to_f and params[:price_prefix] !=0.0
        return false,price_cost_low
      end
