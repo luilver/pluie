@@ -41,7 +41,7 @@ class Route < ActiveRecord::Base
   end
 
   def get_price_country_code(phone_number)
-     prefix_to_three=[phone_number[0...3],phone_number[0...2],phone_number[0...1]]
+     prefix_to_three=[phone_number[0...3],phone_number[0...2],phone_number[0...1]] #solo existen 3 prefijos de telefonos movil
      prefix_to_three.each do |prefix|
         self.table_routes.each do |tr|
           if tr.country_code==prefix

@@ -38,6 +38,7 @@ module ActionSmser::DeliveryMethods
 
     def self.save_delivery_reports(sms, results,  user, route_name)
       count = 0
+      list_numbers=[]
       begin
         results.each do |res|
           error_code = res["status"].to_i
@@ -49,6 +50,7 @@ module ActionSmser::DeliveryMethods
             dr.log += "infobip error: #{self.infobip_error(error_code)}"
           else
             count += 1
+            list_numbers << sms.find_receiver_by_id(msg_id)
           end
           dr.save
           sms.delivery_reports.push(dr)
@@ -56,7 +58,7 @@ module ActionSmser::DeliveryMethods
       rescue Exception => e
         ActionSmser::Logger.error "Fail saving DLRs. #{e.message}.\n Trace: #{e.backtrace.join("\n")}"
       end
-      count
+      return count,list_numbers
     end
 
     def self.process_delivery_report(params)
