@@ -3,12 +3,14 @@ class Route < ActiveRecord::Base
   belongs_to :gateway
   has_many :single_messages
   has_many :bulk_messages
+  has_many :table_routes
 
   before_save :min_value_route
   validates :name, presence: true
   validates :price, presence: true, numericality: {greater_than: 0}
   # validates :user, presence: true
   validates :gateway, presence: true
+  validates :name, :uniqueness => true
 
   scope :publisher_routes , -> { where( system_route: true) }
 
@@ -39,6 +41,14 @@ class Route < ActiveRecord::Base
   end
 
   def get_price_country_code(phone_number)
-    self.price=self.gateway.get_prefix(phone_number.to_s) || self.price_was
+     prefix_to_three=[phone_number[0...3],phone_number[0...2],phone_number[0...1]]
+     prefix_to_three.each do |prefix|
+        self.table_routes.each do |tr|
+          if tr.country_code==prefix
+            return tr.price_system
+          end
+        end
+     end
+    return price
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330192358) do
+ActiveRecord::Schema.define(version: 20160520080238) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -126,6 +126,15 @@ ActiveRecord::Schema.define(version: 20160330192358) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
+  create_table "gateway_prefixtables", force: true do |t|
+    t.integer  "gateway_id"
+    t.integer  "prefix_table_id"
+    t.float    "price_system"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price_cost"
+  end
+
   create_table "gateways", force: true do |t|
     t.string   "name"
     t.decimal  "price"
@@ -190,6 +199,13 @@ ActiveRecord::Schema.define(version: 20160330192358) do
 
   add_index "observers", ["gsm_number_id"], name: "index_observers_on_gsm_number_id"
 
+  create_table "prefix_tables", force: true do |t|
+    t.string   "country_code"
+    t.string   "country"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "routes", force: true do |t|
     t.decimal  "price"
     t.integer  "user_id"
@@ -197,7 +213,8 @@ ActiveRecord::Schema.define(version: 20160330192358) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.boolean  "system_route", default: false
+    t.boolean  "system_route",  default: false
+    t.float    "price_default"
   end
 
   create_table "routes_users", id: false, force: true do |t|
@@ -215,6 +232,17 @@ ActiveRecord::Schema.define(version: 20160330192358) do
     t.string   "url_callback"
   end
 
+  create_table "table_routes", force: true do |t|
+    t.string   "name_route"
+    t.float    "price_system"
+    t.float    "price_cost"
+    t.string   "country_code"
+    t.string   "country"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "route_id",     default: 1
+  end
+
   create_table "topups", force: true do |t|
     t.string   "number"
     t.integer  "amount"
@@ -224,12 +252,12 @@ ActiveRecord::Schema.define(version: 20160330192358) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "",   null: false
-    t.string   "encrypted_password",     default: "",   null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,    null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -249,10 +277,16 @@ ActiveRecord::Schema.define(version: 20160330192358) do
     t.string   "token_number"
     t.datetime "confirm_token_number"
     t.string   "low_account"
+    t.boolean  "unit_views",             default: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "users_routes", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "route_id"
+  end
 
 end

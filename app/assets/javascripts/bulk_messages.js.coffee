@@ -13,6 +13,6 @@ $(document).on "page:change", ->
     placeholder: $('#list_ids').data('phtext')
   })
 
-  $('#prefix_list').select2({
-    placeholder: $('#prefix_list').data('phtext')
+  $('#name_route').select2({
+    placeholder: $('#name_route').data('phtext')
   })
