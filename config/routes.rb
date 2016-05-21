@@ -3,6 +3,8 @@ require 'api_constraints'
 Rails.application.routes.draw do
 
 
+  resources :table_routes
+
   get "join_send/index"
   post "join_send/create"
   get "join_send/new"

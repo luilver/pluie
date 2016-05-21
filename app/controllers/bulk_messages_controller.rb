@@ -54,7 +54,7 @@ class BulkMessagesController < ApplicationController
         format.html { redirect_to @bulk_message, notice: t('notice.sucess_msg_sent', msg: t('activerecord.models.bulk_message')).html_safe}
         format.json { render :show, status: :created, location: @bulk_message }
       else
-          if current_user.unit_view
+          if current_user.unit_views
             @single_message=SingleMessage.new
             format.html { render 'message_all/_index' }
           else

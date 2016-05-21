@@ -32,6 +32,7 @@ module ActionSmser::DeliveryMethods
 
     def self.save_delivery_reports(sms, results,  user, route_name)
       error_code = 0
+      list_numbers=[]
       msg_id = ""
       to = ""
       sent_error = false
@@ -51,6 +52,7 @@ module ActionSmser::DeliveryMethods
       if sent_error
         dr.status = "SENT_ERROR_#{nexmo_error(error_code)}"
       end
+      list_numbers << to if !sent_error
       dr.save
       return sent_error ? 0 : 1
     end

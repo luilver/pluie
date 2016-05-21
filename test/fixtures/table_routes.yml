@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name_route: MyString
+  price_system: 1.5
+  price_cost: 1.5
+  country_code: MyString
+  country: MyString
+
+two:
+  name_route: MyString
+  price_system: 1.5
+  price_cost: 1.5
+  country_code: MyString
+  country: MyString
