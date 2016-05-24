@@ -49,6 +49,6 @@ class Route < ActiveRecord::Base
           end
         end
      end
-    return ENV['ROUTE_PRICE_DEFAULT']
+    return (ENV['ROUTE_PRICE_DEFAULT']).to_f
   end
 end
