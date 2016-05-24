@@ -15,8 +15,8 @@
     <div class="field">
     <%= f.label :name_route %><br>
     <fieldset>
-    <%= select_tag :name_route,
-                     options_from_collection_for_select(Route.all, "id", "name"),:style=>"width:126px;"
+    <%= select_tag(:name_route,
+                     options_from_collection_for_select(Route.all, "id", "name",@table_route.route.blank? ? Route.first.id : @table_route.route.id),:style=>"width:126px;")
       %>
     </fieldset>
     </div>
