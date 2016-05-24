@@ -49,6 +49,6 @@ class Route < ActiveRecord::Base
           end
         end
      end
-    return price
+    return ENV['ROUTE_PRICE_DEFAULT']
   end
 end
