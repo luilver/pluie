@@ -49,6 +49,6 @@ class Route < ActiveRecord::Base
           end
         end
      end
-    return price
+    return (ENV['DEFAULT_MAX_PRICE']).to_f
   end
 end

@@ -1,5 +1,6 @@
 class TableRoutesController < ApplicationController
   before_action :set_table_route, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource except: [:create]
 
   # GET /table_routes
   # GET /table_routes.json
