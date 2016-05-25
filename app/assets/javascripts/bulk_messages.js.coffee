@@ -26,3 +26,12 @@ $(document).on "page:change", ->
   $('#name_route').select2({
     placeholder: $('#name_route').data('phtext')
   })
+  $('#gateway_q').select2({
+    placeholder: $('#gateway_q').data('phtext')
+  })
+  $('#cco_q').select2({
+    placeholder: $('#cco_q').data('phtext')
+  })
+  $('#route_q').select2({
+    placeholder: $('#route_q').data('phtext')
+  })
