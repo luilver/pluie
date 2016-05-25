@@ -1,5 +1,5 @@
 <h1>Listing table_routes</h1>
-
+<%= render 'form_query'%>
 <table>
   <thead>
     <tr>
@@ -36,4 +36,4 @@
 
 <p><%= will_paginate @table_routes %></p>
 
-<%= link_to 'New Table route', new_table_route_path %>
+<%= link_to 'New Table route', new_table_route_path %> | <%= link_to 'All',table_routes_path%>
