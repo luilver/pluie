@@ -112,6 +112,20 @@ module ActionSmser
                       1.day.ago..Time.current
                     when 'last hour'
                       1.hour.ago..Time.current
+                    when 'today'
+                      Time.current.at_beginning_of_day..Time.current
+                    when 'd_15'
+                      15.days.ago..Time.current
+                    when 'd_60'
+                      60.days.ago..Time.current
+                    when 't_year'
+                      Time.current.at_beginning_of_year..Time.current
+                    when 'd_500'
+                      500.days.ago..Time.current
+                    when 'h_48'
+                      48.hours.ago..Time.current
+                    when 't_week'
+                      Time.current.at_beginning_of_week..Time.current
                     when /^(\d\d)-(\d\d) hours/
                       $1.to_i.hours.ago..$2.to_i.hours.ago
                     else

@@ -17,6 +17,20 @@
       1.day.ago..Time.current
     when 'last hour'
       1.hour.ago..Time.current
+    when 'today'
+      Time.current.at_beginning_of_day..Time.current
+    when 'd_15'
+      15.days.ago..Time.current
+    when 'd_60'
+       60.days.ago..Time.current
+    when 't_year'
+       Time.current.at_beginning_of_year..Time.current
+    when 'd_500'
+      500.days.ago..Time.current
+    when 'h_48'
+      48.hours.ago..Time.current
+    when 't_week'
+       Time.current.at_beginning_of_week..Time.current
     when /^(\d\d)-(\d\d) hours/
       $1.to_i.hours.ago..$2.to_i.hours.ago
     else
@@ -49,7 +63,7 @@
 
 <p class="selection_links">
   <strong><%= t('show_summary').html_safe %>:</strong>
-  <% {t('last_hour').html_safe => 'Last hour', t('last_24h').html_safe => 'Last 24 hours', t('2_days').html_safe =>'48-24 hours', t('3_days').html_safe =>'72-48 hours', t('4_days').html_safe =>'96-72 hours ago', t('last_week').html_safe =>'Last week', t('week_before').html_safe =>'Week before that', t('30_days').html_safe =>'Last 30 days', t('this_month').html_safe =>'This month', t('1_month').html_safe =>'1 month ago', t('2_month').html_safe =>'2 months ago'}.each do |key,value| %>
+  <% {t('last_hour').html_safe => 'Last hour', t('today').html_safe=>'today', t('last_24h').html_safe => 'Last 24 hours', t('last_48_hour').html_safe=> 'h_48',t('2_days').html_safe =>'48-24 hours', t('3_days').html_safe =>'72-48 hours', t('4_days').html_safe =>'96-72 hours ago',t('this_week').html_safe=>'t_week', t('last_week').html_safe =>'Last week', t('week_before').html_safe =>'Week before that', t('last_15_days').html_safe => 'd_15', t('30_days').html_safe =>'Last 30 days', t('this_month').html_safe =>'This month', t('1_month').html_safe =>'1 month ago', t('last_60_days').html_safe=>'d_60', t('2_month').html_safe =>'2 months ago',t('this_year').html_safe=>'t_year',t('last_500').html_safe=>'d_500'}.each do |key,value| %>
     <%= link_to key, dr_summary_url(:time_span => value), :class => (value == params['time_span'] ? 'selected' : 'not_selected') %>
   <% end %>
 </p>

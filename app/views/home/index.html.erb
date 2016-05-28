@@ -10,19 +10,20 @@
 <p>Rails versi&oacute;n: <%= Rails::VERSION::STRING%></p>
 <p>Ruby versi&oacute;n: <%= RUBY_VERSION%></p>
 
-<p>Ultimos env&iacute;os: </p>
+<%hash_count_sms = current_user.query_home%>
+<p><%= link_to t('last_hour').html_safe, dr_summary_url(:time_span => 'Last hour')%>: <%= hash_count_sms[:l_hour]%></p>
 
 <div>
   <p>Estadísticas</p>
   <ul style="list-style-type: none;">
-  <%hash_count_sms = current_user.query_home%>
-  <li>hoy: <%= hash_count_sms[:today]%></li>
-  <li>&uacute;ltimas 48h: <%= hash_count_sms[:h_48]%></li>
-  <li>esta semana: <%= hash_count_sms[:t_week]%></li>
-  <li>&uacute;ltima quincena: <%=  hash_count_sms[:d_15]%></li>
-  <li>este mes: <%= hash_count_sms[:t_month]%></li>
-  <li>&uacute;ltimos 60 días: <%= hash_count_sms[:d_60]%></li>
-  <li>este a&ntilde;o: <%= hash_count_sms[:t_year]%></li>
-  <li>&uacute;ltimos 500 d&iacute;as: <%= hash_count_sms[:d_500]%></li>
+
+  <li><%= link_to t('today').html_safe, dr_summary_url(:time_span => 'today')%>: <%= hash_count_sms[:today]%></li>
+  <li><%= link_to t('last_48_hour').html_safe, dr_summary_url(:time_span => 'h_48')%>: <%= hash_count_sms[:h_48]%></li>
+  <li><%= link_to t('this_week').html_safe, dr_summary_url(:time_span => 't_week')%>: <%= hash_count_sms[:t_week]%></li>
+  <li><%= link_to t('last_15_days').html_safe, dr_summary_url(:time_span => 'd_15')%>: <%=  hash_count_sms[:d_15]%></li>
+  <li><%= link_to t('this_month').html_safe, dr_summary_url(:time_span => 'this month')%>: <%= hash_count_sms[:t_month]%></li>
+  <li><%= link_to t('last_60_days').html_safe, dr_summary_url(:time_span => 'd_60')%>:: <%= hash_count_sms[:d_60]%></li>
+  <li><%= link_to t('this_year').html_safe, dr_summary_url(:time_span => 't_year')%>: <%= hash_count_sms[:t_year]%></li>
+  <li><%= link_to t('last_500').html_safe, dr_summary_url(:time_span => 'd_500')%>: <%= hash_count_sms[:d_500]%></li>
 </ul>
 </div>
