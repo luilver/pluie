@@ -1,4 +1,28 @@
-<h1><%= t('welcome') %></h1>
-<p>
-  <%= t('today_is').html_safe %> <%= I18n.localize(Time.current, :format => :long).html_safe %>h
-</p>
+<!--<h1><%= t('welcome') %></h1>-->
+
+<%= image_tag 'logo_knal.png',:width => '206px;',:height => '90px;'%>
+
+
+<p>Pluie Versi&oacute;n: <%= ENV['PLUIE_VERSION'] %> </p>
+<p>System time: <%= I18n.localize(Time.current, :format => :long).html_safe %></p>
+<p>Location:</p>
+
+<p>Rails versi&oacute;n: <%= Rails::VERSION::STRING%></p>
+<p>Ruby versi&oacute;n: <%= RUBY_VERSION%></p>
+
+<p>Ultimos env&iacute;os: </p>
+
+<div>
+  <p>Estadísticas</p>
+  <ul style="list-style-type: none;">
+  <%hash_count_sms = current_user.query_home%>
+  <li>hoy: <%= hash_count_sms[:today]%></li>
+  <li>&uacute;ltimas 48h: <%= hash_count_sms[:h_48]%></li>
+  <li>esta semana: <%= hash_count_sms[:t_week]%></li>
+  <li>&uacute;ltima quincena: <%=  hash_count_sms[:d_15]%></li>
+  <li>este mes: <%= hash_count_sms[:t_month]%></li>
+  <li>&uacute;ltimos 60 días: <%= hash_count_sms[:d_60]%></li>
+  <li>este a&ntilde;o: <%= hash_count_sms[:t_year]%></li>
+  <li>&uacute;ltimos 500 d&iacute;as: <%= hash_count_sms[:d_500]%></li>
+</ul>
+</div>
