@@ -1,0 +1,42 @@
+<%= form_for(@table_route) do |f| %>
+  <% if @table_route.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@table_route.errors.count, "error") %> prohibited this table_route from being saved:</h2>
+
+      <ul>
+      <% @table_route.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+    <div class="field">
+    <%= f.label :name_route %><br>
+    <fieldset>
+    <%= select_tag(:name_route,
+                     options_from_collection_for_select(Route.all, "id", "name",@table_route.route.blank? ? Route.first.id : @table_route.route.id),:style=>"width:126px;")
+      %>
+    </fieldset>
+    </div>
+  <div class="field">
+    <%= f.label :price_system %><br>
+    <%= f.text_field :price_system %>
+  </div>
+  <div class="field">
+    <%= f.label :price_cost %><br>
+    <%= f.text_field :price_cost %>
+  </div>
+  <div class="field">
+    <%= f.label :country_code %><br>
+    <%= f.text_field :country_code %>
+  </div>
+  <div class="field">
+    <%= f.label :country %><br>
+    <%= f.text_field :country %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

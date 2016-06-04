@@ -1,0 +1,39 @@
+<h1>Listing table_routes</h1>
+<%= render 'form_query'%>
+<table>
+  <thead>
+    <tr>
+      <th>Name route</th>
+      <th>Price system</th>
+      <th>Price cost</th>
+      <th>Country code</th>
+      <th>Country</th>
+      <th>Gateway</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @table_routes.each do |table_route| %>
+      <tr>
+        <td><%= table_route.name_route %></td>
+        <td><%= table_route.price_system %></td>
+        <td><%= table_route.price_cost %></td>
+        <td><%= table_route.country_code %></td>
+        <td><%= table_route.country %></td>
+        <td><%= table_route.route.gateway.name%></td>
+        <td><%= link_to 'Show', table_route %></td>
+        <td><%= link_to 'Edit', edit_table_route_path(table_route) %></td>
+        <td><%= link_to 'Destroy', table_route, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<p><%= will_paginate @table_routes %></p>
+
+<%= link_to 'New Table route', new_table_route_path %> | <%= link_to 'All',table_routes_path%>

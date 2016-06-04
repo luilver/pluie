@@ -1,0 +1,22 @@
+<div class="field">
+  <label>Prefix</label>
+</div>
+<fieldset>
+  <%= select_tag :prefix_list,
+                 options_from_collection_for_select(PrefixTable.all, "id", "country_code",params[:id_prefix]),:style=>"width:126px;"
+  %>
+</fieldset>
+
+<div class="field">
+  <label>Adicionar o modificar country code</label>
+  <%= check_box_tag :ccode, params[:ccode] %>
+</div>
+<div class="field">
+  <label>Price system</label> <br/>
+  <%= text_field_tag :price_prefix, params[:price_prefix],:value=>params[:price_sys]%>
+</div>
+
+<div class="field">
+  <label>Price cost</label><br/>
+  <%= text_field_tag :price_cost, params[:price_cost],:value=>params[:price_cost]%>
+</div>

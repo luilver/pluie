@@ -1,0 +1,68 @@
+<%= form_tag join_send_create_path, :method => 'post' do %>
+    <% if @errors.any? %>
+        <div id="error_explanation">
+          <h2>Errores</h2>
+          <p><%= t('errors.template.body') %></p>
+
+          <ul>
+            <% @errors.each do |msg| %>
+                <li><%= msg[:name] %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+
+    <div class="field">
+      <%= label :remitente, t('from_number',:num=>5)%><br>
+      <%= text_field_tag :remitente,params[:remitente]%>
+    </div>
+
+
+
+    <div class="field">
+      <%= label :number, SingleMessage.human_attribute_name("number")%><br>
+      <%= text_field_tag :number,params[:number]%>
+    </div>
+
+    <fieldset>
+      <legend><%= t(:lists)%></legend>
+      <%= select_tag :list_ids,
+                     options_from_collection_for_select(current_user.lists, "id", "name", @list_ids ),
+                     {:multiple => true, :class => "bulk_lists", "data-phtext" => I18n.t(:select_lists).html_safe}
+      %>
+    </fieldset>
+    <fieldset>
+      <legend><%= t(:message).capitalize %></legend>
+      <div class="message_text">
+        <div class="field">
+          <%= text_area_tag :message_join, params[:message_join]%>
+        </div>
+
+        <div id="sms_info">
+          <div id="size_info">
+            <%= t(:sms_size).html_safe %>: <span id="sms_size"> </span>
+          </div>
+          <br>
+          <div id="parts_info">
+            <%= t(:sms_parts).html_safe %>: <span id="sms_parts"></span>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend><%= t(:sending_options).capitalize.html_safe%></legend>
+      <div class="field">
+        <%= label :route, t("activerecord.models.route") %>:
+        <%= select_tag :route_id,
+                       options_from_collection_for_select(current_user.routes, "id", "name"),:class=>  "message_route_select"
+        %>
+      </div>
+      <br/>
+      </fieldset>
+
+    <div class="actions">
+      <%= submit_tag  t(:send).capitalize %>
+    </div>
+<%end%>

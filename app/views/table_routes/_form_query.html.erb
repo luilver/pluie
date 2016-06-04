@@ -1,0 +1,15 @@
+<%= form_tag table_routes_path,:method => :get do%>
+   <%= select_tag :gateway_q, options_from_collection_for_select(Gateway.all,"id","name",params[:gateway_q]),:style=>"width:140px;margin-right:10px;"%>
+    <%= check_box_tag :gt_q,params[:gt_q],params[:gt_q]%>
+
+    <%= select_tag :route_q, options_from_collection_for_select(Route.all,"name","name",params[:route_q]),:style=>"width:140px;margin-right:10px;"%>
+    <%= check_box_tag :rt_q,params[:rt_q],params[:rt_q]%>
+
+    <%= select_tag :cco_q, options_from_collection_for_select(TableRoute.select(:country_code).distinct,"country_code","country_code",params[:cco_q]),:style=>"width:140px;margin-right:10px;"%>
+    <%= check_box_tag :cc_q,params[:cc_q],params[:cc_q]%>
+    <br/>
+    <br/>
+   <%= submit_tag :search %>
+<%end%>
+<br/>
+<br/>

@@ -22,6 +22,8 @@ FORTYTWO_PASS = ENV['FORTYTWO_PASS']
 TWILIO_KEY = ENV['TWILIO_KEY']
 TWILIO_TOKEN = ENV['TWILIO_TOKEN']
 
+TM4B_KEY = ENV['TM4B_KEY']
+TM4B_PASS = ENV['TM4B_PASS']
 
 PLUIE_HOST = Pluie::Application.config.default_url_options[:host]
 
@@ -70,5 +72,8 @@ if Rails.env.development? || Rails.env.staging? || Rails.env.production?
 
   ActionSmser.delivery_options[:gateway_commit]['fortytwo'] = ActionSmser::DeliveryMethods::AsyncFortytwo
   ActionSmser.delivery_options[:fortytwo] = { username: FORTYTWO_KEY, password: FORTYTWO_PASS, numbers_in_request: 5, parallel_requests: 5 }
+
+  ActionSmser.delivery_options[:gateway_commit]['tm4b'] = ActionSmser::DeliveryMethods::AsyncTm4b
+  ActionSmser.delivery_options[:tm4b] = { username: TM4B_KEY, password: TM4B_PASS, numbers_in_request: 5, parallel_requests: 5 }
 
 end

@@ -1,0 +1,14 @@
+<p>
+  <strong><%= PrefixTable.human_attribute_name("country") %>:</strong>
+  <%= @prefix_t.country %>
+</p>
+
+<p>
+  <strong><%= PrefixTable.human_attribute_name("country_code").html_safe %>:</strong>
+  <%= @prefix_t.country_code %>
+</p>
+
+
+
+<%= link_to t('edit'), edit_prefix_path(:id=>@prefix_t.id) %> |
+<%= link_to t('back').html_safe, prefix_index_path %>

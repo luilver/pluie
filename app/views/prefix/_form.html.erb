@@ -1,0 +1,28 @@
+<%= form_tag :controller=>:prefix, :action => :create, :method => :post do %>
+    <% if @prefix_t.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= raw t('errors.template.header', count: @prefix_t.errors.count, model: t('activerecord.models.credit')) %>
+          </h2>
+          <p><%= t('errors.template.body') %></p>
+
+          <ul>
+            <% @prefix_t.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= label_tag :Prefix%><br/>
+      <%= text_field_tag :prefix, params[:prefix]%>
+    </div>
+    <div class="field">
+      <%= label_tag :Country %><br/>
+      <%= text_field_tag :country, params[:country]%>
+    </div>
+    <%= submit_tag :create%>
+<%end%>
+
+

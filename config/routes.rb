@@ -2,6 +2,13 @@ require 'api_constraints'
 
 Rails.application.routes.draw do
 
+
+  resources :table_routes
+
+  get "join_send/index"
+  post "join_send/create"
+  get "join_send/new"
+  get "join_send/show"
   namespace :api, :defaults => {:format => 'json'} do
     scope :module => :v1, :constraints => ApiConstraints.new(:version => 1, :default => true) do
       get 'user/balance' => 'users#balance'
@@ -47,7 +54,6 @@ Rails.application.routes.draw do
   post 'delivery_reports/gateway_commit/:gateway' => 'action_smser/delivery_reports#gateway_commit'
 
   get 'api/doc' => 'docs#api'
-  get '/tos' => 'pubs#tos'
   get '/about' => 'pubs#about'
   get '/contact' => 'pubs#contact'
   resources :users, path: '/admin'
@@ -98,7 +104,12 @@ Rails.application.routes.draw do
   get "confirmation_number/reconfirmed" => "confirmation_number#reconfirmed"
   get "confirmation_number/delete_warning" => "confirmation_number#delete_warning"
 
-  #
+  # get 'prefix/new' => 'prefix#new'
+  # post "prefix" => "prefix#create"
+  # get 'prefix/:id' => 'prefix#show'
+  # get 'prefixes' => 'prefix#index'
+  resources :prefix
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

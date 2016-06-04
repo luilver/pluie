@@ -4,7 +4,17 @@
 
 $(document).on "page:change", ->
   $('#bulk_message_message').on('input propertychange', ->
-    message = new SmsTools.Message(this.value+'    ')
+
+    enteredText = this.value
+    numberOfLineBreaks = (enteredText.match(/\n/g)||[]).length;
+    #characterCount = enteredText.length + numberOfLineBreaks;
+    k='';
+    i=0
+    while i < numberOfLineBreaks
+       i=i+1
+       k=k+' '
+
+    message = new SmsTools.Message(this.value+'    '+k)
 
     $('#sms_size').text(message.length)
     $('#sms_parts').text(message.concatenatedPartsCount)
@@ -13,3 +23,15 @@ $(document).on "page:change", ->
     placeholder: $('#list_ids').data('phtext')
   })
 
+  $('#name_route').select2({
+    placeholder: $('#name_route').data('phtext')
+  })
+  $('#gateway_q').select2({
+    placeholder: $('#gateway_q').data('phtext')
+  })
+  $('#cco_q').select2({
+    placeholder: $('#cco_q').data('phtext')
+  })
+  $('#route_q').select2({
+    placeholder: $('#route_q').data('phtext')
+  })

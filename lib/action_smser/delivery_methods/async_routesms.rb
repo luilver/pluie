@@ -32,6 +32,7 @@ module ActionSmser::DeliveryMethods
 
     def self.save_delivery_reports(sms, results, user, route_name)
       count = 0
+      list_numbers=[]
       results.each do |res|
         error_code = res[:status]
         number = res[:dest]
@@ -39,6 +40,7 @@ module ActionSmser::DeliveryMethods
         dr = ActionSmser::DeliveryReport.build_with_user(sms, number, msg_id, user, route_name)
         if error_code == GatewayErrorInfo::RoutesmsErrors::SUCCESS_CODE
           count += 1
+          list_numbers << number
         else
           dr.status= "SENT_ERROR_#{self.routesms_error(error_code)}"
           dr.log += "batch aborted" if msg_id == nil
@@ -46,7 +48,7 @@ module ActionSmser::DeliveryMethods
         dr.save
         sms.delivery_reports.push(dr)
       end
-      count
+      return count,list_numbers
     end
 
     def self.process_delivery_report(params)

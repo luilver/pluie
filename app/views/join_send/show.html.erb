@@ -1,0 +1,34 @@
+<p id="notice"><%= t('notice.sucess_msg_sent',:msg=>t('message')) if !@params_send[:message].blank?%></p>
+
+<p>
+  <strong><%= SingleMessage.human_attribute_name("message")%>:</strong>
+  <%= @params_send[:message] %>
+</p>
+
+<%if !@params_send[:lists].blank?%>
+<p>
+  <strong><%= BulkMessage.human_attribute_name("lists")%>:</strong>
+  <%= @params_send[:lists].count if !@params_send[:lists].blank? %>
+</p>
+
+
+<p>
+  <strong><%=t(:recipient).pluralize.capitalize%>:</strong>
+  <% set=Set.new %>
+  <%= List.find(@params_send[:lists]).each {|l| set.merge(l.receivers)}.to_a.count%>
+</p>
+<%end%>
+<p>
+  <strong><%= SingleMessage.human_attribute_name("number").pluralize %>:</strong>
+  <%= @params_send[:numbers] %>
+</p>
+
+
+<p>
+  <strong><%= label_tag Route.model_name.human %>:</strong>
+  <%= @params_send[:route] %>
+</p>
+
+
+<%= link_to t(:new), join_send_new_path %>
+

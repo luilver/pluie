@@ -42,9 +42,17 @@ class GatewaysController < ApplicationController
   # PATCH/PUT /gateways/1.json
   def update
     respond_to do |format|
+      value_b=true
       if @gateway.update(gateway_params)
+        value_b,price_low_cost= @gateway.assign_ps(params) if params[:ccode].present?
+
+        if value_b
         format.html { redirect_to @gateway, notice: t('notice.item_updated', item: t('activerecord.models.gateway')).html_safe }
         format.json { render :show, status: :ok, location: @gateway }
+        else
+          @gateway.errors.add(:error, "precio del sistema debe ser mayor que #{price_low_cost}")
+          format.html {render :edit}
+        end
       else
         format.html { render :edit }
         format.json { render json: @gateway.errors, status: :unprocessable_entity }
