@@ -37,7 +37,7 @@
     <fieldset>
       <legend><%= t('gateway') %></legend>
       <%= f.select :gateway_id,
-                   options_from_collection_for_select(Gateway.all, "id", "name"),
+                   options_from_collection_for_select(Gateway.all, "id", "name",@route.gateway.blank? ? Gateway.first.id : @route.gateway.id),
                    {},
                    :class => "route_gateway_select"
       %>
