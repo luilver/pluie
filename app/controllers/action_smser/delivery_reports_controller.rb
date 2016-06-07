@@ -3,12 +3,25 @@ require 'application_helper'
 module ActionSmser
   include ApplicationHelper
   class DeliveryReportsController < Pluie::ApplicationController
+    before_filter do
+      if !current_user.nil? and  controller_name!=HomeController.name.demodulize.sub(/Controller$/, '').underscore
+        if current_user.role?('mask_user')
+          User.all.each do |u|
+            if u.nested_reseller.to_i==current_user.id
+              @current_user=u
+              break
+            end
+          end
+        end
+      end
+    end
     before_filter :admin_access_only, :except => :gateway_commit
     before_action :set_delivery_report, only: [:show]
     protect_from_forgery :except => :gateway_commit
     skip_before_filter :authenticate_user!, only: [:gateway_commit]
     helper_method :items_within_page
     helper_method :selected_user
+
 
     def gateway_commit
 
