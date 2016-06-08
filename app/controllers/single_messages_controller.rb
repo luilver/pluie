@@ -17,6 +17,10 @@ class SingleMessagesController < ApplicationController
 
   # GET /single_messages/new
   def new
+    #@user = User.find(10) # Find the user depending on the params
+    #@current_user=@user
+    #User.current=@current_user
+#   do work
     @single_message = SingleMessage.new
   end
 
@@ -27,6 +31,7 @@ class SingleMessagesController < ApplicationController
   # POST /single_messages
   # POST /single_messages.json
   def create
+    #User.current=User.find(10)
     @single_message = SingleMessage.new(single_message_params)
     @single_message.user = current_user
 

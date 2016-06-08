@@ -9,6 +9,19 @@ class ApplicationController < ActionController::Base
     params[resource] &&= send(method) if respond_to?(method, true)
   end
 
+  before_filter do
+    if !current_user.nil? and  controller_name!=HomeController.name.demodulize.sub(/Controller$/, '').underscore and !(params[:controller]=="registrations")
+      if current_user.role?('mask_user')
+        User.all.each do |u|
+          if u.nested_reseller.to_i==current_user.id
+            @current_user=u
+            break
+          end
+        end
+      end
+    end
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, :alert => I18n.t('cancan.access_denied').html_safe
   end

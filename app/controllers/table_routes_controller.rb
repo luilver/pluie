@@ -5,13 +5,9 @@ class TableRoutesController < ApplicationController
   # GET /table_routes
   # GET /table_routes.json
   def index
-    @table_routes = TableRoute.order(:created_at =>:desc).paginate(:page=>params[:page],:per_page=>5)
-
-
-    @debits = (current_user.admin ? Debit.order(created_at: :desc)
-    : Debit.latest_from_user(current_user)).paginate(page: params[:page], per_page: 5)
+    #@table_routes = TableRoute.order(:created_at =>:desc).paginate(:page=>params[:page],:per_page=>5)
+     @table_routes=TableRoute.search(params[:page],params[:gt_q],params[:gateway_q],params[:rt_q],params[:cc_q],params[:route_q],params[:cco_q])
   end
-
   # GET /table_routes/1
   # GET /table_routes/1.json
   def show

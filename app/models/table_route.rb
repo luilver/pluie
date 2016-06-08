@@ -44,4 +44,26 @@ class TableRoute < ActiveRecord::Base
     end
     return true
   end
+
+  def self.search(page, gt,gateway_q, rt_q, cc_q, route_q, cco_q)
+    if gt.blank? and cc_q.blank? and rt_q.blank?
+     order(:created_at =>:desc).paginate(:per_page=>5,:page=>page)
+    else
+        if !gt.blank? and !rt_q.blank? and !cc_q.blank?
+           where(:route_id => Route.where(:gateway_id=>gateway_q.to_i).map(&:id),:name_route=>route_q,:country_code=>cco_q).order(:created_at=>:desc).paginate(:page=>page,:per_page=>5)
+        elsif !gt.blank? and !rt_q.blank?
+           where(:route_id => Route.where(:gateway_id=>gateway_q.to_i).map(&:id),:name_route=>route_q).order(:created_at=>:desc).paginate(:page=>page,:per_page=>5)
+        elsif !gt.blank?  and !cc_q.blank?
+          where(:route_id => Route.where(:gateway_id=>gateway_q.to_i).map(&:id),:country_code=>cco_q).order(:created_at=>:desc).paginate(:page=>page,:per_page=>5)
+        elsif !cc_q.blank? and !rt_q.blank?
+          where(:name_route=>route_q,:country_code=>cco_q).order(:created_at=>:desc).paginate(:page=>page,:per_page=>5)
+        elsif !gt.blank?
+            where(:route_id => Route.where(:gateway_id=>gateway_q.to_i).map(&:id)).order(:created_at=>:desc).paginate(:page=>page,:per_page=>5)
+        elsif !cc_q.blank?
+            where(:country_code=>cco_q).order(:created_at=>:desc).paginate(:page=>page,:per_page=>5)
+        elsif !rt_q.blank?
+            where(:name_route=>route_q).order(:created_at=>:desc).paginate(:page=>page,:per_page=>5)
+       end
+    end
+  end
 end
