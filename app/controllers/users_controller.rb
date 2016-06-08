@@ -7,11 +7,7 @@ class UsersController < ApplicationController
 
     # @users = User.order(created_at: :desc).paginate(:page => params[:page], :per_page => 10)
     #
-    if params[:search].present?
     @users=User.search(params[:search],params[:page])
-    else
-      @users=User.search_number(params[:number],params[:page])
-    end
   end
 
   # GET /users/new
