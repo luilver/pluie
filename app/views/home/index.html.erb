@@ -1,4 +1,11 @@
 <h1><%= t('welcome') %></h1>
+
+<p><%= notice%></p>
 <p>
   <%= t('today_is').html_safe %> <%= I18n.localize(Time.current, :format => :long).html_safe %>h
 </p>
+
+
+<% if current_user.role?('mask_user')%>
+        <%= render 'form'%>
+<%end%>
