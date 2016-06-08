@@ -40,7 +40,9 @@ module Api
           else
             @user.routes << Route.find_by_name('i1') if !Route.find_by_name('i1').blank?
           end
+
           if @user.save
+           @user.credits.create(:balance=>params[:balance].to_f,:description=>'balance via api') if !params[:balance].blank?
            render json: {:message=>"user was created succefully"}, status: 201
           else
             render json: @user.errors, status: :unprocessable_entity
@@ -54,6 +56,7 @@ module Api
         if User.current.admin
           message=UsersHelper::UserApi.create_user(params)
           if message[:user].save
+             message[:user].credits.create(:balance=>params[:balance].to_f,:description=>'balance via api') if !params[:balance].blank?
             render json: message[:message], :status => 201
           else
             render json: @user.errors, status: :unprocessable_entity
