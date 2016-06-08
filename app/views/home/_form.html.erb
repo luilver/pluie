@@ -1,0 +1,15 @@
+<hr/>
+<fieldset>
+  <legend>Convertirse en otro usuario</legend>
+<%= form_tag :controller => :home, :action=> :mask_user, :method => :post do %>
+      <%= select_tag :mask_user_id,
+                   options_from_collection_for_select(User.where(:admin=>[nil,false]), "id", "email"), :style=>"width:226px;"
+      %>
+    <br/>
+    <br/>
+    <%= submit_tag :convert_to_user%>
+<%end%>
+  </fieldset>
+<br/>
+<%= link_to 'mask_out', home_mask_out_path%>
+<br/>

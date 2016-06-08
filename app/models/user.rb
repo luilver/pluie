@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :bills
   has_many :topups
   has_many :delivery_reports, class_name: "ActionSmser::DeliveryReport"
+  has_and_belongs_to_many :roles, ->{distinct}
 
   def api_key
     self.api_setting.api_key if self.api_setting
@@ -76,4 +77,8 @@ class User < ActiveRecord::Base
   # def self.search_number(search, page)
   #   paginate :per_page => 10,:page=>page,:conditions=>['movil_number like ?', "%#{search}%"],:order=> {:created_at=>:desc}
   # end
+
+  def role?(role_name) #mask_user
+    return self.roles.map(&:name).include?(role_name)
+  end
 end

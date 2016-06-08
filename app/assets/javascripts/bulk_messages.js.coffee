@@ -35,3 +35,6 @@ $(document).on "page:change", ->
   $('#route_q').select2({
     placeholder: $('#route_q').data('phtext')
   })
+  $('#mask_user_id').select2({
+    placeholder: $('#mask_user_id').data('phtext')
+  })
