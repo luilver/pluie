@@ -131,7 +131,12 @@ module ActionSmser
                     else
                       1.week.ago..Time.current
                   end
-      @delivery_report_xls= ActionSmser::DeliveryReport.where(:user_id => current_user.id).where(:created_at => time_span)
+      @delivery_report_xls=[]
+      if current_user.admin
+        @delivery_report_xls =ActionSmser::DeliveryReport.where(:created_at=>time_span)
+      else
+        @delivery_report_xls=ActionSmser::DeliveryReport.where(:user_id => current_user.id).where(:created_at => time_span)
+      end
       respond_to do |format|
          format.html
          format.csv {send_data ActionSmser::DeliveryReport.to_csv(@delivery_report_xls)}

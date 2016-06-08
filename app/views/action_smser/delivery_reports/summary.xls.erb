@@ -16,6 +16,7 @@ xmlns:html="http://www.w3.org/TR/REC-html">
                           <Cell><Data ss:Type="String"><%= t('status_updated_at')%></Data></Cell>
                           <Cell><Data ss:Type="String"><%= t('recipient')%></Data></Cell>
                           <Cell><Data ss:Type="String"><%= t('sms_type')%></Data></Cell>
+                          <Cell><Data ss:Type="String"><%= t('user')%></Data></Cell>
                         </Row>
                          <%@delivery_report_xls.each do |dr|%>
                            <Row>
@@ -28,6 +29,7 @@ xmlns:html="http://www.w3.org/TR/REC-html">
                              <Cell><Data ss:Type="String"><%= I18n.localize(dr.status_updated_at, :format => :date_time).html_safe %> </Data></Cell>
                              <Cell><Data ss:Type="String"><%= dr.to%> </Data></Cell>
                              <Cell><Data ss:Type="String"><%= I18n.translate("activerecord.models.#{dr.sms_type.tableize.singularize+'_xls'}") if dr.sms_type!="No Pluie"%><%= "No Pluie" if dr.sms_type=="No Pluie"%> </Data></Cell>
+                             <Cell><Data ss:Type="String"><%= User.find(dr.user_id.to_i).email%> </Data></Cell>
                            </Row>
                          <%end%>
                 </Table>
