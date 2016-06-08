@@ -66,10 +66,14 @@ class User < ActiveRecord::Base
   def debt?; balance < 0 end
 
   def self.search(search, page)
-    paginate :per_page => 10,:page=>page,:conditions=>['email like ?', "%#{search}%"],:order=> {:created_at=>:desc}
+    if !(search !~ /\D/)
+      paginate :per_page => 10,:page=>page,:conditions=>['email like ?', "%#{search}%"],:order=> {:created_at=>:desc}
+    else
+      paginate :per_page => 10,:page=>page,:conditions=>['movil_number like ?', "%#{search}%"],:order=> {:created_at=>:desc}
+    end
   end
 
-  def self.search_number(search, page)
-    paginate :per_page => 10,:page=>page,:conditions=>['movil_number like ?', "%#{search}%"],:order=> {:created_at=>:desc}
-  end
+  # def self.search_number(search, page)
+  #   paginate :per_page => 10,:page=>page,:conditions=>['movil_number like ?', "%#{search}%"],:order=> {:created_at=>:desc}
+  # end
 end

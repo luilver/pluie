@@ -5,10 +5,6 @@
       <%= submit_tag t('search').to_sym,:name=>nil%>
 <%end%>
 <br/>
-<%= form_tag @users_path, :method => 'get' do %>
-    <%= text_field_tag :number,params[:number],:placeholder=>t('phone')%>
-    <%= submit_tag t('search').to_sym,:name=>nil%>
-<%end%>
 
 <br/>
 <table style="border-top: 1px solid black;">
