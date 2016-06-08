@@ -47,6 +47,11 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        if !params[:mask_user].blank?
+          if params[:mask_user][:mask_user]=="1"
+            @user.roles << Role.find_by_name("mask_user")
+          end
+        end
         ApplicationHelper::ManageSM.new.notified_account_created(@user)
         format.html { redirect_to @user, notice: t('notice.item_created', item: t('activerecord.models.user')).html_safe }
         format.json { render :show, status: :created, location: @user }
@@ -69,6 +74,13 @@ class UsersController < ApplicationController
         @user.api_setting=ApiSetting.create
       else
         @user.api_setting.reset_authentication_token!
+      end
+    end
+    if !params[:mask_user].blank?
+      if params[:mask_user][:mask_user]=="1"
+        @user.roles << Role.find_by_name("mask_user") if @user.roles.where(:name=>'mask_user').blank?
+      else
+        @user.roles.destroy(Role.where(:name=>'mask_user').first.id) if @user.roles.where(:name=>'mask_user').any?
       end
     end
     if params[:user][:password].blank?
