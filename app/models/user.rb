@@ -67,9 +67,16 @@ class User < ActiveRecord::Base
   def debt?; balance < 0 end
 
   def self.search(search, page)
-    paginate :per_page => 10,:page=>page,:conditions=>['email like ?', "%#{search}%"],:order=> {:created_at=>:desc}
+    if !(search !~ /\D/)
+      paginate :per_page => 10,:page=>page,:conditions=>['email like ?', "%#{search}%"],:order=> {:created_at=>:desc}
+    else
+      paginate :per_page => 10,:page=>page,:conditions=>['movil_number like ?', "%#{search}%"],:order=> {:created_at=>:desc}
+    end
   end
 
+  # def self.search_number(search, page)
+  #   paginate :per_page => 10,:page=>page,:conditions=>['movil_number like ?', "%#{search}%"],:order=> {:created_at=>:desc}
+  # end
 
   def query_home
     return {:today=>count_message('today'),:h_48=>count_message('48_last_hour'),:t_week=>count_message('week'),:d_15=>count_message('15_last_days'),:t_month=>count_message('this_month'),:d_60=>count_message('60_last_days'),:t_year=>count_message('this_year'),:d_500=>count_message('500_last_day'),:l_hour=>count_message('last_hour')}
