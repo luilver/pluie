@@ -16,6 +16,7 @@ module Api
        end
 
        if resource.save
+        resource.credits.create(:balance=>params[:balance].to_f,:description=>'balance via api') if !params[:balance].blank?
         render json: {:register => 'ok register succefully'}, status: 201, success: true
        else
          respond_with resource
