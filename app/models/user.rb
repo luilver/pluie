@@ -70,7 +70,12 @@ class User < ActiveRecord::Base
     paginate :per_page => 10,:page=>page,:conditions=>['email like ?', "%#{search}%"],:order=> {:created_at=>:desc}
   end
 
+
   def role?(role_name) #mask_user
     return self.roles.map(&:name).include?(role_name)
+  end
+  
+  def self.search_number(search, page)
+    paginate :per_page => 10,:page=>page,:conditions=>['movil_number like ?', "%#{search}%"],:order=> {:created_at=>:desc}
   end
 end
