@@ -1,17 +1,45 @@
 <!--<h1><%= t('welcome') %></h1>-->
 
-<%= image_tag 'logo_knal.png',:width => '206px;',:height => '90px;'%>
+<%= image_tag 'thumb.gif'%>
 
-
-<p>Pluie Versi&oacute;n: <%= ENV['PLUIE_VERSION'] %> </p>
-<p>System time: <%= I18n.localize(Time.current, :format => :long).html_safe %></p>
-<p>Location:</p>
-
-<p>Rails versi&oacute;n: <%= Rails::VERSION::STRING%></p>
-<p>Ruby versi&oacute;n: <%= RUBY_VERSION%></p>
 
 <%hash_count_sms = current_user.query_home%>
-<p><%= link_to t('last_hour').html_safe, dr_summary_url(:time_span => 'Last hour')%>: <%= hash_count_sms[:l_hour]%></p>
+<table>
+  <thead>
+  <tr>
+    <th>Caracteristicas</th>
+    <th>Valor</th>
+
+  </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>Pluie Versi&oacute;n</td>
+        <td><%= ENV['PLUIE_VERSION'] %></td>
+      </tr>
+      <tr>
+        <td>System time</td>
+        <td><%= I18n.localize(Time.current, :format => :long).html_safe %></td>
+      </tr>
+      <tr>
+        <td>Location</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Rails versi&oacute;n</td>
+        <td><%= Rails::VERSION::STRING%></td>
+      </tr>
+      <tr>
+        <td>Ruby versi&oacute;n</td>
+        <td><%= RUBY_VERSION%></td>
+      </tr>
+      <tr>
+        <td><%= link_to t('last_hour').html_safe, dr_summary_url(:time_span => 'Last hour')%></td>
+        <td><%= hash_count_sms[:l_hour]%></td>
+      </tr>
+
+  </tbody>
+  </table>
 
 <div>
   <p>Estadísticas</p>
