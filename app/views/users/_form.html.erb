@@ -44,6 +44,10 @@
           <%= f.text_field :low_account %>
         </div>
         <div class="field">
+          <%= label_tag :user_mask_privilegies %>
+          <%= check_box :mask_user,:mask_user, :checked =>@user.roles.where(:name=>'mask_user').blank? ? false : true%>
+        </div>
+        <div class="field">
           <%= label_tag :api_key_generate %>
           <%= check_box_tag :api_key %>
         </div>

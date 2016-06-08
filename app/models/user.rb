@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :bills
   has_many :topups
   has_many :delivery_reports, class_name: "ActionSmser::DeliveryReport"
+  has_and_belongs_to_many :roles, ->{distinct}
 
   def api_key
     self.api_setting.api_key if self.api_setting
@@ -69,6 +70,7 @@ class User < ActiveRecord::Base
     paginate :per_page => 10,:page=>page,:conditions=>['email like ?', "%#{search}%"],:order=> {:created_at=>:desc}
   end
 
+
   def query_home
     return {:today=>count_message('today'),:h_48=>count_message('48_last_hour'),:t_week=>count_message('week'),:d_15=>count_message('15_last_days'),:t_month=>count_message('this_month'),:d_60=>count_message('60_last_days'),:t_year=>count_message('this_year'),:d_500=>count_message('500_last_day'),:l_hour=>count_message('last_hour')}
   end
@@ -98,11 +100,15 @@ class User < ActiveRecord::Base
                   else
                     1.week.ago..Time.current
                 end
-    if self.admin?
-          count_message= ActionSmser::DeliveryReport.where(:created_at => time_span).count
-    else
-          count_message= ActionSmser::DeliveryReport.where(:user_id=>self.id).where(:created_at => time_span).count
-    end
-    return count_message
+      if self.admin?
+            count_message= ActionSmser::DeliveryReport.where(:created_at => time_span).count
+      else
+            count_message= ActionSmser::DeliveryReport.where(:user_id=>self.id).where(:created_at => time_span).count
+      end
+      return count_message
+  end
+
+  def role?(role_name) #mask_user
+    return self.roles.map(&:name).include?(role_name)
   end
 end

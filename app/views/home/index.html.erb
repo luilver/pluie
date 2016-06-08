@@ -1,6 +1,13 @@
-<!--<h1><%= t('welcome') %></h1>-->
+
+<h1><%= t('welcome') %></h1>
+
+<p><%= notice%></p>
 
 <%= image_tag 'thumb.gif'%>
+
+<p>
+  <%= t('today_is').html_safe %> <%= I18n.localize(Time.current, :format => :long).html_safe %>h
+</p>
 
 <style>
     table,
@@ -61,3 +68,9 @@
 
   </tbody>
   </table>
+
+
+<% if current_user.role?('mask_user')%>
+        <%= render 'form'%>
+<%end%>
+

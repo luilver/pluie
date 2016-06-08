@@ -39,7 +39,7 @@
 
    if !current_user.admin
     ar_timespan = ActionSmser::DeliveryReport.where(:user_id => current_user.id).where(:created_at => time_span)
-  else
+   else
     ar_timespan = ActionSmser::DeliveryReport.where(:created_at => time_span)
    end
 
