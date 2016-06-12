@@ -11,7 +11,8 @@ module ActionSmser::DeliveryMethods
           :From => '+18444325936',
           :Body => sms.body,
           :To=> '+'+sms.to.first,
-          :StatusCallback => 'http://162.243.240.188/delivery_reports/gateway_commit/twilio'
+          :StatusCallback => 'http://sms.knal.es/delivery_reports/gateway_commit/twilio'
+          #:StatusCallback => 'http://162.243.240.188/delivery_reports/gateway_commit/twilio'
       }
       msg
     end
