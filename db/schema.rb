@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520080238) do
+ActiveRecord::Schema.define(version: 20160618182944) do
 
   create_table "action_smser_delivery_reports", force: true do |t|
     t.string   "msg_id"
@@ -49,8 +49,9 @@ ActiveRecord::Schema.define(version: 20160520080238) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "finished_sms",     default: 0
-    t.integer  "accepted_numbers", default: 0
+    t.integer  "finished_sms",           default: 0
+    t.integer  "accepted_numbers",       default: 0
+    t.float    "price_numbers_accepted", default: 0.0
   end
 
   add_index "bills", ["message_id"], name: "index_bills_on_message_id"
@@ -199,11 +200,33 @@ ActiveRecord::Schema.define(version: 20160520080238) do
 
   add_index "observers", ["gsm_number_id"], name: "index_observers_on_gsm_number_id"
 
+  create_table "permission_ressls", force: true do |t|
+    t.string   "name_class"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "permission_ressls_users", id: false, force: true do |t|
+    t.integer "permission_ressl_id"
+    t.integer "user_id"
+  end
+
   create_table "prefix_tables", force: true do |t|
     t.string   "country_code"
     t.string   "country"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles_users", id: false, force: true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
   end
 
   create_table "routes", force: true do |t|
@@ -213,8 +236,8 @@ ActiveRecord::Schema.define(version: 20160520080238) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.boolean  "system_route",  default: false
-    t.float    "price_default"
+    t.boolean  "system_route",    default: false
+    t.integer  "create_route_id", default: 0
   end
 
   create_table "routes_users", id: false, force: true do |t|
@@ -277,16 +300,16 @@ ActiveRecord::Schema.define(version: 20160520080238) do
     t.string   "token_number"
     t.datetime "confirm_token_number"
     t.string   "low_account"
+    t.boolean  "unit_view"
     t.boolean  "unit_views",             default: false
+    t.integer  "nested_reseller",        default: 0
+    t.boolean  "reseller",               default: false
+    t.integer  "belongs_resll",          default: 0
+    t.integer  "route_default",          default: 0
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-
-  create_table "users_routes", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "route_id"
-  end
 
 end

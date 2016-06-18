@@ -33,6 +33,7 @@ class RegistrationsController <  Devise::RegistrationsController
     self.resource.url_callback=params[:url][:url] unless params[:url][:url].blank?
     self.resource.unit_views=params[:unit_views][:unit_views]
     self.resource.movil_number=params[:movil_number][:movil_number] unless params[:movil_number][:movil_number].blank? or !valid_number(params[:movil_number][:movil_number]) or !other_movil_number
+    self.resource.route_default=params['r_default'].to_i if !params['r_default'].nil?
     if params[:low_a_check][:low_a_check].to_i==1
       self.resource.low_account =params[:low_account][:low_account]  unless params[:low_account][:low_account].blank? or !validate_integer(params[:low_account][:low_account])
     end

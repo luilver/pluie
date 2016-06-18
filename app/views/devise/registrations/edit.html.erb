@@ -28,7 +28,17 @@
 
     <div><%= check_box :low_a_check,:low_a_check%> <%= label_tag t('low_account') %> <i><%=  t('low_account_current',:credit => current_user.low_account.to_f.to_s)  if !current_user.low_account.nil? %></i><br />
       <%= text_field :low_account, :low_account , :style=>'width:64px;',:placeholder=> t('number').html_safe%> <%= render 'warning_balance'%></div>
+    <br/>
     <div>  <%= check_box :unit_views,:unit_views, :checked => current_user.unit_views.blank? ? false: true %> <%= label_tag t('unit_views') %></div>
+    <br/>
+
+    <div>
+      <label for="r_default">Ruta por defecto:</label>
+      <%   current_user.routes.each  do |r| %>
+          <br><%= radio_button_tag 'r_default', r.id, r.id==@current_user.route_default.to_i%>
+          <%= r.name %>
+      <% end %>
+    </div>
     <br/>
 
     <div><%= f.label :current_password %> <i>(<%= t('devise.registrations.edit.we_need_your_current_password_to_confirm_your_changes')%>)</i><br />
