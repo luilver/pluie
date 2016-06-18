@@ -43,8 +43,8 @@ es:
     registrations:
       edit:
         user_edit_one: 'Editar Usuario'
-        are_you_sure: "¿Está usted seguro?"
-        cancel_my_account: Cerrar la cuenta
+        are_you_sure: "¿SEGURO DESEA ELIMINAR SU CUENTA DE NUESTRO SISTEMA?"
+        cancel_my_account: ELIMINAR SU CUENTA
         currently_waiting_confirmation_for_email:
         leave_blank_if_you_don_t_want_to_change_it: dejar en blanco si no desea cambiarlo
         title: Editar %{resource}
