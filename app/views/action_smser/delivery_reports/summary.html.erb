@@ -144,7 +144,7 @@
 </table>
 <br/>
 
-<%= link_to('CSV', main_app.summary_delivery_reports_path(:format=>"csv",:time_span=>params['time_span']),:style=>'color:blue;')%> |
-<%= link_to('Excel', main_app.summary_delivery_reports_path(:format=>"xls",:time_span=>params['time_span']),:style => 'color:blue;')%>
+<%= link_to('CSV', main_app.summary_delivery_reports_path(:format=>"csv",:time_span=>params['time_span'],:route=> params[:gateway]),:style=>'color:blue;')%> |
+<%= link_to('Excel', main_app.summary_delivery_reports_path(:format=>"xls",:time_span=>params['time_span'],:route=> params[:gateway]),:style => 'color:blue;')%>
 
 
