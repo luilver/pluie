@@ -29,8 +29,8 @@ class DeliverMessage
            publish(:message_delivery, message)
          end
        end
-      else
-        strategy.deliver(message, randomText,number_from)
+     else
+        strategy.deliver(message, randomText,number_from,false)
         publish(:message_delivery, message)
       end
   end
