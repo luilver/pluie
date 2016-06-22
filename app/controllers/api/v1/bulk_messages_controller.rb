@@ -40,7 +40,7 @@ module Api
 
               if @bulk_message.save
               delay_options = {:queue => 'deliver'}
-              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),sm.convert_to_num(params[:from]),params[:backup_bm].to_bool)
+              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),sm.convert_to_num(params[:from]),false)
               Delayed::Job.enqueue(job, delay_options)
               sm.low_cost(@bulk_message,sm.convert_to_num(params[:from]),5.minute.from_now)
 
