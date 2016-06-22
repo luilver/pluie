@@ -31,7 +31,7 @@ BackupBulkMessageJob = Struct.new(:list_messages, :gateways, :randomText,:number
 
           if gateways.count>1
             job= BackupBulkMessageJob.new(list_messages, gateways.last(gateways.count-1), randomText,number_from,id_original_bm,number_original_bm) #nuevo message y una ruta menos
-            Delayed::Job.enqueue(job,:run_at => 5.minutes.from_now) #manda a ejecutarlo dentro de 5minutos
+            Delayed::Job.enqueue(job,:run_at => 1.minutes.from_now) #manda a ejecutarlo dentro de 5minutos
           end
         end
       end
