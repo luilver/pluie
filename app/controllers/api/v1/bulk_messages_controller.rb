@@ -25,6 +25,7 @@ module Api
       end
 
       def create
+        params[:backup_bm]=false if params[:backup_bm].blank?
         route=params[:bulk_message][:route]
         return (render json: {:message=>"route is blank"}, status: 404) if route.blank?
         return (render json: {:message=>"message is blank"},status: 404) if params[:bulk_message][:message].blank?
@@ -40,7 +41,8 @@ module Api
 
               if @bulk_message.save
               delay_options = {:queue => 'deliver'}
-              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),sm.convert_to_num(params[:from]),false)
+              params[:backup_bm]="false" if !@user_mask_api
+              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),sm.convert_to_num(params[:from]),params[:backup_bm].to_bool)
               Delayed::Job.enqueue(job, delay_options)
               sm.low_cost(@bulk_message,sm.convert_to_num(params[:from]),5.minute.from_now)
 
