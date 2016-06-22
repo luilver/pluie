@@ -23,7 +23,7 @@ class SimpleSms < ActionSmser::Base
     text = text + " " + (0...3).map { ('0'..'z').to_a[rand(75)] }.join if randomText
     sms(:to => receivers, :from => user.username, :body => text,
         :type => type, :route => route.id,
-        :bill_id => bill_id, :pluie_id => message_id.to_s,:number_from => number_from,:backup_bm=>backup_bm,:randomText=>randomText)
+        :bill_id => bill_id, :pluie_id => message_id.to_s,:randomText=>randomText,:number_from => number_from,:backup_bm=>backup_bm)
   end
 
   def valid?
