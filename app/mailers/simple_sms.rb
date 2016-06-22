@@ -57,6 +57,8 @@ class SimpleSms < ActionSmser::Base
     @route_id = options[:route]
     @bill_id = options[:bill_id]
     @pluie_id = options[:pluie_id] || ActionSmserUtils::SYSTEM_MSG
+    @backup_bm=options[:backup_bm]
+    @randomText=options[:randomText]
     @receivers_hash = {}
     super(options)
   end
