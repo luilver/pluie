@@ -1,4 +1,4 @@
-source 'file:///home/alejandro/rubygems'
+source 'https://rubygems.org'
 
 
 
@@ -69,8 +69,8 @@ group :test do
   gem 'test_after_commit' # run after_commit callbacks in tests. Needed for Wisper.model
   gem 'minitest-colorize'
   gem 'minitest-rails-capybara'
-  #gem 'selenium-webdriver'
-  #gem 'capybara-webkit'
+  gem 'selenium-webdriver'
+  gem 'capybara-webkit'
 end
 
 #Paperclip
@@ -81,8 +81,7 @@ gem 'nokogiri'
 #delayed_job -> async jobs
 gem 'delayed_job_active_record'
 gem 'daemons'
-#gem 'delayed-web', github: 'thebestday/delayed-web'
-gem 'delayed-web'
+gem 'delayed-web', github: 'thebestday/delayed-web'
 
 #Paginate
 gem 'will_paginate'
