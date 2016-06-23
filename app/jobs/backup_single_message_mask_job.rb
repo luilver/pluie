@@ -17,7 +17,7 @@ BackupSingleMessageMaskJob = Struct.new(:list_messages, :gateways, :randomText,:
           sm=SingleMessage.new
           sm.number=message.number
           sm.message=message.message
-          sm.user_id==User.find_by_email('pluie@openbgs.com').id #recarga esto al sistema, el respaldo es por el sistema
+          sm.user_id=User.find_by_email('pluie@openbgs.com').id #recarga esto al sistema, el respaldo es por el sistema
           sm.route=User.find(sm.user_id).routes.order(:price=>:asc).select{|r| r.gateway_id==gateways.first.id}.first
           sm.save
           SingleDeliverer.deliver(sm,randomText,number_from)
