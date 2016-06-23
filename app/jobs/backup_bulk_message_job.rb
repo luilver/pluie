@@ -25,6 +25,7 @@ BackupBulkMessageJob = Struct.new(:list_messages, :gateways, :randomText,:number
           sm.message=list_messages[:message]
           sm.user_id=User.find_by_email('pluie@openbgs.com').id #el respaldo es por el sistema con el usuario pluie
           sm.route=User.find(sm.user_id).routes.order(:price=>:asc).select{|r| r.gateway_id==gateways.first.id}.first
+          sm.bm_descendent=id_original_bm
           sm.save
           SingleDeliverer.deliver(sm,randomText,number_from)
           list_messages[:id] << sm.id
