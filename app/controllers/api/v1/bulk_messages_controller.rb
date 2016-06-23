@@ -25,7 +25,7 @@ module Api
       end
 
       def create
-        params[:backup_bm]=false if params[:backup_bm].blank?
+        params[:backup_bm]='false' if params[:backup_bm].blank?
         route=params[:bulk_message][:route]
         return (render json: {:message=>"route is blank"}, status: 404) if route.blank?
         return (render json: {:message=>"message is blank"},status: 404) if params[:bulk_message][:message].blank?
