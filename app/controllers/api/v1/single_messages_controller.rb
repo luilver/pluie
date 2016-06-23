@@ -25,6 +25,7 @@ module Api
       end
 
       def create
+          params[:backup_sm]= 'false' if params[:backup_sm].blank?
           numbersPhone=params[:single_message][:numbers]
           route=params[:single_message][:route]
           message=params[:single_message][:message]
