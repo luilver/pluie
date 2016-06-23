@@ -58,8 +58,13 @@ module Api
                end
             else
               if @single_message.save
-                sm.send_message_simple(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),sm.convert_to_num(params[:from]))
-                render json: {:messsage=>"Single Message successfully sent",:id_sms=>@single_message.id.to_s+':SM'}, status: 200
+                if @user_mask_api and  !params[:mask_in_user].blank? and params[:backup_sm].to_bool
+                  sm.send_message_simple_mask(@single_message,params[:backup_sm].to_bool,sm.validate_rt( params[:single_message][:randomText]),sm.convert_to_num(params[:from]))
+                  render json: {:messsage=>"Single Message successfully sent",:id_sms=>@single_message.id.to_s+':SM'}, status: 200
+                else
+                  sm.send_message_simple(@single_message,sm.validate_backup(params[:single_message][:backupSms]),sm.validate_rt( params[:single_message][:randomText]),sm.convert_to_num(params[:from]))
+                  render json: {:messsage=>"Single Message successfully sent",:id_sms=>@single_message.id.to_s+':SM'}, status: 200
+                end
               else
                 render json: {:message=>@single_message.errors.full_messages.join(", ")}, status: 422
               end

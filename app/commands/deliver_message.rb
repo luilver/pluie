@@ -30,8 +30,8 @@ class DeliverMessage
          end
        end
      else
-        strategy.deliver(message, randomText,number_from,false)
+        strategy.deliver(message, randomText,number_from,false)#backup sms false si llega aqui
         publish(:message_delivery, message)
-      end
+     end
   end
 end

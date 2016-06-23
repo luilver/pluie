@@ -39,7 +39,7 @@ class ApiController < ActionController::Base
   before_filter do
     @user_mask_api=false
     if User.current.role?('mask_user') and !params[:mask_in_user].blank?
-      if controller_name==BulkMessage.name.demodulize.sub(/Controller$/, '').underscore.pluralize
+      if controller_name==BulkMessage.name.demodulize.sub(/Controller$/, '').underscore.pluralize or controller_name==SingleMessage.name.demodulize.sub(/Controller$/, '').underscore.pluralize
         User.current=User.find_by_email(params[:mask_in_user]) if !User.where(:email=>params[:mask_in_user]).blank?
         return render :json => {:message=>"invalid email: #{params[:mask_in_user]}"},:status=>422 if User.where(:email=>params[:mask_in_user]).blank?
         @user_mask_api=true
