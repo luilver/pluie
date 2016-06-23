@@ -38,7 +38,7 @@ class SimpleSms < ActionSmser::Base
         gt=user.gateways.order(:price=>:asc).select{|g| g.id!=Route.find(self.route_id.to_i).gateway.id}
         list_messages={:number=>self.to.first,:message=>self.body,:user_id=>user.id,:id=>[]} #id es el array con los id de los single messages de respaldo
         job=BackupBulkMessageJob.new(list_messages,gt,self.randomText,self.number_from,self.pluie_id,self.to.first)
-        Delayed::Job.enqueue(job,:run_at=>1.minutes.from_now)
+        Delayed::Job.enqueue(job,:run_at=>5.minutes.from_now)
       end
     end
   end
