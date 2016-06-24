@@ -10,7 +10,7 @@ class LowBalanceUserJob
   def perform
     if @message.user.low_account.to_f > @message.user.balance.to_f and !@message.user.confirm_token_number.nil? and @message.user.low_account.to_f < @balance_old.to_f
       sm =SingleMessage.new
-      sm.message=I18n.translate('notice.low_balance',:username=>@message.user.username,:balance=>@message.user.balance)
+      sm.message=I18n.translate('notice.low_balance',:balance=>@message.user.balance)
       sm.route=@message.user.routes.order(:price=>:asc).first
       sm.user=@message.user
       sm.number=@message.user.movil_number

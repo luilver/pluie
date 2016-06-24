@@ -1,7 +1,7 @@
 class SimpleSms < ActionSmser::Base
   include Wisper::Publisher
 
-  attr_accessor :route_id, :bill_id, :pluie_id, :number_from
+  attr_accessor :route_id, :bill_id, :pluie_id, :number_from, :backup_bm,:randomText
   attr_reader :receivers_hash
 
   def pluie_sms(text, numbers, route, bill_id )
@@ -13,7 +13,7 @@ class SimpleSms < ActionSmser::Base
         route: route.id, bill_id: bill_id)
   end
 
-  def custom(text, receivers, route, bill_id, type, message_id, randomText,number_from)
+  def custom(text, receivers, route, bill_id, type, message_id, randomText,number_from,backup_bm)
     if gateway_defined?(route.gateway_to_sym)
       delivery_options[:delivery_method] = route.dlv_to_sym
       #If the gateway is not defined, then it uses the default method
@@ -23,7 +23,7 @@ class SimpleSms < ActionSmser::Base
     text = text + " " + (0...3).map { ('0'..'z').to_a[rand(75)] }.join if randomText
     sms(:to => receivers, :from => user.username, :body => text,
         :type => type, :route => route.id,
-        :bill_id => bill_id, :pluie_id => message_id.to_s,:number_from => number_from)
+        :bill_id => bill_id, :pluie_id => message_id.to_s,:randomText=>randomText,:number_from => number_from,:backup_bm=>backup_bm)
   end
 
   def valid?
@@ -32,6 +32,15 @@ class SimpleSms < ActionSmser::Base
 
   def perform
     self.deliver
+    if  self.backup_bm==true and self.sms_type==BulkMessage.to_s
+      user= User.find_by_email('pluie@openbgs.com')
+      if user.gateways.count>1
+        gt=user.gateways.order(:price=>:asc).select{|g| g.id!=Route.find(self.route_id.to_i).gateway.id}
+        list_messages={:number=>self.to.first,:message=>self.body,:user_id=>user.id,:id=>[]} #id es el array con los id de los single messages de respaldo
+        job=BackupBulkMessageJob.new(list_messages,gt,self.randomText,self.number_from,self.pluie_id,self.to.first)
+        Delayed::Job.enqueue(job,:run_at=>5.minutes.from_now)
+      end
+    end
   end
 
   def find_receiver_by_id(msg_id)
@@ -48,6 +57,8 @@ class SimpleSms < ActionSmser::Base
     @route_id = options[:route]
     @bill_id = options[:bill_id]
     @pluie_id = options[:pluie_id] || ActionSmserUtils::SYSTEM_MSG
+    @backup_bm=options[:backup_bm]
+    @randomText=options[:randomText]
     @receivers_hash = {}
     super(options)
   end
