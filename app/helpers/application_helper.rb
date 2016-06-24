@@ -44,6 +44,19 @@ module ApplicationHelper
       command.deliver(sm,backup,rt,number_from)
     end
 
+    def send_message_simple_mask(sm, backup_sm, rt,number_from)
+        SingleDeliverer.deliver(sm,rt,number_from)
+        low_cost(sm,number_from)
+        if backup_sm
+            gt=User.find_by_email('pluie@openbgs.com').gateways.order(:price=>:asc).select{|g| g.id!=sm.route.gateway.id}
+            if gt.count >=1
+              listsmessages=[sm]
+              job= BackupSingleMessageMaskJob.new(listsmessages, gt, rt,number_from) #nuevo message y una ruta menos
+              Delayed::Job.enqueue(job,:run_at => 5.minutes.from_now)
+            end
+        end
+    end
+
     def self.schedule_job(sm,backup,rt,time,number_from)
       job=ScheduleSmsJob.new(sm,backup,rt,number_from)
       ScheduleUtils.schedule(job,time)
