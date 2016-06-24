@@ -8,6 +8,20 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<%
+   if !current_user.nil? and  controller_name!=HomeController.name.demodulize.sub(/Controller$/, '').underscore
+     if current_user.role?('mask_user')
+       User.all.each do |u|
+         if u.nested_reseller.to_i==current_user.id
+           @current_user=u
+           break
+         end
+       end
+     end
+   end
+
+%>
+
 
 <% if current_user %>
   <%= render '/right_menu' %>

@@ -1,4 +1,76 @@
+
 <h1><%= t('welcome') %></h1>
+
+<p><%= notice%></p>
+
+<%= image_tag 'thumb.gif'%>
+
 <p>
   <%= t('today_is').html_safe %> <%= I18n.localize(Time.current, :format => :long).html_safe %>h
 </p>
+
+<style>
+    table,
+    th,
+    td {
+        border: 0px solid white;
+        border-collapse: collapse;
+    }
+
+</style>
+<%hash_count_sms = current_user.query_home%>
+<table>
+
+  <tr>
+    <th></th>
+    <th></th>
+
+  </tr>
+
+  <tbody>
+      <tr>
+        <td>Pluie Versi&oacute;n</td>
+        <td><%= ENV['PLUIE_VERSION'] %></td>
+      </tr>
+      <tr>
+        <td>System time</td>
+        <td><%= I18n.localize(Time.current, :format => :long).html_safe %></td>
+      </tr>
+      <tr>
+        <td>Location</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Rails versi&oacute;n</td>
+        <td><%= Rails::VERSION::STRING%></td>
+      </tr>
+      <tr>
+        <td>Ruby versi&oacute;n</td>
+        <td><%= RUBY_VERSION%></td>
+      </tr>
+      <tr>
+        <td><%= link_to t('last_hour').html_safe, dr_summary_url(:time_span => 'Last hour')%></td>
+        <td><%= hash_count_sms[:l_hour]%></td>
+      </tr>
+      <tr>
+        <td>Estadísticas</td>
+        <td>
+          <%= link_to t('today').html_safe, dr_summary_url(:time_span => 'today')%>: <%= hash_count_sms[:today]%><br/>
+          <%= link_to t('last_48_hour').html_safe, dr_summary_url(:time_span => 'h_48')%>: <%= hash_count_sms[:h_48]%><br/>
+          <%= link_to t('this_week').html_safe, dr_summary_url(:time_span => 't_week')%>: <%= hash_count_sms[:t_week]%><br/>
+          <%= link_to t('last_15_days').html_safe, dr_summary_url(:time_span => 'd_15')%>: <%=  hash_count_sms[:d_15]%><br/>
+          <%= link_to t('this_month').html_safe, dr_summary_url(:time_span => 'this month')%>: <%= hash_count_sms[:t_month]%><br/>
+          <%= link_to t('last_60_days').html_safe, dr_summary_url(:time_span => 'd_60')%>:: <%= hash_count_sms[:d_60]%><br/>
+          <%= link_to t('this_year').html_safe, dr_summary_url(:time_span => 't_year')%>: <%= hash_count_sms[:t_year]%><br/>
+          <%= link_to t('last_500').html_safe, dr_summary_url(:time_span => 'd_500')%>: <%= hash_count_sms[:d_500]%><br/>
+        </td>
+      </tr>
+
+  </tbody>
+  </table>
+
+
+<% if current_user.role?('mask_user')%>
+        <%= render 'form'%>
+<%end%>
+

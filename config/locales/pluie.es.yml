@@ -253,4 +253,11 @@ es:
   api_information: 'Información de acceso vía API:'
   link_uv: 'Enviar Mensaje'
   unit_views: 'vistas unificadas de envio'
+  last_48_hour: '&Uacute;ltimas 48 horas'
+  last_15_days: '&Uacute;ltimos 15 d&iacute;as'
+  last_60_days: '&Uacute;ltimos 60 d&iacute;as'
+  this_year: 'Este a&ntilde;o'
+  this_week: 'Esta semana'
+  last_500: '&Uacute;ltimos 500 d&iacute;as'
+  today: 'Hoy'
 

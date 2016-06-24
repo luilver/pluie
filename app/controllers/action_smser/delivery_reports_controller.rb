@@ -3,12 +3,25 @@ require 'application_helper'
 module ActionSmser
   include ApplicationHelper
   class DeliveryReportsController < Pluie::ApplicationController
+    before_filter do
+      if !current_user.nil? and  controller_name!=HomeController.name.demodulize.sub(/Controller$/, '').underscore
+        if current_user.role?('mask_user')
+          User.all.each do |u|
+            if u.nested_reseller.to_i==current_user.id
+              @current_user=u
+              break
+            end
+          end
+        end
+      end
+    end
     before_filter :admin_access_only, :except => :gateway_commit
     before_action :set_delivery_report, only: [:show]
     protect_from_forgery :except => :gateway_commit
     skip_before_filter :authenticate_user!, only: [:gateway_commit]
     helper_method :items_within_page
     helper_method :selected_user
+
 
     def gateway_commit
 
@@ -112,12 +125,31 @@ module ActionSmser
                       1.day.ago..Time.current
                     when 'last hour'
                       1.hour.ago..Time.current
+                    when 'today'
+                      Time.current.at_beginning_of_day..Time.current
+                    when 'd_15'
+                      15.days.ago..Time.current
+                    when 'd_60'
+                      60.days.ago..Time.current
+                    when 't_year'
+                      Time.current.at_beginning_of_year..Time.current
+                    when 'd_500'
+                      500.days.ago..Time.current
+                    when 'h_48'
+                      48.hours.ago..Time.current
+                    when 't_week'
+                      Time.current.at_beginning_of_week..Time.current
                     when /^(\d\d)-(\d\d) hours/
                       $1.to_i.hours.ago..$2.to_i.hours.ago
                     else
                       1.week.ago..Time.current
                   end
-      @delivery_report_xls= ActionSmser::DeliveryReport.where(:user_id => current_user.id).where(:created_at => time_span)
+      @delivery_report_xls=[]
+      if current_user.admin
+        @delivery_report_xls =ActionSmser::DeliveryReport.where(:created_at=>time_span)
+      else
+        @delivery_report_xls=ActionSmser::DeliveryReport.where(:user_id => current_user.id).where(:created_at => time_span)
+      end
       respond_to do |format|
          format.html
          format.csv {send_data ActionSmser::DeliveryReport.to_csv(@delivery_report_xls)}
