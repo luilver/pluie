@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
 
   resources :historic_logs
+  post 'historic_logs/names' =>'historic_logs#names'
 
   resources :roles
 

@@ -1,5 +1,15 @@
 <h1>Listing historic_logs</h1>
 
+<%= form_tag 'historic_logs/names', :method => :post do %>
+
+<%= select_tag(:user_id_historic,
+               options_from_collection_for_select(User.all, "id", "email"),:style=>"width:126px;")
+%>
+    <%= submit_tag :search%>
+<%end%>
+<br/>
+<br/>
+
 <table>
   <thead>
     <tr>
@@ -34,5 +44,6 @@
 </table>
 
 <br>
+<p><%= will_paginate @historic_logs %></p>
 
 
