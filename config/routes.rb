@@ -3,6 +3,8 @@ require 'api_constraints'
 Rails.application.routes.draw do
 
 
+  resources :historic_logs
+
   resources :roles
 
   resources :table_routes
