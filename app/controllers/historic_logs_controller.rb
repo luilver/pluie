@@ -5,7 +5,7 @@ class HistoricLogsController < ApplicationController
   respond_to :html
 
   def index
-    @historic_logs = HistoricLog.all.paginate(:page => params[:page], :per_page => 20)
+    @historic_logs = HistoricLog.all.order(:created_at=>:desc).paginate(:page => params[:page], :per_page => 20)
     respond_with(@historic_logs)
   end
 
@@ -38,7 +38,7 @@ class HistoricLogsController < ApplicationController
   end
 
   def names
-    @historic_logs=HistoricLog.where(:user_id=>params[:user_id_historic]).paginate(:page => params[:page], :per_page => 20)
+    @historic_logs=HistoricLog.where(:user_id=>params[:user_id_historic]).order(:created_at=>:desc).paginate(:page => params[:page], :per_page => 20)
     render 'index'
   end
 
