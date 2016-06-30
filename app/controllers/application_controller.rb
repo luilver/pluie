@@ -24,6 +24,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  before_action do
+    if params[:controller]=='devise/sessions' and (params[:action]=='destroy' or params[:action]=='create')
+      HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>nil,:user_id=>@current_user.id,:mask_user_active=>nil,:parameters_not_comun=>nil,:full_path=>request.fullpath)
+    end
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     list_parameters=[]
     parameters=params[:id] if !params[:id].blank?
