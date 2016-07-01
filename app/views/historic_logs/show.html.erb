@@ -12,7 +12,29 @@
 
 <p>
   <strong>User:</strong>
-  <%= @historic_log.user_id %>
+  <%= User.find(@historic_log.user_id).email %>
+</p>
+<p>
+  <strong>Parameters extra (opcional):</strong>
+  <%= @historic_log.parameters_not_comun %>
+</p>
+<p>
+  <strong>Full Path:</strong>
+  <%= @historic_log.full_path %>
+</p>
+<p>
+  <strong>Id (opcional):</strong>
+  <%= @historic_log.parameter_req %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= I18n.localize(@historic_log.created_at,:format=>:date_time) %>
+</p>
+
+<p>
+  <strong>Mask User:</strong>
+  <%= @historic_log.mask_user_active %>
 </p>
 
 <%= link_to 'Edit', edit_historic_log_path(@historic_log) %> |
