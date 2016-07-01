@@ -16,11 +16,13 @@ module Api
         if not User.current.single_messages.where(:id=>params[:id]).blank?
           render json: {:message=>  User.current.single_messages.find(params[:id]).message, :number=> User.current.single_messages.find(params[:id]).receivers,:identifier=>params[:id]}, status: 200
         else
+          log_not_authorized_access
           render json: {:message=>"invalid indentifier: #{params[:id]}"}, status: 422
         end
       end
 
       def new
+          log_not_authorized_access
           render json: {:message=> "resource disabled"},status: 301
       end
 
@@ -65,11 +67,13 @@ module Api
               end
             end
           else
+            log_not_authorized_access
             render json: {:message=>"Invalid route"}, status: 422
           end
       end
 
       def update
+           log_not_authorized_access
            render json: {:message=> "resources disabled"},status: 301
       end
 
@@ -83,6 +87,7 @@ module Api
             render json: {:message=>"invalid identifier: #{params[:id]}"}, status: 422
           end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end
