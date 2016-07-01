@@ -12,7 +12,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= User.find(@historic_log.user_id).email %>
+  <%= User.find(@historic_log.user_id).email if @historic_log.user_id!=0%>
 </p>
 <p>
   <strong>Parameters extra (opcional):</strong>

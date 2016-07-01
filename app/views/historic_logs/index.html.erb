@@ -34,7 +34,7 @@
         <td><%= historic_log.full_path %></td>
         <td><%= historic_log.parameters_not_comun %></td>
         <td><%= I18n.localize(historic_log.created_at,:format=>:date_time) %></td>
-        <td><%= User.find(historic_log.user_id).email %></td>
+        <td><%= User.find(historic_log.user_id).email if historic_log.user_id!=0 %></td>
         <td><%= link_to 'Show', historic_log %></td>
         <td><%= link_to 'Destroy', historic_log, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <td></td>
