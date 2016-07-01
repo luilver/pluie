@@ -123,7 +123,7 @@ module Api
   end
 
   def log_write (resource)
-    HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>nil,:user_id=>resource.id,:mask_user_active=>nil,:parameters_not_comun=>nil,:full_path=>request.fullpath)
+    HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>nil,:user_id=>resource.id,:mask_user_active=>nil,:parameters_not_comun=>nil,:full_path=>request.fullpath,:method_http=>request.method)
   end
 
   def log_write_invalid
@@ -131,7 +131,7 @@ module Api
     params.each  do |key, value|
       list_parameters << key.to_s+':'+value.to_s if key!='controller' and key!=:action.to_s and key!=:id.to_s
     end
-    HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>nil,:user_id=>0,:mask_user_active=>nil,:parameters_not_comun=>list_parameters.join(','),:full_path=>request.fullpath)
+    HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>nil,:user_id=>0,:mask_user_active=>nil,:parameters_not_comun=>list_parameters.join(','),:full_path=>request.fullpath,:method_http=>request.method)
   end
 
   # def set_csrf_header

@@ -16,6 +16,7 @@
       <th>Action name</th>
       <th>Controller name</th>
       <th>id(opcional)</th>
+      <th>Method http</th>
       <th>full_path</th>
       <th>parameters extra (opcional)</th>
       <th>Date access</th>
@@ -31,6 +32,7 @@
         <td><%= historic_log.action_name %></td>
         <td><%= historic_log.controller_name %></td>
         <td><%= historic_log.parameter_req %></td>
+        <td><%= historic_log.method_http %></td>
         <td><%= historic_log.full_path %></td>
         <td><%= historic_log.parameters_not_comun %></td>
         <td><%= I18n.localize(historic_log.created_at,:format=>:date_time) %></td>

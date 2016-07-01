@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 
   before_action do
     if params[:controller]=='devise/sessions' and (params[:action]=='destroy' or params[:action]=='create') and !@current_user.nil?
-      HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>nil,:user_id=>@current_user.id,:mask_user_active=>nil,:parameters_not_comun=>nil,:full_path=>request.fullpath)
+      HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>nil,:user_id=>@current_user.id,:mask_user_active=>nil,:parameters_not_comun=>nil,:full_path=>request.fullpath,:method_http=>request.method)
     end
   end
 
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
     params.each  do |key, value|
       list_parameters << key.to_s+':'+value.to_s if key!='controller' and key!=:action.to_s and key!=:id.to_s
     end
-    HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>parameters,:user_id=>@current_user.id,:mask_user_active=>@mask_u,:parameters_not_comun=>list_parameters.join(','),:full_path=>request.fullpath)
+    HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>parameters,:user_id=>@current_user.id,:mask_user_active=>@mask_u,:parameters_not_comun=>list_parameters.join(','),:full_path=>request.fullpath,:method_http=>request.method)
 
     redirect_to main_app.root_url, :alert => I18n.t('cancan.access_denied').html_safe
   end
