@@ -78,4 +78,13 @@ class ApiController < ActionController::Base
       render :json => { :success => false,
                      :message => 'invalid api secret' }, :status => 401
     end
+
+    def log_not_authorized_access
+      list_parameters=[]
+      parameters=params[:id] if !params[:id].blank?
+      params.each  do |key, value|
+         list_parameters << key.to_s+':'+value.to_s if key!='controller' and key!=:action.to_s and key!=:id.to_s
+      end
+      HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>parameters,:user_id=>User.current.id,:mask_user_active=>nil,:parameters_not_comun=>list_parameters.join(','),:full_path=>request.fullpath)
+    end
 end

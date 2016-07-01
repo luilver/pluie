@@ -20,7 +20,8 @@ module Api
             else
               render json: {:message=>"invalid identifier: #{params[:id]}"}, status: 422
             end
-          else
+        else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end
