@@ -1,6 +1,6 @@
 class BulkDeliverer
 
-  def self.deliver(message, randomText=true,number_from)
+  def self.deliver(message, randomText=true,number_from, backup_bm)
     text = message.message
     route = message.route
     type = message.pluie_type
@@ -10,7 +10,7 @@ class BulkDeliverer
     batches = numbers.each_slice(size).to_a
     bill = Bill.create(number_of_sms: batches.size, message_id: message.pluie_message_id, user: message.user)
     batches.each_with_index do |nums, index|
-      sms = SimpleSms.custom(text, nums, route, bill.id, type, message.id, randomText,number_from)
+      sms = SimpleSms.custom(text, nums, route, bill.id, type, message.id, randomText,number_from,backup_bm)
       Delayed::Job.enqueue(sms, :priority => bulk_sms_priority(index), :queue => bulk_sms_queue)
     end
   end
