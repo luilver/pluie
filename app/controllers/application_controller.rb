@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   before_filter do
-    if !current_user.nil? and  controller_name!=HomeController.name.demodulize.sub(/Controller$/, '').underscore and !(params[:controller]=="registrations")
+    if !current_user.nil? and  controller_name!=HomeController.name.demodulize.sub(/Controller$/, '').underscore and !(params[:controller]=="registrations") and  (params[:controller]!="confirmation_number")
       if current_user.role?('mask_user')
         User.all.each do |u|
           if u.nested_reseller.to_i==current_user.id
