@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Action name:</strong>
+  <%= @historic_log.action_name %>
+</p>
+
+<p>
+  <strong>Controller name:</strong>
+  <%= @historic_log.controller_name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= User.find(@historic_log.user_id).email if @historic_log.user_id!=0%>
+</p>
+<p>
+  <strong>Parameters extra (opcional):</strong>
+  <%= @historic_log.parameters_not_comun %>
+</p>
+<p>
+  <strong>Method http:</strong>
+  <%= @historic_log.method_http %>
+</p>
+
+<p>
+  <strong>Full Path:</strong>
+  <%= @historic_log.full_path %>
+</p>
+<p>
+  <strong>Id (opcional):</strong>
+  <%= @historic_log.parameter_req %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= I18n.localize(@historic_log.created_at,:format=>:date_time) %>
+</p>
+
+<p>
+  <strong>Mask User:</strong>
+  <%= @historic_log.mask_user_active %>
+</p>
+
+<%= link_to 'Edit', edit_historic_log_path(@historic_log) %> |
+<%= link_to 'Back', historic_logs_path %>

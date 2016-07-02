@@ -16,9 +16,11 @@ module Api
             delivery_report_val=ActionSmser::DeliveryReport.where(:pluie_id=>id,:sms_type=>type_val,:user_id=>User.current.id)
             render json: {:sms_id=>params[:sms_id],:delivery_reports=> delivery_report_val.map { |dr| {:status=>I18n.translate(dr.status.to_s+'_status',:locale=>User.current.locale),:to=>dr.to}}}, :status=>200
           else
+           log_not_authorized_access
            render json: {:message=>'incorrect parameter sms_id'}, :status=>422
           end
        rescue
+         log_not_authorized_access
          render json: {:message=>'incorrect parameter sms_id'}, :status=>422
        end
      end

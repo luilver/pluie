@@ -1,4 +1,5 @@
 class PrefixController < ApplicationController
+  load_and_authorize_resource
 
   def index
     @prefix_all  = PrefixTable.paginate(:page => params[:page], :per_page => 5)

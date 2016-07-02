@@ -8,6 +8,7 @@ module Api
         if User.current.admin
          render json: {:routes=>Route.all.map{|r| {:name=>r.name,:price=>r.price,:email=>r.user.email,:gateway=>r.gateway.name,:identifier=>r.id}}}, status: 200
         else
+         log_not_authorized_access
          render json: {:message=>"permission denied"}, status: 401
         end
       end
@@ -20,7 +21,8 @@ module Api
             else
               render json: {:message=>"invalid identifier: #{params[:id]}"}, status: 422
             end
-          else
+        else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end
@@ -34,6 +36,7 @@ module Api
               render json: {:message=>"invalid name: #{params[:route][:name_route]}"}, status: 422
             end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end
@@ -52,6 +55,7 @@ module Api
               end
           end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end
@@ -79,6 +83,7 @@ module Api
               end
             end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end
@@ -109,6 +114,7 @@ module Api
               render json: {:message=> "invalid identifier: #{params[:id]}"}, status: 422
             end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end
@@ -123,6 +129,7 @@ module Api
             render json: {:message=> "invalid identifier: #{params[:id]}"}, status: 422
           end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end

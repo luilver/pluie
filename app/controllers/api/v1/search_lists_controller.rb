@@ -21,6 +21,7 @@ module Api
           if User.current.lists.find_by_name(n)
             name << {:name => n,:count=>User.current.lists.find_by_name(n).receivers.count, :numbers => User.current.lists.find_by_name(n).receivers}
           else
+            log_not_authorized_access
             notFoundName << {:name=> n, :error => 'name invalid '}
           end
         end
@@ -28,6 +29,7 @@ module Api
           notFoundName << {:success => 'succefully send list'}
         end
         if name.blank?
+          log_not_authorized_access
           render json: {:message=>'invalid list name' , :notFound =>notFoundName }, status: 422
         else
         render json: {:lists=> name, :notFound =>notFoundName }, status: 200

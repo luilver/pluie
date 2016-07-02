@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :topups
   has_many :delivery_reports, class_name: "ActionSmser::DeliveryReport"
   has_and_belongs_to_many :roles, ->{distinct}
+  has_many :historic_logs
 
   def api_key
     self.api_setting.api_key if self.api_setting
