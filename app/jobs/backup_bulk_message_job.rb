@@ -12,8 +12,10 @@ BackupBulkMessageJob = Struct.new(:list_messages, :gateways, :randomText,:number
       end
       list_messages[:id].each do |message|
         dr = ActionSmser::DeliveryReport.where(:pluie_id => message.to_s,:sms_type=>SingleMessage.to_s,:to => number_original_bm).first
-        if  dr.status == ActionSmserUtils::DELIVERED_STATUS
-          deliver=true
+        if !dr.nil?
+          if  dr.status == ActionSmserUtils::DELIVERED_STATUS
+            deliver=true
+          end
         end
       end
 
