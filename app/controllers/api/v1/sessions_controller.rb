@@ -46,6 +46,7 @@ module Api
 
         if resource.valid_password?(params[:password])
 
+           log_write(resource)
            api_setting_x=resource.api_setting
            if api_setting_x.blank?
             api_setting_x=ApiSetting.new({user_id: resource.id})
@@ -94,6 +95,7 @@ module Api
            api_setting.api_key=api_setting.reset_authentication_token!
            #api_setting.save
            #ApiSetting.destroy(api_setting.id)
+           log_write(User.find_by_email(user_email))
            render json: { :message => "Session deleted"} , :status => 200, :success => true
         else
            render :json => {:message => 'Invalid api key' }, :status => 422
@@ -102,6 +104,7 @@ module Api
 
   protected
   def invalid_login_attempt
+    log_write_invalid
     warden.custom_failure!
     data = { email: params[:email] }
     return (render json: {success: false, :message => "email is blank"}, status: 404) if params[:email].blank?
@@ -117,6 +120,18 @@ module Api
         res
       end
     end
+  end
+
+  def log_write (resource)
+    HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>nil,:user_id=>resource.id,:mask_user_active=>nil,:parameters_not_comun=>nil,:full_path=>request.fullpath,:method_http=>request.method)
+  end
+
+  def log_write_invalid
+    list_parameters=[]
+    params.each  do |key, value|
+      list_parameters << key.to_s+':'+value.to_s if key!='controller' and key!=:action.to_s and key!=:id.to_s
+    end
+    HistoricLog.create(:controller_name=>params[:controller],:action_name=>params[:action],:parameter_req=>nil,:user_id=>0,:mask_user_active=>nil,:parameters_not_comun=>list_parameters.join(','),:full_path=>request.fullpath,:method_http=>request.method)
   end
 
   # def set_csrf_header

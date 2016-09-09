@@ -38,3 +38,6 @@ $(document).on "page:change", ->
   $('#mask_user_id').select2({
     placeholder: $('#mask_user_id').data('phtext')
   })
+  $('#user_id_historic').select2({
+    placeholder: $('#user_id_historic').data('phtext')
+  })

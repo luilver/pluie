@@ -28,12 +28,22 @@
 
     <div><%= check_box :low_a_check,:low_a_check%> <%= label_tag t('low_account') %> <i><%=  t('low_account_current',:credit => current_user.low_account.to_f.to_s)  if !current_user.low_account.nil? %></i><br />
       <%= text_field :low_account, :low_account , :style=>'width:64px;',:placeholder=> t('number').html_safe%> <%= render 'warning_balance'%></div>
+    <br/>
     <div>  <%= check_box :unit_views,:unit_views, :checked => current_user.unit_views.blank? ? false: true %> <%= label_tag t('unit_views') %></div>
+    <br/>
+
+    <div>
+      <label for="r_default">Ruta por defecto:</label>
+      <%   current_user.routes.each  do |r| %>
+          <br><%= radio_button_tag 'r_default', r.id, r.id==@current_user.route_default.to_i%>
+          <%= r.name %>
+      <% end %>
+    </div>
     <br/>
 
     <div><%= f.label :current_password %> <i>(<%= t('devise.registrations.edit.we_need_your_current_password_to_confirm_your_changes')%>)</i><br />
       <%= f.password_field :current_password, autocomplete: "off" %></div>
-
+    <br/>
     <div><%= f.submit t('devise.registrations.edit.update') %></div>
 <% end %>
 
@@ -47,7 +57,7 @@
 <h3><%= t('devise.registrations.edit.cancel_my_account')%></h3>
 
 
-<p><%= t('devise.registrations.edit.unhappy')%>? <%= button_to t('devise.registrations.edit.cancel_my_account'), registration_path(resource_name), data: { confirm: I18n.translate('devise.registrations.edit.are_you_sure') }, method: :delete %>
+<p><%= t('devise.registrations.edit.unhappy')%>? <%= button_to t('devise.registrations.edit.cancel_my_account'), registration_path(resource_name), data: { confirm: I18n.translate('devise.registrations.edit.are_you_sure') }, method: :delete, :style=>"color:red;" %>
 </p>
 
 

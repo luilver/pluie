@@ -10,7 +10,7 @@
   <div class="field">
     <%= f.label :route, t("activerecord.models.route") %>:
     <%= f.select :route_id,
-      options_from_collection_for_select(current_user.routes, "id", "name"),
+      options_from_collection_for_select(current_user.routes, "id", "name",(current_user.route_default==0 or current_user.route_default.nil?) ? current_user.routes.first.id : current_user.route_default ),
       {},
       :class => "message_route_select"
     %>

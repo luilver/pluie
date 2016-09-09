@@ -8,6 +8,7 @@ module Api
         if User.current.admin
         render json: {:all_credits=> User.all.select{|u| u.credit>0}.map{|c| {:email=>c.email, :credits=>c.credits.map{|cu| {:identifier=> cu.id,:balance=>cu.balance, :description=>cu.description, :date=>cu.created_at}}}}}, status: 200
         else
+          log_not_authorized_access
           render json: {:message=> "permission denied"}, status: 401
         end
       end
@@ -21,7 +22,8 @@ module Api
             render json: {:message=> "invalid identifier: #{params[:id]}"}, status: 422
           end
 
-          else
+        else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end
@@ -36,6 +38,7 @@ module Api
             render json: {:message=> "invalid email"}, status: 422
           end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end
@@ -55,6 +58,7 @@ module Api
               render json: {:message=>"invalid email"}, status: 422
             end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end
@@ -74,6 +78,7 @@ module Api
             render json: {:message=>"invalid identifier: #{params[:id]}"}, status: 422
           end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"}, status: 401
         end
       end
@@ -88,6 +93,7 @@ module Api
             render json: {:message=>"invalid identifier: #{params[:id]}"}, status: 422
           end
         else
+          log_not_authorized_access
           render json: {:message=>"Unauthorized"}, status: 401
         end
       end

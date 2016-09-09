@@ -12,6 +12,7 @@ module Api
         if User.current.admin
           render json: {:count=>User.all.count,:users=>User.all.map{|u| {:email=>u.email,:balance=>u.balance,:Gasto_Total=>u.spent,:identifier=>u.id}}},status: 200
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"},status: 401
         end
       end
@@ -24,6 +25,7 @@ module Api
             render json: {:message=>"invalid identifier: #{params[:id]}"},status: 422
           end
         else
+            log_not_authorized_access
             render json: {:message=>"permission denied"},status: 401
         end
       end
@@ -48,6 +50,7 @@ module Api
             render json: @user.errors, status: :unprocessable_entity
           end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"},status: 401
         end
       end
@@ -62,6 +65,7 @@ module Api
             render json: @user.errors, status: :unprocessable_entity
           end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"},status: 401
         end
       end
@@ -80,6 +84,7 @@ module Api
             render json: {:message=>"invalid email"},status: 422
           end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"},status: 401
         end
       end
@@ -95,6 +100,7 @@ module Api
             render json: {:message=>"invalid email"},status: 422
           end
         else
+          log_not_authorized_access
           render json: {:message=>"permission denied"},status: 401
         end
       end

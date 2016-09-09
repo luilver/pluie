@@ -147,9 +147,12 @@ module ActionSmser
       @delivery_report_xls=[]
       if current_user.admin
         @delivery_report_xls =ActionSmser::DeliveryReport.where(:created_at=>time_span)
+        @delivery_report_xls = @delivery_report_xls.where(:gateway => params[:route]) if (params[:route] && params[:route].to_s != 'all')
       else
         @delivery_report_xls=ActionSmser::DeliveryReport.where(:user_id => current_user.id).where(:created_at => time_span)
+        @delivery_report_xls = @delivery_report_xls.where(:gateway => params[:route]) if (params[:route] && params[:route].to_s != 'all')
       end
+
       respond_to do |format|
          format.html
          format.csv {send_data ActionSmser::DeliveryReport.to_csv(@delivery_report_xls)}

@@ -1,4 +1,5 @@
 require 'action_smser_utils'
+require 'help_string'
 
 module Api
   module V1
@@ -15,15 +16,18 @@ module Api
           @bulk=User.current.bulk_messages.find_by_id(params[:id])
           render json: {:bulk_message=> {:message=>@bulk.message,:route=>@bulk.route.name,:lists=>@bulk.lists.count, :numbers=>@bulk.receivers.count, :list_names=>@bulk.lists.map{|n| n.name}}},status: 200
         else
+         log_not_authorized_access
          render json: {:message=>"Identifier (id: #{params[:id]}) invalid"}, status: 422
         end
       end
 
       def new
+        log_not_authorized_access
         render json: {:message=>"resources disabled"}, status: 301
       end
 
       def create
+        params[:backup_bm]='false' if params[:backup_bm].blank?
         route=params[:bulk_message][:route]
         return (render json: {:message=>"route is blank"}, status: 404) if route.blank?
         return (render json: {:message=>"message is blank"},status: 404) if params[:bulk_message][:message].blank?
@@ -39,7 +43,8 @@ module Api
 
               if @bulk_message.save
               delay_options = {:queue => 'deliver'}
-              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),sm.convert_to_num(params[:from]))
+              params[:backup_bm]="false" if !@user_mask_api
+              job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),sm.convert_to_num(params[:from]),params[:backup_bm].to_bool)
               Delayed::Job.enqueue(job, delay_options)
               sm.low_cost(@bulk_message,sm.convert_to_num(params[:from]),5.minute.from_now)
 
@@ -56,12 +61,14 @@ module Api
                 end
                 render json: {:message=>mens_errors}, status: 422
               end
-              else
+        else
+              log_not_authorized_access
               render json: {:message=>"Invalid route"}, status: 422
         end
       end
 
       def update
+        log_not_authorized_access
         render json: {:message=>"resources disabled"}, status: 301
       end
 
@@ -73,9 +80,11 @@ module Api
               @bulk_message.destroy
               render json: {:message=>"Move permanently"},status: 301
            else
+             log_not_authorized_access
              render json: {:message=>"identifier: #{params[:id]} invalid "}, status: 422
            end
         else
+          log_not_authorized_access
           render json: {:message=>"you are not admin"}, status: 401
         end
       end

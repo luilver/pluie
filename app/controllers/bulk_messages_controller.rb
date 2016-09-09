@@ -41,13 +41,13 @@ class BulkMessagesController < ApplicationController
       if @bulk_message.save
 
         delay_options = {:queue => 'deliver'}
-        job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),sm.convert_to_num(params[:from][:from]))
+        job = DelayDeliveryJob.new(@bulk_message.pluie_type, @bulk_message.id, BulkDeliverer.to_s, %w(DeliveryNotifier),sm.convert_to_num(params[:from][:from]),false)
         Delayed::Job.enqueue(job, delay_options)
         sm.low_cost(@bulk_message,sm.convert_to_num(params[:from][:from]),5.minute.from_now)
 
         if params[:notified][:notified].to_s.to_bool and !@bulk_message.user.confirm_token_number.blank?
           job1 =NotifiedDeliveryReportSmsJob.new(@bulk_message.id,@bulk_message.user.movil_number,BulkMessage.to_s)
-          time_notified=@bulk_message.receivers.count <= 2500 ? 30.minutes.from_now : 46.minutes.from_now
+          time_notified=@bulk_message.receivers.count/1000 > 2 ? ((@bulk_message.receivers.count/1000)*15).minutes.from_now : 30.minutes.from_now
           Delayed::Job.enqueue(job1,:run_at => time_notified)
         end unless params[:notified].nil?
 

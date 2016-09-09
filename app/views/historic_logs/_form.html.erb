@@ -1,0 +1,29 @@
+<%= form_for(@historic_log) do |f| %>
+  <% if @historic_log.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@historic_log.errors.count, "error") %> prohibited this historic_log from being saved:</h2>
+
+      <ul>
+      <% @historic_log.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :action_name %><br>
+    <%= f.text_field :action_name %>
+  </div>
+  <div class="field">
+    <%= f.label :controller_name %><br>
+    <%= f.text_field :controller_name %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
