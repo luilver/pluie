@@ -159,6 +159,7 @@ class MailHandler < ActionMailer::Base
     if single_message.save
       ApplicationHelper::ManageSM.new.send_message_simple(single_message)
       logger.info "MailHandler: single_message ##{single_message.id} sent by #{user}" if logger
+    end
     single_message
   end
 
