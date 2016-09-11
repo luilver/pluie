@@ -157,7 +157,8 @@ class MailHandler < ActionMailer::Base
     single_message.route = user.routes.first
 
     if single_message.save
-      ApplicationHelper::ManageSM.new.send_message_simple(single_message)
+      #TODO: send using params backup, random_text and sender
+      ApplicationHelper::ManageSM.new.send_message_simple(single_message, false, false, 0)
       logger.info "MailHandler: single_message ##{single_message.id} sent by #{user}" if logger
     end
     single_message
