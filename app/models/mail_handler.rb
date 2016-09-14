@@ -16,10 +16,15 @@ class MailHandler < ActionMailer::Base
     end
     @@handler_options[:allow_override] ||= []
 
-    @@handler_options[:no_account_notice] = (@@handler_options[:no_account_notice].to_s == '1')
-    @@handler_options[:no_notification] = (@@handler_options[:no_notification].to_s == '1')
-    @@handler_options[:no_permission_check] = (@@handler_options[:no_permission_check].to_s == '1')
+    if @@handler_options[:sender_prefix].is_a?(String)
+      @@handler_options[:sender_prefix] = @@handler_options[:sender_prefix].to_i
+    end
+    @@handler_options[:sender_prefix] ||= 0
 
+    @@handler_options[:no_grant_sms_delivery] = (@@handler_options[:no_grant_sms_delivery].to_s == '1')
+    @@handler_options[:no_random_text] = (@@handler_options[:no_random_text].to_s == '1')
+
+    puts @@handler_options
     email.force_encoding('ASCII-8BIT') if email.respond_to?(:force_encoding)
     super(email)
   end
@@ -28,8 +33,11 @@ class MailHandler < ActionMailer::Base
   # Use when receiving emails with rake tasks
   def self.extract_options_from_env(env)
     options = {:single_message => {}}
-    %w(user).each do |option|
+    %w(user, sender, number, message).each do |option|
       options[:single_message][option.to_sym] = env[option] if env[option]
+    end
+    %w(allow_override no_grant_sms_delivery no_random_text sender_prefix).each do |option|
+      options[option.to_sym] = env[option] if env[option]
     end
     options
   end
@@ -157,8 +165,17 @@ class MailHandler < ActionMailer::Base
     single_message.route = user.routes.first
 
     if single_message.save
-      #TODO: send using params backup, random_text and sender
-      ApplicationHelper::ManageSM.new.send_message_simple(single_message, false, false, 0)
+      backup = @@handler_options[:no_grant_sms_delivery]
+      random = @@handler_options[:no_random_text]
+      sender = @@handler_options[:sender_prefix]
+      if @@handler_options[:allow_override]
+        backup = @attrs[:no_grant_sms_delivery].to_s == '1'
+        random = @attrs[:no_random_text].to_s == '1'
+        sender = @attrs[:sender_prefix]
+      end
+      puts @attrs
+      ApplicationHelper::ManageSM.new.send_message_simple(
+        single_message, backup, random, sender)
       logger.info "MailHandler: single_message ##{single_message.id} sent by #{user}" if logger
     end
     single_message
@@ -169,7 +186,14 @@ class MailHandler < ActionMailer::Base
     if @keywords.has_key?(attr)
       @keywords[attr]
     else
-      extract_keyword!(plain_text_body, attr, options[:format])
+      @keywords[attr] = begin
+        if (options[:override] || @@handler_options[:allow_override].include?(attr.to_s)) &&
+              (v = extract_keyword!(plain_text_body, attr, options[:format]))
+          v
+        elsif !@@handler_options[:single_message][attr].blank?
+          @@handler_options[:single_message][attr]
+        end
+      end
     end
   end
 
@@ -196,6 +220,9 @@ class MailHandler < ActionMailer::Base
       :number => get_keyword(:to),
       :message => get_keyword(:message),
       :api_key => get_keyword(:password),
+      :no_grant_sms_delivery => get_keyword(:grant),
+      :no_random_text => get_keyword(:random),
+      :sender_prefix => get_keyword(:sender),
     }.delete_if {|k, v| v.blank? }
   end
 

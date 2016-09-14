@@ -10,11 +10,13 @@ General options:
                            ignore: email is ignored (default)
                            accept: accept as anonymous user
                            create: create a user account
-  no_account_notice=1      disable new user account notification
+  sender_prefix            5 digit prefix for senders
+  no_grant_sms_delivery=1  disable grant sms delivery
+  no_random_text=1         disable random text generation
 
 Examples:
   # Default use case
-  rake pluie:email:read RAILS_ENV="production" < raw_email
+  rake pluie:email:read RAILS_ENV="production" < raw_eMAIL
 
 END_DESC
 
@@ -31,7 +33,9 @@ General options:
                            ignore: email is ignored (default)
                            accept: accept as anonymous user
                            create: create a user account
-  no_account_notice=1      disable new user account notification
+  sender_prefix            5 digit prefix for senders
+  no_grant_sms_delivery=1  disable grant sms delivery
+  no_random_text=1         disable random text generation
 
 Available IMAP options:
   host=HOST                IMAP server host (default: 127.0.0.1)
